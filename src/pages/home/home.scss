@@ -1,0 +1,17 @@
+page-home {
+    
+    
+    .start-button{
+        font-size: large;
+    }
+    .align-start{
+        align-items: flex-start;
+    }
+
+    
+    .button-block{
+        // minor tweak to prevent block buttons stretching over
+        margin:2px;
+    }
+    
+}

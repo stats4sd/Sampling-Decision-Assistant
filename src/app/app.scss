@@ -1,0 +1,78 @@
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+@import './scrollbars.scss';
+// header settings
+.header-logo{
+    height:50px;
+}
+.header{
+    display: flex;
+}
+.header-text{
+display: flex;
+flex-direction: column;
+justify-content: center;
+color:color($colors,primary)
+}
+
+// text block css
+h3{
+    font-size: medium;
+    color:color($colors,primary);
+}
+h2{
+    font-size: x-large;
+    color:color($colors,primary);
+}
+.feature-image{
+    margin-bottom: 20px;
+}
+
+.multi-line-button{
+    // requires text-wrap attribute on element for multiple lines
+    text-transform: none;
+    font-weight: 300;
+    @media screen and (max-width:300px) {
+        // make buttons larger on very small screens
+        height:6rem;
+    }
+}
+
+// css commonly used to help display vertical columns with correct height sections
+.central-content{
+    display: flex;
+    flex-direction: column;
+    height: 100%
+}
+.central-inner-content{
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    justify-content: space-evenly;
+}
+
+
+// app root centering
+$max-app-width:500px;
+
+@media screen and (min-width:$max-app-width){
+    // add padding, background and curved edges for large devices
+    .menu-content, .app-root{
+        border-radius: 10px;
+    }
+    body{
+        background-color: color($colors,primary);
+    }
+    .app-root{
+        margin:5px auto;
+        position: unset;
+        padding: 5px;
+        max-width: $max-app-width;
+        height:calc(100vh - 10px);
+    }
+}
+    

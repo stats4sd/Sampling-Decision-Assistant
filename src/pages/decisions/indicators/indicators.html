@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Indicators</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="central-content">
+    <h3>What indicators will guide your sampling decisions?</h3>
+    <div class="central-inner-content">
+      <ion-slides (ionSlideDidChange)="slideChanged()">
+        <ion-slide>
+          <h4>Introduction</h4>
+        </ion-slide>
+        <ion-slide>
+          <h4>Audio</h4>
+        </ion-slide>
+        <ion-slide>
+          <h4>Video</h4>
+        </ion-slide>
+        <ion-slide>
+          <h4>Pros & Cons</h4>
+        </ion-slide>
+      </ion-slides>
+      <div padding>
+        <ion-segment [(ngModel)]="activeSlide">
+          <ion-segment-button *ngFor="let section of sections" [value]="section.slideIndex" (click)="slideTo(section.slideIndex)">{{section.label}}</ion-segment-button>
+        </ion-segment>
+      </div>
+    </div>
+    <div>
+      <div>
+        <h3>Your Decisions</h3>
+        <div style="display: flex; flex-direction: column; height:80px" >
+          <ion-textarea [placeholder]="placeholderText" style="height:100%"></ion-textarea>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+</ion-content>
