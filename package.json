@@ -1,8 +1,8 @@
 {
-  "name": "SideMenu",
+  "name": "sampling-decision-assistant",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Statistics for Sustainable Development",
+  "homepage": "https://stats4sd.org",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -34,5 +34,5 @@
     "@ionic/app-scripts": "3.0.1",
     "typescript": "2.3.4"
   },
-  "description": "An Ionic project"
+  "description": "Sampling decision assistant"
 }
