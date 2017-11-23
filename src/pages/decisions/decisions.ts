@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {UserProvider} from '../../providers/user/user'
 
 
 @IonicPage()
@@ -15,7 +16,7 @@ export class DecisionsPage {
     {text:'What is a “Target Population”',page:"TargetPopulationPage",complete:false, disabled:true},
   ]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public user:UserProvider) {
   }
 
   loadDecision(decision){

@@ -1,0 +1,27 @@
+<div [formGroup]="formGroup">
+  
+  <!-- question labels -->
+  <div *ngIf="question.type!='label'" class="question-label">
+    <div style="display: flex">
+        <ion-icon name="help"></ion-icon>
+        <div>{{question.label}}</div>
+    </div>
+  </div>
+
+  <!-- text area input -->
+  <div *ngIf="question.type=='text'">
+    <ion-item>
+      <ion-textarea style="height:100%" [formControlName]="question.controlName"></ion-textarea>
+    </ion-item>
+  </div>
+
+  <!-- select -->
+  <div *ngIf="question.type=='select'">
+    <ion-item>
+      <ion-select *ngIf="question.type=='select'" interface="popover" [formControlName]="question.controlName">
+        <ion-option *ngFor="let option of selectOptionsArray">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+</div>

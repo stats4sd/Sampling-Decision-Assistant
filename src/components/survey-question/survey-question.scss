@@ -1,0 +1,15 @@
+survey-question {
+    
+    .question-label{
+        color:color($colors,primary);
+        font-size: 1.6rem;
+        padding: 5px;
+    }
+    ion-icon{
+        margin-right:5px;
+    }
+    ion-select{
+        max-width: 100%;
+        width:100%;
+    }
+}

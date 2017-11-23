@@ -71,6 +71,10 @@
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-4.3.2.tgz#b2e9acd5a4c961c64d786a9b4dc0c2194389efcd"
 
+"@ionic-native/file@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@ionic-native/file/-/file-4.4.2.tgz#aa02ab0290cda9d5fc4ae15a42f716b16dfb3075"
+
 "@ionic-native/splash-screen@4.3.2":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-4.3.2.tgz#4120680e24fa6d0d455800deaf18534d3033aa3a"
@@ -114,13 +118,27 @@
     ws "1.1.4"
     xml2js "0.4.17"
 
-"@ionic/storage@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-2.0.1.tgz#bb1a8c276007d008d7acdda426b56065b0fd3c0b"
+"@ionic/storage@^2.0.1":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-2.1.3.tgz#05dcf396a759879bf7aea42cfed61519562a13c7"
   dependencies:
     "@types/localforage" "0.0.30"
     localforage "~1.4.2"
     localforage-cordovasqlitedriver "~1.5.0"
+
+"@types/html2canvas@^0.5.35":
+  version "0.5.35"
+  resolved "https://registry.yarnpkg.com/@types/html2canvas/-/html2canvas-0.5.35.tgz#62ef0b59918bf87553593342fa2b040a7477a587"
+  dependencies:
+    "@types/jquery" "*"
+
+"@types/jquery@*":
+  version "3.2.16"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.16.tgz#04419c404a3194350e7d3f339a90e72c88db3111"
+
+"@types/jspdf@^1.1.31":
+  version "1.1.31"
+  resolved "https://registry.yarnpkg.com/@types/jspdf/-/jspdf-1.1.31.tgz#88de8018ffeb8f264f97574f2b1c55b8c5405326"
 
 "@types/localforage@0.0.30":
   version "0.0.30"
@@ -160,6 +178,10 @@ acorn@^4.0.1, acorn@^4.0.3:
 acorn@^5.0.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
+
+adler32cs@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/adler32cs/-/adler32cs-0.0.1.tgz#9e29cd8087564d7055209ced1206a58d22e778eb"
 
 ajv-keywords@^2.0.0:
   version "2.1.1"
@@ -557,6 +579,10 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
+cf-blob.js@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/cf-blob.js/-/cf-blob.js-0.0.1.tgz#f5ab7e12e798caf08ccf828c69aba0f063d83f99"
+
 chalk@1.1.3, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
@@ -696,6 +722,20 @@ cookie-signature@1.0.6:
 cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
+
+cordova-plugin-file@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-file/-/cordova-plugin-file-5.0.0.tgz#d397682321669c000be8c71f8ef4438aae8f925d"
+
+cordova-sqlite-storage-dependencies@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/cordova-sqlite-storage-dependencies/-/cordova-sqlite-storage-dependencies-1.0.4.tgz#8279afc8d83b0161bfa7dd9c228a827f5dd8145e"
+
+cordova-sqlite-storage@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/cordova-sqlite-storage/-/cordova-sqlite-storage-2.1.2.tgz#fb3ccc842d088fde5513b7d3160a88319fb72ea4"
+  dependencies:
+    cordova-sqlite-storage-dependencies "1.0.4"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -1169,6 +1209,10 @@ faye-websocket@~0.10.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
+file-saver@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-1.3.3.tgz#cdd4c44d3aa264eac2f68ec165bc791c34af1232"
+
 filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
@@ -1474,6 +1518,10 @@ hosted-git-info@^2.1.4:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
 
+html2canvas@^0.5.0-beta4:
+  version "0.5.0-beta4"
+  resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-0.5.0-beta4.tgz#8282c62ac5fd78168f5702b5e4877157ca93f39e"
+
 http-errors@~1.6.1:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.2.tgz#0a002cc85707192a7e7946ceedc11155f60ec736"
@@ -1760,6 +1808,14 @@ jsonfile@^3.0.0:
 jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+
+jspdf@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/jspdf/-/jspdf-1.3.5.tgz#e8c9d96fe1c1f152fce430f41d5ec66f17e10f19"
+  dependencies:
+    adler32cs "0.0.1"
+    cf-blob.js "0.0.1"
+    file-saver "1.3.3"
 
 jsprim@^1.2.2:
   version "1.4.1"

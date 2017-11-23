@@ -75,4 +75,24 @@ $max-app-width:500px;
         height:calc(100vh - 10px);
     }
 }
+
+
+// attempts to fix html2canvas for ionic, failed
+
+// .scroll-content,.pdf-content,.fixed-content,.content,body{
+//     overflow: visible!important
+// }
+
+// matched css from questions.scss to apply to pdf clone
+.pdf-output{
+    .heading{
+        font-weight: 700;
+        color:white;
+        width:100%;
+        background-color: color($colors,primary);
+        padding:5px;
+        font-size: large;
+        margin-top:5px
+    }
+}
     

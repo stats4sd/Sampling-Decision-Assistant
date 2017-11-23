@@ -7,7 +7,9 @@ import { HomePage } from '../pages/home/home';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { DataProvider } from '../providers/data/data';
+import { IonicStorageModule } from '@ionic/storage';
+import {File} from '@ionic-native/file'
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,9 @@ import { DataProvider } from '../providers/data/data';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: '__sampling',
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -25,9 +30,10 @@ import { DataProvider } from '../providers/data/data';
   ],
   providers: [
     StatusBar,
+    File,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    UserProvider
   ]
 })
 export class AppModule {}

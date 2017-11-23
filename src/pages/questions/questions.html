@@ -1,0 +1,88 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>questions</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="save()">Save</button>
+      <button ion-button icon-left (click)="load()">Load</button>
+      <button ion-button icon-left (click)="print()">Print</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="survey">
+  <div id="outputImage"></div>
+
+  <div class="pdf-output">
+      <div *ngFor="let questionGroup of questionGroups">
+          <div class="heading">
+            {{questionGroup._name}}
+          </div>
+          <survey-question-group #survey [questions]="questionGroup.questions"></survey-question-group>
+        </div>
+  </div>
+  
+  <!-- <div id="outputTable">
+    <div *ngFor="let questionGroup of questionGroups">
+      <div>{{questionGroup._name}}</div>
+      <table style="border:1px solid black; width:400px">
+        <tr>
+          <th style="height:30px">#</th>
+          <th style="height:30px">Label</th>
+          <th style="height:30px">Response</th>
+        </tr>
+        <tr *ngFor="let question of questionGroup.questions">
+          <td>{{question.controlName}}</td>
+          <td>{{question.label}}</td>
+          <td>{{responses[question.controlName]}}</td>
+        </tr>
+      </table>
+    </div>
+  </div> -->
+
+
+
+
+
+</ion-content>
+
+
+
+
+
+<!-- <ion-slides #surveySlides (ionSlideDidChange)="saveProgress()" direction="horizontal"> -->
+<!-- Section 1 questions -->
+<!-- <ion-slide class="background-primary intro-slide"> -->
+
+<!-- <ion-card style="flex:1">
+
+    <form [formGroup]="formGroups.section1">
+      <div *ngFor="let question of questionMeta">
+
+       
+        <survey-question [questions]="question" *ngIf="question.section=='section1'"></survey-question>
+      </div>
+
+    </form>
+
+    <form [formGroup]="formGroups.section2">
+      <div *ngFor="let question of questionMeta">
+        <survey-question [questions]="question" *ngIf="question.section=='section2'"></survey-question>
+      </div>
+
+    </form>
+
+    <form [formGroup]="formGroups.section3">
+      <div *ngFor="let question of questionMeta">
+        <survey-question [questions]="question" *ngIf="question.section=='section3'"></survey-question>
+      </div>
+
+    </form>
+  </ion-card> -->
+
+<!-- <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroups.section1.valid">Continue</button> -->
+
+<!-- </ion-slide> -->
+<!-- </ion-slides> -->
