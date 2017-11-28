@@ -9,7 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import {File} from '@ionic-native/file'
-import { UserProvider } from '../providers/user/user';
+import { DataProvider } from '../providers/data/data';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { UserProvider } from '../providers/user/user';
     File,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    DataProvider
   ]
 })
 export class AppModule {}

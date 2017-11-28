@@ -1,20 +1,12 @@
-/* Takes an array of questions and presents them as a formgroup
-
-@Input('questions')
-
-Array of question objects, with fields:
-
-controlName: string (what to call form variables)
-type: string (input type, currently accepts 'heading', 'text', 'select')
-label: string (text to display as question label)
-value?: any (default value to save)
-selectOptions?: string[] (array of options to pass to select, single word list binds to both display name and value properties)
-
-
+/* Takes a question and binds to appropriate input mechanism 
+Additional features:
+- auto-save on focusout or change for all elements
+- automatic resize for textareas
 */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { query } from '@angular/core/src/animation/dsl';
 
 
 
@@ -24,9 +16,12 @@ import { FormGroup } from '@angular/forms';
 })
 export class SurveyQuestionComponent {
   @Input('question') question;
-  @Input('formGroup') formGroup:FormGroup
+  @Input('formGroup') formGroup: FormGroup
+  @ViewChild('textAreaInput') textAreaInput: ElementRef
   value: any;
-  selectOptionsArray: string[]
+  selectOtherValue:any;
+  selectOptionsArray: string[];
+  initialScrollHeight:number
 
 
   constructor() {
@@ -34,7 +29,9 @@ export class SurveyQuestionComponent {
   }
   ngAfterViewInit() {
     this._generateSelectOptions()
-
+  }
+  valueUpdated(e) {
+    console.log(this.question.controlName, this.value)
   }
   _generateSelectOptions() {
     // parse select options to array
@@ -45,6 +42,24 @@ export class SurveyQuestionComponent {
       this.selectOptionsArray = options
       console.log('select options array', this.selectOptionsArray)
     }
+  }
+  updateSelectOther(e){
+    let value = e.target.value
+    this.selectOtherValue=value
+    this.value=value
+   
+  }
+  
+  resize() {
+    // increase height on text area automatically except when first entry row (looks jumpy otherwise as 10px increase on first char)
+    let scrollHeight=this.textAreaInput.nativeElement.scrollHeight
+    if(!this.initialScrollHeight){this.initialScrollHeight=scrollHeight}
+    if(scrollHeight>this.initialScrollHeight){
+      console.log('resizing')
+      this.textAreaInput.nativeElement.style.height = 'auto'
+      this.textAreaInput.nativeElement.style.height = this.textAreaInput.nativeElement.scrollHeight + 10 + 'px';
+    }
+    
   }
 
 

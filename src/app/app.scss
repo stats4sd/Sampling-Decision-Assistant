@@ -74,6 +74,10 @@ $max-app-width:500px;
         max-width: $max-app-width;
         height:calc(100vh - 10px);
     }
+    // popover fix for screen resizing
+    .popover-content{
+        margin-right:400px;
+    }
 }
 
 
@@ -95,4 +99,6 @@ $max-app-width:500px;
         margin-top:5px
     }
 }
+
+
     

@@ -1,34 +1,40 @@
-<div [formGroup]="formGroup">
-  
-  <!-- question labels -->
-  <div *ngIf="question.type!='label'" class="question-label">
-    <div style="display: flex">
+<div class="container">
+  <div [formGroup]="formGroup" style="flex:1">
+    <!-- question labels -->
+    <div *ngIf="question.type!='label'" class="question-label">
+      <div style="display: flex">
         <ion-icon name="help"></ion-icon>
         <div>{{question.label}}</div>
+      </div>
+    </div>
+    <!-- text area input -->
+    <div *ngIf="question.type=='text'">
+      <ion-item>
+        <textarea id="textAreaInput" #textAreaInput (focusout)="valueUpdated(question)" (keyup)="resize()" [formControlName]="question.controlName"
+          [(ngModel)]="value"></textarea>
+      </ion-item>
+    </div>
+    <!-- number input -->
+    <div *ngIf="question.type=='number'">
+      <ion-item>
+        <ion-input type="number" (focusout)="valueUpdated(question)" [formControlName]="question.controlName" [(ngModel)]="value"></ion-input>
+      </ion-item>
+    </div>
+    <!-- select -->
+    <div *ngIf="question.type=='select'">
+      <ion-item>
+        <ion-select (ionChange)="valueUpdated(question)" interface="action-sheet" [formControlName]="question.controlName" [(ngModel)]="value">
+          <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
+          <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- input for type other -->
+      <ion-item *ngIf="value=='Other (please specify)'">
+        <ion-input clearOnEdit="true" type="text" (focusout)="updateSelectOther($event)" placeholder="please specify"></ion-input>
+      </ion-item>
     </div>
   </div>
-
-  <!-- text area input -->
-  <div *ngIf="question.type=='text'">
-    <ion-item>
-      <ion-textarea style="height:100%" [formControlName]="question.controlName"></ion-textarea>
-    </ion-item>
+  <div class="bookmark">
+    <ion-icon name="bookmark"></ion-icon>
   </div>
-
-  <!-- number input -->
-  <div *ngIf="question.type=='number'">
-    <ion-item>
-      <ion-input type="number" [formControlName]="question.controlName"></ion-input>
-    </ion-item>
-  </div>
-
-  <!-- select -->
-  <div *ngIf="question.type=='select'">
-    <ion-item>
-      <ion-select interface="popover" [formControlName]="question.controlName">
-        <ion-option *ngFor="let option of selectOptionsArray">{{option}}</ion-option>
-      </ion-select>
-    </ion-item>
-  </div>
-
 </div>

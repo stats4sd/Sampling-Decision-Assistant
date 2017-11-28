@@ -12,4 +12,20 @@ survey-question {
         max-width: 100%;
         width:100%;
     }
+    .container{
+        display: flex;
+    }
+    .bookmark{
+        margin:5px;
+    }
+    textarea{
+        min-height:60px; 
+        height: auto;
+        // max-height:16rem;
+        overflow: hidden;        
+        border: 1px solid black;
+        border-radius: 10px;
+        width:calc(100% - 10px);
+        padding: 5px;
+    }
 }
