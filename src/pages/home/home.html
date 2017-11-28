@@ -9,11 +9,12 @@
 </ion-header>
 
 <ion-content padding>
+   
   <div class="central-content">
     <div class="central-inner-content">
       <ion-slides #mainSlides>
         <ion-slide>
-          <img src="assets/img/feature-image-1.jpg" alt="" class="feature-image">
+          <img [src]="imageSrc" alt="" class="feature-image">
           <div style="text-align: center">
             <button ion-button outline color="primary" class="start-button" (click)="nextSlide()">Start</button>
           </div>

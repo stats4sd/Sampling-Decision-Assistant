@@ -6,11 +6,14 @@ import { NavController, Slides } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  imageSrc="assets/img/feature-image-1.jpg"
   @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController) {
 
   }
+
 
   ionViewDidLoad(){
     // prevent user swiping
@@ -22,7 +25,7 @@ export class HomePage {
     this.slides.lockSwipes(true)
   }
   startNew(){
-    this.navCtrl.push('DecisionsPage')
+    this.navCtrl.push('OverviewPage')
   }
 
 }

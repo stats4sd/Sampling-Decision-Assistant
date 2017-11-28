@@ -15,10 +15,17 @@
     </ion-item>
   </div>
 
+  <!-- number input -->
+  <div *ngIf="question.type=='number'">
+    <ion-item>
+      <ion-input type="number" [formControlName]="question.controlName"></ion-input>
+    </ion-item>
+  </div>
+
   <!-- select -->
   <div *ngIf="question.type=='select'">
     <ion-item>
-      <ion-select *ngIf="question.type=='select'" interface="popover" [formControlName]="question.controlName">
+      <ion-select interface="popover" [formControlName]="question.controlName">
         <ion-option *ngFor="let option of selectOptionsArray">{{option}}</ion-option>
       </ion-select>
     </ion-item>
