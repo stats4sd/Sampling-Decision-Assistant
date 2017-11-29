@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import { File } from '@ionic-native/file';
-import questionMeta from './questionMeta'
+import questionMeta from './questionMeta';
+import { DataProvider } from '../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -12,26 +13,34 @@ import questionMeta from './questionMeta'
 })
 export class QuestionsPage {
   questionGroups: any = [];
-  responses: any = {};
   questionMeta: any;
   @ViewChildren('survey') surveys;
   canvasImage: any;
 
 
-  constructor(private file: File) {
+  constructor(private file: File, private dataPrvdr: DataProvider) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
     this.questionMeta = questionMeta
-    this._generateQuestionGroups()
+    // load saved responses
+    this.loadSavedSurvey()
+    
+    
+    
   }
 
   ionViewDidLoad() {
 
   }
 
-  _generateQuestionGroups() {
-    // split questions into groups by section
+  _generateQuestionGroups(values?) {
+    
+    // split questions into groups by section. can pass json values matching individual control names
     let groups = {}
     this.questionMeta.forEach(q => {
+      // add values
+      if(values && values[q.controlName]!=undefined){
+        q.value=values[q.controlName]
+      }
       // split questions into corresponding sections
       if (q.controlName != "") {
         if (!groups.hasOwnProperty(q.section)) {
@@ -49,22 +58,26 @@ export class QuestionsPage {
         this.questionGroups.push(group)
       }
     }
-    console.log('question groups', this.questionGroups)
-
   }
   save() {
+    // take entire survey results and save to storage
     let responses = {}
     this.surveys._results.forEach(survey => {
       let formValues = survey.formGroup.value
       responses = Object.assign(responses, formValues);
     });
-
-    this.responses = responses
-    console.log('responses', this.responses)
+    this.dataPrvdr.saveToStorage('surveyResults', responses).then(
+      _ => console.log('responses saved', responses)
+    )
   }
 
-  load() {
-
+  loadSavedSurvey() {
+    this.dataPrvdr.loadSurvey().then(
+      res => {
+        console.log('data retrieved', res)
+        this._generateQuestionGroups(res)
+      }
+    )
   }
   print() {
     this._generatePdf()
@@ -73,7 +86,7 @@ export class QuestionsPage {
   _generatePdf() {
     // somewhat tricky method to try and output contents to a pdf doc
     // needs to first create clone of element off screen for proper rendering
-    
+
     var pdf = new jsPDF
     var offScreen = document.querySelector('.pdf-output');
     // Clone off-screen element

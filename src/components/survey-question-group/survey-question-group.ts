@@ -1,6 +1,8 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
+import {Events} from 'ionic-angular'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
+
 
 
 @Component({
@@ -12,7 +14,9 @@ export class SurveyQuestionGroupComponent {
   formGroup: FormGroup;
   public payLoad: any;
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private events:Events) {
+    
+   }
 
   ngAfterViewInit() {
     this._generateQuestionForm()
@@ -26,17 +30,16 @@ export class SurveyQuestionGroupComponent {
       if (q.condition!="") { return this._generateConditionOptions(q) }
       else { return q }
     })
-    console.log('questions condition complete', questions)
-
     questions.forEach(q => {
       // split questions into corresponding sections
       if (!q.value) { questionGroup[q.controlName] = "" }
-      else { questionGroup[q.controlName = q.value] }
+      else { questionGroup[q.controlName] = q.value }
 
     });
     // build formgroup sections appropriately
+    console.log('questionGroup',questionGroup)
     this.formGroup = this.fb.group(questionGroup)
-    console.log('formGroup', this.formGroup)
+    
     this.cdr.detectChanges()
   }
 

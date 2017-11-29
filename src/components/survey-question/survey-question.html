@@ -1,40 +1,46 @@
+<div>{{testText}}</div>
 <div class="container">
   <div [formGroup]="formGroup" style="flex:1">
     <!-- question labels -->
     <div *ngIf="question.type!='label'" class="question-label">
-      <div style="display: flex">
-        <ion-icon name="help"></ion-icon>
-        <div>{{question.label}}</div>
-      </div>
+
+      <!-- <ion-icon name="help"></ion-icon> -->
+      <div class="question-number dark">{{question.controlName}}</div>
+      <div>{{question.label}}</div>
+
     </div>
     <!-- text area input -->
     <div *ngIf="question.type=='text'">
       <ion-item>
-        <textarea id="textAreaInput" #textAreaInput (focusout)="valueUpdated(question)" (keyup)="resize()" [formControlName]="question.controlName"
-          [(ngModel)]="value"></textarea>
+        <textarea id="textAreaInput" #textAreaInput (focusout)="saveValue()" (keyup)="resize()" [formControlName]="question.controlName"></textarea>
       </ion-item>
     </div>
     <!-- number input -->
     <div *ngIf="question.type=='number'">
       <ion-item>
-        <ion-input type="number" (focusout)="valueUpdated(question)" [formControlName]="question.controlName" [(ngModel)]="value"></ion-input>
+        <ion-input type="number" (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
       </ion-item>
     </div>
     <!-- select -->
     <div *ngIf="question.type=='select'">
-      <ion-item>
-        <ion-select (ionChange)="valueUpdated(question)" interface="action-sheet" [formControlName]="question.controlName" [(ngModel)]="value">
+      <ion-item *ngIf="!showSelectOther">
+        <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [formControlName]="question.controlName">
           <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
           <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
         </ion-select>
       </ion-item>
       <!-- input for type other -->
-      <ion-item *ngIf="value=='Other (please specify)'">
-        <ion-input clearOnEdit="true" type="text" (focusout)="updateSelectOther($event)" placeholder="please specify"></ion-input>
+      <ion-item *ngIf="showSelectOther">
+        <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
+          placeholder="please specify"></ion-input>
       </ion-item>
     </div>
+    <!-- label -->
+    <div *ngIf="question.type=='label'" class="question-label" style="margin:10px 0">
+      {{question.label}}
+    </div>
   </div>
-  <div class="bookmark">
+  <!-- <div class="bookmark">
     <ion-icon name="bookmark"></ion-icon>
-  </div>
+  </div> -->
 </div>

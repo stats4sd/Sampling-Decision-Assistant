@@ -3,8 +3,8 @@
   <div *ngFor="let question of questions">
     <survey-question [question]="question" [formGroup]="formGroup" *ngIf="showQuestion(question)"></survey-question>
   </div>
-  <div class="group-meta">
-    <div>valid: {{formGroup.valid}}</div>
+  <!-- <div class="group-meta"> -->
+    <!-- <div>valid: {{formGroup.valid}}</div> -->
     <!-- <button ion-button (click)="save()" [disabled]="!formGroup.valid">Save</button> -->
-  </div>
+  <!-- </div> -->
 </form>
