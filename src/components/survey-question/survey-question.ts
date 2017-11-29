@@ -29,7 +29,7 @@ export class SurveyQuestionComponent {
   dynamicText: any = {}
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr:DataProvider) {
-    this.events.subscribe('valueUpdate', data => this.updateLabel(data.key, data.value))
+    this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 
   }
   ngAfterViewInit() {
@@ -40,24 +40,36 @@ export class SurveyQuestionComponent {
 
 
   }
-  updateLabel(key?, value?) {
+  updateLabel(key) {
+    
     // updates dynamic text labels if relevant 
-    if (Object.keys(this.dynamicText).length > 0) {
-      if (key && this.dynamicText.hasOwnProperty(key)) {
-        // if sent key appears in text update the mapping value to be processed next cycle (and send to next cycle)
-        this.dynamicText[key].currentValue = value
-        this.updateLabel()
-      }
-      else {
-        let label = this.originalLabel
-         // iterate through all keys in case multiple exist in a question, populating with previously stored answered
-        for (let k in this.dynamicText) {
-          let matchText = this.dynamicText[k].matchText
-          let replaceText = this.dynamicText[k].currentValue
-          label = label.replace(matchText,replaceText)
-        }
-        this.question.label = label
-      }
+    if (this.dynamicText[key]) {  
+      let value = this.dataPrvdr.getSurveyValue(key)    
+      let el = document.getElementById(this.question.type+'LabelText')
+      let className=".dynamicText"+key
+      let instances = el.querySelectorAll('.dynamic-text')
+      console.log('instances',instances)
+      for (let i = 0; i < instances.length; i++) {
+        if(instances[i].getAttribute('name')==key)
+        instances[i].innerHTML = value;
+    }
+      // if (key && this.dynamicText.hasOwnProperty(key)) {
+      //   // if sent key appears in text update the mapping value to be processed next cycle (and send to next cycle)
+      //   this.dynamicText[key].currentValue = value
+      //   this.updateLabel()
+      // }
+      // else {
+      //   console.log('updating labels')
+      //   let label = this.originalLabel
+      //    // iterate through all keys in case multiple exist in a question, populating with previously stored answered
+      //   for (let k in this.dynamicText) {
+      //     let matchText = this.dynamicText[k].matchText
+      //     let replaceText = this.dynamicText[k].currentValue
+
+      //     label = label.replace(matchText,replaceText)
+      //   }
+      //   this.question.label = label
+      // }
     }
   }
 
@@ -99,16 +111,22 @@ export class SurveyQuestionComponent {
       if (matches.text != null) {
         matches.vars = matches.text.map(function (x) { return x.match(/[\w\.]+/)[0]; });
       }
+      console.log('matches',matches)
       matches.vars.forEach((val, i) => {
         // populate match text and current val. get current val from provider in case it is outside of current question group
         this.dynamicText[val] = {
           matchText: matches.text[i],
           currentValue: this.dataPrvdr.getSurveyValue(val)
         }
-
+        // apply css
+      let el = document.getElementById(this.question.type+'LabelText')
+      // use split/join to target all instances of text, apply name attribute for tracking later
+      // el.innerHTML=el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text dynamicText"+val+"'>"+matches.text[i]+"</span>")
+      el.innerHTML=el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='"+val+"'>"+val+"</span>")
+      this.updateLabel(val)
       })
-      // run initial replace for saved values
-      this.updateLabel()
+      
+     
     }
 
   }
