@@ -12,14 +12,25 @@ import { query } from '@angular/core/src/animation/dsl';
 export class SurveyQuestionGroupComponent {
   @Input('questions') questions;
   formGroup: FormGroup;
-  public payLoad: any;
+  section:any;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private events:Events) {
+    this.events.subscribe('valueUpdate', data => this.updateProgress(data.section))
     
    }
 
   ngAfterViewInit() {
     this._generateQuestionForm()
+    this.section=this.questions[0].section
+  }
+
+  updateProgress(section){
+    
+    console.log('updating progress',section)
+    if(section =="all" || section=="this.section"){
+      console.log('section matched',section)
+    }
+
   }
 
   _generateQuestionForm() {
@@ -54,11 +65,6 @@ export class SurveyQuestionGroupComponent {
   _addSubQuestion(template){
     // create nested group
     return this.fb.group(template)
-  }
-
-  save() {
-    this.payLoad = JSON.stringify(this.formGroup.value);
-    console.log('payload', this.payLoad)
   }
 
   _generateConditionOptions(question) {

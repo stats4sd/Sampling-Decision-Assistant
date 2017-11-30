@@ -63,7 +63,7 @@ export class SurveyQuestionComponent {
     // save value on update (do not exclude "" in case user might have deleted a value)
     let key = this.question.controlName
     let value = this.formGroup.value[key]
-    let update = { key: key, value: value }
+    let update = { key: key, value: value, section: this.question.section }
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
 
@@ -150,10 +150,15 @@ export class SurveyQuestionComponent {
 
   addTextMultiple(){
     // push response to array
-    console.log('pushing value',this.multipleTextInput)
     this.multipleTextValues.push(this.multipleTextInput)
     this.multipleTextInput=""
-
+    this.formGroup.value[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    this.saveValue()
+  }
+  removeTextMultiple(index){
+    this.multipleTextValues.splice(index,1)
+    this.formGroup.value[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    this.saveValue()
   }
 
   resize() {

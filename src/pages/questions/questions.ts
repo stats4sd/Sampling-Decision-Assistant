@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import { File } from '@ionic-native/file';
-import questionMeta from './questionMeta';
 import { DataProvider } from '../../providers/data/data'
 
 @IonicPage()
@@ -20,7 +19,7 @@ export class QuestionsPage {
 
   constructor(private file: File, private dataPrvdr: DataProvider) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
-    this.questionMeta = questionMeta
+    this.questionMeta = this.dataPrvdr.getQuestionMeta()
     // load saved responses
     this.loadSavedSurvey()
     

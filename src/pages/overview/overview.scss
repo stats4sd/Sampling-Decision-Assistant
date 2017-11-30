@@ -1,3 +1,38 @@
 page-overview {
-
+    
+    ion-card{
+        :hover{
+            background-color: wheat
+        }
+    }
+    .section-icon{
+        height: 100%;
+        max-height: 110px;
+        max-width: 110px;
+        padding: 5px;
+        width:auto;
+    }
+    .section-icon-container{
+        width:120px;
+    }
+    .section-container{
+        padding:5px;
+        height: 100%;
+        display: flex;
+        cursor: pointer;
+    }
+    .section-title{
+        color:color($colors,primary);
+        font-size: large;
+        flex: 1;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .content-container{
+        height: calc(100vh - 106px);
+        display: flex; 
+        flex-direction: column;
+    }
 }

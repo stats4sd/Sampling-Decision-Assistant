@@ -1,15 +1,20 @@
-<!--
-  To do: Some buttons to navigate to each of the sections
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>overview</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Step By Step Decisions</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
+  <div class="content-container">
+    <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)">
+      <div class="section-container">
+        <div class="section-icon-container"><img class="section-icon" [src]="section.icon"></div>
+        <div class="section-title">{{section.name}}</div>
+        <div class="section-status">{{section.status}}</div>
+      </div>
+    </ion-card>
+  </div>
+
 
 </ion-content>

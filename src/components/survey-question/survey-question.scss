@@ -31,6 +31,7 @@ survey-question {
         border-radius: 10px;
         width:calc(100% - 10px);
         padding: 5px;
+        resize: none;
     }
     .question-number{
         margin-right:5px;
@@ -57,5 +58,9 @@ survey-question {
         color: rgba(0,0,0,0.9);
         border: 1px solid rgba(0,0,0,0.3);
         padding: 5px;
+    }
+    .multiple-remove-button{
+        float: right;
+        color: color($colors,primary)
     }
 }

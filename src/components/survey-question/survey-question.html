@@ -47,11 +47,12 @@
       </div>
       <!-- multiple list -->
       <div style="min-height: 6em">
-        <div style="display:flex" *ngFor="let value of multipleTextValues">
+        <div style="display:flex" *ngFor="let value of multipleTextValues, index as i">
           <div style="opacity: 0" class="question-number">{{question.controlName}}</div>
           <div class="multiple-list">
             <span class="bullet"></span>
             <span>{{value}}</span>
+            <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
           </div>
         </div>
 
