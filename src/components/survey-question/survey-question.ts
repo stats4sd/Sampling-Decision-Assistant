@@ -21,19 +21,24 @@ export class SurveyQuestionComponent {
   @Input('question') question;
   @Input('formGroup') formGroup: FormGroup
   @ViewChild('textAreaInput') textAreaInput: ElementRef
+  questionKey:string  
   selectOtherValue: any = "";
   selectOptionsArray: string[];
   initialScrollHeight: number;
   showSelectOther: boolean = false;
   originalLabel: string;
-  dynamicText: any = {}
+  dynamicText: any = {};
+  multipleTextInput:any=""
+  multipleTextValues:any=[]
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr:DataProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 
   }
   ngAfterViewInit() {
+    this.questionKey=this.question.controlName
     this._generateSelectOptions()
+    this._generateMultipleValues()
     this._prepareDynamicText()
     this.cdr.detectChanges()
 
@@ -41,35 +46,16 @@ export class SurveyQuestionComponent {
 
   }
   updateLabel(key) {
-    
     // updates dynamic text labels if relevant 
     if (this.dynamicText[key]) {  
       let value = this.dataPrvdr.getSurveyValue(key)    
       let el = document.getElementById(this.question.type+'LabelText')
       let className=".dynamicText"+key
       let instances = el.querySelectorAll('.dynamic-text')
-      console.log('instances',instances)
       for (let i = 0; i < instances.length; i++) {
         if(instances[i].getAttribute('name')==key)
         instances[i].innerHTML = value;
     }
-      // if (key && this.dynamicText.hasOwnProperty(key)) {
-      //   // if sent key appears in text update the mapping value to be processed next cycle (and send to next cycle)
-      //   this.dynamicText[key].currentValue = value
-      //   this.updateLabel()
-      // }
-      // else {
-      //   console.log('updating labels')
-      //   let label = this.originalLabel
-      //    // iterate through all keys in case multiple exist in a question, populating with previously stored answered
-      //   for (let k in this.dynamicText) {
-      //     let matchText = this.dynamicText[k].matchText
-      //     let replaceText = this.dynamicText[k].currentValue
-
-      //     label = label.replace(matchText,replaceText)
-      //   }
-      //   this.question.label = label
-      // }
     }
   }
 
@@ -99,6 +85,17 @@ export class SurveyQuestionComponent {
       }
     }
   }
+  _generateMultipleValues(){
+    if(this.question.type=="textMultiple"){
+      let value = this.dataPrvdr.getSurveyValue(this.questionKey)
+      console.log('multiple val in',value)
+      if(value==undefined || value=="" || !value==null){
+        value=[]
+      }
+      else{value = JSON.parse(value)}
+      this.multipleTextValues=value
+    }
+  }
   _prepareDynamicText() {
     // search through text string for instances of variable references contained between {{ }}
 
@@ -111,7 +108,6 @@ export class SurveyQuestionComponent {
       if (matches.text != null) {
         matches.vars = matches.text.map(function (x) { return x.match(/[\w\.]+/)[0]; });
       }
-      console.log('matches',matches)
       matches.vars.forEach((val, i) => {
         // populate match text and current val. get current val from provider in case it is outside of current question group
         this.dynamicText[val] = {
@@ -150,9 +146,13 @@ export class SurveyQuestionComponent {
     if (value == "") {
       this.showSelectOther = false
     }
+  }
 
-    // this.formGroup.value[this.question.controlName] = value
-
+  addTextMultiple(){
+    // push response to array
+    console.log('pushing value',this.multipleTextInput)
+    this.multipleTextValues.push(this.multipleTextInput)
+    this.multipleTextInput=""
 
   }
 

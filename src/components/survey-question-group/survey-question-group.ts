@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import {Events} from 'ionic-angular'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 
 
@@ -33,14 +33,27 @@ export class SurveyQuestionGroupComponent {
     questions.forEach(q => {
       // split questions into corresponding sections
       if (!q.value) { questionGroup[q.controlName] = "" }
-      else { questionGroup[q.controlName] = q.value }
+      //if (q.type == 'textMultiple'){
+        // generate template for sub fields, pulled from select options
+        // let template = {}
+        // for(let field of q.selectOptions.split(',')){
+        //   template[field.trim()]=""
+        // }
+        // console.log('templated',template)
+        // questionGroup[q.controlName] = this.fb.array([this._addSubQuestion(template)])
+      //}
+      questionGroup[q.controlName] = q.value
 
     });
     // build formgroup sections appropriately
     console.log('questionGroup',questionGroup)
-    this.formGroup = this.fb.group(questionGroup)
-    
+    this.formGroup = this.fb.group(questionGroup)    
     this.cdr.detectChanges()
+  }
+
+  _addSubQuestion(template){
+    // create nested group
+    return this.fb.group(template)
   }
 
   save() {

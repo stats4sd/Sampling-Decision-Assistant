@@ -37,7 +37,25 @@ survey-question {
         font-size: x-small
     }
     .dynamic-text{
-        color:red;
-        margin:0 2px;
+        color:#b75d1b;
+        margin:0 3px;
+    }
+    .bullet{
+        display: inline-block;
+		width: 8px;
+		height: 8px;
+        background-color: rgba(0,0,0,0.7);
+        margin-right:4px;
+		border-radius: 50%;
+    }
+    .multiple-list{
+
+        width:100%;
+        display: inline-block;
+        margin: 5px 60px 0 0;
+        font-size: medium;
+        color: rgba(0,0,0,0.9);
+        border: 1px solid rgba(0,0,0,0.3);
+        padding: 5px;
     }
 }

@@ -5,7 +5,9 @@
     <div *ngIf="question.type!='label'" class="question-label">
       <!-- <ion-icon name="help"></ion-icon> -->
       <div class="question-number dark">{{question.controlName}}</div>
-      <div ><span id="questionLabelText" #questionLabelText>{{question.label}}</span></div>
+      <div>
+        <span id="questionLabelText" #questionLabelText>{{question.label}}</span>
+      </div>
 
     </div>
     <!-- text area input -->
@@ -28,14 +30,38 @@
           <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
         </ion-select>
       </ion-item>
-      <!-- input for type other -->
+      <!-- select with type other -->
       <ion-item *ngIf="showSelectOther">
         <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
           placeholder="please specify"></ion-input>
       </ion-item>
     </div>
+    <!-- text multiple -->
+    <div *ngIf="question.type=='textMultiple'">
+      <div style="display: flex">
+        <ion-item>
+          <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
+            type="text" [placeholder]="question.labelMultiple"></ion-input>
+        </ion-item>
+        <button ion-button (click)="addTextMultiple()">Add</button>
+      </div>
+      <!-- multiple list -->
+      <div style="min-height: 6em">
+        <div style="display:flex" *ngFor="let value of multipleTextValues">
+          <div style="opacity: 0" class="question-number">{{question.controlName}}</div>
+          <div class="multiple-list">
+            <span class="bullet"></span>
+            <span>{{value}}</span>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
     <!-- label -->
-    <div  *ngIf="question.type=='label'" class="question-label" style="margin:10px 0">
+    <div *ngIf="question.type=='label'" class="question-label" style="margin:10px 0">
       <span id="labelLabelText" #labelLabelText>{{question.label}}</span>
     </div>
   </div>
