@@ -20,18 +20,46 @@
           </div>
         </ion-slide> -->
         <ion-slide class="align-start">
-          <h2 style="margin-top:20px">Sampling Decision Assistant</h2>
-          <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image">
+          <h1 style="margin-top:35px"></h1>
           <div style="text-align: center">
-            <h3>Where do you want to start?</h3>
-            <button ion-button block color="primary" text-wrap class="multi-line-button" (click)="startNew()" style="margin-bottom:10px">
-              <div>
-                Use the Step-by-step process to plan your sampling
-              </div>
-            </button>
-            <button ion-button block color="primary" text-wrap class="multi-line-button"  (click)="nextSlide()">
-              Do you want to jump into a particular stage in the sampling process?
-            </button>
+            <h2 style='margin-bottom:20px'>Where do you want to start?</h2>
+            <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image">
+
+            <hr/>
+            <div class="content-container">
+              <h3>Sampling Decision Assistant</h3>
+              <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
+                <div class="section-container">
+<!--                   <div class="section-icon-container"><img class="section-icon" [src]="section.icon"></div>
+ -->                  <div class="section-title">{{section.name}}</div>
+                  <div class="section-status">{{section.status}}</div>
+                </div>
+              </ion-card>
+            </div>
+            <hr/>
+            <h3>Extra Resources</h3>
+            <!-- Add other options to the main menu / home page -->
+            <div class="content-container">
+              <ion-card *ngFor="let alt of altSections" style="height: 100%; max-height:120px" (click)="goToSection(alt)" [ngClass]="alt.class">
+                <div class="section-container">
+<!--                   <div class="section-icon-container"><img class="alt-icon" [src]="alt.icon"></div>
+ -->                  <div class="section-title">{{alt.name}}</div>
+                  <div class="section-status">{{alt.status}}</div>
+                </div>
+              </ion-card>
+            </div>
+
+            <hr/>
+            <h3>Additional Support</h3>
+            <div class="content-container">
+              <ion-card (click)="goToSection('ContactPage')">
+                <div class="section-container">
+<!--                   <div class="section-icon-container"><img class="alt-icon" [src]="alt.icon"></div>
+ -->                  <div class="section-title">How to find help within your organisation</div>
+                </div>
+              </ion-card>
+            </div>
+
           </div>
         </ion-slide>
 

@@ -21,8 +21,10 @@ color:color($colors,primary)
 
 // text block css
 h3{
-    font-size: medium;
+    font-size: large;
+    font-weight: bold;
     color:color($colors,primary);
+    padding: 10px 0;
 }
 h2{
     font-size: x-large;
@@ -136,8 +138,8 @@ $max-app-width:500px;
         justify-content: center;
     }
     .content-container{
-        height: calc(100vh - 106px);
-        display: flex; 
+/*        height: calc(100vh - 106px);
+*/        display: flex; 
         flex-direction: column;
     }
 
