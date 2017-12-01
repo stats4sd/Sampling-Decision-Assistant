@@ -13,22 +13,23 @@
   <div class="central-content">
     <div class="central-inner-content">
       <ion-slides #mainSlides>
-        <ion-slide>
+        <!-- <ion-slide>
           <img [src]="imageSrc" alt="" class="feature-image">
           <div style="text-align: center">
             <button ion-button outline color="primary" class="start-button" (click)="nextSlide()">Start</button>
           </div>
-        </ion-slide>
+        </ion-slide> -->
         <ion-slide class="align-start">
-          <h3 style="margin-top:20px">Where do you want to start?</h3>
+          <h2 style="margin-top:20px">Sampling Decision Assistant</h2>
           <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image">
           <div style="text-align: center">
+            <h3>Where do you want to start?</h3>
             <button ion-button block color="primary" text-wrap class="multi-line-button" (click)="startNew()" style="margin-bottom:10px">
               <div>
-                Do you want to use the SDA step by step?
+                Use the Step-by-step process to plan your sampling
               </div>
             </button>
-            <button ion-button block color="primary" text-wrap class="multi-line-button" disabled (click)="nextSlide()">
+            <button ion-button block color="primary" text-wrap class="multi-line-button"  (click)="nextSlide()">
               Do you want to jump into a particular stage in the sampling process?
             </button>
           </div>
