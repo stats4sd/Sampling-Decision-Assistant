@@ -8,12 +8,13 @@ import questionMeta from './questionMeta';
 export class DataProvider {
   surveyResults: any = {};
   questionMeta = questionMeta;
-  public sectionMeta: any;
+  public sectionMeta: any
 
   constructor(public storage: Storage, private events: Events) {
     console.log('Data provider loaded, ready to save data');
     this.events.subscribe('valueUpdate', data => this.saveResult(data.key, data.value))
-    this._processSectionMeta()
+
+
   }
 
   // ***** specific survey functions ***** //
@@ -29,25 +30,45 @@ export class DataProvider {
     // get individual question result
     return this.surveyResults[key]
   }
-  getQuestionMeta() {
-    return this.questionMeta
+  getSectionMeta() {
+    return new Promise((resolve, reject) => {
+      if (this.sectionMeta) { resolve(this.sectionMeta) }
+      else {
+        this.loadSurvey().then(_=>resolve(this.sectionMeta))
+      }
+    })
+
+
   }
   saveSurvey() {
     // save entire survey to local storage
     return this.saveToStorage('surveyResults', this.surveyResults)
   }
   loadSurvey() {
-    // load survey from local storage
-    return this.getFromStorage('surveyResults')
+    // load survey from local storage, resolve once processed
+    return new Promise((resolve, reject) => {
+      this.getFromStorage('surveyResults').then(
+        _ => {
+          this._processSectionMeta();
+          resolve()
+        }
+      )
+    })
+
+
   }
 
 
   // ***** user navigation and experience functions ***** //
   _processSectionMeta() {
-    // return available app sections with progress update
+    // return available app sections with question groups and progress update
     let sections = {}
+    this.sectionMeta={_asArray: []}
     this.questionMeta.forEach(q => {
       if (q.controlName != "") {
+        // add any saved values
+        let savedValue = this.surveyResults[q.controlName]
+        if (savedValue != undefined) { q['value'] = savedValue }
         if (!sections.hasOwnProperty(q.section)) {
           sections[q.section] = {}
           sections[q.section].name = q.section
@@ -57,7 +78,7 @@ export class DataProvider {
       }
     })
     console.log('sections', sections)
-    this.sectionMeta=sections
+    this.sectionMeta = sections
   }
 
 

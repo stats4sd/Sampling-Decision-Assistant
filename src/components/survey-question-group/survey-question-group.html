@@ -1,10 +1,20 @@
-<!-- Generated template for the SurveyQuestionGroupComponent component -->
 <form *ngIf="formGroup" [formGroup]="formGroup">
-  <div *ngFor="let question of questions">
-    <survey-question [question]="question" [formGroup]="formGroup" *ngIf="showQuestion(question)"></survey-question>
+  <div *ngIf="singleMode && questions">
+    <ion-slides>
+      <ion-slide *ngFor="let question of questions">
+        <survey-question [question]="question" [formGroup]="formGroup" *ngIf="showQuestion(question)"></survey-question>
+      </ion-slide>
+    </ion-slides>
+
   </div>
+  <div *ngIf="!singleMode && questions">
+    <div *ngFor="let question of questions">
+      <survey-question [question]="question" [formGroup]="formGroup" *ngIf="showQuestion(question)"></survey-question>
+    </div>
+  </div>
+
   <!-- <div class="group-meta"> -->
-    <!-- <div>valid: {{formGroup.valid}}</div> -->
-    <!-- <button ion-button (click)="save()" [disabled]="!formGroup.valid">Save</button> -->
+  <!-- <div>valid: {{formGroup.valid}}</div> -->
+  <!-- <button ion-button (click)="save()" [disabled]="!formGroup.valid">Save</button> -->
   <!-- </div> -->
 </form>

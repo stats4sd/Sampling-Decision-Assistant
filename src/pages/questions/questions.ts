@@ -12,52 +12,24 @@ import { DataProvider } from '../../providers/data/data'
 })
 export class QuestionsPage {
   questionGroups: any = [];
-  questionMeta: any;
   @ViewChildren('survey') surveys;
   canvasImage: any;
 
 
   constructor(private file: File, private dataPrvdr: DataProvider) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
-    this.questionMeta = this.dataPrvdr.getQuestionMeta()
-    // load saved responses
-    this.loadSavedSurvey()
-    
-    
-    
+    this.dataPrvdr.getSectionMeta().then(
+      meta => {
+        Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
+        console.log('question grups', this.questionGroups)
+      })
   }
 
-  ionViewDidLoad() {
 
-  }
 
-  _generateQuestionGroups(values?) {
-    
-    // split questions into groups by section. can pass json values matching individual control names
-    let groups = {}
-    this.questionMeta.forEach(q => {
-      // add values
-      if(values && values[q.controlName]!=undefined){
-        q.value=values[q.controlName]
-      }
-      // split questions into corresponding sections
-      if (q.controlName != "") {
-        if (!groups.hasOwnProperty(q.section)) {
-          groups[q.section] = {}
-          groups[q.section].questions = []
-        }
-        groups[q.section].questions.push(q)
-      }
-    });
-    // push groups object to json array
-    for (let key in groups) {
-      if (groups.hasOwnProperty(key)) {
-        let group = groups[key]
-        group._name = key
-        this.questionGroups.push(group)
-      }
-    }
-  }
+
+
+
   save() {
     // take entire survey results and save to storage
     let responses = {}
@@ -70,14 +42,6 @@ export class QuestionsPage {
     )
   }
 
-  loadSavedSurvey() {
-    this.dataPrvdr.loadSurvey().then(
-      res => {
-        console.log('data retrieved', res)
-        this._generateQuestionGroups(res)
-      }
-    )
-  }
   print() {
     this._generatePdf()
   }

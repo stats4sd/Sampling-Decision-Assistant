@@ -11,6 +11,7 @@ import { query } from '@angular/core/src/animation/dsl';
 })
 export class SurveyQuestionGroupComponent {
   @Input('questions') questions;
+  @Input('singleMode') singleMode;
   formGroup: FormGroup;
   section:any;
 
@@ -20,8 +21,11 @@ export class SurveyQuestionGroupComponent {
    }
 
   ngAfterViewInit() {
+    console.log('single mode?',this.singleMode? true : false)
+    this.section=this.questions[0].section;
     this._generateQuestionForm()
-    this.section=this.questions[0].section
+    
+    
   }
 
   updateProgress(section){
@@ -41,6 +45,7 @@ export class SurveyQuestionGroupComponent {
       if (q.condition!="") { return this._generateConditionOptions(q) }
       else { return q }
     })
+    console.log('questions',this.questions)
     questions.forEach(q => {
       // split questions into corresponding sections
       if (!q.value) { questionGroup[q.controlName] = "" }

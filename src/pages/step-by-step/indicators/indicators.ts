@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { DataProvider} from '../../../providers/data/data'
 
 
 @IonicPage()
@@ -16,13 +17,22 @@ export class IndicatorsPage {
     {label:'Pros & Cons',slideIndex:3},
   ]
   activeSlide:number=0
+  questions:any;
   placeholderText = `Text box to enter main decision at this stage. Will be used to create a summary of the sampling process that is designed. Editable and with no limit for the amount of text`
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr:DataProvider) {
+    // load section questions from data provider
+    this.dataPrvdr.getSectionMeta().then(meta=>{
+      this.questions=meta["Indicators"].questions
+      console.log('questions',this.questions)
+    }
+      
+    )
+    
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad IndicatorsPage');
+    
   }
 
   slideChanged() {
