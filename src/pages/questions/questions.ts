@@ -68,7 +68,7 @@ export class QuestionsPage {
       let array = new Uint8Array(buffer);
       for (var i = 0; i < pdfOutput.length; i++) {
         array[i] = pdfOutput.charCodeAt(i);
-      }
+      } 
       doc.save('output.pdf')
     })
   }

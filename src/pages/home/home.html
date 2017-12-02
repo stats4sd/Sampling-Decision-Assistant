@@ -9,62 +9,38 @@
 </ion-header>
 
 <ion-content padding>
-   
-  <div class="central-content">
-    <div class="central-inner-content">
-      <ion-slides #mainSlides>
-        <!-- <ion-slide>
-          <img [src]="imageSrc" alt="" class="feature-image">
-          <div style="text-align: center">
-            <button ion-button outline color="primary" class="start-button" (click)="nextSlide()">Start</button>
-          </div>
-        </ion-slide> -->
-        <ion-slide class="align-start">
-          <h1 style="margin-top:35px"></h1>
-          <div style="text-align: center">
-            <h2 style='margin-bottom:20px'>Where do you want to start?</h2>
-            <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image">
 
-            <hr/>
-            <div class="content-container">
-              <h3>Sampling Decision Assistant</h3>
-              <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
-                <div class="section-container">
-<!--                   <div class="section-icon-container"><img class="section-icon" [src]="section.icon"></div>
- -->                  <div class="section-title">{{section.name}}</div>
-                  <div class="section-status">{{section.status}}</div>
-                </div>
-              </ion-card>
+  <div>
+    <div>
+      <h1 style="margin-top:35px"></h1>
+      <div style="text-align: center">
+        <h2 style='margin-bottom:20px'>Where do you want to start?</h2>
+        <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image">
+        <hr/>
+        <div>
+          <h3 class="invert">Sampling Decision Assistant</h3>
+          <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
+            <div class="section-container">
+              <div class="section-title">{{section.name}}</div>
             </div>
-            <hr/>
-            <h3>Extra Resources</h3>
-            <!-- Add other options to the main menu / home page -->
-            <div class="content-container">
-              <ion-card *ngFor="let alt of altSections" style="height: 100%; max-height:120px" (click)="goToSection(alt)" [ngClass]="alt.class">
-                <div class="section-container">
-<!--                   <div class="section-icon-container"><img class="alt-icon" [src]="alt.icon"></div>
- -->                  <div class="section-title">{{alt.name}}</div>
-                  <div class="section-status">{{alt.status}}</div>
-                </div>
-              </ion-card>
+          </ion-card>
+          <hr/>
+          <h3 class="invert">Extra Resources</h3>
+          <!-- Add other options to the main menu / home page -->
+          <ion-card *ngFor="let alt of altSections" style="height: 100%; max-height:120px" (click)="goToSection(alt)" [ngClass]="alt.class">
+            <div class="section-container">
+              <div class="section-title">{{alt.name}}</div>
             </div>
-
-            <hr/>
-            <h3>Additional Support</h3>
-            <div class="content-container">
-              <ion-card (click)="goToSection('ContactPage')">
-                <div class="section-container">
-<!--                   <div class="section-icon-container"><img class="alt-icon" [src]="alt.icon"></div>
- -->                  <div class="section-title">How to find help within your organisation</div>
-                </div>
-              </ion-card>
+          </ion-card>
+          <hr/>
+          <h3 class="invert">Additional Support</h3>
+          <ion-card (click)="goToSection('ContactPage')">
+            <div class="section-container">
+              <div class="section-title">How to find help within your organisation</div>
             </div>
-
-          </div>
-        </ion-slide>
-
-      </ion-slides>
-
+          </ion-card>
+        </div>
+      </div>
     </div>
 
 

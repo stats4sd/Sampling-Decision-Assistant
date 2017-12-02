@@ -5,6 +5,7 @@
 // Additionally, this file can be also used as an entry point
 // to import other Sass files to be included in the output CSS.
 @import './scrollbars.scss';
+// --------------------------------------------------
 // header settings
 .header-logo{
     height:50px;
@@ -18,7 +19,7 @@ flex-direction: column;
 justify-content: center;
 color:color($colors,primary)
 }
-
+// --------------------------------------------------
 // text block css
 h3{
     font-size: large;
@@ -44,6 +45,7 @@ h2{
     }
 }
 
+// --------------------------------------------------
 // css commonly used to help display vertical columns with correct height sections
 .central-content{
     display: flex;
@@ -57,10 +59,55 @@ h2{
     justify-content: space-evenly;
 }
 
+// --------------------------------------------------
+// more section css
+.card{
+    :hover{
+        background-color: wheat;
+    }     
+}
+.card.disabled{
+    opacity: 0.6;
+    :hover{background-color:white};
+}
+.invert{
+    background-color: color($colors,primary);
+    color:rgba(255,255,255,0.9)
+}
+.section-icon{
+    height: 100%;
+    max-height: 110px;
+    max-width: 110px;
+    padding: 5px;
+    width:auto;
+}
+.section-icon-container{
+    width:120px;
+}
+.section-container{
+    padding:5px;
+    height: 100%;
+    display: flex;
+    cursor: pointer;
+}
+.section-title{
+    color:color($colors,primary);
+    font-size: large;
+    flex: 1;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.content-container{
+    height: calc(100vh - 106px);
+    display: flex; 
+    flex-direction: column;
+}
 
+// --------------------------------------------------
 // app root centering
 $max-app-width:500px;
-
 @media screen and (min-width:$max-app-width){
     // add padding, background and curved edges for large devices
     .menu-content, .app-root{
@@ -81,14 +128,12 @@ $max-app-width:500px;
         margin-right:400px;
     }
 }
+// --------------------------------------------------
 
 
-// attempts to fix html2canvas for ionic, failed
 
-// .scroll-content,.pdf-content,.fixed-content,.content,body{
-//     overflow: visible!important
-// }
 
+// --------------------------------------------------
 // matched css from questions.scss to apply to pdf clone
 .pdf-output{
     .heading{
@@ -102,45 +147,22 @@ $max-app-width:500px;
     }
 }
 
+// --------------------------------------------------
+// attempts to fix html2canvas for ionic, failed
+// .scroll-content,.pdf-content,.fixed-content,.content,body{
+//     overflow: visible!important
+// }
 
-    .card{
-        :hover{
-            background-color: wheat;
-        }     
-    }
-    .card.disabled{
-        opacity: 0.6;
-        :hover{background-color:white};
-    }
-    .section-icon{
-        height: 100%;
-        max-height: 110px;
-        max-width: 110px;
-        padding: 5px;
-        width:auto;
-    }
-    .section-icon-container{
-        width:120px;
-    }
-    .section-container{
-        padding:5px;
-        height: 100%;
-        display: flex;
-        cursor: pointer;
-    }
-    .section-title{
-        color:color($colors,primary);
-        font-size: large;
-        flex: 1;
-        padding: 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .content-container{
-/*        height: calc(100vh - 106px);
-*/        display: flex; 
-        flex-direction: column;
-    }
+
+
+
+
+
+
+
+
+
+
+
 
     

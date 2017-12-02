@@ -11,13 +11,14 @@ export class HomePage {
   altSections: any = []
 
   imageSrc="assets/img/feature-image-1.jpg"
-  @ViewChild(Slides) slides: Slides;
+  // no longer using slides
+  //@ViewChild(Slides) slides: Slides;
 
 constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
 
     this.sections=[
-      {name:"Use the step-by-step assistant to plan your sampling", page:"OverviewPage"},
-      {name:"Sampling Checklist - Quick Review", page:"QuestionsPage"}
+      {name:"Use step-by-step", page:"OverviewPage"},
+      {name:"Quick review", page:"QuestionsPage"}
 
     ]
 
@@ -36,17 +37,20 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
 
 
   ionViewDidLoad(){
-    // prevent user swiping
-    this.slides.lockSwipes(true)
+    // prevent user swiping (no longer using slides)
+    //this.slides.lockSwipes(true)
 
   }
-  nextSlide(){
-    this.slides.lockSwipes(false)
-    this.slides.slideNext()
-    this.slides.lockSwipes(true)
-  }
+  // 
   goToSection(section){
     this.navCtrl.push(section.page)
   }
 
 }
+
+//nextSlide(){
+  //   // transition locked slides
+  //   this.slides.lockSwipes(false)
+  //   this.slides.slideNext()
+  //   this.slides.lockSwipes(true)
+  // }
