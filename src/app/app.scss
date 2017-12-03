@@ -61,9 +61,10 @@ h2{
 
 // --------------------------------------------------
 // more section css
-.card{
+.hover-fill{
     :hover{
         background-color: wheat;
+        cursor: pointer;
     }     
 }
 .card.disabled{
@@ -106,6 +107,10 @@ h2{
 }
 
 // --------------------------------------------------
+// glossary
+.glossary-link{text-decoration: underline; color: blue; cursor: pointer;}
+
+// --------------------------------------------------
 // app root centering
 $max-app-width:500px;
 @media screen and (min-width:$max-app-width){
@@ -126,6 +131,14 @@ $max-app-width:500px;
     // popover fix for screen resizing
     .popover-content{
         margin-right:400px;
+    }
+    // modal fix for screen resizing
+    .modal-wrapper{
+        left: calc(50% - 250px);
+        top: calc(50% - 250px);
+        position: absolute;
+        width: $max-app-width;
+        height: $max-app-width;
     }
 }
 // --------------------------------------------------

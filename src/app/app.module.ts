@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AnimatorModule } from 'css-animator';
 import { IonicStorageModule } from '@ionic/storage';
 import {File} from '@ionic-native/file'
 import { DataProvider } from '../providers/data/data';
@@ -21,7 +22,8 @@ import { DataProvider } from '../providers/data/data';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: '__sampling',
-    })
+    }),
+    AnimatorModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

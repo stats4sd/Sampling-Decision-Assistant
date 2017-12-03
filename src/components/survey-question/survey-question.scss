@@ -20,8 +20,12 @@ survey-question {
         display: flex;
     }
     .bookmark{
-        margin:5px;
+            float: right;
+            font-size: small;
+            color: green;
+            visibility: hidden;
     }
+
     textarea{
         min-height:60px; 
         height: auto;

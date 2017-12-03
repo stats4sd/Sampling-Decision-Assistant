@@ -1,15 +1,7 @@
 <form *ngIf="formGroup" [formGroup]="formGroup">
-  <div *ngIf="singleMode && questions">
-    <ion-slides>
-      <ion-slide *ngFor="let question of questions">
-        <survey-question [question]="question" [formGroup]="formGroup" *ngIf="showQuestion(question)"></survey-question>
-      </ion-slide>
-    </ion-slides>
-
-  </div>
-  <div *ngIf="!singleMode && questions">
-    <div *ngFor="let question of questions">
-      <survey-question [question]="question" [formGroup]="formGroup" *ngIf="showQuestion(question)"></survey-question>
+  <div *ngIf="groupQuestions">
+    <div *ngFor="let question of groupQuestions">
+      <survey-question [question]="question" [formGroup]="formGroup" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
     </div>
   </div>
 

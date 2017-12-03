@@ -219,6 +219,10 @@ android-versions@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/android-versions/-/android-versions-1.2.1.tgz#3f50baf693e73a512c3c5403542291cead900063"
 
+animate.css@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-3.5.2.tgz#91e668dc069a808e5e499514867b97aae0166c36"
+
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
@@ -882,6 +886,10 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+css-animator@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/css-animator/-/css-animator-2.1.1.tgz#534d71a9c83943f7dbfb18f8f86ad68fcccc07e9"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"

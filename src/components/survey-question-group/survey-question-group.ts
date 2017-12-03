@@ -11,8 +11,10 @@ import { query } from '@angular/core/src/animation/dsl';
 })
 export class SurveyQuestionGroupComponent {
   @Input('questions') questions;
-  @Input('singleMode') singleMode;
+  @Input('questionNumber') questionNumber;
+  @Input('showLabel') showLabel:boolean
   formGroup: FormGroup;
+  groupQuestions:any;
   section:any;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private events:Events) {
@@ -21,9 +23,15 @@ export class SurveyQuestionGroupComponent {
    }
 
   ngAfterViewInit() {
-    console.log('single mode?',this.singleMode? true : false)
+    // slice for individual question if question number provided
+    console.log('input questions',this.questions)
     this.section=this.questions[0].section;
-    this._generateQuestionForm()
+    let questions = this.questions
+    if(this.questionNumber){
+      // questions = questions.splice(this.questionNumber-1,1)
+      questions=[this.questions[this.questionNumber-1]]
+    }
+    this._generateQuestionForm(questions)
     
     
   }
@@ -37,33 +45,25 @@ export class SurveyQuestionGroupComponent {
 
   }
 
-  _generateQuestionForm() {
+  _generateQuestionForm(questions) {
     // uses the formbuilder to a form from an array of questions provided
     let questionGroup = {}
     // generate conditions
-    let questions = this.questions.map(q => {
+    questions = questions.map(q => {
       if (q.condition!="") { return this._generateConditionOptions(q) }
       else { return q }
     })
-    console.log('questions',this.questions)
+    console.log('questions',questions)
     questions.forEach(q => {
       // split questions into corresponding sections
       if (!q.value) { questionGroup[q.controlName] = "" }
-      //if (q.type == 'textMultiple'){
-        // generate template for sub fields, pulled from select options
-        // let template = {}
-        // for(let field of q.selectOptions.split(',')){
-        //   template[field.trim()]=""
-        // }
-        // console.log('templated',template)
-        // questionGroup[q.controlName] = this.fb.array([this._addSubQuestion(template)])
-      //}
       questionGroup[q.controlName] = q.value
 
     });
     // build formgroup sections appropriately
     console.log('questionGroup',questionGroup)
-    this.formGroup = this.fb.group(questionGroup)    
+    this.formGroup = this.fb.group(questionGroup)
+    this.groupQuestions=questions    
     this.cdr.detectChanges()
   }
 
@@ -87,7 +87,7 @@ export class SurveyQuestionGroupComponent {
     return question
   }
 
-  showQuestion(question) {
+  shouldShowQuestion(question) {
     // test logic from condition property against form
     // currently implemented for specific previous values
     if (question.hasOwnProperty('conditionJson')) {

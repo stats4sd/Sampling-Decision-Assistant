@@ -7,8 +7,9 @@ Additional features:
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
-import { Events } from 'ionic-angular'
-import { DataProvider} from '../../providers/data/data'
+import { Events } from 'ionic-angular';
+import { DataProvider} from '../../providers/data/data';
+import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
 
 
 
@@ -19,8 +20,10 @@ import { DataProvider} from '../../providers/data/data'
 })
 export class SurveyQuestionComponent {
   @Input('question') question;
-  @Input('formGroup') formGroup: FormGroup
+  @Input('formGroup') formGroup: FormGroup;
+  @Input('showLabel') showLabel: boolean;;
   @ViewChild('textAreaInput') textAreaInput: ElementRef
+  @ViewChild('saveMessage') saveMessage: ElementRef
   questionKey:string  
   selectOtherValue: any = "";
   selectOptionsArray: string[];
@@ -29,21 +32,22 @@ export class SurveyQuestionComponent {
   originalLabel: string;
   dynamicText: any = {};
   multipleTextInput:any=""
-  multipleTextValues:any=[]
+  multipleTextValues:any=[];
+  valueSaved:boolean=false
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr:DataProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
+    
 
   }
   ngAfterViewInit() {
-    this.questionKey=this.question.controlName
-    this._generateSelectOptions()
-    this._generateMultipleValues()
-    this._prepareDynamicText()
-    this.cdr.detectChanges()
-
-
-
+    console.log('question',this.question)
+    console.log('formgroup',this.formGroup)
+      this.questionKey=this.question.controlName
+      this._generateSelectOptions()
+      this._generateMultipleValues()
+      this._prepareDynamicText()
+      this.cdr.detectChanges() 
   }
   updateLabel(key) {
     // updates dynamic text labels if relevant 
@@ -66,7 +70,12 @@ export class SurveyQuestionComponent {
     let update = { key: key, value: value, section: this.question.section }
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
-
+    this.valueSaved=true
+    let animator = new AnimationBuilder();
+    let el = this.saveMessage.nativeElement
+    animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
+   .then(_res=>{el.style.visibility="inherit"})
+   
   }
   _generateSelectOptions() {
     // parse select options to array

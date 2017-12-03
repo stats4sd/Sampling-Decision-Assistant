@@ -31,6 +31,7 @@ export class DataProvider {
     return this.surveyResults[key]
   }
   getSectionMeta() {
+    // return list of all sections meta, includes question lists and formgroups
     return new Promise((resolve, reject) => {
       if (this.sectionMeta) { resolve(this.sectionMeta) }
       else {
@@ -61,7 +62,7 @@ export class DataProvider {
 
   // ***** user navigation and experience functions ***** //
   _processSectionMeta() {
-    // return available app sections with question groups and progress update
+    // return available app sections with question groups (and maybe progress update in future??)
     let sections = {}
     this.sectionMeta={_asArray: []}
     this.questionMeta.forEach(q => {
@@ -77,6 +78,8 @@ export class DataProvider {
         sections[q.section].questions.push(q)
       }
     })
+    // build formgroups
+    
     console.log('sections', sections)
     this.sectionMeta = sections
   }

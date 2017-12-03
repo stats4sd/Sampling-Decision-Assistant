@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import glossaryMaster from '../../models/glossaryTerms'
 
 @IonicPage()
@@ -9,12 +9,40 @@ import glossaryMaster from '../../models/glossaryTerms'
 })
 export class GlossaryPage {
   glossaryTerms:any=glossaryMaster;
+  modalMode:boolean;
+  activeTerm:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
+    if(navParams.data.term){
+      this.modalMode=true
+      this._getActiveTerm(navParams.data.term)
+    }
   }
 
-  ionViewDidLoad() {
-    
+  dismiss(){
+    this.viewCtrl.dismiss()
   }
+
+  showFullGlossary(){
+    this.activeTerm=null
+  }
+
+  setActiveTerm(term){
+    console.log('setting active term',term)
+    if(!term.Definition){term.Definition="This is just a placeholder definition for "+term.Term+". More content will be added later"}
+    this.activeTerm=term
+  }
+  
+  _getActiveTerm(term){
+    // get term from glossary and set as active
+    this.glossaryTerms.forEach(el => {
+      if(el.Term==term){
+        this.activeTerm=el
+        return
+      }
+    });
+  }
+
+  
 
 }

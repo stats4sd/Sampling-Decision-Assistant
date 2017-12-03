@@ -24,9 +24,9 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
 
     this.altSections=[
       {name:"How to use this guide", page:"HowToPage"},
-      {name:"Training index", page:"TrainingIndexPage"},
+      {name:"Training index", page:"TrainingIndexPage", class:"disabled"},
       {name:"Glossary of technical terms", page:"GlossaryPage"},
-      {name: "Sample side trade-off tool", page:"SampleSizePage"},
+      {name: "Sample side trade-off tool", page:"SampleSizePage", class:"disabled"},
     ];
 
 
@@ -43,7 +43,10 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
   }
   // 
   goToSection(section){
-    this.navCtrl.push(section.page)
+    if(section.class!="disabled"){
+      this.navCtrl.push(section.page)
+    }
+    
   }
 
 }

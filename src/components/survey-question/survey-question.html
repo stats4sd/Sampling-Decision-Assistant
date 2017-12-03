@@ -1,9 +1,7 @@
-<div>{{testText}}</div>
-<div class="container">
-  <div [formGroup]="formGroup" style="flex:1; margin-bottom:10px">
+<div class="container" *ngIf="question">
+  <div [formGroup]="formGroup" style="flex:1">
     <!-- question labels -->
-    <div *ngIf="question.type!='label'" class="question-label">
-      <!-- <ion-icon name="help"></ion-icon> -->
+    <div *ngIf="question.type!='label' && showLabel!=false" class="question-label">
       <div class="question-number dark">{{question.controlName}}</div>
       <div>
         <span id="questionLabelText" #questionLabelText>{{question.label}}</span>
@@ -66,7 +64,14 @@
       <span id="labelLabelText" #labelLabelText>{{question.label}}</span>
     </div>
   </div>
-  <!-- <div class="bookmark">
-    <ion-icon name="bookmark"></ion-icon>
-  </div> -->
+
+</div>
+<div  id="saveMessage" #saveMessage class="bookmark" >
+  <!-- <ion-icon name="bookmark"></ion-icon> -->
+  <div>saved</div>
+</div>
+
+<!-- fallback if no question provided -->
+<div class="container" *ngIf="!question">
+  <p>No Question Provided</p>
 </div>

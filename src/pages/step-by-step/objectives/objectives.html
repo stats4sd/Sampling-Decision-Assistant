@@ -19,13 +19,10 @@
     <ion-card-content>
       <p style='font-weight: bold'>How would you describe the main objective of the survey?</p>
       <div>
-        <ion-icon name="alert"></ion-icon> This should involve some form of <span style='text-decoration: underline; color: blue'>Estimation</span>. 
+        <ion-icon name="alert"></ion-icon> This should involve some form of <span class="glossary-link" (click)="showGlossary('estimation')">Estimation</span>. 
       </div>
-      <button ion-button icon-left><ion-icon name='question'></ion-icon>Why?</button>
-      <ion-item>
-        <ion-label floating>Main Objective</ion-label>
-        <ion-input type='text' name='mainObjective'></ion-input>
-      </ion-item>
+      <button ion-button icon-left disabled><ion-icon name='question'></ion-icon>Why?</button>
+      <survey-question-group *ngIf="sectionMeta.questions" [questions]="sectionMeta.questions" [questionNumber]=1 [showLabel]=false></survey-question-group>
       <button ion-button icon-left clear >
         <ion-icon name='info'></ion-icon>
         Go to help about this question
@@ -38,10 +35,7 @@
     <ion-card-content>
       <p style='font-weight: bold'>Are there any specific objectives?</p>
       <p>These are more focused objectives, for example 'learning a particular thing about a group of subjects'. List all specific objectives below</p>
-      <ion-item>
-        <ion-label floating>Specific Objectives</ion-label>
-        <ion-input type='text' name='mainObjective'></ion-input>
-      </ion-item>
+      <survey-question-group *ngIf="sectionMeta.questions" [questions]="sectionMeta.questions" [questionNumber]=2 [showLabel]=false></survey-question-group>
       <button ion-button icon-left clear >
         <ion-icon name='info'></ion-icon>
         Go to help about this question

@@ -1,17 +1,39 @@
 <ion-header>
-    
-      <ion-navbar color="primary">
-        <ion-title>Glossary</ion-title>
-      </ion-navbar>
-    
-    </ion-header>
-    
+
+  <ion-navbar color="primary">
+    <ion-title>Glossary</ion-title>
+    <ion-buttons end *ngIf="modalMode">
+      <button ion-button icon-right (click)="dismiss()">
+        Close
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
 
 
 <ion-content padding>
-  <h2>Glossary</h2>
-  <div *ngFor="let term of glossaryTerms" class="glossary-term">
-    {{term}}
+
+  <div *ngIf="!activeTerm">
+    <h2>Glossary</h2>
+    <div *ngFor="let term of glossaryTerms" class="glossary-term" (click)="setActiveTerm(term)">
+      {{term.Term}}
+    </div>
   </div>
+
+  <div *ngIf="activeTerm">
+    <h2>{{activeTerm.Term}}</h2>
+    <div class="glossary-definition">
+      {{activeTerm.Definition}}
+    </div>
+    <button ion-button icon-left (click)="showFullGlossary()">
+      <ion-icon name="book"></ion-icon>
+      <span>Show full glossary</span>
+    </button>
+  </div>
+
 
 </ion-content>

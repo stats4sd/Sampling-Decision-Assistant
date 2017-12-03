@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ObjectivesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { DataProvider } from '../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -14,12 +8,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'objectives.html',
 })
 export class ObjectivesPage {
+  sectionMeta: any = {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, private modalCtrl: ModalController) {
+    this.dataPrvdr.getSectionMeta().then(
+      meta => {
+        this.sectionMeta = meta["General objectives"];
+        console.log('section meta', this.sectionMeta)
+      }
+    )
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ObjectivesPage');
+  showGlossary(term: string) {
+    term = term.toLowerCase()
+    let modal = this.modalCtrl.create("GlossaryPage", { term: term });
+    modal.present();
   }
 
 }
