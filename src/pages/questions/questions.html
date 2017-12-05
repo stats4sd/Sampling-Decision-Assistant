@@ -1,20 +1,11 @@
-<!-- 
-  To Do:
-
-  Include option to view groups as slides
-  Include decisions summary screen/feedback
-  
- -->
-
-
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>questions</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Questions-based mode</ion-title>
     <ion-buttons end>
-      <button ion-button icon-left (click)="save()">Save</button>
+      <!-- <button ion-button icon-left (click)="save()">Save</button>
       <button ion-button icon-left (click)="loadSavedSurvey()">Load</button>
-      <button ion-button icon-left (click)="print()">Print</button>
+      <button ion-button icon-left (click)="print()">Print</button> -->
     </ion-buttons>
   </ion-navbar>
 
@@ -22,76 +13,22 @@
 
 
 <ion-content class="survey" style="margin-bottom:10px">
-  <div id="outputImage"></div>
-
-  <div class="pdf-output">
-      <div *ngFor="let questionGroup of questionGroups">
-          <div class="heading">
-            {{questionGroup._name}}
-          </div>
-          <survey-question-group #survey [questions]="questionGroup.questions"></survey-question-group>
-        </div>
+  <div class="intro" *ngIf="showIntro==true">
+    <p>Here you will use the Sampling Decision Assistant following key decision stages in your sampling design.</p>
+    <p>You will have easy access to extra help and examples about how to make the decisions that will form you sampling design</p>
+    <button block ion-button icon-left (click)="hideIntro()">
+      <ion-icon name="arrow-forward"></ion-icon>Continue</button>
   </div>
-  
-  <!-- <div id="outputTable">
-    <div *ngFor="let questionGroup of questionGroups">
-      <div>{{questionGroup._name}}</div>
-      <table style="border:1px solid black; width:400px">
-        <tr>
-          <th style="height:30px">#</th>
-          <th style="height:30px">Label</th>
-          <th style="height:30px">Response</th>
-        </tr>
-        <tr *ngFor="let question of questionGroup.questions">
-          <td>{{question.controlName}}</td>
-          <td>{{question.label}}</td>
-          <td>{{responses[question.controlName]}}</td>
-        </tr>
-      </table>
+
+  <div *ngIf="showIntro==false">
+    <div id="outputImage"></div>
+    <div class="pdf-output">
+      <div *ngFor="let questionGroup of questionGroups">
+        <div class="heading">
+          {{questionGroup._name}}
+        </div>
+        <survey-question-group #survey [questions]="questionGroup.questions"></survey-question-group>
+      </div>
     </div>
-  </div> -->
-
-
-
-
-
+  </div>
 </ion-content>
-
-
-
-
-
-<!-- <ion-slides #surveySlides (ionSlideDidChange)="saveProgress()" direction="horizontal"> -->
-<!-- Section 1 questions -->
-<!-- <ion-slide class="background-primary intro-slide"> -->
-
-<!-- <ion-card style="flex:1">
-
-    <form [formGroup]="formGroups.section1">
-      <div *ngFor="let question of questionMeta">
-
-       
-        <survey-question [questions]="question" *ngIf="question.section=='section1'"></survey-question>
-      </div>
-
-    </form>
-
-    <form [formGroup]="formGroups.section2">
-      <div *ngFor="let question of questionMeta">
-        <survey-question [questions]="question" *ngIf="question.section=='section2'"></survey-question>
-      </div>
-
-    </form>
-
-    <form [formGroup]="formGroups.section3">
-      <div *ngFor="let question of questionMeta">
-        <survey-question [questions]="question" *ngIf="question.section=='section3'"></survey-question>
-      </div>
-
-    </form>
-  </ion-card> -->
-
-<!-- <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroups.section1.valid">Continue</button> -->
-
-<!-- </ion-slide> -->
-<!-- </ion-slides> -->

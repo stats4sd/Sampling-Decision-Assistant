@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Step By Step Decisions</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="content-container">
+    <div class="intro" *ngIf="showIntro==true">
+      <p>Here you will use the Sampling Decision Assistant following key decision stages in your sampling design.</p>
+      <p>You will have easy access to extra help and examples about how to make the decisions that will form you sampling design</p>
+      <button block ion-button icon-left (click)="hideIntro()"><ion-icon name="arrow-forward" ></ion-icon>Continue</button>
+    </div>
+    
+    <div *ngIf="showIntro==false">
+        <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
+            <div class="section-container">
+              <div class="section-icon-container"><img class="section-icon" [src]="section.icon"></div>
+              <div class="section-title">{{section.number}}: {{section.name}}</div>
+              <div class="section-status">{{section.status}}</div>
+            </div>
+          </ion-card>
+    </div>
+    
+  </div>
+
+
+</ion-content>

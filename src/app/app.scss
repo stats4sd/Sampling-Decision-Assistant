@@ -50,7 +50,7 @@ h2{
 .central-content{
     display: flex;
     flex-direction: column;
-    height: 100%
+    height: 100%;
 }
 .central-inner-content{
     display: flex;
@@ -105,10 +105,40 @@ h2{
     display: flex; 
     flex-direction: column;
 }
+// allow vertical scroll in slides
+ion-slides { height: 100%; }
+.slide-zoom{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.slide-content{
+    max-height: 100%;
+    overflow: scroll;
+    font-size: 14px;
+    text-align: left;
+    line-height: 18px;
+}
+.swiper-slide{
+    width:100%!important;
+}
 
 // --------------------------------------------------
 // glossary
 .glossary-link{text-decoration: underline; color: blue; cursor: pointer;}
+
+// --------------------------------------------------
+// question display overrides
+ion-card{
+    #questionLabelText, .question-number.dark{
+        color: color($colors,dark);
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .question-number.dark{
+        font-size: 10px;
+    }
+}
 
 // --------------------------------------------------
 // app root centering

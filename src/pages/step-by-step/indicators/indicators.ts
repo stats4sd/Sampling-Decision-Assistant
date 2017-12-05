@@ -11,27 +11,22 @@ import { DataProvider} from '../../../providers/data/data'
 export class IndicatorsPage {
   @ViewChild(Slides) slides: Slides;
   sections:any=[
-    {label:'More',slideIndex:0},
-    {label:'Audio',slideIndex:1},
-    {label:'Video',slideIndex:2},
-    {label:'Pros & Cons',slideIndex:3},
+    {label:'Intro',slideIndex:0},
+    {label:'Resources',slideIndex:1},
+    {label:'Glossary',slideIndex:2},
   ]
   activeSlide:number=0
-  questions:any;
+  sectionMeta: any = {}
   placeholderText = `Text box to enter main decision at this stage. Will be used to create a summary of the sampling process that is designed. Editable and with no limit for the amount of text`
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr:DataProvider) {
     // load section questions from data provider
-    this.dataPrvdr.getSectionMeta().then(meta=>{
-      this.questions=meta["Indicators"].questions
-      console.log('questions',this.questions)
-    }
-      
+    this.dataPrvdr.getSectionMeta().then(
+      meta => {
+        this.sectionMeta = meta["Indicators"];
+        console.log('section meta', this.sectionMeta)
+      }      
     )
-    
-  }
-
-  ionViewDidLoad() {
     
   }
 

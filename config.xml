@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="coms.stats4sd.samplingdecisionassistant" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="coms.stats4sd.samplingdecisionassistant" version="0.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Sampling Decision Assistant</name>
     <description>Sampling decision assistant app</description>
     <author email="c.clarke@stats4sd.org" href="https://stats4sd.org">Statistics for Sustainable Development</author>

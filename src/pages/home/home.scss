@@ -13,5 +13,11 @@ page-home {
         // minor tweak to prevent block buttons stretching over
         margin:2px;
     }
+    .version{
+        position: absolute;
+        right: 5px;
+        color: color($colors,primary);
+        font-weight: 500;
+    }
     
 }

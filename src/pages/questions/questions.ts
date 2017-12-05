@@ -14,6 +14,7 @@ export class QuestionsPage {
   questionGroups: any = [];
   @ViewChildren('survey') surveys;
   canvasImage: any;
+  showIntro:boolean=true;
 
 
   constructor(private file: File, private dataPrvdr: DataProvider) {
@@ -24,11 +25,6 @@ export class QuestionsPage {
         console.log('question grups', this.questionGroups)
       })
   }
-
-
-
-
-
 
   save() {
     // take entire survey results and save to storage
@@ -44,6 +40,10 @@ export class QuestionsPage {
 
   print() {
     this._generatePdf()
+  }
+
+  hideIntro(){
+    this.showIntro=false;
   }
 
   _generatePdf() {

@@ -4,11 +4,12 @@ import { DataProvider } from '../../providers/data/data'
 
 @IonicPage()
 @Component({
-  selector: 'page-overview',
-  templateUrl: 'overview.html',
+  selector: 'page-step-by-step',
+  templateUrl: 'step-by-step.html',
 })
-export class OverviewPage {
-  sections: any = []
+export class StepByStepPage {
+  sections: any = [];
+  showIntro:boolean=true
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
     
@@ -27,6 +28,9 @@ export class OverviewPage {
       this.navCtrl.push(section.page)
     }
     
+  }
+  hideIntro(){
+    this.showIntro=false;
   }
 
  
