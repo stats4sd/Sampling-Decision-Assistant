@@ -20,9 +20,9 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Technical terms explained', component: 'TechnicalTermsPage',disabled:true },
+      // { title: 'Technical terms explained', component: 'TechnicalTermsPage',disabled:true },
       { title: 'Sample size trade-off tool', component: 'SampleSizeTradeoffPage',disabled:true },
-      { title: 'Sample design assessment tool', component: 'SampleDesignAssessmentPage',disabled:true },
+      // { title: 'Sample design assessment tool', component: 'SampleDesignAssessmentPage',disabled:true },
       { title: 'How to use this guide', component: 'HowTo',disabled:true },
       { title: 'More information and support', component: 'MoreInfo',disabled:true },
       { title: 'Glossary', component: 'GlossaryPage',disabled:false },

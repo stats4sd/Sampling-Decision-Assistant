@@ -9,7 +9,7 @@ import { DataProvider } from '../../providers/data/data'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version:string="0.2.0";
+  version:string="0.2.2";
 
   imageSrc="assets/img/feature-image-1.jpg"
   // no longer using slides
@@ -25,15 +25,9 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
 
     this.altSections=[
       {name:"How to use this guide", page:"HowToPage"},
-      {name:"Training index", page:"TrainingIndexPage", class:"disabled"},
       {name:"Glossary of technical terms", page:"GlossaryPage"},
-      {name: "Sample side trade-off tool", page:"SampleSizePage", class:"disabled"},
+      {name: "Sample size trade-off tool", page:"SampleSizePage", class:"disabled"},
     ];
-
-
-    console.log("this.sections", this.sections);
-    console.log("this.altSections", this.altSections)
-
   }
 
 

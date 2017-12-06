@@ -1,4 +1,13 @@
-
+@media screen and (max-width:500px) {
+  ::-webkit-scrollbar{
+    display: none;
+  }
+}
+ion-slides{
+  ::-webkit-scrollbar{
+    display: none;
+  }
+}
 ::-webkit-scrollbar {
   width: 22px;
   height: 22px;

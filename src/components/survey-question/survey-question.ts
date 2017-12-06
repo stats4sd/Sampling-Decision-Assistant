@@ -41,8 +41,6 @@ export class SurveyQuestionComponent {
 
   }
   ngAfterViewInit() {
-    console.log('question',this.question)
-    console.log('formgroup',this.formGroup)
       this.questionKey=this.question.controlName
       this._generateSelectOptions()
       this._generateMultipleValues()

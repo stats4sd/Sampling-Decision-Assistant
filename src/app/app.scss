@@ -34,6 +34,7 @@ h2{
 .feature-image{
     margin-bottom: 20px;
 }
+.hidden{display: none}
 
 .multi-line-button{
     // requires text-wrap attribute on element for multiple lines
@@ -113,15 +114,22 @@ ion-slides { height: 100%; }
     flex-direction: column;
 }
 .slide-content{
-    max-height: 100%;
+    max-height: calc(100vh - 140px);
+    padding-top:10px;
     overflow: scroll;
     font-size: 14px;
     text-align: left;
     line-height: 18px;
 }
-.swiper-slide{
-    width:100%!important;
+.central-content{
+    position: absolute;
+    width:calc(100vw - 32px);
+    max-width: 468px;
+    margin-top:32px;
+    max-height: calc(100vh - 164px)
+    // equiv of $max-width - 32px
 }
+.swiper-slide{width:100%!important}
 
 // --------------------------------------------------
 // glossary
@@ -133,7 +141,7 @@ ion-card{
     #questionLabelText, .question-number.dark{
         color: color($colors,dark);
         font-size: 14px;
-        font-weight: 300;
+        font-weight: 500;
     }
     .question-number.dark{
         font-size: 10px;

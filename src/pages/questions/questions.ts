@@ -19,6 +19,9 @@ export class QuestionsPage {
 
   constructor(private file: File, private dataPrvdr: DataProvider) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
+    
+  }
+  ionViewDidEnter(){
     this.dataPrvdr.getSectionMeta().then(
       meta => {
         Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
@@ -45,6 +48,7 @@ export class QuestionsPage {
   hideIntro(){
     this.showIntro=false;
   }
+  export(){this.dataPrvdr.export()}
 
   _generatePdf() {
     // somewhat tricky method to try and output contents to a pdf doc
