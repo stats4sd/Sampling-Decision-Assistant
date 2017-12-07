@@ -40,9 +40,9 @@ export class QuestionsPage {
     modal.onDidDismiss(data=>{
       console.log('survey loaded',data)
       if(data){
+        
         let meta = this.dataPrvdr.getSectionMeta()
         Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
-        console.log('question grups', this.questionGroups)
         this.showIntro=false
       }
     })

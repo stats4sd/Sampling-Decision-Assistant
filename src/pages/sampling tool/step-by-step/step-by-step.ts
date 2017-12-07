@@ -44,7 +44,10 @@ export class StepByStepPage {
     let modal = this.modalCtrl.create('SavedInfoPage',{view:'load'});
     modal.onDidDismiss(data=>{
       console.log('survey loaded',data)
-      if(data){this.showIntro=false}
+      if(data){
+        
+        this.showIntro=false;        
+      }
     })
     modal.present()
   }

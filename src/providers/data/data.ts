@@ -38,10 +38,17 @@ export class DataProvider {
     }
     console.log('new survey created', this.activeSurvey)
     this.savedSurveys[title] = this.activeSurvey
+    this.saveSurvey();
   }
   deleteSurvey(title) {
+    console.log('deleting',title,this.savedSurveys)
+    if(this.activeSurvey._title == title){
+      this.activeSurvey=null
+    }
     delete this.savedSurveys[title]
-    this.saveSurvey()
+    if(!this.savedSurveys){this.savedSurveys={}}
+    console.log('saved surveys',this.savedSurveys)
+    return this.saveToStorage('savedSurveys', this.savedSurveys)
   }
   setActiveSurvey(survey) {
     this.activeSurvey = survey
@@ -65,15 +72,21 @@ export class DataProvider {
   }
   saveSurvey() {
     // save entire survey to local storage
-    console.log('saving survey',this.activeSurvey)
-    if (this.activeSurvey) {
-      let title = this.activeSurvey._title
-      this.savedSurveys[title] = this.activeSurvey
-      console.log('saved surveys', this.savedSurveys)
-      this.saveToStorage('savedSurveys', this.savedSurveys).then(
-        _ => this.showNotification('Progress Saved')
-      )
-    }
+    return new Promise ((resolve,reject)=>{
+      console.log('saving survey',this.activeSurvey)
+      if (this.activeSurvey) {
+        let title = this.activeSurvey._title
+        this.savedSurveys[title] = this.activeSurvey
+        console.log('saved surveys', this.savedSurveys)
+        this.saveToStorage('savedSurveys', this.savedSurveys).then(
+          _ => {
+            this.showNotification('Progress Saved')
+            resolve('saved')
+          }
+        )
+      }
+    })
+    
 
   }
   showNotification(message, duration?, position?) {
