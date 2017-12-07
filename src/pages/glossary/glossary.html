@@ -17,18 +17,26 @@
 
 <ion-content padding>
 
-  <div *ngIf="!activeTerm">
+  <div *ngIf="!activeTerm.Term">
     <h2>Glossary</h2>
-    <div *ngFor="let term of glossaryTerms" class="glossary-term" (click)="setActiveTerm(term)">
-      {{term.Term}}
+    <div *ngFor="let term of glossaryTerms" (click)="setActiveTerm(term)">
+      <span class="glossary-term" *ngIf="term.Definition!=''">{{term.Term}}</span>
     </div>
+    <h3>More terms to be included</h3>
+    <ul>
+      <div *ngFor="let term of glossaryTerms">
+        <li *ngIf="term.Definition==''">
+          <span>{{term.Term}}</span>
+        </li>
+      </div>
+
+    </ul>
+
   </div>
 
-  <div *ngIf="activeTerm">
+  <div *ngIf="activeTerm.Definition">
     <h2>{{activeTerm.Term}}</h2>
-    <div class="glossary-definition">
-      {{activeTerm.Definition}}
-    </div>
+    <div id="definition" #definition class="glossary-definition" [innerHtml]="_renderHtml(activeTerm.definition)"></div>
     <button ion-button icon-left (click)="showFullGlossary()">
       <ion-icon name="book"></ion-icon>
       <span>Show full glossary</span>

@@ -9,7 +9,7 @@ import { DataProvider } from '../../providers/data/data'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version:string="0.2.2c";
+  version:string="0.2.4";
 
   imageSrc="assets/img/feature-image-1.jpg"
   // no longer using slides
