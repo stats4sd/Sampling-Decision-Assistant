@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { IndicatorsPage } from './indicators';
-import {ComponentsModule} from '../../../components/components.module'
+import {ComponentsModule} from '../../../../components/components.module'
 
 @NgModule({
   declarations: [

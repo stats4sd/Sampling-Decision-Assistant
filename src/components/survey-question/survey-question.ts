@@ -68,11 +68,11 @@ export class SurveyQuestionComponent {
     let update = { key: key, value: value, section: this.question.section }
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
-    this.valueSaved=true
-    let animator = new AnimationBuilder();
-    let el = this.saveMessage.nativeElement
-    animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
-   .then(_res=>{el.style.visibility="inherit"})
+  //   this.valueSaved=true
+  //   let animator = new AnimationBuilder();
+  //   let el = this.saveMessage.nativeElement
+  //   animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
+  //  .then(_res=>{el.style.visibility="inherit"})
    
   }
   _generateSelectOptions() {

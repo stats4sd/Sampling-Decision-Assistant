@@ -1,9 +1,9 @@
 import { Component, ViewChildren, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import { File } from '@ionic-native/file';
-import { DataProvider } from '../../providers/data/data'
+import { DataProvider } from '../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -14,41 +14,33 @@ export class QuestionsPage {
   questionGroups: any = [];
   @ViewChildren('survey') surveys;
   canvasImage: any;
-  showIntro:boolean=true;
+  showIntro: boolean = true;
 
 
-  constructor(private file: File, private dataPrvdr: DataProvider) {
+  constructor(private file: File, private dataPrvdr: DataProvider, private modalCtrl: ModalController) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
-    
+
   }
-  ionViewDidEnter(){
-    this.dataPrvdr.getSectionMeta().then(
-      meta => {
-        Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
-        console.log('question grups', this.questionGroups)
-      })
+  ionViewDidEnter() {
+    let meta = this.dataPrvdr.getSectionMeta()
+    Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
+    console.log('question grups', this.questionGroups)
   }
 
-  save() {
-    // take entire survey results and save to storage
-    let responses = {}
-    this.surveys._results.forEach(survey => {
-      let formValues = survey.formGroup.value
-      responses = Object.assign(responses, formValues);
-    });
-    this.dataPrvdr.saveToStorage('surveyResults', responses).then(
-      _ => console.log('responses saved', responses)
-    )
+
+  load() {
+    let modal = this.modalCtrl.create('SavedInfoPage', { view: 'load' });
+    modal.present()
   }
 
   print() {
     this._generatePdf()
   }
 
-  hideIntro(){
-    this.showIntro=false;
+  hideIntro() {
+    this.showIntro = false;
   }
-  export(){this.dataPrvdr.export()}
+  export() { this.dataPrvdr.export() }
 
   _generatePdf() {
     // somewhat tricky method to try and output contents to a pdf doc
@@ -72,7 +64,7 @@ export class QuestionsPage {
       let array = new Uint8Array(buffer);
       for (var i = 0; i < pdfOutput.length; i++) {
         array[i] = pdfOutput.charCodeAt(i);
-      } 
+      }
       doc.save('output.pdf')
     })
   }
