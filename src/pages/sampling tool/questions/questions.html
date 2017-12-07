@@ -3,10 +3,9 @@
   <ion-navbar color="primary">
     <ion-title>Questions-based mode</ion-title>
     <ion-buttons end>
-        <button ion-button icon-left (click)="load()"><ion-icon name="folder-open"></ion-icon>Load</button>
-      <!-- <button ion-button icon-left (click)="save()">Save</button>
-      <button ion-button icon-left (click)="print()">Print</button> -->
-      <button ion-button icon-left (click)="export()" *ngIf="!showIntro">Export</button>
+        <button ion-button icon-left (click)="save()" *ngIf="!showIntro">Save</button>
+      <!-- <button ion-button icon-left (click)="print()">Print</button> -->
+        <button ion-button icon-left (click)="export()" *ngIf="!showIntro">Export</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -17,8 +16,12 @@
   <div padding class="intro" [ngClass]="showIntro ? 'not-hidden':'hidden'">
     <p>Here you will use the Sampling Decision Assistant following key decision stages in your sampling design.</p>
     <p>You will have easy access to extra help and examples about how to make the decisions that will form you sampling design</p>
-    <button block ion-button icon-left (click)="hideIntro()">
-      <ion-icon name="arrow-forward"></ion-icon>Continue</button>
+    <div>
+      <button ion-button icon-left (click)="load()">
+        <ion-icon name="folder-open"></ion-icon>Load Saved Project</button>
+      <button ion-button icon-left (click)="startNew()">
+        <ion-icon name="create"></ion-icon>Create New Project</button>
+    </div>
   </div>
 
   <div [ngClass]="showIntro ? 'hidden':'not-hidden'">

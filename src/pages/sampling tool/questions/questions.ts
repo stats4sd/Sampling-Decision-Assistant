@@ -28,9 +28,28 @@ export class QuestionsPage {
   }
 
 
-  load() {
-    let modal = this.modalCtrl.create('SavedInfoPage', { view: 'load' });
+  startNew(){
+    let modal = this.modalCtrl.create('SavedInfoPage',{view:'save'});
+    modal.onDidDismiss(data=>{
+      if(data){this.showIntro=false}
+    })
     modal.present()
+  }
+  load(){
+    let modal = this.modalCtrl.create('SavedInfoPage',{view:'load'});
+    modal.onDidDismiss(data=>{
+      console.log('survey loaded',data)
+      if(data){
+        let meta = this.dataPrvdr.getSectionMeta()
+        Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
+        console.log('question grups', this.questionGroups)
+        this.showIntro=false
+      }
+    })
+    modal.present()
+  }
+  save(){
+    this.dataPrvdr.saveSurvey()
   }
 
   print() {

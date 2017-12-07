@@ -41,6 +41,7 @@ export class SavedInfoPage {
     this.viewCtrl.dismiss(survey);
   }
   deleteSurvey(survey){
+    console.log('deleting survey',survey._title)
     this.dataPrvdr.deleteSurvey(survey._title)
     this.loadSavedSurveys()
   }

@@ -24,7 +24,7 @@ export class StepByStepPage {
   }
   ionViewDidEnter(){
     console.log('view entered')
-    this.dataPrvdr.saveSurvey()
+    if(!this.showIntro){this.dataPrvdr.saveSurvey()}
   }
 
   goToSection(section){

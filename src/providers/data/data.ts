@@ -24,6 +24,7 @@ export class DataProvider {
   saveResult(key, value) {
     // save an individual survey result
     if (this.activeSurvey) {
+      console.log('saving results',this.activeSurvey)
       this.activeSurvey[key] = value
       // console.log('saving survey', this.activeSurvey)
       // this.saveSurvey()
@@ -40,6 +41,7 @@ export class DataProvider {
   }
   deleteSurvey(title) {
     delete this.savedSurveys[title]
+    this.saveSurvey()
   }
   setActiveSurvey(survey) {
     this.activeSurvey = survey
@@ -47,7 +49,11 @@ export class DataProvider {
   }
   getSurveyValue(key) {
     // get individual question result
-    return this.activeSurvey[key]
+    if(this.activeSurvey){
+      return this.activeSurvey[key]
+    }
+    else return
+    
   }
 
   getSectionMeta(section?){
@@ -59,6 +65,7 @@ export class DataProvider {
   }
   saveSurvey() {
     // save entire survey to local storage
+    console.log('saving survey',this.activeSurvey)
     if (this.activeSurvey) {
       let title = this.activeSurvey._title
       this.savedSurveys[title] = this.activeSurvey
