@@ -120,6 +120,7 @@ ion-slides { height: 100%; }
     font-size: 14px;
     text-align: left;
     line-height: 18px;
+    max-width: calc(100% - 16px)
 }
 .central-content{
     position: absolute;

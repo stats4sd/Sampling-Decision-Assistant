@@ -18,13 +18,12 @@ export class SurveyQuestionGroupComponent {
   section:any;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private events:Events) {
-    this.events.subscribe('valueUpdate', data => this.updateProgress(data.section))
+    
     
    }
 
   ngAfterViewInit() {
     // slice for individual question if question number provided
-    console.log('input questions',this.questions)
     this.section=this.questions[0].section;
     let questions = this.questions
     if(this.questionNumber){
@@ -36,14 +35,6 @@ export class SurveyQuestionGroupComponent {
     
   }
 
-  updateProgress(section){
-    
-    console.log('updating progress',section)
-    if(section =="all" || section=="this.section"){
-      console.log('section matched',section)
-    }
-
-  }
 
   _generateQuestionForm(questions) {
     // uses the formbuilder to a form from an array of questions provided
@@ -53,7 +44,6 @@ export class SurveyQuestionGroupComponent {
       if (q.condition!="") { return this._generateConditionOptions(q) }
       else { return q }
     })
-    console.log('questions',questions)
     questions.forEach(q => {
       // split questions into corresponding sections
       if (!q.value) { questionGroup[q.controlName] = "" }
@@ -61,7 +51,6 @@ export class SurveyQuestionGroupComponent {
 
     });
     // build formgroup sections appropriately
-    console.log('questionGroup',questionGroup)
     this.formGroup = this.fb.group(questionGroup)
     this.groupQuestions=questions    
     this.cdr.detectChanges()

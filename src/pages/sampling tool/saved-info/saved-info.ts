@@ -49,17 +49,14 @@ export class SavedInfoPage {
   }
   loadSavedSurveys() {
     this.savedSurveys = this.dataPrvdr.savedSurveys;
-    console.log('saved surveys', this.savedSurveys)
     if (this.savedSurveys) {
       let arr = []
       Object.keys(this.savedSurveys).forEach(key => {
         arr.push(this.savedSurveys[key])
       })
       this.savedArray = arr.reverse();
-      console.log('saved surveys', this.savedSurveys)
     }
     else { this.savedArray = [] }
-    console.log('savedArray', this.savedArray)
   }
 
 }

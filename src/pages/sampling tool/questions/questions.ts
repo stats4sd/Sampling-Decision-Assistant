@@ -38,10 +38,10 @@ export class QuestionsPage {
   load(){
     let modal = this.modalCtrl.create('SavedInfoPage',{view:'load'});
     modal.onDidDismiss(data=>{
-      console.log('survey loaded',data)
       if(data){
-        
+        console.log('survey loaded',data)
         let meta = this.dataPrvdr.getSectionMeta()
+        this.questionGroups=[]
         Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
         this.showIntro=false
       }

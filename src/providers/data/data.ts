@@ -24,7 +24,7 @@ export class DataProvider {
   saveResult(key, value) {
     // save an individual survey result
     if (this.activeSurvey) {
-      console.log('saving results',this.activeSurvey)
+      console.log('saving results', this.activeSurvey)
       this.activeSurvey[key] = value
       // console.log('saving survey', this.activeSurvey)
       // this.saveSurvey()
@@ -41,13 +41,13 @@ export class DataProvider {
     this.saveSurvey();
   }
   deleteSurvey(title) {
-    console.log('deleting',title,this.savedSurveys)
-    if(this.activeSurvey._title == title){
-      this.activeSurvey=null
+    console.log('deleting', title, this.savedSurveys)
+    if (this.activeSurvey._title == title) {
+      this.activeSurvey = null
     }
     delete this.savedSurveys[title]
-    if(!this.savedSurveys){this.savedSurveys={}}
-    console.log('saved surveys',this.savedSurveys)
+    if (!this.savedSurveys) { this.savedSurveys = {} }
+    console.log('saved surveys', this.savedSurveys)
     return this.saveToStorage('savedSurveys', this.savedSurveys)
   }
   setActiveSurvey(survey) {
@@ -56,24 +56,24 @@ export class DataProvider {
   }
   getSurveyValue(key) {
     // get individual question result
-    if(this.activeSurvey){
+    if (this.activeSurvey) {
       return this.activeSurvey[key]
     }
     else return
-    
+
   }
 
-  getSectionMeta(section?){
+  getSectionMeta(section?) {
     this._processSectionMeta();
-    console.log('section meta processed',this.sectionMeta)
-    if(section){return this.sectionMeta[section]}
-    else{return this.sectionMeta}
-    
+    console.log('section meta processed', this.sectionMeta)
+    if (section) { return this.sectionMeta[section] }
+    else { return this.sectionMeta }
+
   }
   saveSurvey() {
     // save entire survey to local storage
-    return new Promise ((resolve,reject)=>{
-      console.log('saving survey',this.activeSurvey)
+    return new Promise((resolve, reject) => {
+      console.log('saving survey', this.activeSurvey)
       if (this.activeSurvey) {
         let title = this.activeSurvey._title
         this.savedSurveys[title] = this.activeSurvey
@@ -86,7 +86,7 @@ export class DataProvider {
         )
       }
     })
-    
+
 
   }
   showNotification(message, duration?, position?) {
@@ -108,28 +108,31 @@ export class DataProvider {
 
   // ***** user navigation and experience functions ***** //
   _processSectionMeta() {
-    console.log('processing section meta')
     // return available app sections with question groups (and maybe progress update in future??)
     let survey = this.activeSurvey ? this.activeSurvey : {}
-    console.log('survey',survey)
+    console.log('processing', survey)
     let sections = {}
     this.sectionMeta = { _asArray: [] }
     this.questionMeta.forEach(q => {
       if (q.controlName != "") {
-        // add any saved values
-        let savedValue = survey[q.controlName]
-        if (savedValue != undefined) { q['value'] = savedValue }
-        if (!sections.hasOwnProperty(q.section)) {
-          sections[q.section] = {}
-          sections[q.section].name = q.section
-          sections[q.section].questions = []
+        // create section placeholder
+        let sectionName = q.section
+        if (!sections.hasOwnProperty(sectionName)) {
+          sections[sectionName] = {}
+          sections[sectionName].name = sectionName
+          sections[sectionName].questions = []
         }
-        sections[q.section].questions.push(q)
+        // add any saved values
+        let temp: any = q;
+        let savedValue = survey[q.controlName]
+        if (savedValue != undefined) {
+          temp.value = savedValue
+        }
+        // console.log('pushing temp',temp)
+        sections[sectionName].questions.push(temp)
       }
     })
-    // build formgroups
     this.sectionMeta = sections
-    console.log('processing complete',this.sectionMeta)
   }
 
 

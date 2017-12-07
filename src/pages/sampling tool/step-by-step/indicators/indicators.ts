@@ -21,7 +21,7 @@ export class IndicatorsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr:DataProvider) {
     // load section questions from data provider
-    this.sectionMeta=this.dataPrvdr.getSectionMeta("General objectives")
+    this.sectionMeta=this.dataPrvdr.getSectionMeta("Indicators")
     console.log('sectionMeta',this.sectionMeta)    
   }
 
