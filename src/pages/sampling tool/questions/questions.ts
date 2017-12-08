@@ -21,8 +21,9 @@ export class QuestionsPage {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
 
   }
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     let meta = this.dataPrvdr.getSectionMeta()
+    this.questionGroups=[]
     Object.keys(meta).forEach(key => this.questionGroups.push(meta[key]));
     console.log('question grups', this.questionGroups)
   }

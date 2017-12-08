@@ -1,7 +1,7 @@
 <div class="container" *ngIf="question">
   <div [formGroup]="formGroup" style="flex:1">
     <!-- question labels -->
-    <div *ngIf="question.type!='label' && showLabel!=false" class="question-label">
+    <div *ngIf="question.type!='label' && question.type!='repeat' && showLabel!=false" class="question-label">
       <div class="question-number dark">{{question.controlName}}</div>
       <div>
         <span id="questionLabelText" #questionLabelText [innerHtml]="question.label"></span>
@@ -53,8 +53,12 @@
             <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
           </div>
         </div>
-
-
+      </div>
+    </div>
+    <!-- repeat group -->
+    <div *ngIf="question.type=='repeat'">
+      <div *ngFor="let item of _generateRepeatArray(question); let i=index">
+          <survey-question-group #survey [repeatGroup]="question.controlName" [repeatGroupKey]=item></survey-question-group>
       </div>
 
     </div>

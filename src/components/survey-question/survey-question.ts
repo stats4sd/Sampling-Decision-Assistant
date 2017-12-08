@@ -33,7 +33,8 @@ export class SurveyQuestionComponent {
   dynamicText: any = {};
   multipleTextInput:any=""
   multipleTextValues:any=[];
-  valueSaved:boolean=false
+  valueSaved:boolean=false;
+  repeatQuestionGroup:any=[];
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr:DataProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
@@ -75,6 +76,16 @@ export class SurveyQuestionComponent {
   //  .then(_res=>{el.style.visibility="inherit"})
    
   }
+  _generateRepeatArray(question){
+    let ref = question.selectOptions
+    let items = this.formGroup.value[ref]
+    if(items){
+      // generate question group
+      return JSON.parse(items)
+    }
+    else return []
+  }
+
   _generateSelectOptions() {
     // parse select options to array
     if (this.question.selectOptions != "") {
@@ -95,7 +106,6 @@ export class SurveyQuestionComponent {
   _generateMultipleValues(){
     if(this.question.type=="textMultiple"){
       let value = this.dataPrvdr.getSurveyValue(this.questionKey)
-      console.log('multiple val in',value)
       if(value==undefined || value=="" || !value==null){
         value=[]
       }
