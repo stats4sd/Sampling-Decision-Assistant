@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Step By Step Decisions</ion-title>
+    <ion-title>Sampling Decision Assistant</ion-title>
     <ion-buttons end>
-      
+
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -10,28 +10,55 @@
 
 <ion-content padding>
   <div class="content-container">
-    <div class="intro" [ngClass]="showIntro ? 'not-hidden':'hidden'">
-      <p>Here you will use the Sampling Decision Assistant following key decision stages in your sampling design.</p>
-      <p>You will have easy access to extra help and examples about how to make the decisions that will form you sampling design</p>
-      <div> 
-          <button ion-button icon-left (click)="load()"><ion-icon name="folder-open"></ion-icon>Load Saved Project</button>
-          <button ion-button icon-left (click)="startNew()"><ion-icon name="create"></ion-icon>Create New Project</button>
-      </div>
-      
-      <!-- <button block ion-button icon-left (click)="hideIntro()"><ion-icon name="arrow-forward" ></ion-icon>Continue</button> -->
-    </div>
-    
+    <!-- intro -->
+    <introduction *ngIf="showIntro"></introduction>
     <div [ngClass]="showIntro ? 'hidden':'not-hidden'">
-        <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
-            <div class="section-container">
-              <div class="section-icon-container"><img class="section-icon" [src]="section.icon"></div>
-              <div class="section-title">{{section.number}}: {{section.name}}</div>
-              <div class="section-status">{{section.status}}</div>
+      <!-- step by step sections -->
+      <div class="section-break">Step By Step Decisions</div>
+      <div class="main-container">
+        <p class="instruction" icon-left>
+          <ion-icon name="information-circle"></ion-icon>Complete each section to build an overview of your sampling decisions</p>
+        <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)"
+          [ngClass]="section.class">
+          <div class="section-container">
+            <div class="section-icon-container">
+              <img class="section-icon" [src]="section.icon">
             </div>
+            <div class="section-title">{{section.number}}: {{section.name}}</div>
+            <div class="section-status">{{section.status}}</div>
+          </div>
+        </ion-card>
+      </div>
+      <!-- Review and export -->
+      <div class="section-break">Review and Export</div>
+      <p class="instruction" icon-left>
+        <ion-icon name="information-circle"></ion-icon>Review and analyse your decisions before final export</p>
+      <div style="display: flex; flex-wrap:wrap; justify-content:center" (click)="pushPage('ReviewPage')">
+        <div style="max-width:600px; display:flex">
+          <ion-card class="review-card">
+            <span>Review</span>
           </ion-card>
-          <button ion-button (click)="save()" style="float:right">Save</button>
+          <img class="section-icon _80px" src="assets/img/icons/arrows-dual.svg">
+          <ion-card class="review-card" >
+            <span>Analyse</span>
+          </ion-card>
+        </div>
+        <div style="max-width:600px; display:flex; justify-content:center">
+            <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
+            <ion-card class="review-card">
+              <span>Export</span>
+            </ion-card>
+        </div>
+
+        
+
+      </div>
+
     </div>
-    
+
+
+
+
   </div>
 
 

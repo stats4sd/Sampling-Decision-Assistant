@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data'
 
 @IonicPage()
@@ -11,7 +11,13 @@ export class StepByStepPage {
   sections: any = [];
   showIntro:boolean=true
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, public modalCtrl:ModalController) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private dataPrvdr: DataProvider,
+    public modalCtrl:ModalController,
+    public events:Events
+  ) {
     
     this.sections=[
       {name:"General objectives",icon:"assets/img/icons/objectives.svg", page:"ObjectivesPage",number:1},
@@ -20,10 +26,9 @@ export class StepByStepPage {
       {name:"At what level do you need to report these results",icon:"assets/img/icons/reporting.svg", page:"ReportingPage",number:4},
       {name:"Reaching the sampling units",icon:"assets/img/icons/outreach.svg", page:"OutreachPage",number:5, class:'disabled'},
     ]
-    console.log('sections', this.sections)
+    this.events.subscribe('project:loaded',data=>this.showIntro=false)
   }
   ionViewDidEnter(){
-    console.log('view entered')
     if(!this.showIntro){this.dataPrvdr.saveSurvey()}
   }
 
@@ -53,6 +58,13 @@ export class StepByStepPage {
   }
   save(){
     this.dataPrvdr.saveSurvey()
+  }
+  pushPage(page){
+    console.log('pushing page')
+    this.navCtrl.push(page)
+  }
+  export(){
+    this.dataPrvdr.export()
   }
 
 

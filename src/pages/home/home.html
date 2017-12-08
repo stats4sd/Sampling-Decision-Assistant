@@ -22,7 +22,9 @@
           <h3 class="invert">Sampling Decision Assistant</h3>
           <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
             <div class="section-container">
-              <div class="section-title">{{section.name}}</div>
+              <div class="section-title" id="useTheTool">{{section.name}}
+                <ion-icon style="margin-left:10px" [name]="section.icon"></ion-icon>
+              </div>
             </div>
           </ion-card>
           <hr/>

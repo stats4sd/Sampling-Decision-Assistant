@@ -1,47 +1,44 @@
 <ion-header>
-
   <ion-navbar color="primary-inverted">
-    <ion-title>My Decisions</ion-title>
+    <ion-title>Saved Projects</ion-title>
     <ion-buttons end>
-      <button ion-button icon-left icon-right (click)="dismiss()">Close<ion-icon name="close"></ion-icon></button>
+      <button ion-button icon-left icon-right (click)="dismiss()">Close
+        <ion-icon name="close"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
   <div *ngIf="view=='save'">
-      <h3>Create New Project</h3>
-      <ion-list>
-        <ion-item>
-          <ion-input placeholder="Input a name to save" [(ngModel)]="saveName"></ion-input>
-        </ion-item>
-        <div class="error-message">{{errorMsg}}</div>
-        <ion-item>
-          <button ion-button icon-left [disabled]="!saveName" (click)="createNew()"><ion-icon name="create"></ion-icon>Create</button>
-        </ion-item>
-      </ion-list>
+    <h3>Create New Project</h3>
+    <ion-list>
+      <ion-item>
+        <ion-input placeholder="Input a name for the project" [(ngModel)]="saveName"></ion-input>
+      </ion-item>
+      <div class="error-message">{{errorMsg}}</div>
+      <ion-item>
+        <button ion-button icon-left [disabled]="!saveName" (click)="createNew()">
+          <ion-icon name="create"></ion-icon>Create</button>
+      </ion-item>
+    </ion-list>
   </div>
-
   <div *ngIf="view=='load'">
-      <h3>Load saved project</h3>
-      <ion-list>
-        <ion-item *ngFor="let survey of savedArray">
-          <div style="display: flex">
-            <div style="flex:1; cursor:pointer" (click)="loadSurvey(survey)">
-                <div class="survey-title">{{survey._title}}</div>
-                <div class="survey-date">{{survey._created | date}}</div>
-            </div>
-            <div style="margin:5px">
-              <button ion-button icon-only clear (click)="deleteSurvey(survey)"><ion-icon name="trash" color="delete"></ion-icon></button>
-            </div>
+    <h3>Load saved project</h3>
+    <ion-list>
+      <ion-item *ngFor="let survey of savedArray">
+        <div style="display: flex">
+          <div style="flex:1; cursor:pointer" (click)="loadSurvey(survey)">
+            <div class="survey-title">{{survey._title}}</div>
+            <div class="survey-date">{{survey._created | date}}</div>
           </div>
-        </ion-item>
-        <div *ngIf="savedArray.length==0">There are no projects saved</div>
-      </ion-list>
+          <div style="margin:5px">
+            <button ion-button icon-only clear (click)="deleteSurvey(survey)">
+              <ion-icon name="trash" color="delete"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </ion-item>
+      <div *ngIf="savedArray.length==0">There are no projects saved</div>
+    </ion-list>
   </div>
-  
-  
-
 </ion-content>

@@ -19,5 +19,11 @@ page-home {
         color: color($colors,primary);
         font-weight: 500;
     }
+    #useTheTool{
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        
+    }
     
 }

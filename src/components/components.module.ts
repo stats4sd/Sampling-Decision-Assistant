@@ -6,11 +6,16 @@ import { ReactiveFormsModule }          from '@angular/forms';
 
 import { SurveyQuestionComponent } from './survey-question/survey-question';
 import { SurveyQuestionGroupComponent } from './survey-question-group/survey-question-group';
+import { IntroductionComponent } from './introduction/introduction';
 @NgModule({
 	declarations: [SurveyQuestionComponent,
-    SurveyQuestionGroupComponent],
+    SurveyQuestionGroupComponent,
+    IntroductionComponent,
+    ],
 	imports: [IonicModule, ReactiveFormsModule],
 	exports: [SurveyQuestionComponent,
-    SurveyQuestionGroupComponent]
+    SurveyQuestionGroupComponent,
+    IntroductionComponent,
+    ]
 })
 export class ComponentsModule {}

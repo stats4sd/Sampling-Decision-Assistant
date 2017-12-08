@@ -57,7 +57,7 @@ export class SurveyQuestionGroupComponent {
       //   this.formGroup.addControl(q.controlName,'')
       //   return q
       // })
-      this._generateQuestionForm(groupQuestions)
+      this._generateQuestionForm(groupQuestions,this.repeatGroupKey)
       console.log('group questions',groupQuestions)
 
     }
@@ -67,7 +67,7 @@ export class SurveyQuestionGroupComponent {
   }
 
 
-  _generateQuestionForm(questions) {
+  _generateQuestionForm(questions, log?) {
     // uses the formbuilder to a form from an array of questions provided
     let questionGroup = {}
     // generate conditions
@@ -83,6 +83,7 @@ export class SurveyQuestionGroupComponent {
     });
     // build formgroup sections appropriately
     this.formGroup = this.fb.group(questionGroup)
+    if(log){console.log('formgroup',log, this.formGroup)}
     this.groupQuestions = questions
     this.cdr.detectChanges()
   }

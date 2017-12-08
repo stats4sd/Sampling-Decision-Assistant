@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Review and Analysis</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-left *ngIf="viewSection==0" (click)="slideTo(1)">
+          <ion-icon name="analytics"></ion-icon>View Analysis</button>
+        <button ion-button icon-left *ngIf="viewSection==1" (click)="slideTo(0)">
+          <ion-icon name="list"></ion-icon>View Decisions</button>
+      <!-- <button ion-button icon-left (click)="save()" *ngIf="!showIntro">Save</button> -->
+      <!-- <button ion-button icon-left (click)="export()" *ngIf="!showIntro">Export</button> -->
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="survey" style="margin-bottom:10px">
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <!-- Review content -->
+      <h2>Review Decisions</h2>
+        <div>
+            <div *ngFor="let questionGroup of questionGroups">
+              <div class="heading">
+                {{questionGroup._name}}
+              </div>
+              <survey-question-group #survey [questions]="questionGroup.questions"></survey-question-group>
+            </div>
+          </div>
+    </ion-slide>
+    <ion-slide>
+      <!-- Analysis Content -->
+      <h2>Analysis</h2>
+      <p>In this section there will be a short analysis based on the decisions made, to help to identify potential issues or flags<p>
+      <p>Once satisfied, the user can export their results to xlsx format</p>
+      <button ion-button icon-left (click)="export()"><ion-icon name="download"></ion-icon>Export</button>
+    </ion-slide>
+  </ion-slides>
+  
+</ion-content>

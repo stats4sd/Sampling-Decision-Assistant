@@ -4,18 +4,19 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import {IntroductionTextComponent} from '../components/introduction-text/introduction-text'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AnimatorModule } from 'css-animator';
 import { IonicStorageModule } from '@ionic/storage';
-import {File} from '@ionic-native/file'
 import { DataProvider } from '../providers/data/data';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    IntroductionTextComponent
   ],
   imports: [
     BrowserModule,
@@ -29,10 +30,10 @@ import { DataProvider } from '../providers/data/data';
   entryComponents: [
     MyApp,
     HomePage,
+    IntroductionTextComponent
   ],
   providers: [
     StatusBar,
-    File,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider

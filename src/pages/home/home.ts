@@ -9,7 +9,7 @@ import { DataProvider } from '../../providers/data/data'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version:string="0.2.4";
+  version:string="0.3.0";
 
   imageSrc="assets/img/feature-image-1.jpg"
   // no longer using slides
@@ -18,8 +18,9 @@ export class HomePage {
 constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
 
     this.sections=[
-      {name:"Step by step mode", page:"StepByStepPage"},
-      {name:"Question-based mode", page:"QuestionsPage"}
+      {name:"Use the tool", page:"StepByStepPage", icon:"arrow-forward"},
+      // {name:"Step by step mode", page:"StepByStepPage"},
+      // {name:"Question-based mode", page:"QuestionsPage"}
 
     ]
 

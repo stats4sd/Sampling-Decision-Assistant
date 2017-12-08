@@ -6,6 +6,8 @@
 // to import other Sass files to be included in the output CSS.
 @import './scrollbars.scss';
 // --------------------------------------------------
+$max-app-width:768px;
+// --------------------------------------------------
 // header settings
 .header-logo{
     height:50px;
@@ -111,6 +113,7 @@ ion-slides { height: 100%; }
 .slide-zoom{
     height: 100%;
     display: flex;
+    overflow: scroll;
     flex-direction: column;
 }
 .slide-content{
@@ -120,21 +123,29 @@ ion-slides { height: 100%; }
     font-size: 14px;
     text-align: left;
     line-height: 18px;
-    max-width: calc(100% - 16px)
+    // interpolated variable
+    width:calc(100% - 16px);
+    max-width: calc(#{$max-app-width} - 64px)
 }
 .central-content{
     position: absolute;
     width:calc(100vw - 32px);
-    max-width: 468px;
+    max-width: calc(#{$max-app-width} - 32px);
+    // max-width: 468px;
     margin-top:32px;
     max-height: calc(100vh - 164px)
-    // equiv of $max-width - 32px
+    
 }
 .swiper-slide{width:100%!important}
 
 // --------------------------------------------------
 // glossary
-.glossary-link{text-decoration: underline; color: blue; cursor: pointer;}
+.glossary-link{
+    //text-decoration: underline; 
+    color: color($colors,primary); 
+    font-weight: 500;
+    cursor: pointer;
+}
 
 // --------------------------------------------------
 // question display overrides
@@ -151,7 +162,7 @@ ion-card{
 
 // --------------------------------------------------
 // app root centering
-$max-app-width:500px;
+
 @media screen and (min-width:$max-app-width){
     // add padding, background and curved edges for large devices
     .menu-content, .app-root{
@@ -167,14 +178,14 @@ $max-app-width:500px;
         max-width: $max-app-width;
         height:calc(100vh - 10px);
     }
-    // popover fix for screen resizing
+    // popover fix for screen resizing (max-width - 100?)
     .popover-content{
         margin-right:400px;
     }
     // modal fix for screen resizing
     .modal-wrapper{
-        left: calc(50% - 250px);
-        top: calc(50% - 250px);
+        left: calc(50% - #{$max-app-width}/2);
+        top: calc(50% - #{$max-app-width}/2);
         position: absolute;
         width: $max-app-width;
         height: $max-app-width;

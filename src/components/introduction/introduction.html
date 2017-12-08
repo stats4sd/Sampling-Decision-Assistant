@@ -1,0 +1,37 @@
+<div padding>
+    <p>Welcome to the Sampling Decision Assistant tool</p>
+    <p>If this is your
+      <strong>first time</strong> using the tool you may wish to view:</p>
+    <div class="intro-section">
+      <div class="intro-box">
+        <h2 class="sub-heading">Tool Introduction</h2>
+        <div>
+          <button block ion-button clear icon-left disabled>
+            <ion-icon name="logo-youtube"></ion-icon>View the video</button>
+          <div style="text-align: center; font-weight:700">Or</div>
+          <button block ion-button clear icon-left (click)="showIntroText()">
+            <ion-icon name="document"></ion-icon>Read as text</button>
+        </div>
+      </div>
+      <div class="intro-box">
+        <h2 class="sub-heading">Tutorial</h2>
+        <button block ion-button clear icon-left disabled>
+          <ion-icon name="bulb"></ion-icon>Start the tutorial</button>
+      </div>
+    </div>
+    <p>If you have used the tool before you may wish to:</p>
+    <div class="intro-section">
+      <div class="intro-box alt">
+        <h2 class="sub-heading smaller">Create a new project</h2>
+        <div>
+          <button block ion-button clear icon-left (click)="startNew()">
+            <ion-icon name="create"></ion-icon>Create</button>
+        </div>
+      </div>
+      <div class="intro-box alt" (click)="load()">
+        <h2 class="sub-heading smaller">Load a saved project or template</h2>
+        <button block ion-button clear icon-left>
+          <ion-icon name="folder-open"></ion-icon>Load</button>
+      </div>
+    </div>
+  </div>
