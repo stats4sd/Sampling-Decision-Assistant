@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {IntroductionTextComponent} from '../components/introduction-text/introduction-text'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,7 +16,6 @@ import { DataProvider } from '../providers/data/data';
   declarations: [
     MyApp,
     HomePage,
-    IntroductionTextComponent
   ],
   imports: [
     BrowserModule,
@@ -24,13 +23,13 @@ import { DataProvider } from '../providers/data/data';
     IonicStorageModule.forRoot({
       name: '__sampling',
     }),
-    AnimatorModule
+    AnimatorModule,
+    BrowserAnimationsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    IntroductionTextComponent
   ],
   providers: [
     StatusBar,

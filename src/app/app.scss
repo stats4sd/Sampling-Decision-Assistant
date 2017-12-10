@@ -142,7 +142,8 @@ ion-slides { height: 100%; }
 // glossary
 .glossary-link{
     //text-decoration: underline; 
-    color: color($colors,primary); 
+    // color: color($colors,primary); 
+    color:brown;
     font-weight: 500;
     cursor: pointer;
 }

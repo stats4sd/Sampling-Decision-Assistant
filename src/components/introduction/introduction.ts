@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ModalController, Events } from 'ionic-angular';
-import { IntroductionTextComponent} from '../introduction-text/introduction-text'
 
 @Component({
   selector: 'introduction',
@@ -33,7 +32,7 @@ export class IntroductionComponent {
     modal.present()
   }
   showIntroText(){
-    let modal = this.modalCtrl.create(IntroductionTextComponent);
+    let modal = this.modalCtrl.create('IntroductionTextPage');
     modal.present()
   }
 
