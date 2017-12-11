@@ -20,7 +20,7 @@
         <div>
             <div *ngFor="let questionGroup of questionGroups">
               <div class="heading">
-                {{questionGroup._name}}
+                {{questionGroup.name}}
               </div>
               <survey-question-group #survey [questions]="questionGroup.questions"></survey-question-group>
             </div>

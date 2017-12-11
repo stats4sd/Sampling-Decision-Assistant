@@ -25,11 +25,9 @@ export class GlossaryComponent {
         return this._getTermObject(t)
       })
     }
-    console.log('terms',terms, this.sectionTerms)
   }
 
   constructor() {
-    console.log('all glossary terms', this.allTerms)
   }
 
    setActiveTerm(term) { this.activeTerm = term }

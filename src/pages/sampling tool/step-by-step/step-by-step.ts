@@ -24,7 +24,7 @@ export class StepByStepPage {
       {name:"Indicators",icon:"assets/img/icons/indicators.svg", page:"IndicatorsPage",number:2},
       {name:"Definition of the target population and units of study",icon:"assets/img/icons/population.svg", page:"TargetPopulationPage",number:3},
       {name:"At what level do you need to report these results",icon:"assets/img/icons/reporting.svg", page:"ReportingPage",number:4},
-      {name:"Reaching the sampling units",icon:"assets/img/icons/outreach.svg", page:"OutreachPage",number:5, class:'disabled'},
+      {name:"Reaching the sampling units",icon:"assets/img/icons/outreach.svg", page:"OutreachPage",number:5},
     ]
     this.events.subscribe('project:loaded',data=>this.showIntro=false)
   }
@@ -50,7 +50,6 @@ export class StepByStepPage {
     modal.onDidDismiss(data=>{
       console.log('survey loaded',data)
       if(data){
-        
         this.showIntro=false;        
       }
     })

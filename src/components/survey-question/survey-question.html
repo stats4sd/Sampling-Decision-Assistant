@@ -55,13 +55,6 @@
         </div>
       </div>
     </div>
-    <!-- repeat group -->
-    <div *ngIf="question.type=='repeat'">
-      <div *ngFor="let item of _generateRepeatArray(question); let i=index">
-          <survey-question-group #survey [repeatGroup]="question.controlName" [repeatGroupKey]=item></survey-question-group>
-      </div>
-
-    </div>
 
     <!-- label -->
     <div *ngIf="question.type=='label'" class="question-label" style="margin:10px 0">

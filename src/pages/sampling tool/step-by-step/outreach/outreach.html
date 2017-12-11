@@ -8,5 +8,50 @@
 
 
 <ion-content padding>
+  <div class="central-content">
+    <div class="central-inner-content">
+      <ion-slides (ionSlideDidChange)="slideChanged()">
+        <!-- Introduction slide -->
+        <ion-slide>
+          <div class="slide-content">
+            <h4>Decisions about the reaching the sampling units</h4>
+            <p>
+              Main content will go here, questions as follows:
+            </p>
+            <ion-card>
+              <survey-question-group *ngIf="sectionMeta.questions" [questions]="sectionMeta.questions" [showLabel]=true></survey-question-group>
+            </ion-card>
+
+            <p>
+              You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
+              a better understanding that should help in your decision making.
+            </p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="slide-content">
+            <h2>Resources</h2>
+            <p>In this section you can find links and resources related to the main content (currently under construction).</p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="slide-content">
+            <h2>Glossary</h2>
+            <glossary [terms]="glossaryTerms" [term]="activeGlossaryTerm"></glossary>
+          </div>
+        </ion-slide>
+      </ion-slides>
+
+      <div class="segment-container">
+        <ion-segment [(ngModel)]="activeSlide">
+          <ion-segment-button value="Main" (click)="slideTo(0)">Main</ion-segment-button>
+          <ion-segment-button value="Resources" (click)="slideTo(1)">Resources</ion-segment-button>
+          <ion-segment-button value="Glossary" (click)="slideTo(2)">Glossary</ion-segment-button>
+        </ion-segment>
+      </div>
+    </div>
+  </div>
 
 </ion-content>

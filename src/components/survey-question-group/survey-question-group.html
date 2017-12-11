@@ -1,12 +1,20 @@
 <form *ngIf="formGroup" [formGroup]="formGroup">
   <div *ngIf="groupQuestions">
     <div *ngFor="let question of groupQuestions">
-      <survey-question [question]="question" [formGroup]="formGroup" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
+      <div *ngIf="question.type!='repeat'">
+        <survey-question [question]="question" [formGroup]="formGroup" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
+      </div>
+      <div *ngIf="question.type=='repeat'">
+        <div [formArrayName]="question.controlName">
+          <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
+            <div>Repeat group {{i}}</div>
+            <div>Repeat question: {{question.controlName}}</div>
+            <div *ngFor="let q of question.repeatQuestions">
+              <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[0]" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- <div class="group-meta"> -->
-  <!-- <div>valid: {{formGroup.valid}}</div> -->
-  <!-- <button ion-button (click)="save()" [disabled]="!formGroup.valid">Save</button> -->
-  <!-- </div> -->
 </form>

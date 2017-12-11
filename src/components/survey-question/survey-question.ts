@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDe
 import { FormGroup } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
-import { DataProvider} from '../../providers/data/data';
+import { DataProvider } from '../../providers/data/data';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
 
 
@@ -24,67 +24,60 @@ export class SurveyQuestionComponent {
   @Input('showLabel') showLabel: boolean;;
   @ViewChild('textAreaInput') textAreaInput: ElementRef
   @ViewChild('saveMessage') saveMessage: ElementRef
-  questionKey:string  
+  questionKey: string
   selectOtherValue: any = "";
   selectOptionsArray: string[];
   initialScrollHeight: number;
   showSelectOther: boolean = false;
   originalLabel: string;
   dynamicText: any = {};
-  multipleTextInput:any=""
-  multipleTextValues:any=[];
-  valueSaved:boolean=false;
-  repeatQuestionGroup:any=[];
+  multipleTextInput: any = ""
+  multipleTextValues: any = [];
+  valueSaved: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr:DataProvider) {
+  constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr: DataProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
-    
+
 
   }
   ngAfterViewInit() {
-      this.questionKey=this.question.controlName
-      this._generateSelectOptions()
-      this._generateMultipleValues()
-      this._prepareDynamicText()
-      this.cdr.detectChanges() 
+    this.questionKey = this.question.controlName
+    this._generateSelectOptions()
+    this._generateMultipleValues()
+    this._prepareDynamicText()
+    this.cdr.detectChanges()
+    
   }
   updateLabel(key) {
     // updates dynamic text labels if relevant 
-    if (this.dynamicText[key]) {  
-      let value = this.dataPrvdr.getSurveyValue(key)    
-      let el = document.getElementById(this.question.type+'LabelText')
-      let className=".dynamicText"+key
+    if (this.dynamicText[key]) {
+      let value = this.dataPrvdr.getSurveyValue(key)
+      let el = document.getElementById(this.question.type + 'LabelText')
+      let className = ".dynamicText" + key
       let instances = el.querySelectorAll('.dynamic-text')
       for (let i = 0; i < instances.length; i++) {
-        if(instances[i].getAttribute('name')==key)
-        instances[i].innerHTML = value;
-    }
+        if (instances[i].getAttribute('name') == key)
+          instances[i].innerHTML = value;
+      }
     }
   }
 
   saveValue() {
     // save value on update (do not exclude "" in case user might have deleted a value)
-    let key = this.question.controlName
-    let value = this.formGroup.value[key]
-    let update = { key: key, value: value, section: this.question.section }
+    let value = this.formGroup.value[this.question.controlName]
+    let update = { controlName: this.question.controlName, value: value, section: this.question.section }
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
-  //   this.valueSaved=true
-  //   let animator = new AnimationBuilder();
-  //   let el = this.saveMessage.nativeElement
-  //   animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
-  //  .then(_res=>{el.style.visibility="inherit"})
-   
+    //this.events.publish('save')
+    
+    //   this.valueSaved=true
+    //   let animator = new AnimationBuilder();
+    //   let el = this.saveMessage.nativeElement
+    //   animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
+    //  .then(_res=>{el.style.visibility="inherit"})
+
   }
-  _generateRepeatArray(question){
-    let ref = question.selectOptions
-    let items = this.formGroup.value[ref]
-    if(items){
-      // generate question group
-      return JSON.parse(items)
-    }
-    else return []
-  }
+
 
   _generateSelectOptions() {
     // parse select options to array
@@ -103,14 +96,14 @@ export class SurveyQuestionComponent {
       }
     }
   }
-  _generateMultipleValues(){
-    if(this.question.type=="textMultiple"){
+  _generateMultipleValues() {
+    if (this.question.type == "textMultiple") {
       let value = this.dataPrvdr.getSurveyValue(this.questionKey)
-      if(value==undefined || value=="" || !value==null){
-        value=[]
+      if (value == undefined || value == "" || !value == null) {
+        value = []
       }
-      else{value = JSON.parse(value)}
-      this.multipleTextValues=value
+      else { value = JSON.parse(value) }
+      this.multipleTextValues = value
     }
   }
   _prepareDynamicText() {
@@ -132,14 +125,14 @@ export class SurveyQuestionComponent {
           currentValue: this.dataPrvdr.getSurveyValue(val)
         }
         // apply css
-      let el = document.getElementById(this.question.type+'LabelText')
-      // use split/join to target all instances of text, apply name attribute for tracking later
-      // el.innerHTML=el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text dynamicText"+val+"'>"+matches.text[i]+"</span>")
-      el.innerHTML=el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='"+val+"'>"+val+"</span>")
-      this.updateLabel(val)
+        let el = document.getElementById(this.question.type + 'LabelText')
+        // use split/join to target all instances of text, apply name attribute for tracking later
+        // el.innerHTML=el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text dynamicText"+val+"'>"+matches.text[i]+"</span>")
+        el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
+        this.updateLabel(val)
       })
-      
-     
+
+
     }
 
   }
@@ -165,16 +158,20 @@ export class SurveyQuestionComponent {
     }
   }
 
-  addTextMultiple(){
+  addTextMultiple() {
     // push response to array
     this.multipleTextValues.push(this.multipleTextInput)
-    this.multipleTextInput=""
-    this.formGroup.value[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    this.multipleTextInput = ""
+    this.formGroup.value[this.questionKey] = JSON.stringify(this.multipleTextValues)
+    // notify for anything trying to monitor changes to array (e.g. repeat groups)
+    this.events.publish('arrayChange',{controlName:this.questionKey, type:'push', value:this.multipleTextValues})
     this.saveValue()
   }
-  removeTextMultiple(index){
-    this.multipleTextValues.splice(index,1)
-    this.formGroup.value[this.questionKey]=JSON.stringify(this.multipleTextValues)
+  removeTextMultiple(index) {
+    this.multipleTextValues.splice(index, 1)
+    this.formGroup.value[this.questionKey] = JSON.stringify(this.multipleTextValues)
+    // notify for anything trying to monitor changes to array (e.g. repeat groups)
+    this.events.publish('arrayChange',{controlName:this.questionKey, type:'splice', index:index, value:this.multipleTextValues})
     this.saveValue()
   }
 

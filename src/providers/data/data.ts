@@ -13,10 +13,12 @@ export class DataProvider {
   public activeSurvey: any
   questionMeta = questionMeta;
   public sectionMeta: any = {}
+  public activeFormgroups:any={}
 
   constructor(public storage: Storage, private events: Events, public toastCtrl: ToastController) {
     console.log('Data provider loaded, ready to save data');
-    this.events.subscribe('valueUpdate', data => this.saveResult(data.key, data.value))
+    //this.events.subscribe('valueUpdate', data => this.saveResult(data.key, data.value))
+    //this.events.subscribe('save',_=>console.log('save called'))
     this.loadSavedSurveys()
   }
 
