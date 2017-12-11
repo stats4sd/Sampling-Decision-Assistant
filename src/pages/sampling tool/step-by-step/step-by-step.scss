@@ -38,6 +38,17 @@ page-step-by-step {
         font-weight: 700;
         background-color: rgba(196,201,255,0.8)        
     }
+    .review-box{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        border: 1px solid #d2c9d9;
+        padding-bottom: 10px;
+        cursor: pointer;
+    }
+    .review-box:hover{
+        background-color: wheat
+    }
     @media screen and (max-width: 450px){
         .review-card{
             width:90px

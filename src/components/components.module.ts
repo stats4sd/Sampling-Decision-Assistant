@@ -8,12 +8,14 @@ import { SurveyQuestionComponent } from './survey-question/survey-question';
 import { SurveyQuestionGroupComponent } from './survey-question-group/survey-question-group';
 import { IntroductionComponent } from './introduction/introduction';
 import { GlossaryLinkComponent } from './glossary-link/glossary-link';
+import { GlossaryComponent } from './glossary/glossary';
 @NgModule({
     declarations: [
         SurveyQuestionComponent,
         SurveyQuestionGroupComponent,
         IntroductionComponent,
     GlossaryLinkComponent,
+    GlossaryComponent,
     ],
     imports: [
         IonicModule,
@@ -24,6 +26,7 @@ import { GlossaryLinkComponent } from './glossary-link/glossary-link';
         SurveyQuestionGroupComponent,
         IntroductionComponent,
     GlossaryLinkComponent,
+    GlossaryComponent,
     ]
 })
 export class ComponentsModule { }

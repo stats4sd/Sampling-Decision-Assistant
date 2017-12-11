@@ -1,14 +1,14 @@
 survey-question {
     
     .question-label{
-        color:color($colors,primary);
+        // color:color($colors,primary);
         font-size: 1.6rem;
         padding: 5px;
         display: flex;
     }
     
     .dark{
-        color:color($colors,primary-dark);
+        // color:color($colors,primary-dark);
     }
     ion-icon{
         margin-right:5px;
@@ -38,17 +38,26 @@ survey-question {
         padding: 5px;
         resize: none;
     }
+    // textarea.text-input{
+    //     height:calc(100% - 5px);
+    //     margin:0;
+    // }
     .input{
         border: 1px solid black;
         border-radius: 10px;
         padding: 5px;
+    }
+    // input colors
+    .select-text, textarea, .text-input{
+        color:color($colors,primary);
     }
     .question-number{
         margin-right:5px;
         font-size: x-small
     }
     .dynamic-text{
-        color:#b75d1b;
+        // color:#b75d1b;
+        font-weight: 700;
         margin:0 3px;
     }
     .bullet{

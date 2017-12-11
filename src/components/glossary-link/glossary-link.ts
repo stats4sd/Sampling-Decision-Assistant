@@ -8,6 +8,7 @@ export class GlossaryLinkComponent {
 
   @Input('text') text:string;
   @Input('tooltip') tooltip:string;
+  @Input('slug') slug:string
 
 
   constructor() {

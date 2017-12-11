@@ -1,3 +1,11 @@
+/*
+NOTE
+Much of the content of this section has been rewritten into the glossary component instead.
+Full migration to follow once better determined how users might want to interact with the glossary.
+
+*/
+
+
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import glossaryMaster from '../../models/glossaryTerms'
@@ -33,10 +41,11 @@ export class GlossaryPage {
     this.activeTerm = term
   }
 
-  _getActiveTerm(term) {
+  _getActiveTerm(term:string) {
     // get term from glossary and set as active
+    let slug = term.toLowerCase().replace(' ','-')
     this.glossaryTerms.forEach(el => {
-      if (el.Term == term) {
+      if (el.slug == slug) {
         this.activeTerm = el
         return "success"
       }

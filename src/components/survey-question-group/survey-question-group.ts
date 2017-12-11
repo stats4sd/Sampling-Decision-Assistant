@@ -115,6 +115,10 @@ export class SurveyQuestionGroupComponent {
       let condition = question.conditionJson
       if (this.formGroup && this.formGroup.value) {
         if (this.formGroup.value.hasOwnProperty(condition.controlName)) {
+          // match value if based on value, otherwise match exist if based on prerequisite
+          // if( condition.type=="prerequisite" && this.formGroup.value[condition.controlName] && this.formGroup.value[condition.controlName] != ""){
+          //   return true
+          // }
           if (this.formGroup.value[condition.controlName] == condition.value) {
             return true
           }

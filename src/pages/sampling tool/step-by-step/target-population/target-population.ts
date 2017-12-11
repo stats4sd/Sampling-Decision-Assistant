@@ -1,12 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TargetPopulationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { DataProvider } from '../../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -14,12 +8,41 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'target-population.html',
 })
 export class TargetPopulationPage {
+  @ViewChild(Slides) slides: Slides;
+  activeSlide:string="Main";
+  activeGlossaryTerm:string;
+  glossaryTerms=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  sectionMeta:any={};
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,  private dataPrvdr: DataProvider) {
+    this.sectionMeta=this.dataPrvdr.getSectionMeta("Definition of the target population and units of study")
+    console.log('sectionMeta',this.sectionMeta)
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TargetPopulationPage');
+  }
+
+
+
+
+   // slides functions (currently copied onto all sections)
+   slideChanged() {
+    let sections:any=[
+      {label:'Main',slideIndex:0},
+      {label:'Resources',slideIndex:1},
+      {label:'Glossary',slideIndex:2},
+    ]
+    let currentIndex = this.slides.getActiveIndex();
+    this.activeSlide=sections[currentIndex].label;
+  }
+  slideTo(index){
+    this.slides.slideTo(index)
+  }
+  showGlossary(term: string) {
+    this.activeGlossaryTerm=term;
+    this.slides.slideTo(2)
   }
 
 }

@@ -159,7 +159,7 @@ export class DataProvider {
 
   export() {
     // export as xlsx
-    let mapping = { controlName: 'id', value: 'response', label: 'question' }
+    let mapping = { controlName: 'id', label: 'question', value: 'response'  }
     var d = []
     for (let q of questionMeta) {
       let temp: any = {}

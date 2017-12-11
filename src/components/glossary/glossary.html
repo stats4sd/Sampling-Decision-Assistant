@@ -1,0 +1,19 @@
+<div class="glossary-container">
+  <p>In this section you can find a list of keywords relevant to the main content.
+    <br>Click on a word to view its definition.
+  </p>
+    <div *ngFor="let term of sectionTerms" (click)="setActiveTerm(term)">
+        <span class="glossary-term">{{term.Term}}</span>
+      </div>
+  <div *ngIf="activeTerm" style="margin-top:2em">
+    <h3 class="glossary-link">{{activeTerm.Term}}</h3>
+    <div *ngIf="activeTerm.Definition!=''" id="definition" #definition class="glossary-definition" [innerHtml]="_renderHtml(activeTerm.Definition)"></div>
+    <div *ngIf="activeTerm.Definition==''">This is just a placeholder definition. More content will be added later</div>
+    <!-- <button ion-button icon-left (click)="showFullGlossary()">
+      <ion-icon name="book"></ion-icon>
+      <span>Show full glossary</span>
+    </button> -->
+  </div>
+  <!-- <h4>Terms in this section:</h4> -->
+  
+</div>

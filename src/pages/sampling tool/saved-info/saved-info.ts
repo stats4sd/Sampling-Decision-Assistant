@@ -33,6 +33,7 @@ export class SavedInfoPage {
     }
 
   }
+  setView(view){this.view=view}
   dismiss() {
     this.viewCtrl.dismiss()
   }

@@ -1,11 +1,8 @@
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>Indicators</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <div class="central-content">
@@ -34,42 +31,38 @@
               The following questions will help you in thinking about these issues
             </p>
             <ion-card>
-                <survey-question-group *ngIf="sectionMeta.questions" [questions]="sectionMeta.questions" [showLabel]=true></survey-question-group>
+              <survey-question-group *ngIf="sectionMeta.questions" [questions]="sectionMeta.questions" [showLabel]=true></survey-question-group>
             </ion-card>
-            
+
             <p>
-              You can access extra help in the section "Audio" and "Video" where some more technical issues are discussed to help you developing
+              You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
               a better understanding that should help in your decision making.
             </p>
           </div>
         </ion-slide>
+        
         <ion-slide>
-          <h4>Resources</h4>
-        </ion-slide>
-        <ion-slide>
-          <h4>Glossary</h4>
-        </ion-slide>
+            <div class="slide-content">
+              <h2>Resources</h2>
+              <p>In this section you can find links and resources related to the main content (currently under construction).</p>
+            </div>
+          </ion-slide>
+  
+          <ion-slide>
+            <div class="slide-content">
+              <h2>Glossary</h2>
+              <glossary [terms]="glossaryTerms" [term]="activeGlossaryTerm"></glossary>
+            </div>
+          </ion-slide>
       </ion-slides>
-      <div padding>
-        <ion-segment [(ngModel)]="activeSlide">
-          <ion-segment-button *ngFor="let section of sections" [value]="section.slideIndex" (click)="slideTo(section.slideIndex)">{{section.label}}</ion-segment-button>
-        </ion-segment>
-      </div>
+
+      <div class="segment-container">
+          <ion-segment [(ngModel)]="activeSlide">
+            <ion-segment-button value="Main" (click)="slideTo(0)" >Main</ion-segment-button>
+            <ion-segment-button value="Resources" (click)="slideTo(1)">Resources</ion-segment-button>
+            <ion-segment-button value="Glossary" (click)="slideTo(2)">Glossary</ion-segment-button>
+          </ion-segment>
+        </div>
     </div>
-    <div>
-      <div>
-        <!-- <h3>Your Decisions</h3> -->
-        <!-- <survey-question-group #survey [questions]="questions" singleMode='true' *ngIf="questions"></survey-question-group> -->
-        <!-- <div style="display: flex; flex-direction: column; height:80px" >
-          <ion-textarea [placeholder]="placeholderText" style="height:100%"></ion-textarea>
-        </div> -->
-
-      </div>
-
-    </div>
-
   </div>
-
-
-
 </ion-content>

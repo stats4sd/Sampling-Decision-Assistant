@@ -38,7 +38,15 @@
           </div>
         </div>
       </ion-item>
-      <div *ngIf="savedArray.length==0">There are no projects saved</div>
+      <div *ngIf="savedArray.length==0">There are no projects saved. Click <span class="link" (click)="setView('save')">here</span> to create a new project</div>
+    </ion-list>
+    <h3>Load a project templates</h3>
+    <ion-list>
+      <div class="temp-text">Here you will be able load templates that have been precreated to facilitate the sampling decision processes</div>
+    </ion-list>
+    <h3>Import from excel</h3>
+    <ion-list>
+      <div class="temp-text">In this section you will be able import a previously-created excel file, for sharing projects with others or using on different devices</div>
     </ion-list>
   </div>
 </ion-content>

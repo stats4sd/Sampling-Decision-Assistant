@@ -1,8 +1,7 @@
 <!-- Generated template for the GlossaryLinkComponent component -->
 <span class="glossary-link tooltip">
-    <span class="tooltiptext">
-      {{tooltip}}
-    </span>
+    <span class="tooltiptext" *ngIf="tooltip">{{tooltip}}</span>
+    <span class="tooltiptext" *ngIf="!tooltip">Read more about {{text}} in the glossary section</span>
     {{text}}
   </span>
 <!--   
