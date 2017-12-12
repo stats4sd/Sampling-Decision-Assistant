@@ -20,16 +20,14 @@ export class SavedInfoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SavedInfoPage');
   }
   createNew() {
-    console.log('creating new', this.saveName)
     if (this.savedSurveys[this.saveName]) {
       this.errorMsg = "A project with that name already exists"
     }
     else {
       this.dataPrvdr.createNewSurvey(this.saveName)
-      this.viewCtrl.dismiss({ _title: this.saveName })
+      this.viewCtrl.dismiss({ title: this.saveName })
     }
 
   }
@@ -38,12 +36,11 @@ export class SavedInfoPage {
     this.viewCtrl.dismiss()
   }
   loadSurvey(survey) {
-    this.dataPrvdr.setActiveSurvey(survey);
+    this.dataPrvdr.loadSurvey(survey);
     this.viewCtrl.dismiss(survey);
   }
   deleteSurvey(survey) {
-    console.log('deleting survey', survey._title)
-    this.dataPrvdr.deleteSurvey(survey._title).then(
+    this.dataPrvdr.deleteSurvey(survey.title).then(
       _ => this.loadSavedSurveys()
     )
 

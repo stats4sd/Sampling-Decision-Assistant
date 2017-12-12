@@ -12,13 +12,10 @@ export class ObjectivesPage {
   activeSlide:string="Main";
   activeGlossaryTerm:string;
   glossaryTerms=["estimation"];
-
-  sectionMeta: any = {};
+  section = "General objectives";
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, private modalCtrl: ModalController) {
-    this.sectionMeta=this.dataPrvdr.getSectionMeta("General objectives")
-    console.log('sectionMeta',this.sectionMeta)
   }
   ionViewDidEnter(){
     

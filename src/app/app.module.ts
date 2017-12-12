@@ -11,6 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AnimatorModule } from 'css-animator';
 import { IonicStorageModule } from '@ionic/storage';
 import { DataProvider } from '../providers/data/data';
+import { FormProvider } from '../providers/form/form';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DataProvider } from '../providers/data/data';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    DataProvider,
+    FormProvider
   ]
 })
 export class AppModule {}

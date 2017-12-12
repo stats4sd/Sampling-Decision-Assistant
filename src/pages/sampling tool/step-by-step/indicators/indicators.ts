@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { DataProvider} from '../../../../providers/data/data'
+import { IonicPage, Slides } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -12,14 +11,11 @@ export class IndicatorsPage {
   activeSlide:string="Main";
   activeGlossaryTerm:string;
   glossaryTerms=["estimation"]
+  section = "Indicators";
 
-  sectionMeta: any = {}
   placeholderText = `Text box to enter main decision at this stage. Will be used to create a summary of the sampling process that is designed. Editable and with no limit for the amount of text`
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr:DataProvider) {
-    // load section questions from data provider
-    this.sectionMeta=this.dataPrvdr.getSectionMeta("Indicators")
-    console.log('sectionMeta',this.sectionMeta)    
+  constructor() {
   }
 
  // slides functions (currently copied onto all sections)
@@ -34,6 +30,10 @@ export class IndicatorsPage {
 }
 slideTo(index){
   this.slides.slideTo(index)
+}
+// save functions (currently copied onto all slides)
+ionViewWillLeave(){
+  
 }
 
 }

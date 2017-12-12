@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { DataProvider } from '../../../../providers/data/data'
+import { IonicPage, Slides } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -11,13 +10,12 @@ export class TargetPopulationPage {
   @ViewChild(Slides) slides: Slides;
   activeSlide:string="Main";
   activeGlossaryTerm:string;
+  section = "Definition of the target population and units of study";
+
   glossaryTerms=[];
 
-  sectionMeta:any={};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,  private dataPrvdr: DataProvider) {
-    this.sectionMeta=this.dataPrvdr.getSectionMeta("Definition of the target population and units of study")
-    console.log('sectionMeta',this.sectionMeta)
+  constructor() {
   }
 
   ionViewDidLoad() {

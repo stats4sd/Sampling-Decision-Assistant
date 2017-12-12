@@ -28,8 +28,8 @@
       <ion-item *ngFor="let survey of savedArray">
         <div style="display: flex">
           <div style="flex:1; cursor:pointer" (click)="loadSurvey(survey)">
-            <div class="survey-title">{{survey._title}}</div>
-            <div class="survey-date">{{survey._created | date}}</div>
+            <div class="survey-title">{{survey.title}}</div>
+            <div class="survey-date">{{survey.created | date}}</div>
           </div>
           <div style="margin:5px">
             <button ion-button icon-only clear (click)="deleteSurvey(survey)">

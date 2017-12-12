@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { DataProvider } from '../../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -12,12 +11,10 @@ export class OutreachPage {
   activeSlide:string="Main";
   activeGlossaryTerm:string;
   glossaryTerms=[];
+  section = "Reaching the sampling units"
 
-  sectionMeta:any={};
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
-    this.sectionMeta=this.dataPrvdr.getSectionMeta("Reaching the sampling units")
-    console.log('sectionMeta',this.sectionMeta)
+  constructor() {
+    
   }
 
   ionViewDidLoad() {

@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { DataProvider } from '../../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -12,12 +11,10 @@ export class ReportingPage {
   activeSlide:string="Main";
   activeGlossaryTerm:string;
   glossaryTerms=[];
+  section = "At what level do you need to report these results";
 
-  sectionMeta:any={};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
-    this.sectionMeta=this.dataPrvdr.getSectionMeta("At what level do you need to report these results")
-    console.log('sectionMeta',this.sectionMeta)
+  constructor() {
   }
 
   ionViewDidLoad() {

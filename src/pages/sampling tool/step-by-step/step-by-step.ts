@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data'
+import { FormProvider } from '../../../providers/form/form'
 
 @IonicPage()
 @Component({
@@ -16,7 +17,8 @@ export class StepByStepPage {
     public navParams: NavParams, 
     private dataPrvdr: DataProvider,
     public modalCtrl:ModalController,
-    public events:Events
+    public events:Events,
+    public formPrvdr:FormProvider
   ) {
     
     this.sections=[
@@ -29,7 +31,9 @@ export class StepByStepPage {
     this.events.subscribe('project:loaded',data=>this.showIntro=false)
   }
   ionViewDidEnter(){
-    if(!this.showIntro){this.dataPrvdr.saveSurvey()}
+    if(!this.showIntro){
+      this.dataPrvdr.saveSurvey()
+    }
   }
 
   goToSection(section){

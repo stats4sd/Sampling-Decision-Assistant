@@ -19,7 +19,7 @@
                   Main content will go here, questions as follows:
                 </p>
                 <ion-card>
-                  <survey-question-group *ngIf="sectionMeta.questions" [questions]="sectionMeta.questions" [showLabel]=true></survey-question-group>
+                  <survey-question-group [section]="section" [showLabel]=true></survey-question-group>
                 </ion-card>
     
                 <p>

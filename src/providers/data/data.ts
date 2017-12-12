@@ -2,49 +2,38 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import { Events, ToastController } from 'ionic-angular';
-import questionMeta from './questionMeta';
+import questionMeta from '../questionMeta';
 // import * as XLSX from 'xlsx';
 import { utils, write, WorkBook } from 'xlsx';
 import { saveAs } from 'file-saver';
+import { FormProvider } from '../form/form'
+// import * as dojox from 'dojo'
 
 @Injectable()
 export class DataProvider {
   public savedSurveys: any
-  public activeSurvey: any
-  questionMeta = questionMeta;
-  public sectionMeta: any = {}
-  public activeFormgroups:any={}
+  public activeSurvey: any;
+  private _dbVersion=1
 
-  constructor(public storage: Storage, private events: Events, public toastCtrl: ToastController) {
-    console.log('Data provider loaded, ready to save data');
-    //this.events.subscribe('valueUpdate', data => this.saveResult(data.key, data.value))
-    //this.events.subscribe('save',_=>console.log('save called'))
+  constructor(public storage: Storage, private events: Events, public toastCtrl: ToastController, private formPrvdr: FormProvider) {
+    this.events.subscribe('save', _ => this.saveSurvey())
     this.loadSavedSurveys()
   }
 
-  // ***** specific survey functions ***** //
-  saveResult(key, value) {
-    // save an individual survey result
-    if (this.activeSurvey) {
-      console.log('saving results', this.activeSurvey)
-      this.activeSurvey[key] = value
-      // console.log('saving survey', this.activeSurvey)
-      // this.saveSurvey()
-    }
-
-  }
   createNewSurvey(title) {
     this.activeSurvey = {
-      _title: title,
-      _created: new Date()
+      title: title,
+      created: new Date(),
+      responses: {}
     }
     console.log('new survey created', this.activeSurvey)
     this.savedSurveys[title] = this.activeSurvey
     this.saveSurvey();
   }
+
   deleteSurvey(title) {
     console.log('deleting', title, this.savedSurveys)
-    if (this.activeSurvey._title == title) {
+    if (this.activeSurvey.title == title) {
       this.activeSurvey = null
     }
     delete this.savedSurveys[title]
@@ -52,10 +41,8 @@ export class DataProvider {
     console.log('saved surveys', this.savedSurveys)
     return this.saveToStorage('savedSurveys', this.savedSurveys)
   }
-  setActiveSurvey(survey) {
-    this.activeSurvey = survey
-    console.log('survey set', this.activeSurvey)
-  }
+
+
   getSurveyValue(key) {
     // get individual question result
     if (this.activeSurvey) {
@@ -64,21 +51,21 @@ export class DataProvider {
     else return
 
   }
-
-  getSectionMeta(section?) {
-    this._processSectionMeta();
-    console.log('section meta processed', this.sectionMeta)
-    if (section) { return this.sectionMeta[section] }
-    else { return this.sectionMeta }
-
+  loadSurvey(survey) {
+    this.activeSurvey = survey
+    console.log('loading survey', survey)
+    this.formPrvdr.initFormValues(survey.values)
   }
+
   saveSurvey() {
     // save entire survey to local storage
     return new Promise((resolve, reject) => {
       console.log('saving survey', this.activeSurvey)
       if (this.activeSurvey) {
-        let title = this.activeSurvey._title
+        let title = this.activeSurvey.title
         this.savedSurveys[title] = this.activeSurvey
+        this.activeSurvey.values = this.formPrvdr.formGroup.value
+        this.activeSurvey._dbVersion = this._dbVersion
         console.log('saved surveys', this.savedSurveys)
         this.saveToStorage('savedSurveys', this.savedSurveys).then(
           _ => {
@@ -89,7 +76,7 @@ export class DataProvider {
       }
     })
   }
-  
+
   showNotification(message, duration?, position?) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -102,43 +89,15 @@ export class DataProvider {
     this.getFromStorage('savedSurveys').then(
       res => {
         this.savedSurveys = res ? res : {}
+          // remove old format
+        Object.keys(this.savedSurveys).forEach(k => {
+          let survey = res[k]
+          if(!survey._dbVersion || survey._dbVersion<this._dbVersion){delete this.savedSurveys[k]}
+        })
         console.log('surveys loaded', this.savedSurveys)
       }
     )
   }
-
-  // ***** user navigation and experience functions ***** //
-  _processSectionMeta() {
-    // return available app sections with question groups (and maybe progress update in future??)
-    let survey = this.activeSurvey ? this.activeSurvey : {}
-    console.log('processing', survey)
-    let sections = {}
-    this.sectionMeta = { _asArray: [] }
-    this.questionMeta.forEach(q => {
-      if (q.controlName != "") {
-        // create section placeholder
-        let sectionName = q.section
-        if (!sections.hasOwnProperty(sectionName)) {
-          sections[sectionName] = {}
-          sections[sectionName].name = sectionName
-          sections[sectionName].questions = []
-        }
-        // add any saved values
-        let temp: any = q;
-        let savedValue = survey[q.controlName]
-        if (savedValue != undefined) {
-          temp.value = savedValue
-        }
-        // console.log('pushing temp',temp)
-        sections[sectionName].questions.push(temp)
-      }
-    })
-    this.sectionMeta = sections
-  }
-
-
-
-
 
   // ***** general storage functions ***** //
 
@@ -161,7 +120,7 @@ export class DataProvider {
 
   export() {
     // export as xlsx
-    let mapping = { controlName: 'id', label: 'question', value: 'response'  }
+    let mapping = { controlName: 'id', label: 'question', value: 'response' }
     var d = []
     for (let q of questionMeta) {
       let temp: any = {}

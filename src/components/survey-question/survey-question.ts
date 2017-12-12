@@ -8,8 +8,8 @@ import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDe
 import { FormGroup } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
-import { DataProvider } from '../../providers/data/data';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
+import { FormProvider} from '../../providers/form/form'
 
 
 
@@ -35,7 +35,7 @@ export class SurveyQuestionComponent {
   multipleTextValues: any = [];
   valueSaved: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef, private events: Events, private dataPrvdr: DataProvider) {
+  constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr:FormProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 
 
@@ -51,7 +51,7 @@ export class SurveyQuestionComponent {
   updateLabel(key) {
     // updates dynamic text labels if relevant 
     if (this.dynamicText[key]) {
-      let value = this.dataPrvdr.getSurveyValue(key)
+      let value = this.formPrvdr.getSurveyValue(key)
       let el = document.getElementById(this.question.type + 'LabelText')
       let className = ".dynamicText" + key
       let instances = el.querySelectorAll('.dynamic-text')
@@ -98,7 +98,7 @@ export class SurveyQuestionComponent {
   }
   _generateMultipleValues() {
     if (this.question.type == "textMultiple") {
-      let value = this.dataPrvdr.getSurveyValue(this.questionKey)
+      let value = this.formPrvdr.getSurveyValue(this.questionKey)
       if (value == undefined || value == "" || !value == null) {
         value = []
       }
@@ -122,7 +122,7 @@ export class SurveyQuestionComponent {
         // populate match text and current val. get current val from provider in case it is outside of current question group
         this.dynamicText[val] = {
           matchText: matches.text[i],
-          currentValue: this.dataPrvdr.getSurveyValue(val)
+          currentValue: this.formPrvdr.getSurveyValue(val)
         }
         // apply css
         let el = document.getElementById(this.question.type + 'LabelText')
@@ -161,15 +161,19 @@ export class SurveyQuestionComponent {
   addTextMultiple() {
     // push response to array
     this.multipleTextValues.push(this.multipleTextInput)
-    this.multipleTextInput = ""
-    this.formGroup.value[this.questionKey] = JSON.stringify(this.multipleTextValues)
+    this.multipleTextInput = "";
+    let patch = {}
+    patch[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
     this.events.publish('arrayChange',{controlName:this.questionKey, type:'push', value:this.multipleTextValues})
     this.saveValue()
   }
   removeTextMultiple(index) {
     this.multipleTextValues.splice(index, 1)
-    this.formGroup.value[this.questionKey] = JSON.stringify(this.multipleTextValues)
+    let patch = {}
+    patch[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
     this.events.publish('arrayChange',{controlName:this.questionKey, type:'splice', index:index, value:this.multipleTextValues})
     this.saveValue()
