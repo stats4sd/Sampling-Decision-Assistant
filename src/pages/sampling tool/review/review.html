@@ -18,11 +18,11 @@
       <!-- Review content -->
       <h2>Review Decisions</h2>
         <div>
-            <div *ngFor="let questionGroup of questionGroups">
+            <div *ngFor="let group of questionGroups">
               <div class="heading">
-                {{questionGroup.name}}
+                {{group}}
               </div>
-              <survey-question-group #survey ></survey-question-group>
+              <survey-question-group [section]="group" [showLabel]=true></survey-question-group>
             </div>
           </div>
     </ion-slide>

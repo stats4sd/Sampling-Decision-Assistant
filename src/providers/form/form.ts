@@ -15,7 +15,6 @@ export class FormProvider {
 
   constructor(private fb: FormBuilder, private events: Events) {
     this.events.subscribe('valueUpdate', update => {
-      console.log('update received', this.formGroup)
       this._customUpdateTriggers(update)
     })
     this._init()
@@ -84,10 +83,10 @@ export class FormProvider {
       patch["q5.2"] = ''
       this.formGroup.patchValue(patch)
       if (update.value == "Yes") {
-        this.events.publish('arrayChange', { controlName: "q5.2", type: 'reset', empty: false })
+        this.events.publish('arrayChange:q5.2', { controlName: "q5.2", type: 'reset', empty: false })
       }
       if (update.value == "No") {
-        this.events.publish('arrayChange', { controlName: "q5.2", type: 'reset', empty: true })
+        this.events.publish('arrayChange:q5.2', { controlName: "q5.2", type: 'reset', empty: true })
       }
     }
   }
@@ -111,8 +110,10 @@ export class FormProvider {
     questions.forEach(q => {
       // build templates for any repeat groups
       if (q.type == "repeat") {
+        console.log('building repeat',q)
         // build formgroup sections appropriately
         let repeatQs = this._generateRepeatQuestions(q)
+        console.log('repeat qs',repeatQs)
         q.repeatQuestions = repeatQs
         questionGroup[q.controlName] = this.fb.array([])
         displayQs.push(q)
@@ -145,10 +146,11 @@ export class FormProvider {
         return true
       }
     })
-    // add listener for update
-    this.events.unsubscribe('arrayChange')
-    this.events.subscribe('arrayChange', update => {
-      if (update.controlName == question.selectOptions) {
+    // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
+    this.events.unsubscribe('arrayChange:'+question.selectOptions)
+    this.events.subscribe('arrayChange:'+question.selectOptions, update => {
+      console.log('array change:'+question.selectOptions,update)
+        console.log('pushing repeat to '+question.controlName)
         const control = <FormArray>this.formGroup.controls[groupPrefix]
         if (update.type == "push") {
           // push a repeat to the question group
@@ -163,7 +165,6 @@ export class FormProvider {
           }
           if (!update.empty) { control.push(this._buildRepeatGroup(repeatQs)) }
         }
-      }
       console.log('formgroup', this.formGroup)
     })
     return repeatQs

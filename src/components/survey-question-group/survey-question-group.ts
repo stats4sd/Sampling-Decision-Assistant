@@ -31,6 +31,8 @@ export class SurveyQuestionGroupComponent {
     // bind to master formgroup and questions
     this.formGroup = this.formPrvdr.getFormGroup()
     this.allQuestions = this.formPrvdr.getQuestions()
+    this.groupQuestions = this.allQuestions
+    console.log('group questions',this.groupQuestions)
   }
 
   _filterQuestions() {
@@ -48,6 +50,12 @@ export class SurveyQuestionGroupComponent {
       this.groupQuestions = filtered
       console.log('group questions', this.groupQuestions)
     }
+  }
+
+  getRepeatGroupTitle(question,index){
+    let indices = JSON.parse(this.formGroup.value[question.selectOptions])
+    if(indices.length<2){return ""}
+    else {return indices[index]}
   }
 
 

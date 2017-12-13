@@ -7,8 +7,7 @@
       <div *ngIf="question.type=='repeat'">
         <div [formArrayName]="question.controlName">
           <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
-            <div>Repeat group {{i}}</div>
-            <div>Repeat question: {{question.controlName}}</div>
+            <div class="repeat-heading">{{getRepeatGroupTitle(question,i)}}</div>
             <div *ngFor="let q of question.repeatQuestions">
               <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[0]" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
             </div>

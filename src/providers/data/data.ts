@@ -11,9 +11,10 @@ import { FormProvider } from '../form/form'
 
 @Injectable()
 export class DataProvider {
-  public savedSurveys: any
+  public savedSurveys: any;
   public activeSurvey: any;
-  private _dbVersion=1
+  public questionMeta = questionMeta;
+  private _dbVersion=1;
 
   constructor(public storage: Storage, private events: Events, public toastCtrl: ToastController, private formPrvdr: FormProvider) {
     this.events.subscribe('save', _ => this.saveSurvey())
@@ -41,16 +42,7 @@ export class DataProvider {
     console.log('saved surveys', this.savedSurveys)
     return this.saveToStorage('savedSurveys', this.savedSurveys)
   }
-
-
-  getSurveyValue(key) {
-    // get individual question result
-    if (this.activeSurvey) {
-      return this.activeSurvey[key]
-    }
-    else return
-
-  }
+  
   loadSurvey(survey) {
     this.activeSurvey = survey
     console.log('loading survey', survey)

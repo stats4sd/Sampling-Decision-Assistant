@@ -108,6 +108,7 @@ export class SurveyQuestionComponent {
   }
   _prepareDynamicText() {
     // search through text string for instances of variable references contained between {{ }}
+    // NOTE, could be improved via event listeners for updates? (and possibly change event listener to announce which question changed)
 
     let str: string = this.question.label
     this.originalLabel = str;
@@ -122,12 +123,11 @@ export class SurveyQuestionComponent {
         // populate match text and current val. get current val from provider in case it is outside of current question group
         this.dynamicText[val] = {
           matchText: matches.text[i],
-          currentValue: this.formPrvdr.getSurveyValue(val)
+          currentValue: this.formGroup.value[val]
         }
         // apply css
         let el = document.getElementById(this.question.type + 'LabelText')
         // use split/join to target all instances of text, apply name attribute for tracking later
-        // el.innerHTML=el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text dynamicText"+val+"'>"+matches.text[i]+"</span>")
         el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
         this.updateLabel(val)
       })
@@ -166,7 +166,7 @@ export class SurveyQuestionComponent {
     patch[this.questionKey]=JSON.stringify(this.multipleTextValues)
     this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange',{controlName:this.questionKey, type:'push', value:this.multipleTextValues})
+    this.events.publish('arrayChange:'+this.questionKey,{controlName:this.questionKey, type:'push', value:this.multipleTextValues})
     this.saveValue()
   }
   removeTextMultiple(index) {
@@ -175,7 +175,7 @@ export class SurveyQuestionComponent {
     patch[this.questionKey]=JSON.stringify(this.multipleTextValues)
     this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange',{controlName:this.questionKey, type:'splice', index:index, value:this.multipleTextValues})
+    this.events.publish('arrayChange:'+this.questionKey,{controlName:this.questionKey, type:'splice', index:index, value:this.multipleTextValues})
     this.saveValue()
   }
 

@@ -1,5 +1,6 @@
 import { Component, ViewChildren, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
+import {DataProvider} from '../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -15,11 +16,20 @@ export class ReviewPage {
   viewSection:number=0;
 
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController, private dataPrvdr:DataProvider) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
-
+    this._generateQuestionGroups()
   }
-  ionViewDidLoad() {
+
+  _generateQuestionGroups(){
+    let groups = {}
+    this.dataPrvdr.questionMeta.forEach(q=>{
+      if(!groups[q.section]){groups[q.section]={
+        section:q.section
+      }}
+    })
+    this.questionGroups= Object.keys(groups)
+    console.log('question groups',this.questionGroups)
   }
 
 
