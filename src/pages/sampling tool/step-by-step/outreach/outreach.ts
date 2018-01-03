@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { DataProvider } from '../../../../providers/data/data'
 
 @IonicPage()
 @Component({
@@ -11,14 +12,16 @@ export class OutreachPage {
   activeSlide:string="Main";
   activeGlossaryTerm:string;
   glossaryTerms=[];
-  section = "Reaching the sampling units"
+  surveyValues:any;
+  section = "Selecting and reaching units"
 
-  constructor() {
+  constructor(private dataPrvdr:DataProvider) {
     
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OutreachPage');
+  ionViewDidEnter() {
+    this.surveyValues=this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
+    console.log('survey values',this.surveyValues)
   }
 
 
@@ -37,6 +40,7 @@ export class OutreachPage {
   }
   showGlossary(term: string) {
     this.activeGlossaryTerm=term;
+    console.log('setting active glossary term',term)
     this.slides.slideTo(2)
   }
 

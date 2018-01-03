@@ -16,7 +16,10 @@ export class GlossaryComponent {
   private _activeTerm
   @Input()
   set term(term: string) {
-    if (term) { this.activeTerm = this._getTermObject(term); }
+    if (term) { 
+      console.log('term set',term)
+      this.activeTerm = this._getTermObject(term); 
+    }
   }
   @Input()
   set terms(terms: string[]) {

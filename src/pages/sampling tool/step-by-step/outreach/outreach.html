@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Reaching Sampling Units</ion-title>
+    <ion-title>Selecting and Reaching Sampling Units</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -14,11 +14,29 @@
         <!-- Introduction slide -->
         <ion-slide>
           <div class="slide-content">
-            <h4>Decisions about the reaching the sampling units</h4>
+            <h4>Decisions about selecting and reaching the sampling units</h4>
+            <p>We will now find a method to select and reach the
+              <span class="glossary-link" (click)="showGlossary('sampling-unit')">sampling units</span>.</p>
             <p>
-              Main content will go here, questions as follows:
+              When selecting the sampling units, it is important to ensure they are selected at random. This means that every sampling
+              unit in the target population should have the same chance to be selected into the final sample.</p>
+            <p>
+              The easiest way to do this so is to draw a simple random sample from a complete and up-to-date list of all sampling units
+              in the target population. However, such a list often does not exist. If a complete list does not exist, it
+              is possible to group sampling units in a way that allows us to select some of these groups in a first step,
+              and then select the final sampling units in each of the selected groups at random. This is called
+              <span
+                class="glossary-link" (click)="showGlossary('multi-stage-sampling')">multi-stage sampling</span>.
+            </p>
+            <p>It is much easier and quicker to find or build complete lists of sampling units in the selected groups only,
+              as opposed to having to find or build a list of all sampling units in all groups. Furthermore, if the groups
+              are small geographical units such as villages, it is possible to resort to area sampling methods which do not
+              require lists at all (see
+              <i>EPI-method</i> and
+              <i>GPS sampling</i>).
             </p>
             <ion-card>
+              <ion-card-header>Questions</ion-card-header>
               <survey-question-group [section]="section" [showLabel]=true></survey-question-group>
             </ion-card>
 
