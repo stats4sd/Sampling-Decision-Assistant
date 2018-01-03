@@ -53,9 +53,14 @@ export class SurveyQuestionGroupComponent {
   }
 
   getRepeatGroupTitle(question,index){
-    let indices = JSON.parse(this.formGroup.value[question.selectOptions])
-    if(indices.length<2){return ""}
-    else {return indices[index]}
+    try {
+      let indices = JSON.parse(this.formGroup.value[question.selectOptions])
+      if(indices.length<2){return ""}
+      else {return indices[index]}
+    } catch (error) {
+      return ""
+    }
+    
   }
 
 
