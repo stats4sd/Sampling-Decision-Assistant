@@ -14,7 +14,7 @@ export class DataProvider {
   public savedSurveys: any;
   public activeSurvey: any;
   public questionMeta = questionMeta;
-  private _dbVersion=1;
+  private _dbVersion = 1;
 
   constructor(public storage: Storage, private events: Events, public toastCtrl: ToastController, private formPrvdr: FormProvider) {
     this.events.subscribe('save', _ => this.saveSurvey())
@@ -42,7 +42,7 @@ export class DataProvider {
     console.log('saved surveys', this.savedSurveys)
     return this.saveToStorage('savedSurveys', this.savedSurveys)
   }
-  
+
   loadSurvey(survey) {
     this.activeSurvey = survey
     console.log('loading survey', survey)
@@ -81,10 +81,10 @@ export class DataProvider {
     this.getFromStorage('savedSurveys').then(
       res => {
         this.savedSurveys = res ? res : {}
-          // remove old format
+        // remove old format
         Object.keys(this.savedSurveys).forEach(k => {
           let survey = res[k]
-          if(!survey._dbVersion || survey._dbVersion<this._dbVersion){delete this.savedSurveys[k]}
+          if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { delete this.savedSurveys[k] }
         })
         console.log('surveys loaded', this.savedSurveys)
       }
@@ -112,22 +112,12 @@ export class DataProvider {
 
   export() {
     // export as xlsx
-    let mapping = { controlName: 'id', label: 'question', value: 'response' }
-    var d = []
-    for (let q of questionMeta) {
-      let temp: any = {}
-      if (q.isQuestion == "TRUE") {
-        q['value'] = this.activeSurvey[q.controlName]
-        Object.keys(mapping).forEach(key => {
-          let map = mapping[key]
-          temp[map] = q[key]
-        })
-        d.push(temp)
-      }
-    }
+    let values = this.formPrvdr.formGroup.value
+    let rows  = this._processJson(values)
+    console.log('rows', rows)
     const ws_name = 'Sampling Decisions';
     const wb: WorkBook = { SheetNames: [], Sheets: {} };
-    const ws: any = utils.json_to_sheet(d);
+    const ws: any = utils.json_to_sheet(rows);
     wb.SheetNames.push(ws_name);
     wb.Sheets[ws_name] = ws;
     const wbout = write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
@@ -142,6 +132,46 @@ export class DataProvider {
     }
 
     saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'sampling-decisions.xlsx');
+  }
+
+  _processJson(json) {
+    // iterate over json, where array object flatten. Currently bespoke for repeat groups (not generalised)
+    // also 
+
+    var rows = []
+    // prepare labels
+    let labels = {}
+    questionMeta.forEach(q => labels[q.controlName] = q.label)
+
+    Object.keys(json).forEach(key => {
+      let val = json[key]
+      // replace empty strings with 'Not answered'
+      if (val == "") { json[key] = "Not answered" }
+      // convert nested repeat group into seperate entry
+      if (typeof val == "object") {
+        val.forEach((el, index) => {
+          Object.keys(el).forEach(k => {
+            let v = el[k]
+            let entry = k + '_' + index
+            json[entry] = v
+          })
+        });
+        json[key] = "repeat-group"
+      }
+    })
+
+    // second pass, this time creating rows for excel
+    Object.keys(json).forEach(key => {
+      let val = json[key]
+      let temp = {
+        id: key,
+        question: labels[key.split('_')[0]],
+        response: val
+      }
+      rows.push(temp)
+    })
+
+    return rows
   }
 
 }

@@ -32,7 +32,6 @@ export class SurveyQuestionGroupComponent {
     this.formGroup = this.formPrvdr.getFormGroup()
     this.allQuestions = this.formPrvdr.getQuestions()
     this.groupQuestions = this.allQuestions
-    console.log('group questions',this.groupQuestions)
   }
 
   _filterQuestions() {
