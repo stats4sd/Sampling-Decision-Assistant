@@ -9,6 +9,7 @@ import { SurveyQuestionGroupComponent } from './survey-question-group/survey-que
 import { IntroductionComponent } from './introduction/introduction';
 import { GlossaryLinkComponent } from './glossary-link/glossary-link';
 import { GlossaryComponent } from './glossary/glossary';
+// import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
     declarations: [
         SurveyQuestionComponent,

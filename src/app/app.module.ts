@@ -13,10 +13,13 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DataProvider } from '../providers/data/data';
 import { FormProvider } from '../providers/form/form';
 
+import {DecisionToolMenuComponent} from '../components/decision-tool-menu/decision-tool-menu'
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    DecisionToolMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +34,7 @@ import { FormProvider } from '../providers/form/form';
   entryComponents: [
     MyApp,
     HomePage,
+    DecisionToolMenuComponent
   ],
   providers: [
     StatusBar,

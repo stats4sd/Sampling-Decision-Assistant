@@ -193,6 +193,19 @@ ion-card{
     
 }
 
+// popover fix for screen resizing (max-width - 100?)
+.popover-content{
+    // margin-right:400px;
+    // right: 0!important;
+    top:56px!important;
+    left:unset!important;
+    width:150px!important;
+    right:0!important;
+
+    // right: calc(100% - #{$max-app-width}/2)!important;
+
+}
+
 // --------------------------------------------------
 // app root centering
 
@@ -211,10 +224,7 @@ ion-card{
         max-width: $max-app-width;
         height:calc(100vh - 10px);
     }
-    // popover fix for screen resizing (max-width - 100?)
-    .popover-content{
-        margin-right:400px;
-    }
+    
     // modal fix for screen resizing
     .modal-wrapper{
         left: calc(50% - #{$max-app-width}/2);

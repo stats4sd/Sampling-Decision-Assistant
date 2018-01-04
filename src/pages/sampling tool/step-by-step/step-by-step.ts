@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events, PopoverController } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data'
 import { FormProvider } from '../../../providers/form/form'
+import { Popover } from 'ionic-angular/components/popover/popover';
+import {DecisionToolMenuComponent} from '../../../components/decision-tool-menu/decision-tool-menu'
 
 @IonicPage()
 @Component({
@@ -10,7 +12,8 @@ import { FormProvider } from '../../../providers/form/form'
 })
 export class StepByStepPage {
   sections: any = [];
-  showIntro:boolean=true
+  showIntro:boolean;
+  activeSurvey:any
 
   constructor(
     public navCtrl: NavController, 
@@ -18,7 +21,8 @@ export class StepByStepPage {
     private dataPrvdr: DataProvider,
     public modalCtrl:ModalController,
     public events:Events,
-    public formPrvdr:FormProvider
+    public formPrvdr:FormProvider,
+    public popoverCtrl:PopoverController,
   ) {
     
     this.sections=[
@@ -29,10 +33,12 @@ export class StepByStepPage {
       {name:"Selecting and reaching the sampling units",icon:"assets/img/icons/outreach.svg", page:"OutreachPage",number:5},
     ]
     this.events.subscribe('project:loaded',data=>this.showIntro=false)
+    if(this.navParams.data=="tutorialMode"){this.showIntro=true}
   }
   ionViewDidEnter(){
     if(!this.showIntro){
       this.dataPrvdr.saveSurvey()
+      this.activeSurvey=this.dataPrvdr.activeSurvey
     }
   }
 
@@ -40,12 +46,29 @@ export class StepByStepPage {
     if(section.class!="disabled"){
       this.navCtrl.push(section.page)
     }
-    
+  }
+  showMenu(e){
+      let popover = this.popoverCtrl.create(DecisionToolMenuComponent);
+      popover.onDidDismiss(params=>{
+        console.log('params',params)
+        if(params=="save"){
+          if(!this.dataPrvdr.activeSurvey){this.startNew()}
+          else{this.save()}        
+        }
+        if(params == "load"){this.load()}
+        if(params == "new"){this.startNew()}
+      })
+      popover.present({
+        ev:e
+      });
   }
   startNew(){
     let modal = this.modalCtrl.create('SavedInfoPage',{view:'save'});
     modal.onDidDismiss(data=>{
-      if(data){this.showIntro=false}
+      if(data){
+        this.showIntro=false
+        this.activeSurvey=this.dataPrvdr.activeSurvey
+      }
     })
     modal.present()
   }
@@ -54,7 +77,8 @@ export class StepByStepPage {
     modal.onDidDismiss(data=>{
       console.log('survey loaded',data)
       if(data){
-        this.showIntro=false;        
+        this.showIntro=false;
+        this.activeSurvey=this.dataPrvdr.activeSurvey        
       }
     })
     modal.present()

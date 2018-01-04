@@ -23,6 +23,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/common@>=4.00 <6.0.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-5.1.3.tgz#db517c00a95f72885eb2091098eaed4f95494a63"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/compiler-cli@4.4.4":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-4.4.4.tgz#063080a497d9175396825050222c717da184f6cf"
@@ -37,9 +43,21 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/compiler@>=4.00 <6.0.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-5.1.3.tgz#125008477895aee1bf71294bf981a4ba184c1e59"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/core@4.4.4":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-4.4.4.tgz#bd37ecf54158f97489996c9386bd222f80a32f5c"
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/core@>=4.00 <6.0.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-5.1.3.tgz#b739f69834c344285250a384d0c203dd36778a37"
   dependencies:
     tslib "^1.7.1"
 
@@ -61,9 +79,27 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/platform-browser-dynamic@>=4.00 <6.0.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.1.3.tgz#ad37e4dbd5251e7ea256ad9323fe11c848d04050"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/platform-browser@4.4.4":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-4.4.4.tgz#a3898e2e7ba9d84ffa0d47144c6971179c75aee6"
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/platform-browser@>=4.00 <6.0.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-5.1.3.tgz#5abe7809009eff6bff3bf89faba96fe066fb2036"
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/router@>=4.00 <6.0.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-5.1.3.tgz#69627d7186e4ab8e7d4058c4400f82d3899ebd7a"
   dependencies:
     tslib "^1.7.1"
 
@@ -2393,6 +2429,19 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+ngx-file-drop@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/ngx-file-drop/-/ngx-file-drop-2.0.2.tgz#b1445cb6e8b80f3ba6145c4a9ddc9b51b91a7c2a"
+  dependencies:
+    "@angular/common" ">=4.00 <6.0.0"
+    "@angular/compiler" ">=4.00 <6.0.0"
+    "@angular/core" ">=4.00 <6.0.0"
+    "@angular/platform-browser" ">=4.00 <6.0.0"
+    "@angular/platform-browser-dynamic" ">=4.00 <6.0.0"
+    "@angular/router" ">=4.00 <6.0.0"
+    rxjs "^5.1.0"
+    zone.js "^0.8.4"
+
 node-gyp@^3.3.1:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-3.6.2.tgz#9bfbe54562286284838e750eac05295853fa1c60"
@@ -3185,6 +3234,12 @@ rxjs@5.4.3:
   dependencies:
     symbol-observable "^1.0.1"
 
+rxjs@^5.1.0:
+  version "5.5.6"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
+  dependencies:
+    symbol-observable "1.0.1"
+
 safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -3511,6 +3566,10 @@ sw-toolbox@3.6.0:
   dependencies:
     path-to-regexp "^1.0.1"
     serviceworker-cache-polyfill "^4.0.0"
+
+symbol-observable@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
 
 symbol-observable@^1.0.1:
   version "1.1.0"
@@ -4018,3 +4077,7 @@ yargs@~3.10.0:
 zone.js@0.8.18:
   version "0.8.18"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.18.tgz#8cecb3977fcd1b3090562ff4570e2847e752b48d"
+
+zone.js@^0.8.4:
+  version "0.8.19"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.19.tgz#a4b522cd9e8b7b616a638c297d720d4c7f292f71"

@@ -16,6 +16,7 @@
         <ion-input placeholder="Input a name for the project" [(ngModel)]="saveName"></ion-input>
       </ion-item>
       <div class="error-message">{{errorMsg}}</div>
+      <div class="error-message">Future progress will be automatically saved</div>
       <ion-item>
         <button ion-button icon-left [disabled]="!saveName" (click)="createNew()">
           <ion-icon name="create"></ion-icon>Create</button>
@@ -38,7 +39,8 @@
           </div>
         </div>
       </ion-item>
-      <div *ngIf="savedArray.length==0">There are no projects saved. Click <span class="link" (click)="setView('save')">here</span> to create a new project</div>
+      <div *ngIf="savedArray.length==0">There are no projects saved. Click
+        <span class="link" (click)="setView('save')">here</span> to create a new project</div>
     </ion-list>
     <h3>Load a project templates</h3>
     <ion-list>
@@ -46,7 +48,11 @@
     </ion-list>
     <h3>Import from excel</h3>
     <ion-list>
-      <div class="temp-text">In this section you will be able import a previously-created excel file, for sharing projects with others or using on different devices</div>
+      <div class="temp-text">In this section you will be able import a previously-created excel file, for sharing projects with others or using
+        on different devices</div>
+      <file-drop headertext="Drop files here" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <!-- <span>optional content (don't set headertext then)</span> -->
+      </file-drop>
     </ion-list>
   </div>
 </ion-content>

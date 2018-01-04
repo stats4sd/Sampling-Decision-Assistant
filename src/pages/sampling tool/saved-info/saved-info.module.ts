@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { SavedInfoPage } from './saved-info';
+import { FileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { SavedInfoPage } from './saved-info';
   ],
   imports: [
     IonicPageModule.forChild(SavedInfoPage),
+    FileDropModule
   ],
 })
 export class SavedInfoPageModule {}

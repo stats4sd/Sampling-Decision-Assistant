@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import { Events, ToastController } from 'ionic-angular';
 import questionMeta from '../questionMeta';
 // import * as XLSX from 'xlsx';
-import { utils, write, WorkBook } from 'xlsx';
+import { utils, write, WorkBook, read } from 'xlsx';
 import { saveAs } from 'file-saver';
 import { FormProvider } from '../form/form'
 // import * as dojox from 'dojo'
@@ -25,7 +25,7 @@ export class DataProvider {
     this.activeSurvey = {
       title: title,
       created: new Date(),
-      responses: {}
+      values: {}
     }
     console.log('new survey created', this.activeSurvey)
     this.savedSurveys[title] = this.activeSurvey
@@ -34,7 +34,7 @@ export class DataProvider {
 
   deleteSurvey(title) {
     console.log('deleting', title, this.savedSurveys)
-    if (this.activeSurvey.title == title) {
+    if (this.activeSurvey && this.activeSurvey.title == title) {
       this.activeSurvey = null
     }
     delete this.savedSurveys[title]
@@ -66,6 +66,10 @@ export class DataProvider {
           }
         )
       }
+      else {
+        console.log('need survey name', this.activeSurvey)
+        resolve('saved')
+      }
     })
   }
 
@@ -87,6 +91,7 @@ export class DataProvider {
           if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { delete this.savedSurveys[k] }
         })
         console.log('surveys loaded', this.savedSurveys)
+        console.log('active survey', this.activeSurvey)
       }
     )
   }
@@ -99,8 +104,8 @@ export class DataProvider {
       this.storage.get(key)
         .then(
         res => {
-          if (res != null) { this.activeSurvey = res }
-          resolve(this.activeSurvey)
+          // if (res != null) { this.activeSurvey = res }
+          resolve(res)
         }
         )
     })
@@ -112,9 +117,8 @@ export class DataProvider {
 
   export() {
     // export as xlsx
-    let values = this.formPrvdr.formGroup.value
-    let rows  = this._processJson(values)
-    console.log('rows', rows)
+    let rows = this.prepareExport()
+    console.log('active survey', this.activeSurvey)
     const ws_name = 'Sampling Decisions';
     const wb: WorkBook = { SheetNames: [], Sheets: {} };
     const ws: any = utils.json_to_sheet(rows);
@@ -133,12 +137,31 @@ export class DataProvider {
 
     saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'sampling-decisions.xlsx');
   }
+  import(files) {
+    var rABS = true; // true: readAsBinaryString ; false: readAsArrayBuffer
+    var files = files, f = files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var data = files[0].fileEntry.file;
+      if (!rABS) data = new Uint8Array(data);
+      var workbook = read(data, { type: rABS ? 'binary' : 'array' });
+      console.log('workbook',workbook)
 
-  _processJson(json) {
+      /* DO SOMETHING WITH workbook HERE */
+    };
+    if (rABS) reader.readAsBinaryString(f); else reader.readAsArrayBuffer(f);
+  }
+
+  prepareExport() {
     // iterate over json, where array object flatten. Currently bespoke for repeat groups (not generalised)
-    // also 
-
-    var rows = []
+    let values = this.formPrvdr.formGroup.value
+    console.log('values', values)
+    let json = {}
+    for (let key in values) {
+      if (values.hasOwnProperty(key)) { json[key] = values[key] }
+    }
+    console.log('preparing export', json)
+    let rows = []
     // prepare labels
     let labels = {}
     questionMeta.forEach(q => labels[q.controlName] = q.label)
@@ -174,7 +197,10 @@ export class DataProvider {
     return rows
   }
 
+
 }
+
+
 
 
 /*Demos

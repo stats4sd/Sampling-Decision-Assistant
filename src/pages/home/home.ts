@@ -18,7 +18,9 @@ export class HomePage {
 constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
 
     this.sections=[
-      {name:"Use the tool", page:"StepByStepPage", icon:"arrow-forward"},
+     
+      {name:"Use the tool", page:"StepByStepPage" },
+      {name:"View the Tutorial",page:"StepByStepPage", params:"tutorialMode"},
       // {name:"Step by step mode", page:"StepByStepPage"},
       // {name:"Question-based mode", page:"QuestionsPage"}
 
@@ -40,7 +42,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
   // 
   goToSection(section){
     if(section.class!="disabled"){
-      this.navCtrl.push(section.page)
+      this.navCtrl.push(section.page,section.params)
     }
     
   }

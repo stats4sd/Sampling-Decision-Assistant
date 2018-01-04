@@ -2,7 +2,9 @@
   <ion-navbar color="primary">
     <ion-title>Sampling Decision Assistant</ion-title>
     <ion-buttons end>
-
+      <button ion-button icon-left (click)="showMenu($event)">
+        <ion-icon name="more"></ion-icon>Menu
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -11,8 +13,13 @@
 <ion-content padding>
   <div class="content-container">
     <!-- intro -->
+
     <introduction *ngIf="showIntro"></introduction>
     <div [ngClass]="showIntro ? 'hidden':'not-hidden'">
+      <div style="font-size: medium" icon-left *ngIf="!activeSurvey">
+        <ion-icon name="bulb"></ion-icon>To start a new project from a template or to load a saved project click on the menu link above</div>
+        <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeSurvey">
+          <ion-icon name="clipboard"></ion-icon>{{activeSurvey.title}}</div>
       <!-- step by step sections -->
       <div class="section-break">Step By Step Decisions</div>
       <div class="main-container">
@@ -39,18 +46,18 @@
             <span>Review</span>
           </ion-card>
           <img class="section-icon _80px" src="assets/img/icons/arrows-dual.svg">
-          <ion-card class="review-card" >
+          <ion-card class="review-card">
             <span>Analyse</span>
           </ion-card>
         </div>
         <div style="max-width:600px; display:flex; justify-content:center">
-            <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
-            <ion-card class="review-card">
-              <span>Export</span>
-            </ion-card>
+          <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
+          <ion-card class="review-card">
+            <span>Export</span>
+          </ion-card>
         </div>
 
-        
+
 
       </div>
 

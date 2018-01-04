@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-import { DataProvider } from '../../../providers/data/data'
+import { DataProvider } from '../../../providers/data/data';
+import { FileDropModule, UploadFile, UploadEvent } from 'ngx-file-drop';
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ export class SavedInfoPage {
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataPrvdr: DataProvider) {
     this.view = this.navParams.data.view;
+    console.log('file drop',FileDropModule)
     this.loadSavedSurveys()
   }
 
@@ -55,6 +57,20 @@ export class SavedInfoPage {
       this.savedArray = arr.reverse();
     }
     else { this.savedArray = [] }
+  }
+  // file drop
+  dropped(e:UploadEvent){
+    console.log('upload event',e)
+    e.files[0].fileEntry.file(info=>{
+      console.log('info',info)
+    })
+    this.dataPrvdr.import(e.files)
+  }
+  fileOver(e){
+
+  }
+  fileLeave(e){
+
   }
 
 }
