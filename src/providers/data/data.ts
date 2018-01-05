@@ -16,7 +16,12 @@ export class DataProvider {
   public questionMeta = questionMeta;
   private _dbVersion = 1;
 
-  constructor(public storage: Storage, private events: Events, public toastCtrl: ToastController, private formPrvdr: FormProvider) {
+  constructor(
+    public storage: Storage,
+    private events: Events,
+    public toastCtrl: ToastController,
+    private formPrvdr: FormProvider
+  ) {
     this.events.subscribe('save', _ => this.saveSurvey())
     this.loadSavedSurveys()
   }
@@ -49,11 +54,19 @@ export class DataProvider {
     this.formPrvdr.initFormValues(survey.values)
   }
 
-  saveSurvey() {
-    // save entire survey to local storage
+  saveSurvey(survey?) {
+    // save entire survey to local storage. provide survey param to specify exact (e.g. in import), otherwise will pull from form provider
     return new Promise((resolve, reject) => {
-      console.log('saving survey', this.activeSurvey)
-      if (this.activeSurvey) {
+      if (survey) {
+        this.savedSurveys[survey.title] = survey
+        this.saveToStorage('savedSurveys', this.savedSurveys).then(
+          _ => {
+            this.showNotification('Imported Successfully')
+            resolve('saved')
+          })
+      }
+      else if (this.activeSurvey) {
+        console.log('saving survey', this.activeSurvey)
         let title = this.activeSurvey.title
         this.savedSurveys[title] = this.activeSurvey
         this.activeSurvey.values = this.formPrvdr.formGroup.value
@@ -119,7 +132,7 @@ export class DataProvider {
     // export as xlsx
     let rows = this.prepareExport()
     console.log('active survey', this.activeSurvey)
-    const ws_name = 'Sampling Decisions';
+    const ws_name = this.activeSurvey.title;
     const wb: WorkBook = { SheetNames: [], Sheets: {} };
     const ws: any = utils.json_to_sheet(rows);
     wb.SheetNames.push(ws_name);
@@ -135,21 +148,62 @@ export class DataProvider {
       return buf;
     }
 
-    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'sampling-decisions.xlsx');
+    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'Sampling Decisions - ' + this.activeSurvey.title + '.xlsx');
   }
   import(files) {
-    var rABS = true; // true: readAsBinaryString ; false: readAsArrayBuffer
-    var files = files, f = files[0];
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var data = files[0].fileEntry.file;
-      if (!rABS) data = new Uint8Array(data);
-      var workbook = read(data, { type: rABS ? 'binary' : 'array' });
-      console.log('workbook',workbook)
-
-      /* DO SOMETHING WITH workbook HERE */
-    };
-    if (rABS) reader.readAsBinaryString(f); else reader.readAsArrayBuffer(f);
+    // support processing of drag and drop files using filereader api
+    // *** note, currently only supporting readasbinarystring so not entirely compatible. Need to test ***
+    // prepare reader
+    let reader = new FileReader()
+    reader.onload = () => this._processImport(reader)
+    reader.onerror = function (err) { console.log('error', err) }
+    // process files
+    files.forEach(file => {
+      file.fileEntry.file(
+        info => {
+          // get in base64 format
+          // reader.readAsDataURL(info)
+          reader.readAsBinaryString(info)
+          //reader.readAsArrayBuffer(info)
+        }
+      )
+    })
+  }
+  _processImport(reader) {
+    // assumes data read in base64 format. Reads workbook data, runs prepare to convert back into correct format and saves to db
+    let data = reader.result
+    var workbook = read(data, { type: 'binary' });
+    console.log('workbook', workbook)
+    let sheetName = workbook.SheetNames[0]
+    let jsonArr = utils.sheet_to_json(workbook.Sheets[sheetName])
+    let values = this.prepareImport(jsonArr)
+    console.log('values', values)
+    let survey = {
+      title: sheetName,
+      values: values,
+      created: new Date(),
+      imported: true
+    }
+    console.log('survey', survey.values['q1.1'])
+    this.activeSurvey = survey
+    // create new project entry, prompting rename where appropriate
+    console.log('checking for duplicates', survey)
+    if (this.savedSurveys[survey.title]) {
+      console.log('duplicate survey', survey.title)
+      this.events.subscribe('project:rename', title => {
+        survey.title = title
+        console.log('survey renamed', survey)
+        this.saveSurvey(survey).then(_ => {
+          this.events.unsubscribe('project:rename')
+          this.events.publish('import:complete')
+        })
+      })
+      this.events.publish('import:duplicate', survey)
+    }
+    else {
+      console.log('no duplicate, proceeding to save')
+      this.saveSurvey(survey).then(_ => this.events.publish('import:complete'))
+    }
   }
 
   prepareExport() {
@@ -195,6 +249,40 @@ export class DataProvider {
     })
 
     return rows
+  }
+  prepareImport(arr) {
+    // inverse of above for importing data back in
+    console.log('stage 1', arr)
+    let processed = {}
+    arr.forEach((el, i) => {
+      let id = el.id
+      let val = el.response
+      if (val == "Not answered") { val = "" }
+      // rebuild repeat group holder
+      if (val == "repeat-group") {
+        console.log('rebuilding repeat group', val)
+        processed[id] = []
+      }
+      // populate repeat group entries
+      else if (id.indexOf('_') > -1) {
+        // form q5.2.6_0 needs to be in 5.2 array 0 under q5.2.6
+        //                              q       qindex     qid
+        let qid = id.split('_')[0]
+        let arr = qid.split('.')
+        arr.splice(arr.length - 1, 1)
+        let q = arr.join('.')
+        let qindex = id.split('_')[1]
+        if (!processed[q]) { processed[q] = [] }
+        if (!processed[q][qindex]) { processed[q][qindex] = {} }
+        processed[q][qindex][qid] = val
+
+      }
+      // add all other data
+      else { processed[id] = val }
+    })
+    console.log('processed', processed)
+    return processed
+
   }
 
 
