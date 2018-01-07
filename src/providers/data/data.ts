@@ -177,22 +177,17 @@ export class DataProvider {
     let sheetName = workbook.SheetNames[0]
     let jsonArr = utils.sheet_to_json(workbook.Sheets[sheetName])
     let values = this.prepareImport(jsonArr)
-    console.log('values', values)
     let survey = {
       title: sheetName,
       values: values,
       created: new Date(),
       imported: true
     }
-    console.log('survey', survey.values['q1.1'])
     this.activeSurvey = survey
     // create new project entry, prompting rename where appropriate
-    console.log('checking for duplicates', survey)
     if (this.savedSurveys[survey.title]) {
-      console.log('duplicate survey', survey.title)
       this.events.subscribe('project:rename', title => {
         survey.title = title
-        console.log('survey renamed', survey)
         this.saveSurvey(survey).then(_ => {
           this.events.unsubscribe('project:rename')
           this.events.publish('import:complete')
@@ -201,7 +196,6 @@ export class DataProvider {
       this.events.publish('import:duplicate', survey)
     }
     else {
-      console.log('no duplicate, proceeding to save')
       this.saveSurvey(survey).then(_ => this.events.publish('import:complete'))
     }
   }
