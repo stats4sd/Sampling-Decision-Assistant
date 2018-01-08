@@ -7,9 +7,8 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="slide-scroll-content">
     <div class="central-content">
-        <div class="central-inner-content">
           <ion-slides (ionSlideDidChange)="slideChanged()">
             <!-- Introduction slide -->
             <ion-slide>
@@ -51,6 +50,5 @@
                 <ion-segment-button value="Glossary" (click)="slideTo(2)">Glossary</ion-segment-button>
               </ion-segment>
             </div>
-        </div>
       </div>
 </ion-content>

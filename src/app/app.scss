@@ -7,6 +7,9 @@
 @import './scrollbars.scss';
 // --------------------------------------------------
 $max-app-width:768px;
+// also applied direct to body so adjust accordingly
+
+
 // --------------------------------------------------
 // header settings
 .header-logo{
@@ -134,34 +137,56 @@ h2{
     }
 }
 // allow vertical scroll in slides
-ion-slides { height: 100%; }
-.slide-zoom{
-    height: 100%;
+.central-inner-content{
     display: flex;
-    overflow: scroll;
     flex-direction: column;
+    justify-content: space-between;
 }
 .slide-content{
-    max-height: calc(100vh - 140px);
-    //padding-top:10px;
-    overflow: scroll;
     font-size: 14px;
     text-align: left;
     line-height: 18px;
-    // interpolated variable
-    width:calc(100% - 16px);
-    max-width: calc(#{$max-app-width} - 64px)
+    margin-bottom: 30px;
 }
-.central-content{
-    position: absolute;
-    width:calc(100vw - 32px);
-    max-width: calc(#{$max-app-width} - 32px);
-    // max-width: 468px;
-    margin-top:16px;
-    max-height: calc(100vh - 164px)
+.swiper-slide{
+    display: block!important;
+    max-height: calc(100vh - 150px);
+    overflow-y: scroll;
+    width:100%;
+}
+.slide-scroll-content{
+    .scroll-content{
+        overflow-y: hidden
+    }
+}
+// ion-slides { height: 100%; }
+// .slide-zoom{
+//     height: 100%;
+//     display: flex;
+//     // overflow: scroll;
+//     flex-direction: column;
+// }
+// .slide-content{
+//     max-height: calc(100vh - 140px);
+//     //padding-top:10px;
+//     overflow: scroll;
+//     font-size: 14px;
+//     text-align: left;
+//     line-height: 18px;
+//     // interpolated variable
+//     width:calc(100% - 16px);
+//     max-width: calc(#{$max-app-width} - 64px)
+// }
+// .central-content{
+//     position: absolute;
+//     width:calc(100vw - 32px);
+//     max-width: calc(#{$max-app-width} - 32px);
+//     // max-width: 468px;
+//     margin-top:16px;
+//     max-height: calc(100vh - 164px)
     
-}
-.swiper-slide{width:100%!important}
+// }
+// .swiper-slide{width:100%!important}
 
 // --------------------------------------------------
 // glossary
@@ -210,20 +235,32 @@ ion-card{
 // app root centering
 
 @media screen and (min-width:$max-app-width){
+    body{
+        max-width: 768px;
+        left: calc(50% - #{$max-app-width}/2);
+        background-color: color($colors,primary);
+        height:calc(100vh - 10px);
+        margin:5px auto;
+    }
     // add padding, background and curved edges for large devices
     .menu-content, .app-root{
         border-radius: 10px;
+        border: 1px solid white;
     }
-    body{
-        background-color: color($colors,primary);
-    }
-    .app-root{
-        margin:5px auto;
-        position: unset;
-        padding: 5px;
-        max-width: $max-app-width;
-        height:calc(100vh - 10px);
-    }
+    // body{
+    //     background-color: color($colors,primary);
+    // }
+    // .app-root, .ion-page{
+    //     margin:5px auto;
+    //     position: inherit!important;
+    //     padding: 5px;
+    //     max-width: $max-app-width;
+    //     height:calc(100vh - 10px);
+    // }
+    // .app-root, .menu, .menu-inner{
+    //     left: calc(50% - #{$max-app-width}/2);
+    // }
+    
     
     // modal fix for screen resizing
     .modal-wrapper{
