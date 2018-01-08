@@ -35,7 +35,12 @@ export class ObjectivesPage {
     this.activeSlide=sections[currentIndex].label;
   }
   slideTo(index){
+    this.slides.lockSwipes(false)
     this.slides.slideTo(index)
+    this.slides.lockSwipes(true)
+  }
+  ngAfterViewInit(){
+    this.slides.lockSwipes(true)
   }
   showGlossary(term: string) {
     this.activeGlossaryTerm=term;

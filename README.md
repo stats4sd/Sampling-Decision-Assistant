@@ -14,3 +14,26 @@ Use either nmp or yarn to install dependencies
 
 ### Deploying remotely
 The project is linked to a remote firebase server for deployment. Memebers of SSD with access can deploy via `firebase deploy`
+
+
+
+## Build notes
+Standard build with one current exception:
+To enable text select within slide object the core ion-slides component has been changed. Ideally in future should fork and save as custom component however for now simply need to comment out mousedown listeners in `node_modules\ionic-angular\components\slides\swiper\swiper-events.js`
+
+```
+if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios')) || plt.getQueryParam('ionicPlatform')) {
+        // mousedown
+        // plt.registerListener(touchEventsTarget, 'mousedown', function (ev) {
+        //     onTouchStart(s, plt, ev);
+        // }, { zone: false }, unregs);
+        // // mousemove
+        // plt.registerListener(touchEventsTarget, 'mousemove', function (ev) {
+        //     onTouchMove(s, plt, ev);
+        // }, { zone: false }, unregs);
+        // // mouseup
+        // plt.registerListener(touchEventsTarget, 'mouseup', function (ev) {
+        //     onTouchEnd(s, plt, ev);
+        // }, { zone: false }, unregs);
+    }
+```

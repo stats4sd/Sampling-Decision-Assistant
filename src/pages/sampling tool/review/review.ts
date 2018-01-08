@@ -20,6 +20,7 @@ export class ReviewPage {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
     this._generateQuestionGroups()
   }
+  
 
   _generateQuestionGroups(){
     let groups = {}
@@ -48,9 +49,14 @@ export class ReviewPage {
   hideIntro() {
     this.showIntro = false;
   }
+  ngAfterViewInit(){
+    this.slides.lockSwipes(true)
+  }
   slideTo(index){
+    this.slides.lockSwipes(false)
     this.slides.slideTo(index)
     this.viewSection=index;
+    this.slides.lockSwipes(true)
   }
   slideChanged(){
     this.viewSection=this.slides.getActiveIndex();
