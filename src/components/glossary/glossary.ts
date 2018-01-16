@@ -13,7 +13,6 @@ export class GlossaryComponent {
 
   @Input('sectionTerms') glossaryTerms: string[]
   // use set/get to load full json object when term or terms changed
-  private _activeTerm
   @Input()
   set term(term: string) {
     if (term) { 

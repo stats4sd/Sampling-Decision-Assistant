@@ -7,10 +7,13 @@ Full migration to follow once better determined how users might want to interact
 
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, NavController } from 'ionic-angular';
 import glossaryMaster from '../../models/glossaryTerms'
 
-@IonicPage()
+@IonicPage({
+  segment:'glossary',
+  defaultHistory:['HomePage']
+})
 @Component({
   selector: 'page-glossary',
   templateUrl: 'glossary.html',
@@ -20,7 +23,7 @@ export class GlossaryPage {
   modalMode: boolean;
   activeTerm: any={}
 
-  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController, public navParams: NavParams, public navCtrl:NavController) {
     if (navParams.data.term) {
       this.modalMode = true
       this._getActiveTerm(navParams.data.term)
@@ -39,6 +42,10 @@ export class GlossaryPage {
     console.log('setting active term', term)
     if (!term.Definition) { term.Definition = "This is just a placeholder definition for " + term.Term + ". More content will be added later" }
     this.activeTerm = term
+    this.navCtrl.push('GlossaryDetailPage',{
+      slug:this.activeTerm.slug,
+      activeTerm:this.activeTerm
+    },{animate:false})
   }
 
   _getActiveTerm(term:string) {
@@ -53,16 +60,7 @@ export class GlossaryPage {
     });
   }
 
-  _renderHtml(definition){
-    let content = document.getElementById('definition')
-    content.innerHTML=this.activeTerm.Definition
-    let links = Array.prototype.slice.call(content.querySelectorAll('a'));
-    for (let link of links) {
-      link.onclick = function (e) {
-        this._linkClick(link.href, link.text, e)
-      }.bind(this)
-    }
-  }
+ 
 
   _setupClickHandlers() {
     // handle link and image clicks to not follow href (opening external)

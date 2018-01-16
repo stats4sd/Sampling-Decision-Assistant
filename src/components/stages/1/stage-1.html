@@ -1,0 +1,38 @@
+<!-- Generated template for the Stage_1Component component -->
+<div class="slide-content">
+  <h2>Introduction</h2>
+  <p>To effectively answer the questions and guide your decisions throughout this process, you should first have a clear idea
+    of your main objective. This is your overall aim for the activity that you are doing sampling for.</p>
+  <p>Think about the 2 questions below, and write your answers or notes into the boxes.</p>
+  <ion-card>
+    <ion-card-header>Main Objective</ion-card-header>
+    <ion-card-content>
+      <p style='font-weight: bold'>How would you describe the main objective of the survey?</p>
+      <div>
+        <ion-icon name="alert"></ion-icon> This should involve some form of
+        <!-- <glossary-link slug="estimation" text="Estimation"></glossary-link> -->
+        <span class="glossary-link" (click)="showGlossary('estimation')">Estimation</span>.
+      </div>
+      <button ion-button icon-left disabled>
+        <ion-icon name='question'></ion-icon>Why?</button>
+      <survey-question-group [section]="section" [questionNumber]=1 [showLabel]=false></survey-question-group>
+      <button ion-button icon-left clear>
+        <ion-icon name='info'></ion-icon>
+        Go to help about this question
+      </button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>Specific Objectives</ion-card-header>
+    <ion-card-content>
+      <p style='font-weight: bold'>Are there any specific objectives?</p>
+      <p>These are more focused objectives, for example 'learning a particular thing about a group of subjects'. List all specific
+        objectives below</p>
+      <survey-question-group [section]="section" [questionNumber]=2 [showLabel]=false></survey-question-group>
+      <button ion-button icon-left clear>
+        <ion-icon name='info'></ion-icon>
+        Go to help about this question
+      </button>
+    </ion-card-content>
+  </ion-card>
+</div>

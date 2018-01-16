@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -10,23 +9,24 @@ import { HomePage } from '../pages/home/home';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = 'HomePage';
 
-  pages: Array<{title: string, component: any, disabled?:boolean}>;
+  pages: Array<{ title: string, component: any, disabled?: boolean }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events:Events) {
     this.initializeApp();
+
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
+      { title: 'Home', component: 'HomePage' },
       // { title: 'Technical terms explained', component: 'TechnicalTermsPage',disabled:true },
-      { title: 'Sample size trade-off tool', component: 'SampleSizeTradeoffPage',disabled:true },
+      { title: 'Sample size trade-off tool', component: 'SampleSizeTradeoffPage', disabled: true },
       // { title: 'Sample design assessment tool', component: 'SampleDesignAssessmentPage',disabled:true },
-      { title: 'How to use this guide', component: 'HowTo',disabled:true },
-      { title: 'More information and support', component: 'MoreInfo',disabled:true },
-      { title: 'Glossary', component: 'GlossaryPage',disabled:false },
-      { title: 'About', component: 'AboutPage',disabled:true },
+      { title: 'How to use this guide', component: 'HowTo', disabled: true },
+      { title: 'More information and support', component: 'MoreInfo', disabled: true },
+      { title: 'Glossary', component: 'GlossaryPage', disabled: false },
+      { title: 'About', component: 'AboutPage', disabled: true },
     ];
 
   }
@@ -37,6 +37,11 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      // monitor window hash changes and publish corresponding event
+      window.addEventListener('hashchange', ()=> {
+        console.log("Hash Changed",location.hash);
+        this.events.publish('hash:changed',location.hash)
+      })
     });
   }
 

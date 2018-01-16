@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -13,17 +12,26 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DataProvider } from '../providers/data/data';
 import { FormProvider } from '../providers/form/form';
 
-import {DecisionToolMenuComponent} from '../components/decision-tool-menu/decision-tool-menu'
+import { DecisionToolMenuComponent } from '../components/decision-tool-menu/decision-tool-menu'
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     DecisionToolMenuComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,
+      // {
+      //locationStrategy: 'path'
+      // }, 
+      // {
+      // links: [
+      //   { component: HomePage, name: 'Home', segment: 'home' },
+      //   { component: 'GlossaryPage', name: 'Glossary', segment: 'glossary/:termID' }
+      // ]
+      // }
+    ),
     IonicStorageModule.forRoot({
       name: '__sampling',
     }),
@@ -33,15 +41,14 @@ import {DecisionToolMenuComponent} from '../components/decision-tool-menu/decisi
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     DecisionToolMenuComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     DataProvider,
     FormProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

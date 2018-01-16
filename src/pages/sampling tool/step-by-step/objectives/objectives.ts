@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Slides, Events } from 'ionic-angular';
 import { DataProvider } from '../../../../providers/data/data'
 
 @IonicPage()
@@ -9,42 +9,52 @@ import { DataProvider } from '../../../../providers/data/data'
 })
 export class ObjectivesPage {
   @ViewChild(Slides) slides: Slides;
-  activeSlide:string="Main";
-  activeGlossaryTerm:string;
-  glossaryTerms=["estimation"];
+  activeSlide: string = "Main";
+  activeGlossaryTerm: string;
+  glossaryTerms = ["estimation"];
   section = "General objectives";
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, private modalCtrl: ModalController) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, private modalCtrl: ModalController, public events:Events) {
+    this._attachListeners()
   }
-  ionViewDidEnter(){
-    
-    
+  ionViewDidEnter() {
+
+
   }
 
-  
+
+  _attachListeners(){
+    // hash change
+    
+  }
 
   // slides functions (currently copied onto all sections)
   slideChanged() {
-    let sections:any=[
-      {label:'Main',slideIndex:0},
-      {label:'Resources',slideIndex:1},
-      {label:'Glossary',slideIndex:2},
+    let sections: any = [
+      { label: 'Main', slideIndex: 0 },
+      { label: 'Resources', slideIndex: 1 },
+      { label: 'Glossary', slideIndex: 2 },
     ]
     let currentIndex = this.slides.getActiveIndex();
-    this.activeSlide=sections[currentIndex].label;
+    this.activeSlide = sections[currentIndex].label;
+    // reflect path on href
+    location.href=location+'/'+sections[currentIndex].label
   }
-  slideTo(index){
+  slideTo(index) {
     this.slides.lockSwipes(false)
     this.slides.slideTo(index)
+    
     this.slides.lockSwipes(true)
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.slides.lockSwipes(true)
   }
   showGlossary(term: string) {
-    this.activeGlossaryTerm=term;
-    this.slides.slideTo(2)
+    this.activeGlossaryTerm = term;
+    this.slideTo(2)
+    
     // let modal = this.modalCtrl.create("GlossaryPage", { term: term });
     // modal.present();
   }

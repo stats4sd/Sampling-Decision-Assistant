@@ -1,0 +1,52 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{stage.title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding class="slide-scroll-content">
+  <div class="central-content">
+    <ion-slides (ionSlideDidChange)="slideChanged()">
+      <ion-slide>
+        <!-- Main Content -->
+        <div class="slide-content">
+          <stage-1 *ngIf="stage.number==1"></stage-1>
+          <stage-2 *ngIf="stage.number==2"></stage-2>
+          <stage-3 *ngIf="stage.number==3"></stage-3>
+          <stage-4 *ngIf="stage.number==4"></stage-4>
+          <stage-5 *ngIf="stage.number==5"></stage-5>
+        </div>
+      </ion-slide>
+
+      <ion-slide>
+        <!-- Resources -->
+        <div class="slide-content">
+          <h2>Resources</h2>
+          <p>In this section you can find links and resources related to the main content (currently under construction).</p>
+        </div>
+      </ion-slide>
+
+      <ion-slide>
+        <!-- Glossary -->
+        <div class="slide-content">
+          <h2>Glossary</h2>
+          <!-- <glossary [terms]="glossaryTerms" [term]="activeGlossaryTerm"></glossary> -->
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+    <div class="segment-container">
+      <ion-segment [(ngModel)]="activeSlide">
+        <ion-segment-button value="Main" (click)="slideTo(0)">Main</ion-segment-button>
+        <ion-segment-button value="Resources" (click)="slideTo(1)">Resources</ion-segment-button>
+        <ion-segment-button value="Glossary" (click)="slideTo(2)">Glossary</ion-segment-button>
+      </ion-segment>
+    </div>
+  </div>
+
+
+
+
+</ion-content>

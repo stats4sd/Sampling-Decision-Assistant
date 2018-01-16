@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnChanges } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data'
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -27,7 +28,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
     ]
 
     this.altSections=[
-      {name:"How to use this guide", page:"HowToPage"},
+      {name:"How to use this guide", page:"HowToPage", class:"disabled"},
       {name:"Glossary of technical terms", page:"GlossaryPage"},
       {name: "Sample size trade-off tool", page:"SampleSizePage", class:"disabled"},
     ];
