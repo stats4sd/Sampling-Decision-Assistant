@@ -1,64 +1,93 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import {DataProvider} from '../../../../providers/data/data'
+import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
+import { DataProvider } from '../../../../providers/data/data'
+import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
 
 @IonicPage({
   segment: 'step-by-step/:stageID',
-  defaultHistory:['HomePage','StepByStepPage']
+  defaultHistory: ['HomePage', 'StepByStepPage']
 })
 @Component({
   selector: 'page-stage',
   templateUrl: 'stage.html',
 })
 export class StagePage {
-  stage:any;
-  @ViewChild(Slides) slides: Slides;
-  activeSlide:string="Main";
-  activeGlossaryTerm:string;
-  glossaryTerms=[];
-  surveyValues:any;
-  section:any;
+  stage: any;
+  @ViewChild('slides') slides;
+  activeSlide: string = "Main";
+  activeGlossaryTerm: string;
+  glossaryTerms = [];
+  surveyValues: any;
+  section: any;
+  refreshSlides: boolean
+  loaded:boolean
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr:DataProvider ) {
-    let stageID=navParams.data.stageID
-    let stages={
-      "stage-1":{name:"General objectives", title:"General Objectives", icon:"assets/img/icons/objectives.svg", page:"ObjectivesPage",number:1},
-      "stage-2":{name:"Indicators", title:"Indicators", icon:"assets/img/icons/indicators.svg", page:"IndicatorsPage",number:2},
-      "stage-3":{name:"Definition of the target population and units of study", title:"Target Population", icon:"assets/img/icons/population.svg", page:"TargetPopulationPage",number:3},
-      "stage-4":{name:"At what level do you need to report these results", title:"Reporting Results", icon:"assets/img/icons/reporting.svg", page:"ReportingPage",number:4},
-      "stage-5":{name:"Selecting and reaching the sampling units", title:"Selecting and Reaching Sampling Units", icon:"assets/img/icons/outreach.svg", page:"OutreachPage",number:5},
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, public events: Events) {
+    console.log('navParams',navParams.data)
+    let stageID = navParams.data.stageID
+    let stages = {
+      "stage-1": { name: "General objectives", title: "General Objectives", icon: "assets/img/icons/objectives.svg", page: "ObjectivesPage", number: 1 },
+      "stage-2": { name: "Indicators", title: "Indicators", icon: "assets/img/icons/indicators.svg", page: "IndicatorsPage", number: 2 },
+      "stage-3": { name: "Definition of the target population and units of study", title: "Target Population", icon: "assets/img/icons/population.svg", page: "TargetPopulationPage", number: 3 },
+      "stage-4": { name: "At what level do you need to report these results", title: "Reporting Results", icon: "assets/img/icons/reporting.svg", page: "ReportingPage", number: 4 },
+      "stage-5": { name: "Selecting and reaching the sampling units", title: "Selecting and Reaching Sampling Units", icon: "assets/img/icons/outreach.svg", page: "OutreachPage", number: 5 },
     }
     this.stage = stages[stageID]
     this.section = this.stage.name
-    console.log('stage',this.stage)
+    console.log('stage', this.stage)
+    this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
+    
   }
 
 
   ionViewDidEnter() {
-    this.surveyValues=this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
+    this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
+    this.slides.lockSwipes(true)
+    this.loaded=true
   }
 
-  slideChanged() {
-    let sections:any=[
-      {label:'Main',slideIndex:0},
-      {label:'Resources',slideIndex:1},
-      {label:'Glossary',slideIndex:2},
-    ]
-    let currentIndex = this.slides.getActiveIndex();
-    this.activeSlide=sections[currentIndex].label;
+
+  goTo(section) {
+    // update hash so that slides automatically go to correct section
+    let hash = location.hash
+    let arr = hash.split('/')
+    if (arr.indexOf('section') == -1) {
+      // in wrong section
+      let depth = arr.length
+      /* Depth varies between 3 and 4 if section selected
+              /#/step-by-step/stage-1/section
+      */
+      if (section == 'main') {
+        location.hash = arr.slice(0, 3).join('/')
+      }
+      else {
+        // append to main
+        if (depth < 4) { location.hash = location.hash + '/' + section }
+        // replace
+        else { location.hash = arr.slice(0, 3).join('/') + '/' + section }
+      }
+    }
   }
-  slideTo(index){
-    this.slides.lockSwipes(false)
-    this.slides.slideTo(index)
-    this.slides.lockSwipes(true)
-  }
-  ngAfterViewInit(){
-    this.slides.lockSwipes(true)
-  }
+
   showGlossary(term: string) {
-    this.activeGlossaryTerm=term;
-    console.log('setting active glossary term',term)
+    this.activeGlossaryTerm = term;
     this.slides.slideTo(2)
   }
 
+  _hashChanged(hash) {
+    // update slide on hash change. no slide changed tracking needed as swipes disabled (all nav programmatic)
+    if (this.slides && this.loaded) {
+      this.slides.lockSwipes(false)
+      let arr = hash.split('/')
+      // glossary tab
+      if (arr.indexOf('glossary') > -1) { this.slides.slideTo(2) }
+      // resources tab
+      else if (arr.indexOf('resources') > -1) { this.slides.slideTo(1) }
+      // main tab
+      else {
+         this.slides.slideTo(0) 
+        }
+      this.slides.lockSwipes(true)
+    }
+  }
 }

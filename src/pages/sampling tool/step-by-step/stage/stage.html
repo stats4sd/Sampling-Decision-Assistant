@@ -8,7 +8,7 @@
 
 <ion-content padding class="slide-scroll-content">
   <div class="central-content">
-    <ion-slides (ionSlideDidChange)="slideChanged()">
+    <ion-slides #slides id="slides">
       <ion-slide>
         <!-- Main Content -->
         <div class="slide-content">
@@ -39,9 +39,9 @@
 
     <div class="segment-container">
       <ion-segment [(ngModel)]="activeSlide">
-        <ion-segment-button value="Main" (click)="slideTo(0)">Main</ion-segment-button>
-        <ion-segment-button value="Resources" (click)="slideTo(1)">Resources</ion-segment-button>
-        <ion-segment-button value="Glossary" (click)="slideTo(2)">Glossary</ion-segment-button>
+        <ion-segment-button value="Main" (click)="goTo('main')">Main</ion-segment-button>
+        <ion-segment-button value="Resources" (click)="goTo('resources')">Resources</ion-segment-button>
+        <ion-segment-button value="Glossary" (click)="goTo('glossary')">Glossary</ion-segment-button>
       </ion-segment>
     </div>
   </div>

@@ -10,6 +10,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = 'HomePage';
+  hash:string;
 
   pages: Array<{ title: string, component: any, disabled?: boolean }>;
 
@@ -40,7 +41,7 @@ export class MyApp {
       // monitor window hash changes and publish corresponding event
       window.addEventListener('hashchange', ()=> {
         console.log("Hash Changed",location.hash);
-        this.events.publish('hash:changed',location.hash)
+          this.events.publish('hash:changed',location.hash);
       })
     });
   }
