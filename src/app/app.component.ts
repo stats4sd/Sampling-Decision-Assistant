@@ -40,7 +40,6 @@ export class MyApp {
       this.splashScreen.hide();
       // monitor window hash changes and publish corresponding event
       window.addEventListener('hashchange', ()=> {
-        console.log("Hash Changed",location.hash);
           this.events.publish('hash:changed',location.hash);
       })
     });

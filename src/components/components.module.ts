@@ -4,12 +4,12 @@ import { IonicModule } from 'ionic-angular';
 //  import reactive forms module
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { SurveyQuestionComponent } from './survey-question/survey-question';
-import { SurveyQuestionGroupComponent } from './survey-question-group/survey-question-group';
+import { SurveyQuestionComponent } from './survey/survey-question/survey-question';
+import { SurveyQuestionGroupComponent } from './survey/survey-question-group/survey-question-group';
 import { IntroductionComponent } from './introduction/introduction';
-import { GlossaryLinkComponent } from './glossary-link/glossary-link';
+import { GlossaryLinkComponent } from './glossary/glossary-link/glossary-link';
 import { GlossaryComponent } from './glossary/glossary';
-
+import { HelpIconComponent } from './survey/help-icon/help-icon';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -19,6 +19,7 @@ import { GlossaryComponent } from './glossary/glossary';
         IntroductionComponent,
     GlossaryLinkComponent,
     GlossaryComponent,
+    HelpIconComponent,
     ],
     imports: [
         IonicModule,
@@ -30,6 +31,7 @@ import { GlossaryComponent } from './glossary/glossary';
         IntroductionComponent,
     GlossaryLinkComponent,
     GlossaryComponent,
+    HelpIconComponent,
     ]
 })
 export class ComponentsModule { }

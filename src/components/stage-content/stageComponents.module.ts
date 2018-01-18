@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 // import ionic module if plan to use ionic components
 import { IonicModule } from 'ionic-angular';
 import {ComponentsModule} from '../components.module'
-import { Stage1Component } from './1/stage-1';
-import { Stage2Component } from './2/stage-2';
-import { Stage3Component } from './3/stage-3';
-import { Stage4Component } from './4/stage-4';
-import { Stage5Component } from './5/stage-5';
+import { StageIntroComponent } from './intro-sections/stage-intro';
+import { StageCompleteComponent } from './stage-complete/stage-complete';
+import { Stage1Component } from './main-content/1/stage-1';
+import { Stage2Component } from './main-content/2/stage-2';
+import { Stage3Component } from './main-content/3/stage-3';
+import { Stage4Component } from './main-content/4/stage-4';
+import { Stage5Component } from './main-content/5/stage-5';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -16,6 +18,8 @@ import { Stage5Component } from './5/stage-5';
         Stage3Component,
         Stage4Component,
         Stage5Component,
+        StageIntroComponent,
+        StageCompleteComponent
     ],
     imports: [
         IonicModule,
@@ -27,6 +31,8 @@ import { Stage5Component } from './5/stage-5';
         Stage3Component,
         Stage4Component,
         Stage5Component,
+        StageIntroComponent,
+        StageCompleteComponent
     ]
 })
 export class StageComponentsModule { }

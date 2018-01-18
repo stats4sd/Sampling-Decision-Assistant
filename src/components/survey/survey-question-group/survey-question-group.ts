@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormProvider } from '../../providers/form/form'
+import { FormProvider } from '../../../providers/form/form'
 
 @Component({
   selector: 'survey-question-group',
@@ -10,15 +10,16 @@ import { FormProvider } from '../../providers/form/form'
 export class SurveyQuestionGroupComponent {
   @Input('showLabel') showLabel: boolean;
   // when question number or section set automatically filter the questions
-  @Input() set questionNumber(questionNumber: number) {
-    this._questionNumber = questionNumber
+  @Input() set filter(filterQuestions: any) {
+    this.filterQuestions=filterQuestions
     this._filterQuestions()
   };
   @Input() set section(section: string) {
+    console.log('section set',section)
     this._section = section
     this._filterQuestions()
   }
-  _questionNumber: number;
+  filterQuestions: string[];
   _section: string;
   formGroup: FormGroup;
   allQuestions: any;
@@ -43,8 +44,11 @@ export class SurveyQuestionGroupComponent {
       filtered = questions.filter(q => {
         return q.section == section
       })
-      if (this._questionNumber) {
-        filtered = [filtered[this._questionNumber - 1]]
+      if (this.filterQuestions) {
+        console.log('filtering numbers',filtered,this.filterQuestions)
+        filtered = filtered.filter(q=>{
+          return this.filterQuestions.indexOf(q.controlName)>-1
+        })
       }
       this.groupQuestions = filtered
       console.log('group questions', this.groupQuestions)

@@ -1,0 +1,17 @@
+stage-intro {
+    .intro-box{
+        text-align: left;
+        border:2px solid color($colors,primary);
+        margin-bottom:20px
+
+    }
+    h2{
+        padding:5px;
+        background-color: color($colors,primary);
+        color:white
+    }
+    p{
+        font-size: 14px;
+        padding:5px;
+    }
+}

@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
-import { DataProvider } from '../../../../providers/data/data'
+import { FormGroup } from '@angular/forms';
+import { DataProvider } from '../../../../providers/data/data';
+import { FormProvider } from '../../../../providers/form/form'
 import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
 
 @IonicPage({
@@ -17,33 +19,33 @@ export class StagePage {
   activeSlide: string = "Main";
   activeGlossaryTerm: string;
   glossaryTerms = [];
-  surveyValues: any;
+  form: FormGroup = this.formPrvdr.formGroup;
   section: any;
-  refreshSlides: boolean
-  loaded:boolean
+  refreshSlides: boolean;
+  activeResource: any;
+  loaded: boolean
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, public events: Events) {
-    console.log('navParams',navParams.data)
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, public events: Events, public formPrvdr: FormProvider) {
     let stageID = navParams.data.stageID
     let stages = {
       "stage-1": { name: "General objectives", title: "General Objectives", icon: "assets/img/icons/objectives.svg", page: "ObjectivesPage", number: 1 },
       "stage-2": { name: "Indicators", title: "Indicators", icon: "assets/img/icons/indicators.svg", page: "IndicatorsPage", number: 2 },
       "stage-3": { name: "Definition of the target population and units of study", title: "Target Population", icon: "assets/img/icons/population.svg", page: "TargetPopulationPage", number: 3 },
       "stage-4": { name: "At what level do you need to report these results", title: "Reporting Results", icon: "assets/img/icons/reporting.svg", page: "ReportingPage", number: 4 },
-      "stage-5": { name: "Selecting and reaching the sampling units", title: "Selecting and Reaching Sampling Units", icon: "assets/img/icons/outreach.svg", page: "OutreachPage", number: 5 },
+      "stage-5": { name: "Selecting and reaching units", title: "Selecting and Reaching Sampling Units", icon: "assets/img/icons/outreach.svg", page: "OutreachPage", number: 5 },
     }
     this.stage = stages[stageID]
     this.section = this.stage.name
-    console.log('stage', this.stage)
     this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
-    
+    this.events.subscribe('help:clicked', resource => this._showResource(resource))
+
   }
 
 
   ionViewDidEnter() {
-    this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
+    //this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
     this.slides.lockSwipes(true)
-    this.loaded=true
+    this.loaded = true
   }
 
 
@@ -74,19 +76,27 @@ export class StagePage {
     this.slides.slideTo(2)
   }
 
+  _showResource(resource) {
+      this.activeResource = resource;
+      let arr = location.hash.split('/')
+      if(arr.indexOf('resources')==-1){
+        location.hash = location.hash + '/resources'
+      }
+  }
+
   _hashChanged(hash) {
     // update slide on hash change. no slide changed tracking needed as swipes disabled (all nav programmatic)
     if (this.slides && this.loaded) {
       this.slides.lockSwipes(false)
       let arr = hash.split('/')
       // glossary tab
-      if (arr.indexOf('glossary') > -1) { this.slides.slideTo(2) }
+      if (arr.indexOf('glossary') > -1) { this.slides.slideTo(2); this.activeSlide="Glossary" }
       // resources tab
-      else if (arr.indexOf('resources') > -1) { this.slides.slideTo(1) }
+      else if (arr.indexOf('resources') > -1) { this.slides.slideTo(1); this.activeSlide="Resources" }
       // main tab
       else {
-         this.slides.slideTo(0) 
-        }
+        this.slides.slideTo(0); this.activeSlide="Main"
+      }
       this.slides.lockSwipes(true)
     }
   }

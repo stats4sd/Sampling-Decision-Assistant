@@ -10,6 +10,8 @@
   <div class="central-content">
     <ion-slides #slides id="slides">
       <ion-slide>
+        <!-- intro -->
+        <stage-intro [stage]="stage.number"></stage-intro>
         <!-- Main Content -->
         <div class="slide-content">
           <stage-1 *ngIf="stage.number==1"></stage-1>

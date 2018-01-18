@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
-import { FormProvider} from '../../providers/form/form'
+import { FormProvider} from '../../../providers/form/form'
 
 
 

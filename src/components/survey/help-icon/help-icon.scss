@@ -1,0 +1,12 @@
+help-icon {
+    .help-container{
+        position: relative;
+        cursor: pointer;
+    }
+    .help-icon{
+        position: absolute;
+        font-size: 32px;
+        margin-top:-16px;
+        right: 2px
+    }
+}

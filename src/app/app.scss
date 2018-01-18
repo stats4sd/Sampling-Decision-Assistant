@@ -40,7 +40,11 @@ h2{
     margin-bottom: 20px;
 }
 .hidden{display: none}
-
+.incomplete{
+    color:red;
+    background-color: yellow;
+    padding: 5px;
+}
 .multi-line-button{
     // requires text-wrap attribute on element for multiple lines
     text-transform: none;
