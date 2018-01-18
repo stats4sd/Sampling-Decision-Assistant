@@ -19,6 +19,7 @@
           <stage-3 *ngIf="stage.number==3"></stage-3>
           <stage-4 *ngIf="stage.number==4"></stage-4>
           <stage-5 *ngIf="stage.number==5"></stage-5>
+          <stage-6 *ngIf="stage.number==6"></stage-6>
         </div>
       </ion-slide>
 
@@ -33,7 +34,7 @@
       <ion-slide>
         <!-- Glossary -->
         <div class="slide-content">
-          <h2>Glossary</h2>
+          <glossary [section]="stage.number" [slug]="glossarySlug"></glossary>
           <!-- <glossary [terms]="glossaryTerms" [term]="activeGlossaryTerm"></glossary> -->
         </div>
       </ion-slide>

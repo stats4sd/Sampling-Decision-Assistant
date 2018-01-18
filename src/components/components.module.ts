@@ -10,6 +10,7 @@ import { IntroductionComponent } from './introduction/introduction';
 import { GlossaryLinkComponent } from './glossary/glossary-link/glossary-link';
 import { GlossaryComponent } from './glossary/glossary';
 import { HelpIconComponent } from './survey/help-icon/help-icon';
+import { GlossaryDetailComponent } from './glossary/glossary-detail/glossary-detail';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -20,6 +21,7 @@ import { HelpIconComponent } from './survey/help-icon/help-icon';
     GlossaryLinkComponent,
     GlossaryComponent,
     HelpIconComponent,
+    GlossaryDetailComponent,
     ],
     imports: [
         IonicModule,
@@ -32,6 +34,7 @@ import { HelpIconComponent } from './survey/help-icon/help-icon';
     GlossaryLinkComponent,
     GlossaryComponent,
     HelpIconComponent,
+    GlossaryDetailComponent,
     ]
 })
 export class ComponentsModule { }

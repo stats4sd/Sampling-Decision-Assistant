@@ -19,6 +19,7 @@ export class StagePage {
   activeSlide: string = "Main";
   activeGlossaryTerm: string;
   glossaryTerms = [];
+  glossarySlug:string;
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   refreshSlides: boolean;
@@ -28,11 +29,12 @@ export class StagePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, public events: Events, public formPrvdr: FormProvider) {
     let stageID = navParams.data.stageID
     let stages = {
-      "stage-1": { name: "General objectives", title: "General Objectives", icon: "assets/img/icons/objectives.svg", page: "ObjectivesPage", number: 1 },
-      "stage-2": { name: "Indicators", title: "Indicators", icon: "assets/img/icons/indicators.svg", page: "IndicatorsPage", number: 2 },
-      "stage-3": { name: "Definition of the target population and units of study", title: "Target Population", icon: "assets/img/icons/population.svg", page: "TargetPopulationPage", number: 3 },
-      "stage-4": { name: "At what level do you need to report these results", title: "Reporting Results", icon: "assets/img/icons/reporting.svg", page: "ReportingPage", number: 4 },
-      "stage-5": { name: "Selecting and reaching units", title: "Selecting and Reaching Sampling Units", icon: "assets/img/icons/outreach.svg", page: "OutreachPage", number: 5 },
+      "stage-1": { name: "General objectives", title: "General Objectives", icon: "assets/img/icons/objectives.svg", number: 1 },
+      "stage-2": { name: "Indicators", title: "Indicators", icon: "assets/img/icons/indicators.svg", number: 2 },
+      "stage-3": { name: "Definition of the target population and units of study", title: "Target Population", icon: "assets/img/icons/population.svg", number: 3 },
+      "stage-4": { name: "At what level do you need to report these results", title: "Reporting Results", icon: "assets/img/icons/reporting.svg", number: 4 },
+      "stage-5": { name: "Selecting the sampling units", title: "Selecting and Reaching Sampling Units", icon: "assets/img/icons/outreach.svg", number: 5 },
+      "stage-6": { name: "Allocating and deploying resources", title: "Allocating and deploying resources", icon: "assets/img/icons/allocate.svg", number: 6 },
     }
     this.stage = stages[stageID]
     this.section = this.stage.name
@@ -90,7 +92,12 @@ export class StagePage {
       this.slides.lockSwipes(false)
       let arr = hash.split('/')
       // glossary tab
-      if (arr.indexOf('glossary') > -1) { this.slides.slideTo(2); this.activeSlide="Glossary" }
+      if (arr.indexOf('glossary') > -1) { 
+        this.slides.slideTo(2); this.activeSlide="Glossary";
+        if(arr[arr.length-1]!='glossary'){this.glossarySlug=arr[arr.length-1]}
+        else{this.glossarySlug="_"}
+        
+       }
       // resources tab
       else if (arr.indexOf('resources') > -1) { this.slides.slideTo(1); this.activeSlide="Resources" }
       // main tab

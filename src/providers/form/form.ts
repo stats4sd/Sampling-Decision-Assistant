@@ -110,10 +110,8 @@ export class FormProvider {
     questions.forEach(q => {
       // build templates for any repeat groups
       if (q.type == "repeat") {
-        console.log('building repeat',q)
         // build formgroup sections appropriately
         let repeatQs = this._generateRepeatQuestions(q)
-        console.log('repeat qs',repeatQs)
         q.repeatQuestions = repeatQs
         questionGroup[q.controlName] = this.fb.array([])
         displayQs.push(q)

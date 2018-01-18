@@ -1,19 +1,50 @@
-<div class="glossary-container">
-  <p>In this section you can find a list of keywords relevant to the main content.
-    <br>Click on a word to view its definition.
-  </p>
-    <div *ngFor="let term of sectionTerms" (click)="setActiveTerm(term)">
-        <span class="glossary-term">{{term.Term}}</span>
-      </div>
-  <div *ngIf="activeTerm" style="margin-top:2em">
-    <h3 class="glossary-link">{{activeTerm.Term}}</h3>
-    <div *ngIf="activeTerm.Definition!=''" id="definition" #definition class="glossary-definition" [innerHtml]="_renderHtml(activeTerm.Definition)"></div>
-    <div *ngIf="activeTerm.Definition==''">This is just a placeholder definition. More content will be added later</div>
-    <!-- <button ion-button icon-left (click)="showFullGlossary()">
-      <ion-icon name="book"></ion-icon>
-      <span>Show full glossary</span>
-    </button> -->
+<div>
+  <div *ngIf="filteredGlossaryTerms && filteredGlossaryTerms.length>0">
+    <h3>In this section</h3>
+    <span *ngFor="let term of filteredGlossaryTerms">
+      <span (click)="setActiveTerm(term)" class="glossary-term" 
+      [ngClass]="{
+        'term-selected':activeTerm && term.slug==activeTerm.slug,
+        'term-incomplete':term.Definition==''
+      }"
+      >{{term.Term}}</span>
+    </span>
+    <button ion-button clear (click)="viewAllTerms()">View all terms</button>
+    <div class="glossary-detail-container">
+      <glossary-detail *ngIf="activeTerm" [term]="activeTerm"></glossary-detail>
+    </div>
+
   </div>
-  <!-- <h4>Terms in this section:</h4> -->
-  
+
+  <div *ngIf="!filteredGlossaryTerms || filteredGlossaryTerms.length==0">
+    <h3 *ngIf="!filteredGlossaryTerms">Glossary</h3>
+    <span *ngFor="let term of allGlossaryTerms">
+      <span (click)="setActiveTerm(term)" class="glossary-term" 
+      [ngClass]="{
+        'term-selected':activeTerm && term.slug==activeTerm.slug,
+        'term-incomplete':term.Definition==''
+      }"
+      >{{term.Term}}</span>
+    </span>
+    <div class="glossary-detail-container">
+      <glossary-detail *ngIf="activeTerm" [term]="activeTerm"></glossary-detail>
+    </div>
+
+    <!-- <h3>More terms to be included</h3>
+    <ul>
+      <div *ngFor="let term of allGlossaryTerms">
+        <li *ngIf="term.Definition==''">
+          <div>
+            <div>{{term.Term}}</div>
+            <div style="font-size: x-small">{{term.slug}}</div>
+          </div>
+        </li>
+      </div>
+    </ul> -->
+
+  </div>
+
+
+
+
 </div>

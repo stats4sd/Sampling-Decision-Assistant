@@ -13,28 +13,8 @@
 
 </ion-header>
 
-
-
 <ion-content padding>
 
-  <div>
-    <span *ngFor="let term of glossaryTerms">
-      <span (click)="setActiveTerm(term)" class="glossary-term" *ngIf="term.Definition!=''">{{term.Term}}</span>
-    </span>
-
-    <h3>More terms to be included</h3>
-    <ul>
-      <div *ngFor="let term of glossaryTerms">
-        <li *ngIf="term.Definition==''">
-          <span>{{term.Term}}</span>
-        </li>
-      </div>
-
-    </ul>
-
-  </div>
-
-
-
+  <glossary displayMode="page"></glossary>
 
 </ion-content>

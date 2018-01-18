@@ -11,7 +11,7 @@
         in the target population. However, such a list often does not exist.</p>
 
    
-    <ion-card><survey-question-group section="Selecting and reaching units" [filter]="['q5.1']"></survey-question-group></ion-card>
+    <survey-question-group section="Selecting the sampling units" [filter]="['q5.1']"></survey-question-group>
 
     <p *ngIf="form && form.value['q5.1']=='No'">If a complete list does not exist, it is possible to group sampling units in a way that allows us to select some of these
         groups in a first step, and then select the final sampling units in each of the selected groups at random. This is
@@ -19,7 +19,7 @@
         <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>.
     </p>
 
-    <survey-question-group section="Selecting and reaching units" [filter]="['q5.2']"></survey-question-group>
+    <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']"></survey-question-group>
 <!--     
     <survey-question-group section="Selecting and reaching units" [questionNumber]=3></survey-question-group>
     <p>It is much easier and quicker to find or build complete lists of sampling units in the selected groups only, as opposed

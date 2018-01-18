@@ -1,5 +1,5 @@
 glossary {
-    .glossary-container{
+    .glossary-detail-container{
         margin-top:2em;
     }
     .glossary-term{
@@ -12,9 +12,20 @@ glossary {
         cursor: pointer;
         font-weight: 500;
     }
-    .glossary-term:hover{
+    .glossary-term:hover, .term-selected{
         background-color: color($colors,primary);
         color: white;
+    }
+    .term-incomplete{
+        opacity: 0.4;
+        background-color: rgb(180, 175, 175);
+        color:black
+    }
+    .term-incomplete:hover{
+        opacity: 0.4;
+        background-color: rgb(180, 175, 175);
+        color:black;
+        cursor: default
     }
     .glossary-definition{
         margin-bottom: 20px;

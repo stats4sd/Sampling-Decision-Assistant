@@ -15,7 +15,6 @@ export class SurveyQuestionGroupComponent {
     this._filterQuestions()
   };
   @Input() set section(section: string) {
-    console.log('section set',section)
     this._section = section
     this._filterQuestions()
   }
@@ -45,7 +44,6 @@ export class SurveyQuestionGroupComponent {
         return q.section == section
       })
       if (this.filterQuestions) {
-        console.log('filtering numbers',filtered,this.filterQuestions)
         filtered = filtered.filter(q=>{
           return this.filterQuestions.indexOf(q.controlName)>-1
         })

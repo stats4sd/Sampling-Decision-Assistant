@@ -1,0 +1,3 @@
+<!-- Generated template for the GlossaryDetailComponent component -->
+<div class="glossary-heading">{{_term.Term}}</div>
+<div id="definition" #definition class="glossary-definition" [innerHtml]="_renderHtml(_term.Definition)" *ngIf="_term"></div>
