@@ -10,6 +10,15 @@
     </p>
     <help-icon resource="testResource"></help-icon>
     <survey-question-group section="At what level do you need to report these results" [filter]="['q4.1']" [showLabel]=true></survey-question-group>
+    
+    <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
+        <survey-question-group  section="At what level do you need to report these results" [filter]="['q4.2']" [showLabel]=true></survey-question-group>
+    </div>
+    <div *ngIf="form.value['q4.1']=='One estimate'">
+            <survey-question-group  section="At what level do you need to report these results" [filter]="['q4.3']" [showLabel]=true></survey-question-group>
+    </div>
+    <stage-complete *ngIf="form.value['q4.1'] && form.value['q4.2']"></stage-complete>
+    <stage-complete *ngIf="form.value['q4.1'] && form.value['q4.3']"></stage-complete>
 
 
 </div>

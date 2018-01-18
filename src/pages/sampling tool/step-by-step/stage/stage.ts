@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Events, Navbar } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { DataProvider } from '../../../../providers/data/data';
 import { FormProvider } from '../../../../providers/form/form'
@@ -16,6 +16,7 @@ import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
 export class StagePage {
   stage: any;
   @ViewChild('slides') slides;
+  @ViewChild('navbar') navbar:Navbar;
   activeSlide: string = "Main";
   activeGlossaryTerm: string;
   glossaryTerms = [];
@@ -48,6 +49,11 @@ export class StagePage {
     //this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
     this.slides.lockSwipes(true)
     this.loaded = true
+    this.navbar.backButtonClick = () =>{
+      let depth = location.hash.split('/').length
+      if(depth>3){window.history.back()}
+      else{this.navCtrl.pop()}
+    }
   }
 
 
