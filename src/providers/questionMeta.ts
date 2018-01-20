@@ -1,8 +1,48 @@
 export default
     [
-        { "isQuestion": "TRUE", "controlName": "q1.1", "type": "select", "selectOptions": "Describe population characteristics, Measure impact of experiment or intervention", "label": "How would you categorise the general purpose of your survey", "section": "General objectives", "condition": "", "labelMultiple": null },
-        { "isQuestion": "TRUE", "controlName": "q1.2", "type": "text", "selectOptions": "", "label": "How would you describe the main objective of this survey?", "section": "General objectives", "condition": "", "labelMultiple": null },
-        { "isQuestion": "TRUE", "controlName": "q1.3", "type": "text", "selectOptions": "", "label": "Are there any specific objectives?", "section": "General objectives", "condition": "", "labelMultiple": null },
+        // Section 1
+        {
+            "isQuestion": "TRUE", 
+            "controlName": "q1.1",
+            "type": "select",
+            "selectOptions": "Describe population characteristics, Measure impact of experiment or intervention",
+            "label": "How would you categorise the general purpose of your survey", 
+            "section": "General objectives",
+            "condition": "",
+            "labelMultiple": null
+        },
+        { 
+            "isQuestion": "TRUE", 
+            "controlName": "q1.2", 
+            "type": "select", 
+            "selectOptions": "Representative, Non-representative", 
+            "label": "How would you categorise the general purpose of your survey", 
+            "section": "General objectives", 
+            "condition": "type:value, controlName:q1.1, value:Describe population characteristics", 
+            "labelMultiple": null 
+        },
+        { 
+            "isQuestion": "TRUE", 
+            "controlName": "q1.3", 
+            "type": "text", 
+            "selectOptions": "", 
+            "label": 
+            "How would you describe the main objective of this survey?", 
+            "section": "General objectives", 
+            "condition": "type:value, controlName:q1.2, value:Representative", 
+            "labelMultiple": null 
+        },
+        { 
+            "isQuestion": "TRUE", 
+            "controlName": "q1.4", 
+            "type": "text", 
+            "selectOptions": "", 
+            "label": "Are there any specific objectives?", 
+            "section": "General objectives", 
+            "condition": "type:value, controlName:q1.2, value:Representative", 
+            "labelMultiple": null 
+        },
+        // Section 2
         { "isQuestion": "TRUE", "controlName": "q2.1", "type": "select", "selectOptions": "Yes, No", "label": "Can you identify an indicator that is of particular importance for this study and that could be used to provide us with key information for thinking about the sample size decisions.", "section": "Indicators", "condition": "", "labelMultiple": null },
         { "isQuestion": "TRUE", "controlName": "q2.2", "type": "text", "selectOptions": "", "label": "What is the indicator?", "section": "Indicators", "condition": "type:value, controlName:q2.1, value:Yes", "labelMultiple": null },
         { "isQuestion": "TRUE", "controlName": "q2.3", "type": "text", "selectOptions": "", "label": "What is the value that you would expect to find in the population – you may know it or may need to estimate it", "section": "Indicators", "condition": "type:value, controlName:q2.1, value:Yes", "labelMultiple": null },
@@ -20,7 +60,7 @@ export default
         { "isQuestion": "FALSE", "controlName": "", "type": "feedback", "selectOptions": "", "label": "Message to user: Is this an accurate description of the population you are interested in. In responding to this question please ensure that it fully differentiates it from other populations. If you want to refine this definition, please edit the answers you provided.", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null },
         { "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null },
         { "isQuestion": "TRUE", "controlName": "q4.2", "type": "textMultiple", "selectOptions": "", "label": "Please specify the levels of disaggregation, be as specific in your replies", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level" },
-        { "isQuestion": "TRUE", "controlName": "q4.3", "type": "text", "selectOptions": "", "label": "Provide a name or reference for the estimate", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:One estimate"},
+        { "isQuestion": "TRUE", "controlName": "q4.3", "type": "text", "selectOptions": "", "label": "Provide a name or reference for the estimate", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:One estimate" },
         { "isQuestion": "TRUE", "controlName": "q5.1", "type": "select", "selectOptions": "Yes, No", "label": "Is there a single list of all final sampling units from where you can select a sample using a random method?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null },
         { "isQuestion": "TRUE", "controlName": "q5.2", "type": "textMultiple", "selectOptions": "", "label": "What are the sampling stages that will allow you to reach the final sampling unit?", "section": "Selecting the sampling units", "condition": "type:value, controlName:q5.1, value:No", "labelMultiple": "Sampling stages" },
         { "isQuestion": "TRUE", "controlName": "q5.3", "type": "repeat", "selectOptions": "q5.2", "label": "", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null },

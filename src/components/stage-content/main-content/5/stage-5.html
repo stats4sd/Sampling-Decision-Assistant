@@ -1,41 +1,90 @@
 <div class="slide-content">
-    <h4>Decisions about selecting and reaching the sampling units</h4>
-    <p>We will now find a method to select and reach the
-        <glossary-link text="sampling units" slug="sampling-unit"></glossary-link>
-        .</p>
+    <h4>Decisions about selecting the sampling units</h4>
+    <ion-slides #frameBuilder class="stage-5-slides">
+        <ion-slide>
+            <p>We will now find a method to select and reach the
+                <glossary-link text="sampling units" slug="sampling-unit"></glossary-link>
+                .
+            </p>
+            <p>
+                When selecting the sampling units, it is important to ensure that any biases are limited as much as possible. Sometimes this
+                is a relatively straight-forward process, but often it can involve multiple stages and more advanced techniques
+                such as the contstruction of
+                <glossary-link text="sampling frames." slug="sampling-frame"></glossary-link>
+            </p>
+            <p>To start, let us review some of the information that you have presented so far. Note that at any point you can
+                modify this to assist building an appropriate strategy</p>
+            <div class="info-card-container">
+                <ion-card *ngFor="let info of infoProvided" class="info-provided-card">
+                    <div style="display: flex" class="info-card-header">
+                        <div>{{info.heading}}</div>
+                        <ion-icon name="create" class="edit-button" (click)="editStage(info.stage)"></ion-icon>
+                    </div>
+                    <p *ngIf="form.value[info.formControl]" class="info-text">{{form.value[info.formControl]}}</p>
+                    <p *ngIf="!form.value[info.formControl]" class="info-text incomplete">Not Yet Provided</p>
+                </ion-card>
+                <div class="dev-note" icon-left>
+                    <ion-icon name="bug"></ion-icon>Developer note: sampling unit should include full definition with exclusions and reporting
+                    level should include multiple</div>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            Slide 2
+        </ion-slide>
+        <ion-slide>
+            Slide 3
+        </ion-slide>
+    </ion-slides>
+    <div style="display: flex; justify-content:space-between">
+        <button ion-button icon-left (click)="lastStep()" [disabled]="frameBuilderIndex==0" [style.opacity]="frameBuilderIndex==0 ? 0 : 1">
+            <ion-icon name="arrow-back"></ion-icon>
+            Back
+        </button>
+        <button ion-button icon-right (click)="nextStep()">Next
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </div>
+
+
+    <!-- <p>...</p>
     <p>
+        <ion-icon name="ios-list-box" style="font-size: 32px"></ion-icon>
+    </p>
+    <survey-question-group section="Selecting the sampling units" [filter]="['q5.1','q5.2','q5.3']"></survey-question-group> -->
+
+    <!-- <p>We will be using the following information that you have provided:</p>
+    <ion-card>
+        <table>
+
+        </table>
+    </ion-card> -->
+    <div *ngIf="form.value['q1.2']!=''">
+        <!-- <p>In the first section you specified that the main objective was:</p>
+        <div  class="main-objective quote">"{{form.value['q1.2']}}"</div> -->
+
+        <!-- <survey-question-group section="Selecting the sampling units" [filter]="['q5.1']"></survey-question-group>
+        <p *ngIf="form && form.value['q5.1']=='No'">If a complete list does not exist, it is possible to group sampling units in a way that allows us to select some of these
+            groups in a first step, and then select the final sampling units in each of the selected groups at random. This is
+            called
+            <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>.
+        </p>
+        <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']"></survey-question-group> -->
+
+    </div>
+
+    <!-- <div *ngIf="form.value['q1.2']==''">
+        <p>In order to build a strategy it is important to complete the previous sampling stages first</p>
+        <button ion-button clear (click)="goBack()">Return to previous stages</button>
+    </div> -->
+
+    <!-- <p>
         When selecting the sampling units, it is important to ensure they are selected at random. This means that every sampling
         unit in the target population should have the same chance to be selected into the final sample.</p>
     <p>
         The easiest way to do this so is to draw a simple random sample from a complete and up-to-date list of all sampling units
-        in the target population. However, such a list often does not exist.</p>
+        in the target population. However, such a list often does not exist.</p> -->
 
-   
-    <survey-question-group section="Selecting the sampling units" [filter]="['q5.1']"></survey-question-group>
 
-    <p *ngIf="form && form.value['q5.1']=='No'">If a complete list does not exist, it is possible to group sampling units in a way that allows us to select some of these
-        groups in a first step, and then select the final sampling units in each of the selected groups at random. This is
-        called
-        <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>.
-    </p>
 
-    <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']"></survey-question-group>
-<!--     
-    <survey-question-group section="Selecting and reaching units" [questionNumber]=3></survey-question-group>
-    <p>It is much easier and quicker to find or build complete lists of sampling units in the selected groups only, as opposed
-        to having to find or build a list of all sampling units in all groups. Furthermore, if the groups are small geographical
-        units such as villages, it is possible to resort to area sampling methods which do not require lists at all (see
-        <i>EPI-method</i> and
-        <i>GPS sampling</i>).
-    </p>
-    <ion-card>
-        <ion-card-header>Questions</ion-card-header>
-        <survey-question-group section="Selecting and reaching units" [showLabel]=true></survey-question-group>
-    </ion-card>
 
-    <p>
-        You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
-        a better understanding that should help in your decision making.
-    </p>
-     -->
 </div>

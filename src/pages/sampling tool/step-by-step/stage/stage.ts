@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Events, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Events, Navbar, ModalController, ViewController } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
 import { DataProvider } from '../../../../providers/data/data';
 import { FormProvider } from '../../../../providers/form/form'
@@ -21,14 +21,24 @@ export class StagePage {
   activeGlossaryTerm: string;
   glossaryTerms = [];
   glossarySlug:string;
+  modalMode:Boolean;
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   refreshSlides: boolean;
   activeResource: any;
   loaded: boolean
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider, public events: Events, public formPrvdr: FormProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private dataPrvdr: DataProvider, 
+    public events: Events, 
+    public formPrvdr: FormProvider,
+    public modalCtrl: ModalController,
+    public viewCtrl: ViewController
+  ) {
     let stageID = navParams.data.stageID
+    this.modalMode = navParams.data.modalMode
     let stages = {
       "stage-1": { name: "General objectives", title: "General Objectives", icon: "assets/img/icons/objectives.svg", number: 1 },
       "stage-2": { name: "Indicators", title: "Indicators", icon: "assets/img/icons/indicators.svg", number: 2 },
@@ -82,6 +92,13 @@ export class StagePage {
   showGlossary(term: string) {
     this.activeGlossaryTerm = term;
     this.slides.slideTo(2)
+  }
+  openModal(component,params?){
+    this.modalCtrl.create(component,params).present()
+  }
+  closeModal(){
+    this.dataPrvdr.saveSurvey()
+    this.viewCtrl.dismiss()
   }
 
   _showResource(resource) {

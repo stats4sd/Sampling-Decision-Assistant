@@ -10,7 +10,7 @@ import { DataProvider } from '../../providers/data/data'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version:string="0.5.1";
+  version:string="0.6.0";
 
   imageSrc="assets/img/feature-image-1.jpg"
   // no longer using slides
@@ -28,7 +28,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, private 
     ]
 
     this.altSections=[
-      {name:"How to use this guide", page:"HowToPage", class:"disabled"},
+      {name:"Who is this tool for?", page:"About", class:"disabled"},
       {name:"Glossary of technical terms", page:"GlossaryPage"},
       {name: "Sample size trade-off tool", page:"SampleSizePage", class:"disabled"},
     ];

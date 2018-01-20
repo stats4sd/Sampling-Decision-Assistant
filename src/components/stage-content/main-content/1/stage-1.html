@@ -5,12 +5,16 @@
   <p>The first question broadly seperates two types of objective. The first is for those wishing to conduct a survey to help
     explore or understand the characteristics of a population. The second is for those wishing to evaluate the impact of
     an experiment or intervention</p>
+
   <help-icon resource="testResource"></help-icon>
   <survey-question-group [section]="section" [filter]="['q1.1']"></survey-question-group>
   <p *ngIf="form.value['q1.1']=='Describe population characteristics'">
     With your target population in mind, try to answer the following 2 questions:
   </p>
+
+
   <p *ngIf="form.value['q1.1']=='Measure impact of experiment or intervention'">
+    <warning></warning>
     <span class="incomplete">Text to go here responding to measure impact</span>
   </p>
 

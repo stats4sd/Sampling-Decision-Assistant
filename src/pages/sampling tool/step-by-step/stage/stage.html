@@ -2,6 +2,9 @@
 
   <ion-navbar #navbar color="primary" >
     <ion-title>{{stage.title}}</ion-title>
+    <ion-buttons end *ngIf="modalMode">
+      <button ion-button icon-left (click)="closeModal()"><ion-icon name="checkmark"></ion-icon>Close</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>

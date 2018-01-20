@@ -19,12 +19,10 @@ export class GlossaryComponent {
   }
   @Input() set section(sectionNumber:number){
     let terms = this.allSectionTerms[sectionNumber]
-    console.log('section glossary terms',terms)
     this._filterGlossary(terms)
   }
   @Input('displayMode') displayMode: string;
   @Input() set slug(slug:string){
-    console.log('setting slug',slug)
     if(slug){
       if(slug=="_"){this.activeTerm=null}
       else{this.activeTerm = this._getTermObject(slug)}
@@ -32,22 +30,19 @@ export class GlossaryComponent {
   }
 
   constructor(private events: Events) {
-    console.log('all glossary terms',this.allGlossaryTerms)
     this.allSectionTerms={
       1:[],
       2:[],
       3:[],
       4:[],
-      5:['sampling-unit'],
+      5:['sampling-frame','sampling-unit'],
       6:[]
     }
   }
 
   setActiveTerm(term) {
-    console.log('component setting active term',term)
     //  if page mode use hash navigation, otherwise embedded component mode
     this.activeTerm = term
-    console.log('active term',this.activeTerm)
     if (this.displayMode == "page") {
       this.events.publish('glossaryTerm:set', this.activeTerm)
     }
@@ -62,7 +57,6 @@ export class GlossaryComponent {
     this.filteredGlossaryTerms = this.allGlossaryTerms.filter(t => {
       return (termsArray.indexOf(t.slug) > -1)
     })
-    console.log('filtered terms', this.filteredGlossaryTerms)
   }
 
   _getTermObject(term: string) {

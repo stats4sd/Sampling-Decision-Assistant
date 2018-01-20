@@ -41,9 +41,14 @@ h2{
 }
 .hidden{display: none}
 .incomplete{
-    color:red;
-    background-color: yellow;
+    color:red!important;
+    //background-color: #ecbdb6;
     padding: 5px;
+    font-weight: bold!important;
+}
+.dev-note{
+    margin:5px;
+    color: rgba(11,120,175,1)
 }
 .multi-line-button{
     // requires text-wrap attribute on element for multiple lines

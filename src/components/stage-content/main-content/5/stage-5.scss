@@ -1,3 +1,44 @@
 stage-5 {
+    .quote{
+        font-style: italic;
+        padding: 5px;
+        border: 1px solid #82817c;
+        background-color: #f1e4ba6e;
+        border-radius: 5px;
+    
+    }
+    .info-provided-card{
+        width: 100%;
+        max-width: 200px;
+        border: 1px solid black;
+        height: 150px;
+        padding:0;
+    }
+    .info-card-container{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+    }
+    .info-card-header{
+        padding:5px;
+        background-color: lightgray;
+        justify-content: space-between;
+   
+        font-size: 16px;
+
+    }
+    .info-text{
+        padding:5px;
+        font-style: italic;
+    }
+    .edit-button{
+        cursor:pointer;
+        float: right;
+    }
+    .stage-5-slides, .slide-zoom, .swiper-slide{
+        font-size: 14px;
+        text-align: left;
+        
+    }
 
 }
