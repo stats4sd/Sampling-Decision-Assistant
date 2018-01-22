@@ -1,10 +1,10 @@
-<div class="container" *ngIf="question">
+<div class="container" *ngIf="question && shouldShowQuestion(question)">
   <div [formGroup]="formGroup" style="flex:1">
     <!-- question labels -->
     <div *ngIf="question.type!='label' && question.type!='repeat' && showLabel!=false" class="question-label">
       <div class="question-number dark">{{question.controlName}}</div>
       <div>
-        <span id="questionLabelText" #questionLabelText [innerHtml]="question.label"></span>
+        <span id="questionLabelText" #questionLabelText *ngIf="question.label" [innerHtml]="question.label"></span>
       </div>
 
     </div>

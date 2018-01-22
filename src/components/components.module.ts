@@ -12,6 +12,8 @@ import { GlossaryComponent } from './glossary/glossary';
 import { HelpIconComponent } from './survey/help-icon/help-icon';
 import { GlossaryDetailComponent } from './glossary/glossary-detail/glossary-detail';
 import { WarningComponent } from './warning/warning';
+import { SurveyReferenceComponent } from './survey/survey-reference/survey-reference';
+
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -19,11 +21,12 @@ import { WarningComponent } from './warning/warning';
         SurveyQuestionComponent,
         SurveyQuestionGroupComponent,
         IntroductionComponent,
-    GlossaryLinkComponent,
-    GlossaryComponent,
-    HelpIconComponent,
-    GlossaryDetailComponent,
-    WarningComponent,
+        GlossaryLinkComponent,
+        GlossaryComponent,
+        HelpIconComponent,
+        GlossaryDetailComponent,
+        WarningComponent,
+        SurveyReferenceComponent,
     ],
     imports: [
         IonicModule,
@@ -33,11 +36,12 @@ import { WarningComponent } from './warning/warning';
         SurveyQuestionComponent,
         SurveyQuestionGroupComponent,
         IntroductionComponent,
-    GlossaryLinkComponent,
-    GlossaryComponent,
-    HelpIconComponent,
-    GlossaryDetailComponent,
-    WarningComponent,
+        GlossaryLinkComponent,
+        GlossaryComponent,
+        HelpIconComponent,
+        GlossaryDetailComponent,
+        WarningComponent,
+        SurveyReferenceComponent,
     ]
 })
 export class ComponentsModule { }

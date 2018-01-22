@@ -1,12 +1,42 @@
 <div class="slide-content">
     <h4>Decisions about the target population</h4>
     <p>
-        Main content will go here, questions as follows:
+        It is important to clearly define your target population as explicitly as possible. The following questions will help you
+        to do so:
     </p>
-        <survey-question-group section="Definition of the target population and units of study" [showLabel]=true></survey-question-group>
+    <survey-question-group section="Definition of the target population and units of study" [filter]="['q3.1']" [showLabel]=true></survey-question-group>
+    <div *ngIf="form.value['q3.1']">
+        <p>The next step is to identify any specific characteristics of those
+            <survey-reference [controlName]="'q3.1'"></survey-reference> that can be used to define them as a group of interest and distinguish them from others.
+            You should try to be as specific as you can, and consider the characteristics in the following ways:
+        </p>
+        <survey-question-group section="Definition of the target population and units of study" [filter]="['q3.2','q3.3','q3.4']"
+            [showLabel]=true></survey-question-group>
+    </div>
+    <div *ngIf="form.value['q3.1']">
+        <p>Is the description below accurate of the population you are interested in, and fully differentiatites from other
+            populations?
+        </p>
+        <div class="quote">
+            <survey-reference [controlName]="'q3.1'" *ngIf="form.value['q3.1']"></survey-reference>
+            <span *ngIf="form.value['q3.2']">  located in  <survey-reference [controlName]="'q3.2'"></survey-reference></span>
+            <span *ngIf="form.value['q3.3']">  during  <survey-reference [controlName]="'q3.3'"></survey-reference></span>
+            <span *ngIf="form.value['q3.4']">  and  <survey-reference [controlName]="'q3.4'"></survey-reference></span>
+            
+        </div>
+        <p>If yes, check the box below. If no then change your answers to the questions above</p>
+        <ion-item>
+            <ion-label>Yes, it is an accurate description</ion-label>
+            <ion-checkbox [(ngModel)]="verificationBox" (ionChange)="verify()"></ion-checkbox>
+        </ion-item>
 
-    <p>
+    </div>
+
+
+
+
+    <!-- <p>
         You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
         a better understanding that should help in your decision making.
-    </p>
+    </p> -->
 </div>

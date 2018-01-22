@@ -51,15 +51,20 @@ export class SurveyQuestionComponent {
   updateLabel(key) {
     // updates dynamic text labels if relevant 
     if (this.dynamicText[key]) {
+      console.log('updating label')
       let value = this.formPrvdr.getSurveyValue(key)
       let el = document.getElementById(this.question.type + 'LabelText')
       let className = ".dynamicText" + key
-      let instances = el.querySelectorAll('.dynamic-text')
+      if(el){
+        let instances = el.querySelectorAll('.dynamic-text')
       for (let i = 0; i < instances.length; i++) {
         if (instances[i].getAttribute('name') == key)
           instances[i].innerHTML = value;
       }
+      }
+      
     }
+    console.log('label updated')
   }
 
   saveValue() {
@@ -82,7 +87,12 @@ export class SurveyQuestionComponent {
   _generateSelectOptions() {
     // parse select options to array
     if (this.question.selectOptions != "") {
-      let options = this.question.selectOptions.split(",")
+      let options
+      try {
+        options = this.question.selectOptions.split(",")
+      } catch (error) {
+        options = []
+      }
       // trim whitespace at start if present
       options = options.map(el => { return el.trim() })
       this.selectOptionsArray = options
@@ -128,7 +138,13 @@ export class SurveyQuestionComponent {
         // apply css
         let el = document.getElementById(this.question.type + 'LabelText')
         // use split/join to target all instances of text, apply name attribute for tracking later
-        el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
+        console.log('test')
+        try {
+          el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
+        } catch (error) {
+          
+        }
+        
         this.updateLabel(val)
       })
 
@@ -189,6 +205,30 @@ export class SurveyQuestionComponent {
       this.textAreaInput.nativeElement.style.height = this.textAreaInput.nativeElement.scrollHeight + 10 + 'px';
     }
 
+  }
+  shouldShowQuestion(question) {
+    // test logic from condition property against form
+    // currently implemented for specific previous values
+    if (question.hasOwnProperty('conditionJson')) {
+      let condition = question.conditionJson
+      if (this.formGroup && this.formGroup.value) {
+        if (this.formGroup.value.hasOwnProperty(condition.controlName)) {
+          if (condition.type == "prerequisite") {
+            if (this.formGroup.value[condition.controlName] && this.formGroup.value[condition.controlName] != '') {
+              return true
+            }
+          }
+          if (condition.type == "value") {
+            if (this.formGroup.value[condition.controlName] == condition.value) {
+              return true
+            }
+          }
+          else {return false }
+        }
+      }
+      return false
+    }
+    return true
   }
 
 

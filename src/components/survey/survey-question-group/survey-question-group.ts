@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormProvider } from '../../../providers/form/form'
 
@@ -9,17 +9,32 @@ import { FormProvider } from '../../../providers/form/form'
 
 export class SurveyQuestionGroupComponent {
   @Input('showLabel') showLabel: boolean;
-  // when question number or section set automatically filter the questions
+
   @Input() set filter(filterQuestions: any) {
-    this.filterQuestions=filterQuestions
+    // when question number or section set automatically filter the questions
+    this.filterQuestions = filterQuestions
     this._filterQuestions()
   };
   @Input() set section(section: string) {
+    // survey subsection questions
     this._section = section
     this._filterQuestions()
   }
+  @Input() set omit(omit: any) {
+    // intended to omit specific question from group, although currently handled with question condition logic instead
+    this._omit = omit
+  }
+  @Input() set repeatIndex(repeatIndex: number){
+    console.log('repeat index',repeatIndex)
+    this.showAllRepeats=false
+    this._repeatIndex=repeatIndex
+  }
+  // used to only show one set in repeat group
   filterQuestions: string[];
   _section: string;
+  _omit: string[] = [];
+  _repeatIndex:number;
+  showAllRepeats:boolean=true
   formGroup: FormGroup;
   allQuestions: any;
   groupQuestions: any;
@@ -44,8 +59,8 @@ export class SurveyQuestionGroupComponent {
         return q.section == section
       })
       if (this.filterQuestions) {
-        filtered = filtered.filter(q=>{
-          return this.filterQuestions.indexOf(q.controlName)>-1
+        filtered = filtered.filter(q => {
+          return this.filterQuestions.indexOf(q.controlName) > -1
         })
       }
       this.groupQuestions = filtered
@@ -53,42 +68,14 @@ export class SurveyQuestionGroupComponent {
     }
   }
 
-  getRepeatGroupTitle(question,index){
+  getRepeatGroupTitle(question, index) {
     try {
       let indices = JSON.parse(this.formGroup.value[question.selectOptions])
-      if(indices.length<2){return ""}
-      else {return indices[index]}
+      if (indices.length < 2) { return "" }
+      else { return indices[index] }
     } catch (error) {
       return ""
     }
-    
+
   }
-
-
-  shouldShowQuestion(question) {
-    // test logic from condition property against form
-    // currently implemented for specific previous values
-
-    if (question.hasOwnProperty('conditionJson')) {
-      let condition = question.conditionJson
-      if (this.formGroup && this.formGroup.value) {
-        if (this.formGroup.value.hasOwnProperty(condition.controlName)) {
-          if (condition.type == "prerequisite") {
-            if (this.formGroup.value[condition.controlName] && this.formGroup.value[condition.controlName] != '') {
-              return true
-            }
-          }
-          if (condition.type == "value") {
-            if (this.formGroup.value[condition.controlName] == condition.value) {
-              return true
-            }
-          }
-          else { return false }
-        }
-      }
-      return false
-    }
-    return true
-  }
-
 }

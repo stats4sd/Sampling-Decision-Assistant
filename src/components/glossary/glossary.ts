@@ -35,7 +35,7 @@ export class GlossaryComponent {
       2:[],
       3:[],
       4:[],
-      5:['sampling-frame','sampling-unit'],
+      5:['multi-stage-sampling','sampling-frame','sampling-unit','simple-random-sampling'],
       6:[]
     }
   }

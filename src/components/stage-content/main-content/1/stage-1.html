@@ -7,17 +7,23 @@
     an experiment or intervention</p>
 
   <help-icon resource="testResource"></help-icon>
-  <survey-question-group [section]="section" [filter]="['q1.1']"></survey-question-group>
-  <p *ngIf="form.value['q1.1']=='Describe population characteristics'">
-    With your target population in mind, try to answer the following 2 questions:
-  </p>
+  <survey-question-group [section]="section" [filter]="['q1.1','q1.2']"></survey-question-group>
 
 
+
+  <div *ngIf="form.value['q1.2']=='Representative'">
+    <p>With your target population in mind, try to answer the following questions:</p>
+    <survey-question-group [section]="section" [filter]="['q1.3','q1.4']"></survey-question-group>
+  </div>
+
+  <!-- not relevant responses from 1.1 or 1.2 -->
   <p *ngIf="form.value['q1.1']=='Measure impact of experiment or intervention'">
-    <warning></warning>
+    <warning>Warning Text</warning>
     <span class="incomplete">Text to go here responding to measure impact</span>
   </p>
-
-  <survey-question-group *ngIf="form.value['q1.1']=='Describe population characteristics'" [section]="section" [filter]="['q1.2','q1.3']"></survey-question-group>
-  <stage-complete *ngIf="form.value['q1.1'] && form.value['q1.2'] && form.value['q1.3']"></stage-complete>
+  <p *ngIf="form.value['q1.2']=='Non-representative'">
+    <warning>Warning Text</warning>
+    <span class="incomplete">Text to go here responding to measure impact</span>
+  </p>
+  <stage-complete *ngIf="form.value['q1.4']"></stage-complete>
 </div>

@@ -94,6 +94,7 @@ export class StagePage {
     this.slides.slideTo(2)
   }
   openModal(component,params?){
+    console.log('openining modal',component,params)
     this.modalCtrl.create(component,params).present()
   }
   closeModal(){

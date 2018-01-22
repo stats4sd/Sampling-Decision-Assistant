@@ -1,21 +1,38 @@
 <ion-card>
-    <form *ngIf="formGroup" [formGroup]="formGroup">
-        <div *ngIf="groupQuestions">
-          <div *ngFor="let question of groupQuestions">
-            <div *ngIf="question.type!='repeat'">
-              <survey-question [question]="question" [formGroup]="formGroup" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div *ngIf="groupQuestions">
+      <div *ngFor="let question of groupQuestions">
+        <div *ngIf="question.type!='repeat'">
+          <survey-question [question]="question" [formGroup]="formGroup" [showLabel]="showLabel"></survey-question>
+        </div>
+        <!-- repeat groups -->
+        <div *ngIf="question.type=='repeat'">
+          <!-- show all repeats-->
+          <div *ngIf="showAllRepeats">
+            <div>no index provided {{_repeatIndex}}</div>
+            <div [formArrayName]="question.controlName">
+              <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
+                <div class="repeat-heading">{{getRepeatGroupTitle(question,i)}}</div>
+                <div *ngFor="let q of question.repeatQuestions">
+                  <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[i]" [showLabel]="showLabel"></survey-question>
+                </div>
+              </div>
             </div>
-            <div *ngIf="question.type=='repeat'">
-              <div [formArrayName]="question.controlName">
-                <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
-                  <div class="repeat-heading">{{getRepeatGroupTitle(question,i)}}</div>
-                  <div *ngFor="let q of question.repeatQuestions">
-                    <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[0]" *ngIf="shouldShowQuestion(question)" [showLabel]="showLabel"></survey-question>
-                  </div>
+          </div>
+          <!-- show selected repeat -->
+          <div *ngIf="!showAllRepeats">
+            <div>repeatIndex: {{_repeatIndex}}</div>
+            <div [formArrayName]="question.controlName">
+              <div [formGroupName]="_repeatIndex">
+                <div class="repeat-heading">{{getRepeatGroupTitle(question,_repeatIndex)}}</div>
+                <div *ngFor="let q of question.repeatQuestions">
+                  <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]" [showLabel]="showLabel"></survey-question>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </form>
+      </div>
+    </div>
+  </form>
 </ion-card>

@@ -83,10 +83,10 @@ export class FormProvider {
       patch["q5.2"] = ''
       this.formGroup.patchValue(patch)
       if (update.value == "Yes") {
-        this.events.publish('arrayChange:q5.2', { controlName: "q5.2", type: 'reset', empty: false })
+        this.events.publish('arrayChange:q5.3', { controlName: "q5.3", type: 'reset', empty: false })
       }
       if (update.value == "No") {
-        this.events.publish('arrayChange:q5.2', { controlName: "q5.2", type: 'reset', empty: true })
+        this.events.publish('arrayChange:q5.3', { controlName: "q5.3", type: 'reset', empty: true })
       }
     }
   }
@@ -146,6 +146,7 @@ export class FormProvider {
     })
     // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
     this.events.unsubscribe('arrayChange:'+question.selectOptions)
+    console.log('subscribing array change',question.selectOptions)
     this.events.subscribe('arrayChange:'+question.selectOptions, update => {
       console.log('array change:'+question.selectOptions,update)
         console.log('pushing repeat to '+question.controlName)
