@@ -4,7 +4,7 @@
   <span class="tooltiptext" *ngIf="!tooltip">Read more about {{text}} in the glossary section</span>
   {{text}}
 </span>
-<span class="glossary-link" *ngIf="!tooltip" (click)="glossaryClick()">{{text}}</span>
+<span class="glossary-link" *ngIf="!tooltip" (click)="glossaryClick()">{{text}}<ng-content></ng-content></span>
 <!--   
 <div>
   {{text}}

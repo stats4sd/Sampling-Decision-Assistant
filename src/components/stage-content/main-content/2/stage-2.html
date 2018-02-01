@@ -1,23 +1,54 @@
 <div class="slide-content">
   <h4>What indicators will guide your sampling decisions?</h4>
   <p>
-    A good deal of the statistics theory that is used in sampling is based on estimating the value of an indicator for a population.
-    This produces some tension because in practice we want to estimate multiple indicators. The way this tension is resolved
-    it to choose one key indicator that can be used to make important decisions.
+    While most studies that use sampling intend to quantify multiple indicators, it is normal to base the decisions on a key
+    indicator. In this section you will be asked to select such indicator and to establish the estimation requirements that
+    will help you making sampling decisions later on.
   </p>
-  <p>
-    There are two things you will need to know about the indicator:
-  </p>
-  <ol>
-    <li>How variable it is</li>
-    <li>What is the margin of error that you are prepared to accept in the estimation process</li>
-  </ol>
-  <p>
-    The following questions will help you in thinking about these issues
-  </p>
-    <survey-question-group section="Indicators" [showLabel]=true></survey-question-group>
-  <p>
-    You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
-    a better understanding that should help in your decision making.
-  </p>
+  <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.1.1']"></survey-question-group>
+  <div>
+    <p>
+      The next question is about the estimate you are interested in. Many estimation processes are about estimating either of the
+      following, please select the estimate that best describes your interest.
+    </p>
+    <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.1.2']"></survey-question-group>
+  </div>
+  <!-- case averages -->
+  <div *ngIf="form.value['q2.1.2']=='Average or total value of indicator in the population'">
+    <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.2.1']"></survey-question-group>
+    <p>This value may be known from previous studies. You don’t need to be exact about this value, but the more exact you are,
+      the better.</p>
+    <div *ngIf="form.value['q2.2.1']=='Yes'">
+      <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.2.2']"></survey-question-group>
+    </div>
+    <div *ngIf="form.value['q2.2.1']=='No'">
+      <p>If you don’t know the value and there is no information you can rely on, you may be able to come to an approximate
+        value by answering the following questions</p>
+      <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.2.3']"></survey-question-group>
+      <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.2.4']"></survey-question-group>
+      <p>If the distribution of the values of (indicator) in the population is roughly symmetric, this value would be an acceptable
+        estimate. If the distribution is heavily skewed the value may be an overestimate and you may want to correct it slightly
+        down. If the distribution is flat, that is the values do not cluster towards the mean, but low values and high values
+        are as likely as values around the mean, this may be a slight underestimate.
+      </p>
+      <div *ngIf="form.value['q2.2.3'] && form.value['q2.2.4']" class="calculation">
+        <ion-icon name="calculator"></ion-icon>
+        <span>&sigma; = {{sd | number:'1.2-2' }}</span>
+      </div>
+      <p>
+        The above calculation establishes the standard deviation as: (max-min)/6 .<br>
+        Do you want to change this value? If so you can do so in the box below.
+      </p>
+      <survey-question-group section="Indicators" [showLabel]=false [filter]="['q2.2.2']"></survey-question-group>
+    </div>
+  </div>
+  <!-- case proportions -->
+  <div *ngIf="form.value['q2.1.2']=='Proportion of elements in the population with the characteristics of the indicator'">
+      <note type="dev">Questions for case proportions will go here</note>
+  </div>
+
+
+
+
+
 </div>

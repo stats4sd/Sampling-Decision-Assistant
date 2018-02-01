@@ -3,7 +3,7 @@
   <p>To effectively answer the questions and guide your decisions throughout this process, you should first have a clear idea
     of your main objective. This is your overall aim for the activity that you are doing sampling for.</p>
   <p>The first question broadly seperates two types of objective. The first is for those wishing to conduct a survey to help
-    explore or understand the characteristics of a population. The second is for those wishing to evaluate the impact of
+    explore or understand the <glossary-link slug="population-characteristics">characteristics of a population</glossary-link>. The second is for those wishing to evaluate the impact of
     an experiment or intervention</p>
 
   <help-icon resource="testResource"></help-icon>
@@ -18,12 +18,17 @@
 
   <!-- not relevant responses from 1.1 or 1.2 -->
   <p *ngIf="form.value['q1.1']=='Measure impact of experiment or intervention'">
-    <warning>Warning Text</warning>
-    <span class="incomplete">Text to go here responding to measure impact</span>
+    <note type="dev">
+      Information will go here explaining main uses of tool directed towards measuring characteristics, but elements that may still
+      be relevant and links to more information
+    </note>
   </p>
   <p *ngIf="form.value['q1.2']=='Non-representative'">
-    <warning>Warning Text</warning>
-    <span class="incomplete">Text to go here responding to measure impact</span>
+    <note type="dev">
+      Information will go here explaining main uses of tool directed towards representative samples, but elements that may still
+      be relevant and links to more information
+    </note>
+    <!-- <span class="incomplete">Text to go here responding to measure impact</span> -->
   </p>
   <stage-complete *ngIf="form.value['q1.4']"></stage-complete>
 </div>

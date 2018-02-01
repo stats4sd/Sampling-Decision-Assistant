@@ -31,7 +31,7 @@ export class GlossaryComponent {
 
   constructor(private events: Events) {
     this.allSectionTerms={
-      1:[],
+      1:['population-characteristics'],
       2:[],
       3:[],
       4:[],

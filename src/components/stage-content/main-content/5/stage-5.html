@@ -22,9 +22,38 @@
                         <div>{{info.heading}}</div>
                         <ion-icon name="create" class="edit-button" (click)="editStage(info.stage)"></ion-icon>
                     </div>
-                    <p style="padding:5px">
-                        <survey-reference [controlName]="info.formControl"></survey-reference>
-                    </p>
+                    <div style="padding:5px">
+                        <!-- specific cases for content boxes-->
+                        <div *ngIf="info.stage=='stage-1'">
+                            <survey-reference [controlName]="info.formControl"></survey-reference>
+                        </div>
+                        <div *ngIf="info.stage=='stage-2'">
+                            <survey-reference [controlName]="info.formControl"></survey-reference>
+                            <div>
+                                <span>&sigma; = </span>
+                                <survey-reference controlName="q2.2.2"></survey-reference>
+                            </div>
+
+                        </div>
+                        <div *ngIf="info.stage=='stage-3'">
+                            <survey-reference [controlName]="info.formControl"></survey-reference>
+                        </div>
+                        <div *ngIf="info.stage=='stage-4'">
+                            <div *ngIf="form.value['q4.1']=='One estimate'">
+                                <survey-reference [controlName]="info.formControl"></survey-reference>
+                            </div>
+                            <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
+                                <div>Disaggregated by:</div>
+                                <survey-reference controlName="q4.2" *ngIf="form.value['q4.2']==''"></survey-reference>
+                                <ul>
+                                    <li *ngFor="let estimate of processed.estimates">{{estimate}}</li>
+                                </ul>
+                            </div>
+                            <div *ngIf="form.value['q4.1']==''">
+                                <survey-reference [controlName]="info.formControl"></survey-reference>
+                            </div>
+                        </div>
+                    </div>
 
                 </ion-card>
                 <!-- <div class="dev-note" icon-left>
@@ -41,14 +70,20 @@
                 that make up your target population of
                 <survey-reference controlName="q3.1"></survey-reference>.</p>
             <survey-question-group section="Selecting the sampling units" [filter]="['q5.1']"></survey-question-group>
+            <!-- q5.1 -->
             <div *ngIf="form.value['q5.1']=='Yes'">
                 <p>As a final list does exist you have the choice to use it in a single stage sampling approach with
                     <glossary-link text="simple random sampling" slug="simple-random-sampling"></glossary-link>, or you may still decide to use
                     <glossary-link text="multiple stages" slug="multi-stage-sampling"></glossary-link>. Some of the pros and cons of each approach are discussed in the resources section.
                 </p>
                 <survey-question-group section="Selecting the sampling units" [filter]="['q5.1.1']"></survey-question-group>
+                <note *ngIf="form.value['q5.1.1'] =='Single-stage'" type='dev'>Next steps for single stage to be completed, multi stage more indicative</note>
                 <div *ngIf="form.value['q5.1.1']=='Multi-stage'">
-                    <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']"></survey-question-group>
+                    <!-- q5.2-->
+                    <div style="display: flex">
+                        <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']" style="flex:1"></survey-question-group>
+                    </div>
+
                 </div>
             </div>
             <div *ngIf="form.value['q5.1']=='No'">
@@ -56,7 +91,10 @@
                     <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>strategy. In order to do this you must first determine a set of sampling stages that
                     will eventually narrow down to your final sampling units.
                 </p>
-                <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']"></survey-question-group>
+                <!-- q5.2-->
+                <div style="display: flex">
+                    <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']" style="flex:1"></survey-question-group>
+                </div>
             </div>
 
         </ion-slide>
@@ -70,6 +108,7 @@
                 you should click on the corresponding box and answer the set of questions to decide on your overall sampling
                 approach.
             </p>
+            <tree-diagram [nodes]="form.value['q5.2']" style="width:300px; min-height:250px"></tree-diagram>
             <div class="builder-container">
                 <div *ngFor="let stage of form.value['q5.3']; let i=index; let last=last" class="builder-stage-container">
                     <button ion-button class="builder-stage-select" (click)="buildStage(i)">{{builderStages[i] ? builderStages[i] : 'Stage '+(i+1)}}</button>

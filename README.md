@@ -37,3 +37,6 @@ if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouc
         // }, { zone: false }, unregs);
     }
 ```
+
+### Vis.JS
+External package vis.js is used for tree diagrams. Due to hammer.js conflicts it is not imported from npm and instead sits in the /assets/js folder. To update to latest version download and place in the folder.

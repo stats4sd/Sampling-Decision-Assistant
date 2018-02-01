@@ -1,0 +1,11 @@
+note {
+    .note{
+        padding:5px;
+        display: flex;
+        align-items: center;
+        background-color: rgba(128, 128, 128, 0.6)
+    }
+    .warning, .alert{
+        background-color: rgba(250, 78, 78, 0.541)
+    }
+}

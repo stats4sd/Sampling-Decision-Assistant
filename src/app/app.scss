@@ -61,6 +61,8 @@ h2{
 }
 body{
     user-select: text;
+    font-family: 'proxima_nova', lato, sans-serif!important;
+	font-size:1.3em;
 }
 
 // --------------------------------------------------
@@ -137,6 +139,7 @@ body{
     width:calc(100% - 32px);
     max-width: calc(100vw - 32px);
     z-index: 2;
+    background-color: white;
     
 }
 @media screen and (min-width:$max-app-width){

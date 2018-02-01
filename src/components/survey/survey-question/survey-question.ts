@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
-import { FormProvider} from '../../../providers/form/form'
+import { FormProvider } from '../../../providers/form/form'
 
 
 
@@ -35,7 +35,7 @@ export class SurveyQuestionComponent {
   multipleTextValues: any = [];
   valueSaved: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr:FormProvider) {
+  constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr: FormProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 
 
@@ -45,8 +45,9 @@ export class SurveyQuestionComponent {
     this._generateSelectOptions()
     this._generateMultipleValues()
     this._prepareDynamicText()
+    // run any custom onInit triggers
+    if (this.question.triggers && this.question.triggers.trigger == "onInit") { this._runCustomTriggers() }
     this.cdr.detectChanges()
-    
   }
   updateLabel(key) {
     // updates dynamic text labels if relevant 
@@ -55,14 +56,14 @@ export class SurveyQuestionComponent {
       let value = this.formPrvdr.getSurveyValue(key)
       let el = document.getElementById(this.question.type + 'LabelText')
       let className = ".dynamicText" + key
-      if(el){
+      if (el) {
         let instances = el.querySelectorAll('.dynamic-text')
-      for (let i = 0; i < instances.length; i++) {
-        if (instances[i].getAttribute('name') == key)
-          instances[i].innerHTML = value;
+        for (let i = 0; i < instances.length; i++) {
+          if (instances[i].getAttribute('name') == key)
+            instances[i].innerHTML = value;
+        }
       }
-      }
-      
+
     }
     console.log('label updated')
   }
@@ -73,8 +74,9 @@ export class SurveyQuestionComponent {
     let update = { controlName: this.question.controlName, value: value, section: this.question.section }
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
+    this.events.publish('valueUpdated:' + update.controlName, update)
     //this.events.publish('save')
-    
+
     //   this.valueSaved=true
     //   let animator = new AnimationBuilder();
     //   let el = this.saveMessage.nativeElement
@@ -82,6 +84,27 @@ export class SurveyQuestionComponent {
     //  .then(_res=>{el.style.visibility="inherit"})
 
   }
+
+  _runCustomTriggers() {
+    // fires custom triggers saved in the question object
+    if (this.question.triggers) {
+      console.log('running custom trigger', this.question)
+      eval(this.question.triggers.function)
+      this.cdr.detectChanges()
+    }
+  }
+  setValue(controlName, value, stringify?) {
+    // called from custom triggers to set another value
+    setTimeout(() => {
+      // running as timeout to avoid change detection issues
+      if (stringify) { value = JSON.stringify(value) }
+      console.log('setting value', controlName, value)
+      let patch = {}
+      patch[controlName] = value
+      this.formGroup.patchValue(patch)
+    })
+  }
+
 
 
   _generateSelectOptions() {
@@ -142,9 +165,9 @@ export class SurveyQuestionComponent {
         try {
           el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
         } catch (error) {
-          
+
         }
-        
+
         this.updateLabel(val)
       })
 
@@ -179,19 +202,19 @@ export class SurveyQuestionComponent {
     this.multipleTextValues.push(this.multipleTextInput)
     this.multipleTextInput = "";
     let patch = {}
-    patch[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    patch[this.questionKey] = JSON.stringify(this.multipleTextValues)
     this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:'+this.questionKey,{controlName:this.questionKey, type:'push', value:this.multipleTextValues})
+    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'push', value: this.multipleTextValues })
     this.saveValue()
   }
   removeTextMultiple(index) {
     this.multipleTextValues.splice(index, 1)
     let patch = {}
-    patch[this.questionKey]=JSON.stringify(this.multipleTextValues)
+    patch[this.questionKey] = JSON.stringify(this.multipleTextValues)
     this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:'+this.questionKey,{controlName:this.questionKey, type:'splice', index:index, value:this.multipleTextValues})
+    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues })
     this.saveValue()
   }
 
@@ -223,7 +246,7 @@ export class SurveyQuestionComponent {
               return true
             }
           }
-          else {return false }
+          else { return false }
         }
       }
       return false

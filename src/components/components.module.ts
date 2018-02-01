@@ -11,8 +11,9 @@ import { GlossaryLinkComponent } from './glossary/glossary-link/glossary-link';
 import { GlossaryComponent } from './glossary/glossary';
 import { HelpIconComponent } from './survey/help-icon/help-icon';
 import { GlossaryDetailComponent } from './glossary/glossary-detail/glossary-detail';
-import { WarningComponent } from './warning/warning';
 import { SurveyReferenceComponent } from './survey/survey-reference/survey-reference';
+import { NoteComponent } from './note/note';
+import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
 
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
@@ -25,8 +26,9 @@ import { SurveyReferenceComponent } from './survey/survey-reference/survey-refer
         GlossaryComponent,
         HelpIconComponent,
         GlossaryDetailComponent,
-        WarningComponent,
         SurveyReferenceComponent,
+        NoteComponent,
+    TreeDiagramComponent,
     ],
     imports: [
         IonicModule,
@@ -40,8 +42,9 @@ import { SurveyReferenceComponent } from './survey/survey-reference/survey-refer
         GlossaryComponent,
         HelpIconComponent,
         GlossaryDetailComponent,
-        WarningComponent,
         SurveyReferenceComponent,
+        NoteComponent,
+    TreeDiagramComponent,
     ]
 })
 export class ComponentsModule { }

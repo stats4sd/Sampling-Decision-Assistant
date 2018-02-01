@@ -104,6 +104,8 @@ export class DataProvider {
           if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { delete this.savedSurveys[k] }
         })
         console.log('surveys loaded', this.savedSurveys)
+        // load testing survey by default if created for faster dev workflow //
+        if (this.savedSurveys._testing) { this.loadSurvey(this.savedSurveys._testing) }
         console.log('active survey', this.activeSurvey)
       }
     )

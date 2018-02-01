@@ -9,7 +9,6 @@
         <div *ngIf="question.type=='repeat'">
           <!-- show all repeats-->
           <div *ngIf="showAllRepeats">
-            <div>no index provided {{_repeatIndex}}</div>
             <div [formArrayName]="question.controlName">
               <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
                 <div class="repeat-heading">{{getRepeatGroupTitle(question,i)}}</div>
@@ -21,7 +20,6 @@
           </div>
           <!-- show selected repeat -->
           <div *ngIf="!showAllRepeats">
-            <div>repeatIndex: {{_repeatIndex}}</div>
             <div [formArrayName]="question.controlName">
               <div [formGroupName]="_repeatIndex">
                 <div class="repeat-heading">{{getRepeatGroupTitle(question,_repeatIndex)}}</div>
