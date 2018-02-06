@@ -25,6 +25,7 @@
       <div class="main-container">
         <p class="instruction" icon-left>
           <ion-icon name="information-circle"></ion-icon>Complete each section to build an overview of your sampling decisions</p>
+          <!-- section cards -->
         <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
@@ -32,7 +33,11 @@
               <img class="section-icon" [src]="section.icon">
             </div>
             <div class="section-title">{{section.stage}}: {{section.name}}</div>
-            <div class="section-status">{{section.status}}</div>
+            <div class="section-status" >
+              <!-- *ngIf="dataPrvdr.stagesComplete[section.stage]" -->
+              <button ion-button icon-only clear [disabled]="!dataPrvdr.stagesComplete[section.stage]"><ion-icon name="checkmark-circle"></ion-icon></button>
+              
+            </div>
           </div>
         </ion-card>
       </div>

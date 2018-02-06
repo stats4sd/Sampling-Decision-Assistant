@@ -7,6 +7,5 @@ import { StagePage } from '../../../../pages/sampling tool/step-by-step/stage/st
 })
 export class Stage1Component extends StagePage {
 
-    
 
 }

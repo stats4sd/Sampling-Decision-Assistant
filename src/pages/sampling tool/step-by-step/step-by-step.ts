@@ -18,7 +18,7 @@ export class StepByStepPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private dataPrvdr: DataProvider,
+    public dataPrvdr: DataProvider,
     public modalCtrl:ModalController,
     public events:Events,
     public formPrvdr:FormProvider,

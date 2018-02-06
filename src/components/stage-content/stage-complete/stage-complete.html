@@ -2,4 +2,19 @@
   <h2>Section Completed</h2>
   <ion-icon name="checkmark-circle" class="complete-icon"></ion-icon>
 </div> -->
-<note type="dev">Stage completion signifier will go here, ideally triggered on completion of all relevant questions or through self-assessment mechanism</note>
+<!-- <note type="dev">Stage completion signifier will go here, ideally triggered on completion of all relevant questions or through self-assessment
+  mechanism</note> -->
+<div style="display:flex; flex-wrap:wrap; justify-content:space-between">
+  <ion-item *ngIf="form" style="max-width:300px">
+    <ion-label>Mark Section as Complete</ion-label>
+    <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="dataPrvdr.stagesComplete[stage.number]"></ion-checkbox>
+  </ion-item>
+  <button ion-button icon-right *ngIf="dataPrvdr.stagesComplete[1]" (click)="nextStage()">
+    Next Stage
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
+</div>
+
+
+<!-- automatic checking of form validity through template function call - uses throttle to avoid too many calls -->
+<div>{{checkSectionValid(form.value)}}</div>

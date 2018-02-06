@@ -49,6 +49,21 @@ page-step-by-step {
     .review-box:hover{
         background-color: wheat
     }
+    .section-container{
+        position: relative;
+    }
+    .section-status{
+        position: absolute;
+        right:0px;
+        top:0px;
+        .button{
+            margin:0
+        }
+        .icon{
+            padding:0 2px;
+        }
+    }
+   
     @media screen and (max-width: 450px){
         .review-card{
             width:90px

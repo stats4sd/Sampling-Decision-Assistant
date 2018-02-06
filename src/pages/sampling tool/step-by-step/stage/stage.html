@@ -1,15 +1,17 @@
 <ion-header>
-
-  <ion-navbar #navbar color="primary" >
+  <ion-navbar #navbar color="primary">
     <ion-title>{{stage.title}}</ion-title>
-    <ion-buttons end *ngIf="modalMode">
-      <button ion-button icon-left (click)="closeModal()"><ion-icon name="checkmark"></ion-icon>Close</button>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="closeModal()" *ngIf="modalMode">
+        <ion-icon name="checkmark"></ion-icon>Close</button>
+      <button ion-button icon-left color="primary" style="background-color: white" *ngIf="dataPrvdr.stagesComplete[stage.number]" [@animationState]="'flyIn'">
+        <ion-icon name="checkmark-circle"></ion-icon>Section Complete</button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding class="slide-scroll-content">
+<ion-content padding class="slide-scroll-content" #content id="content">
   <div class="central-content">
     <ion-slides #slides id="slides">
       <ion-slide>
@@ -29,8 +31,7 @@
       <ion-slide>
         <!-- Resources -->
         <div class="slide-content">
-          <h2>Resources</h2>
-          <p>In this section you can find links and resources related to the main content (currently under construction).</p>
+          <resources></resources>
         </div>
       </ion-slide>
 

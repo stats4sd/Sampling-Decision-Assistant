@@ -48,7 +48,7 @@ import { DecisionToolMenuComponent } from '../components/decision-tool-menu/deci
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     DataProvider,
-    FormProvider
+    FormProvider,
   ]
 })
 export class AppModule { }

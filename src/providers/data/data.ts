@@ -14,6 +14,7 @@ export class DataProvider {
   public savedSurveys: any;
   public activeSurvey: any;
   public questionMeta = questionMeta;
+  public stagesComplete = [null,false,false,false,false,false,false];
   private _dbVersion = 1;
 
   constructor(

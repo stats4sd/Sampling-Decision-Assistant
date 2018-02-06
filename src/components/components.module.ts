@@ -14,6 +14,7 @@ import { GlossaryDetailComponent } from './glossary/glossary-detail/glossary-det
 import { SurveyReferenceComponent } from './survey/survey-reference/survey-reference';
 import { NoteComponent } from './note/note';
 import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
+import { ResourcesComponent } from './resources/resources';
 
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
@@ -29,6 +30,7 @@ import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
         SurveyReferenceComponent,
         NoteComponent,
     TreeDiagramComponent,
+    ResourcesComponent,
     ],
     imports: [
         IonicModule,
@@ -45,6 +47,7 @@ import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
         SurveyReferenceComponent,
         NoteComponent,
     TreeDiagramComponent,
+    ResourcesComponent,
     ]
 })
 export class ComponentsModule { }
