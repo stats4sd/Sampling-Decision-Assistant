@@ -7,12 +7,12 @@ import { Events} from 'ionic-angular'
 })
 export class HelpIconComponent {
 
-@Input('resource') resource:any;
+@Input('relevant') relevant:any;
 
   constructor(public events:Events) {}
 
   helpClicked(){
-    this.events.publish('help:clicked',this.resource)
+    this.events.publish('help:clicked',this.relevant)
   }
 
 }

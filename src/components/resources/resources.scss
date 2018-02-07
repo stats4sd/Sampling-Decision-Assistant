@@ -8,8 +8,17 @@ resources {
         cursor: pointer;
     }
     .question-text{
-        font-weight: bold;
-        font-size: large;
         margin-bottom: 1em;
+        white-space: normal;
+    }
+    .answer-text{
+        padding: 5px;
+        font-size: small
+    }
+    .expanded{
+        background-color: #ffa2002e;
+        .question-text{
+            font-weight:bold
+        }
     }
 }

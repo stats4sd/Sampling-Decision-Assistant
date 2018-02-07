@@ -31,7 +31,7 @@ export class StagePage {
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   refreshSlides: boolean;
-  activeResource: any;
+  relevant:string
   loaded: boolean
   stagesComplete = this.dataPrvdr.stagesComplete
 
@@ -46,7 +46,7 @@ export class StagePage {
   ) {
     this.stageInit(navParams)
     this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
-    this.events.subscribe('help:clicked', resource => this._showResource(resource))
+    this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
 
   }
   stageInit(navParams){
@@ -120,8 +120,8 @@ export class StagePage {
     }, 500);
   }
 
-  _showResource(resource) {
-    this.activeResource = resource;
+  _showResource(relevant) {
+    this.relevant = relevant;
     let arr = location.hash.split('/')
     if (arr.indexOf('resources') == -1) {
       location.hash = location.hash + '/resources'

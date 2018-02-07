@@ -22,9 +22,9 @@ export class StageCompleteComponent extends StagePage {
     const v = formValues
     switch (true) {
       case s == 1: {
-        if (v['q1.4']) { return true }
+        if (v['q1.4'] && v['q1.3']) { return true }
         if (v['q1.2'] == 'Non-representative') { return true }
-        if (v['q1.1'] == 'Measure impact of experiment or intervention') { return true }
+        if (v['q1.1'] == 'A comparison that needs a quasi-experimental or an experimental approach') { return true }
         else {
           this.dataPrvdr.stagesComplete[1] = false
           return false

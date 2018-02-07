@@ -19,7 +19,8 @@ The project is linked to a remote firebase server for deployment. Memebers of SS
 
 ## Build notes
 Standard build with one current exception:
-To enable text select within slide object the core ion-slides component has been changed. Ideally in future should fork and save as custom component however for now simply need to comment out mousedown listeners in `node_modules\ionic-angular\components\slides\swiper\swiper-events.js`
+To enable text select within slide object the core ion-slides component has been changed. Ideally in future should fork and save as custom component however 
+for now simply need to comment out mousedown listeners in `node_modules\ionic-angular\components\slides\swiper\swiper-events.js`
 
 ```
 if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios')) || plt.getQueryParam('ionicPlatform')) {

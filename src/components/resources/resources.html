@@ -2,10 +2,11 @@
 <div>
   <h2>Frequently Asked Questions</h2>
   <ion-list>
-    <ion-item *ngFor="let question of resources.questions; let i=index">
-      <div class="question-text" (click)="expandToggle(i)">Question: {{question.q}}</div>
-      <div class="answer-text" *ngIf="expanded[i]" [@animationState]="'expandIn'">Answer: {{question.a}}</div>
+    <ion-item *ngFor="let question of resources.questions; let i=index" (click)="expandToggle(i)" [ngClass]="expanded[i] ? 'expanded' : 'contracted'">
+      <div class="question-text" >{{question.q}}</div>
+      <div class="answer-text" *ngIf="expanded[i]" [@animationState]="'expandIn'">{{question.a}}</div>
     </ion-item>
   </ion-list>
+  <h2>Example Cases</h2>
   <h2>More Information</h2>
 </div>

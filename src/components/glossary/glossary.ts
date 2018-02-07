@@ -10,33 +10,34 @@ import glossaryMaster from '../../models/glossaryTerms'
 export class GlossaryComponent {
   allGlossaryTerms: any = glossaryMaster;
   filteredGlossaryTerms: any;
-  allSectionTerms:any;
+  allSectionTerms: any;
   modalMode: boolean;
   activeTerm: any;
 
   @Input() set sectionTerms(sectionTerms: string[]) {
     this._filterGlossary(sectionTerms)
   }
-  @Input() set section(sectionNumber:number){
+  @Input() set section(sectionNumber: number) {
     let terms = this.allSectionTerms[sectionNumber]
     this._filterGlossary(terms)
   }
   @Input('displayMode') displayMode: string;
-  @Input() set slug(slug:string){
-    if(slug){
-      if(slug=="_"){this.activeTerm=null}
-      else{this.activeTerm = this._getTermObject(slug)}
+  @Input() set slug(slug: string) {
+    if (slug) {
+      if (slug == "_") { this.activeTerm = null }
+      else { this.activeTerm = this._getTermObject(slug) }
     }
   }
 
   constructor(private events: Events) {
-    this.allSectionTerms={
-      1:['population-characteristics, indicators'],
-      2:[],
-      3:[],
-      4:[],
-      5:['multi-stage-sampling','sampling-frame','sampling-unit','simple-random-sampling'],
-      6:[]
+    this.allSectionTerms = {
+      1: ['baseline', 'endline', 'experiments', 'external-validity', 'hypothesis-testing', 'indicator', 'inference', 'internal validity', 'quasi-experiments',
+      'representative-sample', 'non-representative-sample'],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: []
     }
   }
 
@@ -47,9 +48,9 @@ export class GlossaryComponent {
       this.events.publish('glossaryTerm:set', this.activeTerm)
     }
   }
-  viewAllTerms(){
-    this.filteredGlossaryTerms=null;
-    this.activeTerm=null;
+  viewAllTerms() {
+    this.filteredGlossaryTerms = null;
+    this.activeTerm = null;
   }
 
   _filterGlossary(termsArray) {

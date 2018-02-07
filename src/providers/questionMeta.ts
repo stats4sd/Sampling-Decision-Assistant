@@ -5,7 +5,7 @@ export default
             "isQuestion": "TRUE",
             "controlName": "q1.1",
             "type": "select",
-            "selectOptions": "Describe population characteristics, Measure impact of experiment or intervention",
+            "selectOptions": "Estimating the value of one or a set of characteristics of a population, A comparison that needs a quasi-experimental or an experimental approach",
             "label": "How would you categorise the general purpose of your survey",
             "section": "General objectives",
             "condition": "",
@@ -18,7 +18,7 @@ export default
             "selectOptions": "Representative, Non-representative",
             "label": "Are you looking to establish a representative or non-representative sample",
             "section": "General objectives",
-            "condition": "type:value, controlName:q1.1, value:Describe population characteristics",
+            "condition": "type:value, controlName:q1.1, value:Estimating the value of one or a set of characteristics of a population",
             "labelMultiple": null
         },
         {
