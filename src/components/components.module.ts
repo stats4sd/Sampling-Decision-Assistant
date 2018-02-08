@@ -16,7 +16,6 @@ import { NoteComponent } from './note/note';
 import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
 import { ResourcesComponent } from './resources/resources';
 
-
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
     declarations: [
@@ -29,8 +28,8 @@ import { ResourcesComponent } from './resources/resources';
         GlossaryDetailComponent,
         SurveyReferenceComponent,
         NoteComponent,
-    TreeDiagramComponent,
-    ResourcesComponent,
+        TreeDiagramComponent,
+        ResourcesComponent,
     ],
     imports: [
         IonicModule,
@@ -46,8 +45,8 @@ import { ResourcesComponent } from './resources/resources';
         GlossaryDetailComponent,
         SurveyReferenceComponent,
         NoteComponent,
-    TreeDiagramComponent,
-    ResourcesComponent,
+        TreeDiagramComponent,
+        ResourcesComponent,
     ]
 })
 export class ComponentsModule { }

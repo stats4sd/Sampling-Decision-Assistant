@@ -16,9 +16,18 @@
     </div>
     <!-- number input -->
     <div *ngIf="question.type=='number'">
-      <ion-item>
-        <ion-input type="number" (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
-      </ion-item>
+      <div style="display: flex">
+        <!-- optional prefix -->
+        <div *ngIf="question.options && question.options.prefix" class="prefix">
+          {{question.options.prefix}}
+        </div>
+        <ion-item>
+          <ion-input type="number" 
+          [max]="question.options && question.options.max ? question.options.max : null"
+          [min]="question.options && question.options.min ? question.options.min : null" 
+          (focusout)="saveValue()" [formControlName]="question.controlName" ></ion-input>
+        </ion-item>
+      </div>
     </div>
     <!-- select -->
     <div *ngIf="question.type=='select'">
@@ -47,10 +56,27 @@
       <div style="min-height: 6em">
         <div style="display:flex" *ngFor="let value of multipleTextValues, index as i">
           <div style="opacity: 0" class="question-number">{{question.controlName}}</div>
-          <div class="multiple-list">
+          <!-- list format -->
+          <div class="multiple-list" *ngIf="!question.options || !question.options.format">
             <span class="bullet"></span>
             <span>{{value}}</span>
             <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
+          </div>
+          <!-- arrow format -->
+          <div class="multiple-arrows" *ngIf="question.options && question.options.format=='arrow'">
+            <div class="multiple-arrow-down">
+              <ion-icon name="arrow-down"></ion-icon>
+            </div>
+            <!-- rough method to reverse the order values appear in arrow format -->
+            <div style="display: flex">
+              <button ion-button block icon-right class="multiple-arrows-button">
+                {{multipleTextValues[multipleTextValues.length-1-i]}}
+              </button>
+              <button ion-button icon-only clear (click)="removeTextMultiple(multipleTextValues.length-1-i)" [disabled]="i==multipleTextValues.length-1">
+                <ion-icon name="remove-circle"></ion-icon>
+              </button>
+            </div>
+
           </div>
         </div>
       </div>

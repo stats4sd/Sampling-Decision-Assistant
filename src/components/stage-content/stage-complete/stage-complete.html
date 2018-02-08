@@ -9,7 +9,7 @@
     <ion-label>Mark Section as Complete</ion-label>
     <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="dataPrvdr.stagesComplete[stage.number]"></ion-checkbox>
   </ion-item>
-  <button ion-button icon-right *ngIf="dataPrvdr.stagesComplete[1]" (click)="nextStage()">
+  <button ion-button icon-right *ngIf="dataPrvdr.stagesComplete[stageNumber]" (click)="nextStage()">
     Next Stage
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

@@ -1,30 +1,31 @@
 <div class="slide-content">
   <h2>Introduction</h2>
-  <p>To effectively design a sampling process, you should first have a clear idea of your main objective. This is your overall
-    aim for the activity that you are doing sampling for.</p>
+  <p>To design a sampling process, you should first have a clear idea of your main objective. This is, your overall aim for
+    the activity that you are doing sampling for.</p>
 
-  <p>Developing sampling designs is about making decisions that will define how you will collect data and how you will estimate
-    the value of one or a set of characteristics of a population. We sometimes call those characteristics
-    <glossary-link slug="indicator">indicators</glossary-link>. This guide has been designed to help with this type of objective. Common examples can be
-    seen in the
-    <a href="/#/step-by-step/stage-1/resources">resources</a> tab. This may happen for example when profiling populations, setting
+  <p>
+    Developing sampling designs is about making decisions that will define how you will collect data and how you will estimate
+    the value of one or a set of characteristics of a population. We sometimes call those characteristics:
+    <glossary-link slug="indicator">indicators</glossary-link>. This guide has been designed to help with this type of objective. This may happen for example
+    when profiling populations, setting
     <glossary-link slug="baseline">baselines</glossary-link>
     or assessing the value of indicators at
-    <glossary-link slug="endline">end-line</glossary-link> or midline points.
+    <glossary-link slug="endline">end-line</glossary-link> or midline points. Common examples can be seen in the
+    <a href="/#/step-by-step/stage-1/resources">resources</a> tab.
   </p>
 
   <p>In some cases a study may be established to compare interventions and require a
     <glossary-link slug="quasi-experimental">quasi-experimental</glossary-link> or
-    <glossary-link slug="experiments">experimental</glossary-link> approach. This tool has not been aimed to support decisions for this type of design but
-    it will provide pointers to useful resources and links that may help with the question of how many times a treatment
-    should be repeated.</p>
+    <glossary-link slug="experiments">experimental</glossary-link> approach. This tool has not been aimed to support decisions for this type of design, but
+    it will provide pointers to resources and links that may help with the question of how many times a treatment should
+    be repeated.</p>
 
   <!-- q1.1 -->
   <p>
-    The first question you will answer broadly separates these two types of objectives. The first answer is for people conducting
-    a survey to estimate a characteristics of a population. The second is for those wishing to evaluate the impact of an
-    intervention while controlling external factors. If you are not sure which is the correct answer for you, click on the
-    help icon for more information and examples.
+    The first question you will answer broadly separates these two types of objectives. The first answer provided is for people
+    conducting a survey to estimate a characteristic of a population. The second answer is for those wishing to evaluate
+    the comparative benefits of a set of options while controlling external factors, that is, setting an experimental or
+    a quasi-experimental study. If you are not sure which is the correct answer for you, have a look at the examples provided.
   </p>
   <help-icon relevant="q1.1"></help-icon>
   <survey-question-group [section]="section" [filter]="['q1.1']"></survey-question-group>
@@ -44,11 +45,11 @@
     <help-icon relevant="q1.2"></help-icon>
     <survey-question-group [section]="section" [filter]="['q1.2']"></survey-question-group>
   </div>
-  <!-- q1.3 & q1.4 -->
+  <!-- q1.3 -->
   <div *ngIf="form.value['q1.2']=='Representative'">
     <p>With your target population in mind, try to answer the following questions:</p>
     <help-icon relevant="q1.3"></help-icon>
-    <survey-question-group [section]="section" [filter]="['q1.3','q1.4']"></survey-question-group>
+    <survey-question-group [section]="section" [filter]="['q1.3']"></survey-question-group>
   </div>
 
   <!-- not relevant responses from 1.1 or 1.2 -->

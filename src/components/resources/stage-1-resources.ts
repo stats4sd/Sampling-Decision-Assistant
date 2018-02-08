@@ -1,4 +1,5 @@
 export default {
+    stage:1,
     questions: [
         {
             q: 'Can you explain the difference between studies that deal with estimation of population characteristics and studies to compare interventions? ',
@@ -32,10 +33,16 @@ export default {
             relevant: ['q1.2']
         },
         {
-            q: 'Why are objectives important and can you give some examples that are common for this type of study?',
+            q: 'What are the limitations of results that come from a non-representative sample?',
             a: '...',
             video: '',
-            relevant: ['q1.3', 'q1.4']
+            relevant: ['q1.2']
+        },
+        {
+            q: 'Can you give me examples about how to best formulate the main objectives for the purposes of designing a sampling scheme?',
+            a: '...',
+            video: '',
+            relevant: ['q1.3']
         },
     ],
     examples: [

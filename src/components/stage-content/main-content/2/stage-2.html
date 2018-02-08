@@ -5,6 +5,7 @@
     indicator. In this section you will be asked to select such indicator and to establish the estimation requirements that
     will help you making sampling decisions later on.
   </p>
+  <help-icon relevant="q2.1.1"></help-icon>
   <survey-question-group section="Indicators" [showLabel]=true [filter]="['q2.1.1']"></survey-question-group>
   <div>
     <p>
@@ -31,21 +32,32 @@
         down. If the distribution is flat, that is the values do not cluster towards the mean, but low values and high values
         are as likely as values around the mean, this may be a slight underestimate.
       </p>
-      <div *ngIf="form.value['q2.2.3'] && form.value['q2.2.4']" class="calculation">
-        <ion-icon name="calculator"></ion-icon>
-        <span>&sigma; = {{sd | number:'1.2-2' }}</span>
+      <div *ngIf="form.value['q2.2.3'] && form.value['q2.2.4']">
+        <div class="calculation">
+          <ion-icon name="calculator"></ion-icon>
+          <span>&sigma; = {{sd | number:'1.2-2' }}</span>
+        </div>
+        <p>
+          The above calculation establishes the standard deviation as: (max-min)/6 .
+          <br> Do you want to change this value? If so you can do so in the box below.
+        </p>
+        <survey-question-group section="Indicators" [showLabel]=false [filter]="['q2.2.2']"></survey-question-group>
       </div>
-      <p>
-        The above calculation establishes the standard deviation as: (max-min)/6 .<br>
-        Do you want to change this value? If so you can do so in the box below.
-      </p>
-      <survey-question-group section="Indicators" [showLabel]=false [filter]="['q2.2.2']"></survey-question-group>
+      
     </div>
   </div>
-  <!-- case proportions -->
+  <!-- case proportions *** tbc ***-->
   <div *ngIf="form.value['q2.1.2']=='Proportion of elements in the population with the characteristics of the indicator'">
-      <note type="dev">Questions for case proportions will go here</note>
+    <!-- <note type="dev">Questions for case proportions will go here</note> -->
+    <survey-question-group section="Indicators" [filter]="['q2.3.1']"></survey-question-group>
   </div>
+
+  <!-- q2.4 -->
+  <div *ngIf="form.value['q2.2.2'] || form.value['q2.3.1']">
+    <survey-question-group section="Indicators" [filter]="['q2.4']"></survey-question-group>
+  </div>
+
+  <stage-complete stageNumber=2 [complete]="dataPrvdr.stagesComplete[2]"></stage-complete>
 
 
 

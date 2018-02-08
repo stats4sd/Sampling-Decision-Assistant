@@ -9,24 +9,20 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: 'stage-2.html'
 })
 export class Stage2Component extends StagePage {
-  sd:number;
+  sd: number;
   ngOnInit() {
     // listen for updates on min/max values to automatically calculate s.d
-    this.events.subscribe('valueUpdated:q2.2.3',(update)=>this._calculateSD())
-    this.events.subscribe('valueUpdated:q2.2.4',(update)=>this._calculateSD())
+    this.events.subscribe('valueUpdated:q2.2.3', (update) => this._calculateSD())
+    this.events.subscribe('valueUpdated:q2.2.4', (update) => this._calculateSD())
     this._calculateSD()
   }
-  _calculateSD(){
-    console.log('calculate sd?')
-    if(this.form.value['q2.2.4']!='' && this.form.value['q2.2.3']!=''){
-      console.log('calculating sd')
-      let sd = (this.form.value['q2.2.4'] - this.form.value['q2.2.3'])/6
-      console.log('sd',sd)
-      this.sd=sd
+  _calculateSD() {
+    if (this.form.value['q2.2.4'] != '' && this.form.value['q2.2.3'] != '') {
+      let sd = (this.form.value['q2.2.4'] - this.form.value['q2.2.3']) / 6
+      this.sd = sd
       let patch = {}
       patch['q2.2.2'] = sd
       this.form.patchValue(patch)
-      console.log('form',this.form)
     }
   }
 

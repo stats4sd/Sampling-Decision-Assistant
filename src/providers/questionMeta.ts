@@ -16,7 +16,7 @@ export default
             "controlName": "q1.2",
             "type": "select",
             "selectOptions": "Representative, Non-representative",
-            "label": "Are you looking to establish a representative or non-representative sample",
+            "label": "Do you need your sample to be representative, or is this not a requirement or even a possibility?",
             "section": "General objectives",
             "condition": "type:value, controlName:q1.1, value:Estimating the value of one or a set of characteristics of a population",
             "labelMultiple": null
@@ -32,157 +32,151 @@ export default
             "condition": "type:value, controlName:q1.2, value:Representative",
             "labelMultiple": null
         },
+        // Section 2
         {
             "isQuestion": "TRUE",
-            "controlName": "q1.4",
+            "controlName": "q2.1.1",
             "type": "text",
             "selectOptions": "",
-            "label": "Are there any specific objectives?",
-            "section": "General objectives",
-            "condition": "type:value, controlName:q1.2, value:Representative",
+            "label": "What indicator do you want to choose to guide your sampling decisions?",
+            "section": "Indicators",
+            "condition": "",
             "labelMultiple": null
         },
-        // Section 2
-        // { 
-        //     "isQuestion": "TRUE", 
-        //     "controlName": "q2.1", 
-        //     "type": "select", 
-        //     "selectOptions": "Yes, No", 
-        //     "label": "Can you identify an indicator that is of particular importance for this study and that could be used to provide us with key information for thinking about the sample size decisions.", 
-        //     "section": "Indicators", 
-        //     "condition": "", 
-        //     "labelMultiple": null 
-        // },
-        { 
-            "isQuestion": "TRUE", 
-            "controlName": "q2.1.1", 
-            "type": "text", 
-            "selectOptions": "", 
-            "label": "What indicator do you want to choose to guide your sampling decisions?", 
-            "section": "Indicators", 
-            "condition": "", 
-            "labelMultiple": null 
-        },
-        { 
-            "isQuestion": "TRUE", 
-            "controlName": "q2.1.2", 
-            "type": "select", 
-            "selectOptions": "Average or total value of indicator in the population, Proportion of elements in the population with the characteristics of the indicator", 
-            "label": "Select the estimate that best describes your interest", 
-            "section": "Indicators", 
-            "condition": "", 
-            "labelMultiple": null 
+        {
+            "isQuestion": "TRUE",
+            "controlName": "q2.1.2",
+            "type": "select",
+            "selectOptions": "Average or total value of indicator in the population, Proportion of elements in the population with the characteristics of the indicator",
+            "label": "Select the estimate that best describes your interest",
+            "section": "Indicators",
+            "condition": "",
+            "labelMultiple": null
         },
         // case averages
         {
-            "isQuestion": "TRUE", 
-            "controlName": "q2.2.1", 
-            "type": "select", 
-            "selectOptions": "Yes, No", 
-            "label": "Do you know what is the value of the standard deviation for the indicator in the population?", 
-            "section": "Indicators", 
-            "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population", 
-            "labelMultiple": null 
+            "isQuestion": "TRUE",
+            "controlName": "q2.2.1",
+            "type": "select",
+            "selectOptions": "Yes, No",
+            "label": "Do you know what is the value of the standard deviation for the indicator in the population?",
+            "section": "Indicators",
+            "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
+            "labelMultiple": null
         },
-        { 
-            
-            "isQuestion": "TRUE", 
-            "controlName": "q2.2.2", 
-            "type": "number", 
-            "selectOptions": "", 
-            "label": "What is the value?", 
-            "section": "Indicators", 
-            "condition": "", 
-            "labelMultiple": null 
+        {
+
+            "isQuestion": "TRUE",
+            "controlName": "q2.2.2",
+            "type": "number",
+            "selectOptions": "",
+            "label": "What is the value?",
+            "section": "Indicators",
+            "condition": "",
+            "labelMultiple": null
         },
-        { 
-            
-            "isQuestion": "TRUE", 
-            "controlName": "q2.2.3", 
-            "type": "number", 
-            "selectOptions": "", 
-            "label": "What is the minimum value for the indicator that you can expect to find among the elements of the population?", 
-            "section": "Indicators", 
-            "condition": "type:value, controlName:q2.2.1, value:No", 
-            "labelMultiple": null 
+        {
+
+            "isQuestion": "TRUE",
+            "controlName": "q2.2.3",
+            "type": "number",
+            "selectOptions": "",
+            "label": "What is the minimum value for the indicator that you can expect to find among the elements of the population?",
+            "section": "Indicators",
+            "condition": "type:value, controlName:q2.2.1, value:No",
+            "labelMultiple": null
         },
-        { 
-            
-            "isQuestion": "TRUE", 
-            "controlName": "q2.2.4", 
-            "type": "number", 
-            "selectOptions": "", 
-            "label": "What is the maximum value for the indicator that you can expect to find among the elements of the population?", 
-            "section": "Indicators", 
-            "condition": "type:value, controlName:q2.2.1, value:No", 
-            "labelMultiple": null 
+        {
+
+            "isQuestion": "TRUE",
+            "controlName": "q2.2.4",
+            "type": "number",
+            "selectOptions": "",
+            "label": "What is the maximum value for the indicator that you can expect to find among the elements of the population?",
+            "section": "Indicators",
+            "condition": "type:value, controlName:q2.2.1, value:No",
+            "labelMultiple": null
         },
 
 
 
 
         // case proportions
-        // {
-        //     "isQuestion": "TRUE", 
-        //     "controlName": "q2.3.1", 
-        //     "type": "select", 
-        //     "selectOptions": "Average or total value of indicator in the population, Proportion of elements in the population with the characteristics of the indicator", 
-        //     "label": "Select the estimate that best describes your interest", 
-        //     "section": "Indicators", 
-        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population", 
-        //     "labelMultiple": null 
-        // },
-
-        // { 
-            
-        //     "isQuestion": "TRUE", 
-        //     "controlName": "q2.3", 
-        //     "type": "text", 
-        //     "selectOptions": "", 
-        //     "label": "What is the value that you would expect to find in the population – you may know it or may need to estimate it", 
-        //     "section": "Indicators", 
-        //     "condition": "type:value, controlName:q2.1, value:Yes", 
-        //     "labelMultiple": null 
-        // },
-        // { 
-        //     "isQuestion": "TRUE", 
-        //     "controlName": "q2.4", 
-        //     "type": "text", 
-        //     "selectOptions": "", 
-        //     "label": "What is the range of values that you expect to find for this indicator?", 
-        //     "section": "Indicators", 
-        //     "condition": "type:value, controlName:q2.1, value:Yes", 
-        //     "labelMultiple": null 
-        // },
-        // { 
-        //     "isQuestion": "TRUE", "controlName": "q2.5", "type": "select", "selectOptions": "Yes, No", "label": "Do you have any idea about the size of the variance or the standard deviation for this indicator? This may have been published in recent reports, or could be guessed from similar reports, or perhaps be estimated from data available that is similar to the data you will be collecting", "section": "Indicators", "condition": "type:value, controlName:q2.1, value:Yes", "labelMultiple": null },
-        // { 
-        //     "isQuestion": "TRUE", "controlName": "q2.6", "type": "text", "selectOptions": "", "label": "What is the value or range of values?", "section": "Indicators", "condition": "type:value, controlName:q2.5, value:Yes", "labelMultiple": null },
-        // { 
-        //    "isQuestion": "TRUE", "controlName": "q2.6", "type": "number", "selectOptions": "", "label": "<p>It is recommended that you try to find out more information about the variance from previous studies or somebody else who may know. If this is not possible then calculate as follows:</p> <p> take the difference between the minimum value and the maximum that came from 2.4, divided it by 5 and square the result.</p> This will yield a very rough estimate of the variance that assumes that the distribution is roughly symmetric around the mean value.", "section": "Indicators", "condition": "type:value, controlName:q2.5, value:No", "labelMultiple": null },
+       
         {
-            "isQuestion": "TRUE", "controlName": "q2.7", "type": "number", "selectOptions": "", 
-            "label": "Think about the margin of error that you think is acceptable for the estimate that you are looking for? Please enter that range as a “plus or minus” in the units that are natural to the indicator.", 
-            "section": 
-            "Indicators", 
-            "condition": 
-            "type:value, controlName:q2.1, value:Yes", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q3.1", "type": "select", "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)", "label": "Who are you interested in? In other words, who should the data come from to be able to calculate the indicator of interest? We will refer to this as the sampling units. In particular, think about what unit the measurements refer to. Is it a household? Or a person? Or a community?", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Characteristics with respect to location", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q3.3", "type": "text", "selectOptions": "", "label": "Characteristics with respect to time", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q3.4", "type": "text", "selectOptions": "", "label": "Any other characteristics (ethnic group, origin, gender, reason for displacement, host population, IDP, refugees, etc)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q3.5", "type": "text", "selectOptions": "", "label": "Clearly define your target population, including any specific grouping characteristics such as location, time, ethnic group, origin, status etc.", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null },
-        { 
-            "isQuestion": "TRUE", "controlName": "q4.2", "type": "textMultiple", "selectOptions": "", "label": "Please specify the levels of disaggregation, be as specific in your replies", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level" },
-        { 
-            "isQuestion": "TRUE", "controlName": "q4.3", "type": "text", "selectOptions": "", "label": "Provide a name or reference for the estimate", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:One estimate" },
+
+            "isQuestion": "TRUE",
+            "controlName": "q2.3.1",
+            "type": "number",
+            "selectOptions": "",
+            "label": "What is the value of the proportion that you expect to find for the indicator in the population? If you have no idea whatsoever set it as 0.5, otherwise provide your best estimate between 0 and 1.",
+            "section": "Indicators",
+            "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
+            "labelMultiple": null,
+            options:{
+                max:1,
+                min:0
+            }
+        },
+        // {
+
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.2.3",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What is the minimum value for the indicator that you can expect to find among the elements of the population?",
+        //     "section": "Indicators",
+        //     "condition": "type:value, controlName:q2.2.1, value:No",
+        //     "labelMultiple": null
+        // },
+        // {
+
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.2.4",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What is the maximum value for the indicator that you can expect to find among the elements of the population?",
+        //     "section": "Indicators",
+        //     "condition": "type:value, controlName:q2.2.1, value:No",
+        //     "labelMultiple": null
+        // },
+        // 
+        {
+            "isQuestion": "TRUE",
+            "controlName": "q2.4",
+            "type": "number",
+            "selectOptions": "",
+            "label": "Think about the margin of error that you think is acceptable for the estimate that you are looking for. Please enter that range as a “plus or minus” in the units that are natural to the indicator.",
+            "section": "Indicators",
+            options:{
+                prefix:'+/-',
+            },
+            "condition": "", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q3.1", "type": "select", "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)", "label": "Who are you interested in? In other words, who should the data come from to be able to calculate the indicator of interest? We will refer to this as the sampling units. In particular, think about what unit the measurements refer to. Is it a household? Or a person? Or a community?", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Characteristics with respect to location", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q3.3", "type": "text", "selectOptions": "", "label": "Characteristics with respect to time", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q3.4", "type": "text", "selectOptions": "", "label": "Any other characteristics (ethnic group, origin, gender, reason for displacement, host population, IDP, refugees, etc)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q3.5", "type": "text", "selectOptions": "", "label": "Clearly define your target population, including any specific grouping characteristics such as location, time, ethnic group, origin, status etc.", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q4.2", "type": "textMultiple", "selectOptions": "", "label": "Please specify the levels of disaggregation, be as specific in your replies", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
+        },
+        {
+            "isQuestion": "TRUE", "controlName": "q4.3", "type": "text", "selectOptions": "", "label": "Provide a name or reference for the estimate", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:One estimate"
+        },
         // section 5
         {
             "isQuestion": "TRUE",
@@ -211,15 +205,18 @@ export default
             "selectOptions": "",
             "label": "What are the sampling stages that will allow you to reach the final sampling unit?",
             "section": "Selecting the sampling units",
-            "condition":"",
+            "condition": "",
             // "condition": "type:multiple, logic:OR, conditions:[{controlName:q5.1, value:No},{controlName:q5.1.1, value:Multi-stage}]",
             "labelMultiple": "Sampling stages",
-            "triggers":{
-                "description":'automatically populate first entry with final sampling unit',
-                "function":"this.multipleTextValues=['Final Sampling Unit'];this.setValue('q5.2',['Final Sampling Unit'],true)",
-                "trigger":"onInit"
+            "triggers": {
+                "description": 'automatically populate first entry with final sampling unit',
+                "function": "this.multipleTextValues=['Final Sampling Unit'];this.setValue('q5.2',['Final Sampling Unit'],true)",
+                "trigger": "onInit"
+            },
+            options: {
+                format: 'arrow'
             }
-            
+
         },
         {
             "isQuestion": "TRUE",

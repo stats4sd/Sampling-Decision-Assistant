@@ -12,6 +12,7 @@ export class StageCompleteComponent extends StagePage {
 
   @Input('complete') complete: boolean
   @Input('disabled') disabled: boolean
+  @Input('stageNumber') stageNumber:number
   lastCall: number = 0
   sectionValid:boolean = false
 
@@ -22,7 +23,7 @@ export class StageCompleteComponent extends StagePage {
     const v = formValues
     switch (true) {
       case s == 1: {
-        if (v['q1.4'] && v['q1.3']) { return true }
+        if (v['q1.3']) { return true }
         if (v['q1.2'] == 'Non-representative') { return true }
         if (v['q1.1'] == 'A comparison that needs a quasi-experimental or an experimental approach') { return true }
         else {
@@ -31,8 +32,12 @@ export class StageCompleteComponent extends StagePage {
         }
       }
       case s == 2: {
-        console.log('evaluating section valid 2')
-        break
+        if (v['q2.4']) {  return true}
+        else{
+          this.dataPrvdr.stagesComplete[2] = false
+          return false
+        }
+        
       }
       case s == 3: {
         console.log('evaluating section valid 3')
