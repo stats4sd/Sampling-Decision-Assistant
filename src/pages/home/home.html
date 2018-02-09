@@ -1,5 +1,12 @@
 <ion-header class="header">
-  <div class="version">v{{version}}</div>
+  <div class="version-info">
+    <div>
+      <span style="font-weight: bold">v{{version}}</span>
+      <span style="font-size:smaller; margin-left:8px">({{date}})</span>
+    </div>
+    <button ion-button clear (click)="showChangelog()">What's New?</button>
+  </div>
+
   <div>
     <button ion-button menuToggle clear>
       <ion-icon name="menu"></ion-icon>

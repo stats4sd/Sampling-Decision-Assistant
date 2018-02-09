@@ -57,7 +57,7 @@ export class StageCompleteComponent extends StagePage {
       }
       default: {
         console.log('default case')
-        return false
+        return true
       }
     }
   }

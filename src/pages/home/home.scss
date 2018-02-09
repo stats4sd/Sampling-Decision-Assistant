@@ -13,11 +13,13 @@ page-home {
         // minor tweak to prevent block buttons stretching over
         margin:2px;
     }
-    .version{
+    .version-info{
         position: absolute;
         right: 5px;
         color: color($colors,primary);
         font-weight: 500;
+        text-align: right;
+        .button{padding:0;margin:0}
     }
     #useTheTool{
         justify-content: center;

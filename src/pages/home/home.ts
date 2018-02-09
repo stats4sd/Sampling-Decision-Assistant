@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnChanges } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data'
 
 @IonicPage()
@@ -10,42 +10,51 @@ import { DataProvider } from '../../providers/data/data'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version:string="0.6.3";
+  version: string = "0.7.1";
+  date: string = "9th Feb"
 
-  imageSrc="assets/img/feature-image-1.jpg"
+  imageSrc = "assets/img/feature-image-1.jpg"
   // no longer using slides
   //@ViewChild(Slides) slides: Slides;
 
-constructor(public navCtrl: NavController, public navParams: NavParams, private dataPrvdr: DataProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private dataPrvdr: DataProvider,
+    public modalCtrl: ModalController
+  ) {
 
-    this.sections=[
-     
-      {name:"Use the tool", page:"StepByStepPage" },
-      {name:"View the Tutorial",page:"StepByStepPage", params:"tutorialMode"},
+    this.sections = [
+
+      { name: "Use the tool", page: "StepByStepPage" },
+      { name: "View the Tutorial", page: "StepByStepPage", params: "tutorialMode" },
       // {name:"Step by step mode", page:"StepByStepPage"},
       // {name:"Question-based mode", page:"QuestionsPage"}
 
     ]
 
-    this.altSections=[
-      {name:"Who is this tool for?", page:"About", class:"disabled"},
-      {name:"Glossary of technical terms", page:"GlossaryPage"},
-      {name: "Sample size trade-off tool", page:"SampleSizePage", class:"disabled"},
+    this.altSections = [
+      { name: "Who is this tool for?", page: "About", class: "disabled" },
+      { name: "Glossary of technical terms", page: "GlossaryPage" },
+      { name: "Sample size trade-off tool", page: "SampleSizePage", class: "disabled" },
     ];
   }
 
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     // prevent user swiping (no longer using slides)
     //this.slides.lockSwipes(true)
 
   }
   // 
-  goToSection(section){
-    if(section.class!="disabled"){
-      this.navCtrl.push(section.page,section.params)
+  goToSection(section) {
+    if (section.class != "disabled") {
+      this.navCtrl.push(section.page, section.params)
     }
-    
+
+  }
+  showChangelog() {
+    this.navCtrl.push('ChangelogPage')
   }
 
 }
