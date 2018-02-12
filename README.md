@@ -16,8 +16,13 @@ Use either nmp or yarn to install dependencies
 The project is linked to a remote firebase server for deployment. Memebers of SSD with access can deploy via `firebase deploy`
 
 
-
 ## Build notes
+### Updating changelog
+`pages/_changelog/changelog.ts` -> version number and date
+`pages/_changelog/changelog.md` -> changelog markdown
+`pages/_changelog/changelog.html` -> rendered html of changelog (currently manually generated)
+
+
 Standard build with one current exception:
 To enable text select within slide object the core ion-slides component has been changed. Ideally in future should fork and save as custom component however 
 for now simply need to comment out mousedown listeners in `node_modules\ionic-angular\components\slides\swiper\swiper-events.js`

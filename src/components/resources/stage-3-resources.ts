@@ -24,7 +24,12 @@ export default {
             title: 'Establishing an end-line',
             context: 'For a profiling case we may wish to...',
             answers: [{ 'q1.1': 'answer 1' }, { 'q1.2': 'answer 2' }]
-        }
+        },
+        {
+            title: 'Comparison of the amounts of firewood consumed by traditional and improved stoves',
+            context: 'Comparison of the amounts of firewood consumed by traditional and improved stoves',
+            answers: [{ 'q1.1': 'answer 1' }, { 'q1.2': 'answer 2' }]
+        },
     ],
     links: [
 

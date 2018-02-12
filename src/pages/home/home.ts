@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnChanges } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
-import { DataProvider } from '../../providers/data/data'
+import { DataProvider } from '../../providers/data/data';
+import {ChangelogPage} from '../../pages/_changelog/changelog'
 
 @IonicPage()
 @Component({
@@ -10,18 +11,20 @@ import { DataProvider } from '../../providers/data/data'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version: string = "0.7.1";
-  date: string = "9th Feb"
+  version: string = this.changeLog.version;
+  date: string = this.changeLog.date;
 
   imageSrc = "assets/img/feature-image-1.jpg"
   // no longer using slides
   //@ViewChild(Slides) slides: Slides;
 
   constructor(
+    private changeLog:ChangelogPage,
     public navCtrl: NavController,
     public navParams: NavParams,
     private dataPrvdr: DataProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+
   ) {
 
     this.sections = [

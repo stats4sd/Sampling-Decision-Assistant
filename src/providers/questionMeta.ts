@@ -118,29 +118,7 @@ export default
                 min:0
             }
         },
-        // {
 
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.2.3",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What is the minimum value for the indicator that you can expect to find among the elements of the population?",
-        //     "section": "Indicators",
-        //     "condition": "type:value, controlName:q2.2.1, value:No",
-        //     "labelMultiple": null
-        // },
-        // {
-
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.2.4",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What is the maximum value for the indicator that you can expect to find among the elements of the population?",
-        //     "section": "Indicators",
-        //     "condition": "type:value, controlName:q2.2.1, value:No",
-        //     "labelMultiple": null
-        // },
-        // 
         {
             "isQuestion": "TRUE",
             "controlName": "q2.4",
@@ -151,7 +129,21 @@ export default
             options:{
                 prefix:'+/-',
             },
-            "condition": "", "labelMultiple": null
+            "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
+            "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE",
+            "controlName": "q2.4",
+            "type": "number",
+            "selectOptions": "",
+            "label": "Think about the margin of error that you think is acceptable for the estimate that you are looking for. Please enter that range as a “plus or minus” in the units that are natural to the indicator.",
+            "section": "Indicators",
+            options:{
+                prefix:'+/-',
+            },
+            "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
+            "labelMultiple": null
         },
         {
             "isQuestion": "TRUE", "controlName": "q3.1", "type": "select", "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)", "label": "Who are you interested in? In other words, who should the data come from to be able to calculate the indicator of interest? We will refer to this as the sampling units. In particular, think about what unit the measurements refer to. Is it a household? Or a person? Or a community?", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null

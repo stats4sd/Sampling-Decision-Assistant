@@ -1,8 +1,14 @@
 <div class="slide-content">
     <h4>Decisions about the target population</h4>
     <p>
-        It is important to clearly define your target population as explicitly as possible. The following questions will help you
-        to do so:
+        <a href="/#/step-by-step/stage-3/resources">Table 4 “Standard categories of analysis”</a> in the UNHCR Needs Assessment Handbook provides a useful description
+        of criteria for the analytical framework of assessments. This framework is useful to specify the target population
+        of the survey. In most cases, these populations are constructs that are determined by the objectives for which the
+        study is being set up. Getting the boundaries of the population right, means that it would be possible to manage
+        potential biases in the study.
+        <br>
+        <br> Use the following questions to describe the population of interest. We recommend that you look at standard categories
+        of analysis presented in the UNHCR assessment handbook.
     </p>
     <survey-question-group section="Definition of the target population and units of study" [filter]="['q3.1']" [showLabel]=true></survey-question-group>
     <div *ngIf="form.value['q3.1']">
@@ -19,10 +25,16 @@
         </p>
         <div class="quote">
             <survey-reference [controlName]="'q3.1'" *ngIf="form.value['q3.1']"></survey-reference>
-            <span *ngIf="form.value['q3.2']">  located in  <survey-reference [controlName]="'q3.2'"></survey-reference></span>
-            <span *ngIf="form.value['q3.3']">  during  <survey-reference [controlName]="'q3.3'"></survey-reference></span>
-            <span *ngIf="form.value['q3.4']">  and  <survey-reference [controlName]="'q3.4'"></survey-reference></span>
-            
+            <span *ngIf="form.value['q3.2']"> located in
+                <survey-reference [controlName]="'q3.2'"></survey-reference>
+            </span>
+            <span *ngIf="form.value['q3.3']"> during
+                <survey-reference [controlName]="'q3.3'"></survey-reference>
+            </span>
+            <span *ngIf="form.value['q3.4']"> and
+                <survey-reference [controlName]="'q3.4'"></survey-reference>
+            </span>
+
         </div>
         <p>If yes, check the box below. If no then change your answers to the questions above</p>
         <ion-item>

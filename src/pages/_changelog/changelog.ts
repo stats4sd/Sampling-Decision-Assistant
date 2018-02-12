@@ -11,7 +11,8 @@ declare let vis:any
   templateUrl: 'changelog.html',
 })
 export class ChangelogPage {
-
+  public version: string = "0.7.1";
+  public date: string = "9th Feb"
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
