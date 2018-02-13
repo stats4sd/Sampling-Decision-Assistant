@@ -1,10 +1,10 @@
-
-<div style="display:flex; flex-wrap:wrap; justify-content:space-between">
-  <ion-item *ngIf="form" style="max-width:300px">
-    <ion-label>Mark Section as Complete</ion-label>
-    <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="dataPrvdr.stagesComplete[stage.number]"></ion-checkbox>
+<div style="display:flex; flex-wrap:wrap; justify-content:space-between; margin-bottom:50px">
+  <ion-item *ngIf="form" style="max-width:400px">
+    <ion-label *ngIf="!text">Mark Section as Complete</ion-label>
+    <ion-label *ngIf="text">{{text}}</ion-label>
+    <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="dataPrvdr.activeSurvey.stagesComplete[stage.number]" (ionChange)="toggleCheckbox()"></ion-checkbox>
   </ion-item>
-  <button ion-button icon-right *ngIf="dataPrvdr.stagesComplete[stageNumber]" (click)="nextStage()">
+  <button ion-button icon-right *ngIf="dataPrvdr.activeSurvey.stagesComplete[stageNumber]" (click)="nextStage()">
     Next Stage
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

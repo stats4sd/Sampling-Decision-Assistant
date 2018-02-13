@@ -27,7 +27,7 @@ export class FormProvider {
     console.log('master formgroup', this.formGroup)
   }
 
-  getSurveyValue(key){
+  getSurveyValue(key) {
     return this.formGroup.value[key]
   }
   initFormValues(values) {
@@ -40,18 +40,29 @@ export class FormProvider {
         patch[key] = val
         this.formGroup.patchValue(patch)
       }
-      // create controls for repeat group questions
+      // handle arrays
       else if (val instanceof Array) {
-        let question = this.allQuestions.filter(q => { return q.controlName == key })[0]
-        let repeatQs = this._generateRepeatQuestions(question)
-        // update value on repeatQs
-        for (let repeat of val) {
-          repeatQs.map(q => {
-            q.value = repeat[q.controlName]
-          })
-          const control = <FormArray>this.formGroup.controls[key]
-          control.push(this._buildRepeatGroup(repeatQs))
+        if (typeof val[0] == "string") {
+          // handle array values stored as strings (e.g. lists)
+          let patch = {}
+          patch[key] = val
+          this.formGroup.patchValue(patch)
         }
+        else {
+          // handle values stores as objects (e.g. repeat groups)
+          // create controls for repeat group questions
+          let question = this.allQuestions.filter(q => { return q.controlName == key })[0]
+          let repeatQs = this._generateRepeatQuestions(question)
+          // update value on repeatQs
+          for (let repeat of val) {
+            repeatQs.map(q => {
+              q.value = repeat[q.controlName]
+            })
+            const control = <FormArray>this.formGroup.controls[key]
+            control.push(this._buildRepeatGroup(repeatQs))
+          }
+        }
+
       }
     })
     console.log('formgroup', this.formGroup)
@@ -145,25 +156,25 @@ export class FormProvider {
       }
     })
     // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
-    this.events.unsubscribe('arrayChange:'+question.selectOptions)
-    console.log('subscribing array change',question.selectOptions)
-    this.events.subscribe('arrayChange:'+question.selectOptions, update => {
-      console.log('array change:'+question.selectOptions,update)
-        console.log('pushing repeat to '+question.controlName)
-        const control = <FormArray>this.formGroup.controls[groupPrefix]
-        if (update.type == "push") {
-          // push a repeat to the question group
-          control.push(this._buildRepeatGroup(repeatQs))
+    this.events.unsubscribe('arrayChange:' + question.selectOptions)
+    console.log('subscribing array change', question.selectOptions)
+    this.events.subscribe('arrayChange:' + question.selectOptions, update => {
+      console.log('array change:' + question.selectOptions, update)
+      console.log('pushing repeat to ' + question.controlName)
+      const control = <FormArray>this.formGroup.controls[groupPrefix]
+      if (update.type == "push") {
+        // push a repeat to the question group
+        control.push(this._buildRepeatGroup(repeatQs))
+      }
+      if (update.type == "splice") {
+        control.removeAt(update.index)
+      }
+      if (update.type == "reset") {
+        for (let i = control.length; i > 0; i--) {
+          control.removeAt(i - 1)
         }
-        if (update.type == "splice") {
-          control.removeAt(update.index)
-        }
-        if (update.type == "reset") {
-          for (let i = control.length; i > 0; i--) {
-            control.removeAt(i - 1)
-          }
-          if (!update.empty) { control.push(this._buildRepeatGroup(repeatQs)) }
-        }
+        if (!update.empty) { control.push(this._buildRepeatGroup(repeatQs)) }
+      }
       console.log('formgroup', this.formGroup)
     })
     return repeatQs

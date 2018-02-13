@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {Events} from 'ionic-angular'
-import animationStates from '../../providers/animationStates'
+import animationStates from '../../../providers/animationStates'
 
 import stage1Resources from './stage-1-resources'
 import stage2Resources from './stage-2-resources'

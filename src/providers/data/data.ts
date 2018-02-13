@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
-import { Events, ToastController } from 'ionic-angular';
+import { Events, ToastController, AlertController } from 'ionic-angular';
 import questionMeta from '../questionMeta';
 // import * as XLSX from 'xlsx';
 import { utils, write, WorkBook, read } from 'xlsx';
@@ -14,28 +14,34 @@ export class DataProvider {
   public savedSurveys: any;
   public activeSurvey: any;
   public questionMeta = questionMeta;
-  public stagesComplete = [null,false,false,false,false,false,false];
   private _dbVersion = 1;
 
   constructor(
     public storage: Storage,
     private events: Events,
     public toastCtrl: ToastController,
-    private formPrvdr: FormProvider
+    private formPrvdr: FormProvider,
+    public alertCtrl: AlertController
   ) {
-    this.events.subscribe('save', _ => this.saveSurvey())
+    this.activeSurvey = {
+      stagesComplete: [null, false, false, false, false, false, false],
+      title:'(unsaved project)'
+    }
+    console.log('loading saved projects')
     this.loadSavedSurveys()
+    this.events.subscribe('save', _ => this.saveSurvey())
   }
 
-  createNewSurvey(title) {
+  createNewSurvey(title: string, backgroundMode?: boolean) {
     this.activeSurvey = {
       title: title,
       created: new Date(),
-      values: {}
+      values: {},
+      stagesComplete: [null, false, false, false, false, false, false]
     }
     console.log('new survey created', this.activeSurvey)
     this.savedSurveys[title] = this.activeSurvey
-    this.saveSurvey();
+    this.saveSurvey(null, backgroundMode);
   }
 
   deleteSurvey(title) {
@@ -55,18 +61,21 @@ export class DataProvider {
     this.formPrvdr.initFormValues(survey.values)
   }
 
-  saveSurvey(survey?) {
+  saveSurvey(survey?, backgroundMode?) {
     // save entire survey to local storage. provide survey param to specify exact (e.g. in import), otherwise will pull from form provider
     return new Promise((resolve, reject) => {
       if (survey) {
         this.savedSurveys[survey.title] = survey
         this.saveToStorage('savedSurveys', this.savedSurveys).then(
           _ => {
-            this.showNotification('Imported Successfully')
-            resolve('saved')
+            if (!backgroundMode) {
+              this.showNotification('Imported Successfully')
+              resolve('saved')
+            }
+
           })
       }
-      else if (this.activeSurvey) {
+      else if (this.activeSurvey.title) {
         console.log('saving survey', this.activeSurvey)
         let title = this.activeSurvey.title
         this.savedSurveys[title] = this.activeSurvey
@@ -75,8 +84,10 @@ export class DataProvider {
         console.log('saved surveys', this.savedSurveys)
         this.saveToStorage('savedSurveys', this.savedSurveys).then(
           _ => {
-            this.showNotification('Progress Saved')
-            resolve('saved')
+            if (!backgroundMode) {
+              this.showNotification('Progress Saved')
+              resolve('saved')
+            }
           }
         )
       }
@@ -98,6 +109,7 @@ export class DataProvider {
   loadSavedSurveys() {
     this.getFromStorage('savedSurveys').then(
       res => {
+        console.log('saved surveys retrieved',res)
         this.savedSurveys = res ? res : {}
         // remove old format
         Object.keys(this.savedSurveys).forEach(k => {
@@ -107,9 +119,42 @@ export class DataProvider {
         console.log('surveys loaded', this.savedSurveys)
         // load testing survey by default if created for faster dev workflow //
         if (this.savedSurveys._testing) { this.loadSurvey(this.savedSurveys._testing) }
+        else if (this.savedSurveys['(unsaved project)']) {
+          // prompt resume of previous survey if available
+          this.promptSurveyResume(this.savedSurveys['(unsaved project)'])
+        }
+        else {
+          // else save new to '(unsaved project)'
+          let d = new Date
+          console.log(d.toDateString)
+          this.createNewSurvey('(unsaved project)', true)
+        }
         console.log('active survey', this.activeSurvey)
       }
     )
+  }
+  promptSurveyResume(survey) {
+    console.log('resume previous?')
+    // give option to resume previous survey
+    this.alertCtrl.create({
+      title: 'Resume project?',
+      message: 'An unsaved project was found, do you wish to resume it?',
+      buttons: [
+        {
+          text: 'Discard',
+          handler: () => {
+            this.createNewSurvey('(unsaved project)', true)
+          }
+        },
+        {
+          text: 'Resume',
+          handler: () => {
+            this.loadSurvey(survey)
+          }
+        }
+      ],
+      enableBackdropDismiss: false
+    }).present()
   }
 
   // ***** general storage functions ***** //
@@ -119,10 +164,10 @@ export class DataProvider {
     return new Promise((resolve, reject) => {
       this.storage.get(key)
         .then(
-        res => {
-          // if (res != null) { this.activeSurvey = res }
-          resolve(res)
-        }
+          res => {
+            // if (res != null) { this.activeSurvey = res }
+            resolve(res)
+          }
         )
     })
   }

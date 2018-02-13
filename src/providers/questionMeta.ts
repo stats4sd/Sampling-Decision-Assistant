@@ -109,7 +109,7 @@ export default
             "controlName": "q2.3.1",
             "type": "number",
             "selectOptions": "",
-            "label": "What is the value of the proportion that you expect to find for the indicator in the population? If you have no idea whatsoever set it as 0.5, otherwise provide your best estimate between 0 and 1.",
+            "label": "Roughly what value for this proportion do you expect to find with this survey? If you have no idea whatsoever set it as 0.5, otherwise provide your best estimate between 0 and 1.",
             "section": "Indicators",
             "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
             "labelMultiple": null,
@@ -124,7 +124,7 @@ export default
             "controlName": "q2.4",
             "type": "number",
             "selectOptions": "",
-            "label": "Think about the margin of error that you think is acceptable for the estimate that you are looking for. Please enter that range as a “plus or minus” in the units that are natural to the indicator.",
+            "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
             "section": "Indicators",
             options:{
                 prefix:'+/-',
@@ -137,7 +137,7 @@ export default
             "controlName": "q2.4",
             "type": "number",
             "selectOptions": "",
-            "label": "Think about the margin of error that you think is acceptable for the estimate that you are looking for. Please enter that range as a “plus or minus” in the units that are natural to the indicator.",
+            "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
             "section": "Indicators",
             options:{
                 prefix:'+/-',
@@ -145,17 +145,19 @@ export default
             "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
             "labelMultiple": null
         },
+        // section 3
         {
             "isQuestion": "TRUE", "controlName": "q3.1", "type": "select", "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)", "label": "Who are you interested in? In other words, who should the data come from to be able to calculate the indicator of interest? We will refer to this as the sampling units. In particular, think about what unit the measurements refer to. Is it a household? Or a person? Or a community?", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Characteristics with respect to location", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+            "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Geographical characteristics (e.g. area, setting, distance, composite)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+        },
+
+        {
+            "isQuestion": "TRUE", "controlName": "q3.3", "type": "text", "selectOptions": "", "label": "Population group characteristics (e.g. affected, vulnerable, socio-economic, gender)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", "controlName": "q3.3", "type": "text", "selectOptions": "", "label": "Characteristics with respect to time", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
-        },
-        {
-            "isQuestion": "TRUE", "controlName": "q3.4", "type": "text", "selectOptions": "", "label": "Any other characteristics (ethnic group, origin, gender, reason for displacement, host population, IDP, refugees, etc)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+            "isQuestion": "TRUE", "controlName": "q3.4", "type": "text", "selectOptions": "", "label": "Characteristics with respect to time", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
         },
         {
             "isQuestion": "TRUE", "controlName": "q3.5", "type": "text", "selectOptions": "", "label": "Clearly define your target population, including any specific grouping characteristics such as location, time, ethnic group, origin, status etc.", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
@@ -200,16 +202,18 @@ export default
             "condition": "",
             // "condition": "type:multiple, logic:OR, conditions:[{controlName:q5.1, value:No},{controlName:q5.1.1, value:Multi-stage}]",
             "labelMultiple": "Sampling stages",
-            "triggers": {
-                "description": 'automatically populate first entry with final sampling unit',
-                "function": "this.multipleTextValues=['Final Sampling Unit'];this.setValue('q5.2',['Final Sampling Unit'],true)",
-                "trigger": "onInit"
-            },
+            // "triggers": {
+            //     "description": 'automatically populate first entry with final sampling unit',
+            //     "function": "this.multipleTextValues=['Final Sampling Unit'];this.setValue('q5.2',['Final Sampling Unit'],true)",
+            //     "trigger": "onInit"
+            // },
             options: {
-                format: 'arrow'
+                format: 'arrow',
+                dragDrop:true
             }
 
         },
+        // repeat group for each stage in multi-stage
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3",
@@ -217,7 +221,7 @@ export default
             "selectOptions": "q5.2",
             "label": "",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.1, value:No",
+            "condition": "type:prerequisite, controlName:q5.2",
             "labelMultiple": null
         },
         {

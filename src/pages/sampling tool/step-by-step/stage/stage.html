@@ -4,7 +4,7 @@
     <ion-buttons end>
       <button ion-button icon-left (click)="closeModal()" *ngIf="modalMode">
         <ion-icon name="checkmark"></ion-icon>Close</button>
-      <button ion-button icon-left color="primary" style="background-color: white" *ngIf="dataPrvdr.stagesComplete[stage.number]" [@animationState]="'flyIn'">
+      <button ion-button icon-left color="primary" style="background-color: white" *ngIf="dataPrvdr.activeSurvey.stagesComplete[stage.number]" [@animationState]="'flyIn'">
         <ion-icon name="checkmark-circle"></ion-icon>Section Complete</button>
     </ion-buttons>
   </ion-navbar>
@@ -13,7 +13,7 @@
 
 <ion-content padding class="slide-scroll-content" #content id="content">
   <div class="central-content">
-    <ion-slides #slides id="slides">
+    <ion-slides #slides id="slides" [options]="slideOptions">
       <ion-slide>
         <!-- intro -->
         <stage-intro [stage]="stage.number"></stage-intro>

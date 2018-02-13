@@ -13,6 +13,7 @@ export class FrameBuilderPage {
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataPrvdr:DataProvider) {
     this.builderStage=navParams.data
+    console.log('builderStage',this.builderStage)
   }
 
   dismiss(){

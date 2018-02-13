@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ReviewPage } from './review';
-import {ComponentsModule} from '../../../components/components.module'
+import {GeneralComponentsModule} from '../../../components/general/generalComponents.module'
 
 @NgModule({
   declarations: [
@@ -9,7 +9,7 @@ import {ComponentsModule} from '../../../components/components.module'
   ],
   imports: [
     IonicPageModule.forChild(ReviewPage),
-    ComponentsModule
+    GeneralComponentsModule
   ],
 })
 export class ReviewPageModule {}

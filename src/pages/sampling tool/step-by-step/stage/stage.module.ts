@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { StagePage } from './stage';
-import { StageComponentsModule} from '../../../../components/stage-content/stageComponents.module'
-import {ComponentsModule} from '../../../../components/components.module'
+import { StageComponentsModule } from '../../../../components/stage-content/stageComponents.module'
+import { SurveyComponentsModule } from '../../../../components/survey/survey-components.module'
+import { GeneralComponentsModule } from '../../../../components/general/generalComponents.module'
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import {ComponentsModule} from '../../../../components/components.module'
   imports: [
     IonicPageModule.forChild(StagePage),
     StageComponentsModule,
-    ComponentsModule
+    SurveyComponentsModule,
+    GeneralComponentsModule
   ],
 })
-export class StagePageModule {}
+export class StagePageModule { }

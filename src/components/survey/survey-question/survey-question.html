@@ -1,3 +1,5 @@
+<!-- display single survey question -->
+
 <div class="container" *ngIf="question && shouldShowQuestion(question)">
   <div [formGroup]="formGroup" style="flex:1">
     <!-- question labels -->
@@ -22,10 +24,8 @@
           {{question.options.prefix}}
         </div>
         <ion-item>
-          <ion-input type="number" 
-          [max]="question.options && question.options.max ? question.options.max : null"
-          [min]="question.options && question.options.min ? question.options.min : null" 
-          (focusout)="saveValue()" [formControlName]="question.controlName" ></ion-input>
+          <ion-input type="number" [max]="question.options && question.options.max ? question.options.max : null" [min]="question.options && question.options.min ? question.options.min : null"
+            (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
         </ion-item>
       </div>
     </div>
@@ -52,32 +52,53 @@
         </ion-item>
         <button ion-button (click)="addTextMultiple()">Add</button>
       </div>
-      <!-- multiple list -->
-      <div style="min-height: 6em">
-        <div style="display:flex" *ngFor="let value of multipleTextValues, index as i">
-          <div style="opacity: 0" class="question-number">{{question.controlName}}</div>
-          <!-- list format -->
-          <div class="multiple-list" *ngIf="!question.options || !question.options.format">
-            <span class="bullet"></span>
-            <span>{{value}}</span>
-            <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
+      <!-- multiple list with optional drag-->
+      <div style="min-height: 6em; margin:10px 0">
+        <!-- placeholder bottom for arrow format in q5 -->
+        <div *ngIf="question.options && question.options.format=='arrow'" class="multiple-arrow-placeholder">
+          <button ion-button block icon-right class="placeholder-button"></button>
+          <div class="multiple-arrow-down">
+            <ion-icon name="arrow-down"></ion-icon>
           </div>
-          <!-- arrow format -->
-          <div class="multiple-arrows" *ngIf="question.options && question.options.format=='arrow'">
-            <div class="multiple-arrow-down">
-              <ion-icon name="arrow-down"></ion-icon>
+        </div>
+        <!-- drag drop for arrow format -->
+        <div [dragula]='"bag-one"' [dragulaOptions]="dragulaOptions" [dragulaModel]='value'>
+          <div style="display:flex" *ngFor="let value of multipleTextValues, index as i">
+            <!-- <div style="opacity: 0" class="question-number">{{question.controlName}}</div> -->
+            <!-- list format -->
+            <div class="multiple-list" *ngIf="!question.options || !question.options.format">
+              <span class="bullet"></span>
+              <span>{{value}}</span>
+              <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
             </div>
-            <!-- rough method to reverse the order values appear in arrow format -->
-            <div style="display: flex">
-              <button ion-button block icon-right class="multiple-arrows-button">
-                {{multipleTextValues[multipleTextValues.length-1-i]}}
-              </button>
-              <button ion-button icon-only clear (click)="removeTextMultiple(multipleTextValues.length-1-i)" [disabled]="i==multipleTextValues.length-1">
-                <ion-icon name="remove-circle"></ion-icon>
-              </button>
-            </div>
+            <!-- arrow format -->
+            <div class="multiple-arrows" *ngIf="question.options && question.options.format=='arrow'">
+              <!-- rough method to reverse the order values appear in arrow format, omit last entry from drag drop -->
+              <div style="display: flex" [attr.data-drag-handle]="question.options.dragDrop">
+                <button ion-button block icon-right class="multiple-arrows-button">
+                  {{multipleTextValues[multipleTextValues.length-1-i]}}
+                </button>
+                <button ion-button icon-only clear (click)="removeTextMultiple(multipleTextValues.length-1-i)">
+                  <ion-icon name="remove-circle"></ion-icon>
+                </button>
+              </div>
+              <!-- downward arrow -->
+              <div class="multiple-arrow-down">
+                <ion-icon name="arrow-down"></ion-icon>
+              </div>
 
+            </div>
           </div>
+        </div>
+
+        <!-- placeholder bottom for arrow format in q5 -->
+        <div *ngIf="question.options && question.options.format=='arrow'">
+          <div class="multiple-arrow-placeholder">
+            <button ion-button block icon-right>
+              Final Sampling Unit
+            </button>
+          </div>
+          <div *ngIf="multipleTextValues.length>1" style="margin-top:1em; margin-left:15px" icon-left><ion-icon name="bulb"></ion-icon> You can change the order of the stages using drag and drop</div>
         </div>
       </div>
     </div>

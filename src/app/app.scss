@@ -136,7 +136,7 @@ body{
 .segment-container{
     position: fixed;
     bottom:1rem;
-    width:calc(100% - 32px);
+    width:calc(100% - 55px);
     max-width: calc(100vw - 32px);
     z-index: 2;
     background-color: white;
@@ -144,7 +144,7 @@ body{
 }
 @media screen and (min-width:$max-app-width){
     .segment-container{
-        bottom:2rem;
+        // bottom:2rem;
     }
 }
 // allow vertical scroll in slides
@@ -161,7 +161,7 @@ body{
 }
 .swiper-slide{
     display: block!important;
-    max-height: calc(100vh - 150px);
+    // max-height: calc(100vh - 150px);
     overflow-y: scroll;
     width:100%;
 }

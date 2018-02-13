@@ -108,7 +108,7 @@
                 you should click on the corresponding box and answer the set of questions to decide on your overall sampling
                 approach.
             </p>
-            <tree-diagram [nodes]="form.value['q5.2']" style="width:300px; min-height:250px"></tree-diagram>
+            <!-- <tree-diagram [nodes]="form.value['q5.2']" style="width:300px; min-height:250px"></tree-diagram> -->
             <div class="builder-container">
                 <div *ngFor="let stage of form.value['q5.3']; let i=index; let last=last" class="builder-stage-container">
                     <button ion-button class="builder-stage-select" (click)="buildStage(i)">{{builderStages[i] ? builderStages[i] : 'Stage '+(i+1)}}</button>
@@ -118,7 +118,7 @@
 
         </ion-slide>
     </ion-slides>
-    <div style="display: flex; justify-content:space-between">
+    <div style="display: flex; justify-content:space-between; padding-bottom:20px">
         <button ion-button icon-left (click)="lastStep()" [disabled]="frameBuilderIndex==0" [style.opacity]="frameBuilderIndex==0 ? 0 : 1">
             <ion-icon name="arrow-back"></ion-icon>
             Back

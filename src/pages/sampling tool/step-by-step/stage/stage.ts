@@ -33,7 +33,7 @@ export class StagePage {
   refreshSlides: boolean;
   relevant:string
   loaded: boolean
-  stagesComplete = this.dataPrvdr.stagesComplete
+  stagesComplete = this.dataPrvdr.activeSurvey.stagesComplete
 
   constructor(
     public navCtrl: NavController,

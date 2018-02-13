@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
-import glossaryMaster from '../../models/glossaryTerms'
+import glossaryMaster from './glossaryTerms'
 
 
 @Component({

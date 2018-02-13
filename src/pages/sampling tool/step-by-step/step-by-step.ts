@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Events, PopoverCo
 import { DataProvider } from '../../../providers/data/data'
 import { FormProvider } from '../../../providers/form/form'
 import { Popover } from 'ionic-angular/components/popover/popover';
-import {DecisionToolMenuComponent} from '../../../components/decision-tool-menu/decision-tool-menu'
+import {DecisionToolMenuComponent} from '../../../components/general/decision-tool-menu/decision-tool-menu'
 
 @IonicPage()
 @Component({
@@ -38,8 +38,8 @@ export class StepByStepPage {
   }
   ionViewDidEnter(){
     if(!this.showIntro){
-      this.dataPrvdr.saveSurvey()
-      this.activeSurvey=this.dataPrvdr.activeSurvey
+      // this.dataPrvdr.saveSurvey()
+      // this.activeSurvey=this.dataPrvdr.activeSurvey
     }
   }
 

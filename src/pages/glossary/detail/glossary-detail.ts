@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnChanges } from '@angular/core';
 import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
-import glossaryMaster from '../../../models/glossaryTerms'
+import glossaryMaster from '../../../components/general/glossary/glossaryTerms'
 
 @IonicPage({
   segment: 'glossary/:slug',

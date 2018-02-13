@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-declare let vis:any
+declare let vis: any
+
 
 @IonicPage({
   segment: 'changelog',
@@ -11,8 +12,7 @@ declare let vis:any
   templateUrl: 'changelog.html',
 })
 export class ChangelogPage {
-  public version: string = "0.7.1";
-  public date: string = "9th Feb"
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -20,8 +20,6 @@ export class ChangelogPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChangelogPage');
   }
-
-
   // tree diagram demo
   ngAfterViewInit() {
     // create an array with nodes
@@ -54,14 +52,14 @@ export class ChangelogPage {
       physics: {
         enabled: false
       },
-      interaction:{
-        dragView:false
+      interaction: {
+        dragView: false
       },
       layout: {
         hierarchical: {
           enabled: true,
-          levelSeparation:100,
-          sortMethod:'directed'
+          levelSeparation: 100,
+          sortMethod: 'directed'
         }
       }
     };

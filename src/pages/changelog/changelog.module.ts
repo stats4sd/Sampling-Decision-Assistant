@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChangelogPage } from './changelog';
-import {ComponentsModule} from '../../components/components.module'
+import {GeneralComponentsModule} from '../../components/general/generalComponents.module'
 import {StageComponentsModule} from '../../components/stage-content/stageComponents.module'
 
 @NgModule({
@@ -10,7 +10,7 @@ import {StageComponentsModule} from '../../components/stage-content/stageCompone
   ],
   imports: [
     IonicPageModule.forChild(ChangelogPage),
-    ComponentsModule,
+    GeneralComponentsModule,
     StageComponentsModule
   ],
 })

@@ -34,6 +34,12 @@ export class SurveyQuestionComponent {
   multipleTextInput: any = ""
   multipleTextValues: any = [];
   valueSaved: boolean = false;
+  dragulaOptions={
+    moves: function (el, source, handle, sibling) {
+      // allow move only if parent parent has data element (required as drag on button selects inner html first, then button, then parent div)
+      return handle.parentElement.parentElement.dataset.dragHandle;
+    },
+  }
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr: FormProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
@@ -135,7 +141,8 @@ export class SurveyQuestionComponent {
       if (value == undefined || value == "" || !value == null) {
         value = []
       }
-      else { value = JSON.parse(value) }
+      // else { 
+      //   value = JSON.parse(value) }
       this.multipleTextValues = value
     }
   }
@@ -202,7 +209,7 @@ export class SurveyQuestionComponent {
     this.multipleTextValues.push(this.multipleTextInput)
     this.multipleTextInput = "";
     let patch = {}
-    patch[this.questionKey] = JSON.stringify(this.multipleTextValues)
+    patch[this.questionKey] = this.multipleTextValues
     this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
     this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'push', value: this.multipleTextValues })
@@ -211,7 +218,7 @@ export class SurveyQuestionComponent {
   removeTextMultiple(index) {
     this.multipleTextValues.splice(index, 1)
     let patch = {}
-    patch[this.questionKey] = JSON.stringify(this.multipleTextValues)
+    patch[this.questionKey] = this.multipleTextValues
     this.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
     this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues })

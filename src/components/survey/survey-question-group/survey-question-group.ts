@@ -1,3 +1,5 @@
+// display multiple questions on same card
+
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormProvider } from '../../../providers/form/form'

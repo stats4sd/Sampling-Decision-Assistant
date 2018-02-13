@@ -28,22 +28,23 @@
             <span *ngIf="form.value['q3.2']"> located in
                 <survey-reference [controlName]="'q3.2'"></survey-reference>
             </span>
-            <span *ngIf="form.value['q3.3']"> during
+            <span *ngIf="form.value['q3.3']"> with specific interest in
                 <survey-reference [controlName]="'q3.3'"></survey-reference>
             </span>
-            <span *ngIf="form.value['q3.4']"> and
+            <span *ngIf="form.value['q3.4']"> .Time period: 
                 <survey-reference [controlName]="'q3.4'"></survey-reference>
             </span>
 
         </div>
         <p>If yes, check the box below. If no then change your answers to the questions above</p>
-        <ion-item>
+        <!-- <ion-item>
             <ion-label>Yes, it is an accurate description</ion-label>
             <ion-checkbox [(ngModel)]="verificationBox" (ionChange)="verify()"></ion-checkbox>
-        </ion-item>
+        </ion-item> -->
+        <stage-complete stageNumber=3 [complete]="dataPrvdr.activeSurvey.stagesComplete[3]" text="Yes, it is an accurate description"></stage-complete>
+
 
     </div>
-    <stage-complete *ngIf="verificationBox"></stage-complete>
 
 
 

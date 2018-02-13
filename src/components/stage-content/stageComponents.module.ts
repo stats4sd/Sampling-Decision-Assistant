@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 // import ionic module if plan to use ionic components
 import { IonicModule } from 'ionic-angular';
-import {ComponentsModule} from '../components.module'
+import {GeneralComponentsModule} from '../general/generalComponents.module';
+import {SurveyComponentsModule} from '../survey/survey-components.module'
+
 import { StageIntroComponent } from './intro-sections/stage-intro';
 import { StageCompleteComponent } from './stage-complete/stage-complete';
 import { Stage1Component } from './main-content/1/stage-1';
@@ -25,7 +27,8 @@ import { Stage6Component } from './main-content/6/stage-6';
     ],
     imports: [
         IonicModule,
-        ComponentsModule
+        GeneralComponentsModule,
+        SurveyComponentsModule
     ],
     exports: [
         Stage1Component,

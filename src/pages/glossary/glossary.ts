@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams, NavController, Events } from 'ionic-angular';
-import glossaryMaster from '../../models/glossaryTerms'
+import glossaryMaster from '../../components/general/glossary/glossaryTerms'
 
 @IonicPage({
   segment: 'glossary',

@@ -12,7 +12,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DataProvider } from '../providers/data/data';
 import { FormProvider } from '../providers/form/form';
 
-import { DecisionToolMenuComponent } from '../components/decision-tool-menu/decision-tool-menu'
+import { DecisionToolMenuComponent } from '../components/general/decision-tool-menu/decision-tool-menu'
 
 @NgModule({
   declarations: [

@@ -13,6 +13,7 @@ export class StageCompleteComponent extends StagePage {
   @Input('complete') complete: boolean
   @Input('disabled') disabled: boolean
   @Input('stageNumber') stageNumber:number
+  @Input('text') text:string;
   lastCall: number = 0
   sectionValid:boolean = false
 
@@ -27,21 +28,20 @@ export class StageCompleteComponent extends StagePage {
         if (v['q1.2'] == 'Non-representative') { return true }
         if (v['q1.1'] == 'A comparison that needs a quasi-experimental or an experimental approach') { return true }
         else {
-          this.dataPrvdr.stagesComplete[1] = false
+          this.dataPrvdr.activeSurvey.stagesComplete[1] = false
           return false
         }
       }
       case s == 2: {
         if (v['q2.4']) {  return true}
         else{
-          this.dataPrvdr.stagesComplete[2] = false
+          this.dataPrvdr.activeSurvey.stagesComplete[2] = false
           return false
         }
         
       }
       case s == 3: {
-        console.log('evaluating section valid 3')
-        break
+        return true
       }
       case s == 4: {
         console.log('evaluating section valid 4')
@@ -80,9 +80,13 @@ export class StageCompleteComponent extends StagePage {
     this.navCtrl.push('StagePage',{stageID:'stage-'+next}).then(
       _=>{
         this.navCtrl.remove(this.navCtrl.length()-2)
-        this.dataPrvdr.saveSurvey()
+        //this.dataPrvdr.saveSurvey()
       }
 
     )
+  }
+  toggleCheckbox(){
+    console.log('toggling checkbox',this.dataPrvdr.activeSurvey.stagesComplete[this.stage.number])
+    this.dataPrvdr.saveSurvey()
   }
 }

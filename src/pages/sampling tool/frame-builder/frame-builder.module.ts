@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { FrameBuilderPage } from './frame-builder';
-import { ComponentsModule } from '../../../components/components.module'
+import { GeneralComponentsModule } from '../../../components/general/GeneralComponents.module'
+import {SurveyComponentsModule} from '../../../components/survey/survey-components.module'
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { ComponentsModule } from '../../../components/components.module'
   ],
   imports: [
     IonicPageModule.forChild(FrameBuilderPage),
-    ComponentsModule
+    GeneralComponentsModule,
+    SurveyComponentsModule
   ],
 })
 export class FrameBuilderPageModule {}

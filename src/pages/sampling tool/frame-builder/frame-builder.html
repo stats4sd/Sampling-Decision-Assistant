@@ -3,7 +3,8 @@
   <ion-navbar>
     <ion-title>Building a Sampling Frame</ion-title>
     <ion-buttons end>
-      <button ion-button icon-left (click)="dismiss()" color="primary"><ion-icon name="checkmark"></ion-icon>Save</button>
+      <button ion-button icon-left (click)="dismiss()" color="primary">
+        <ion-icon name="checkmark"></ion-icon>Save</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -11,8 +12,11 @@
 
 
 <ion-content padding>
-  <p>Use the following questions to help build a sampling frame for the sampling stage</p>
-  <note type='dev'>Note, the logic in this part will change slightly to incorporate stratification decisions</note>
+  <p>You said you need a stage where you sample [name of sampling unit in this stage]. This section will help you to make decisions
+    about how to select the [SUSi]</p>
+
+  <!-- <p>Use the following questions to help build a sampling frame for the sampling stage</p> -->
+  <!-- <note type='dev'>Note, the logic in this part will change slightly to incorporate stratification decisions</note> -->
   <survey-question-group section="Selecting the sampling units" [filter]="['q5.3']" [repeatIndex]="builderStage.index"></survey-question-group>
 
 </ion-content>
