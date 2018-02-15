@@ -1,6 +1,16 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+## 0.7.2 (14th February 2018)
+
+Stage 5 - further development of multi-stage building strategy (incomplete)
+
+Drag/drop interactions - currently implemented for stage 5 q5.2
+
+Background saving and resume of unsaved project
+
+Lots of minor bug fixes and style improvements as well as general improvements to backend project layout and logic
+
 ## 0.7.1 (9th February 2018)
 
 Stage 1 - minor changes

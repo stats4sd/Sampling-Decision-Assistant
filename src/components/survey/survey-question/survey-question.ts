@@ -66,6 +66,7 @@ export class SurveyQuestionComponent {
       let patch = {}
       patch[this.question.controlName] = v
       this.formGroup.patchValue(patch)
+      this._generateMultipleValues()
       console.log('formgroup', this.formGroup)
     })
 
