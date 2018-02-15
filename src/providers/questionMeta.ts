@@ -229,7 +229,7 @@ export default
             "controlName": "q5.3.1",
             "type": "select",
             "selectOptions": "Yes, No",
-            "label": "Is there a single list of all sampling units at this stage from where you can select them?",
+            "label": "Do you have a list of all [SUSi] in this stage?",
             "section": "Selecting the sampling units",
             "condition": "",
             "labelMultiple": null
@@ -238,72 +238,123 @@ export default
             "isQuestion": "TRUE",
             "controlName": "q5.3.2",
             "type": "select",
-            "selectOptions": "Yes, No",
-            "label": "Can a list be obtained from elsewhere?",
+            "selectOptions": "Yes - proceed, No - highlight the disadvantages and suggest ways of updating it",
+            "label": "Is the list as complete and up-to-date as possible?",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.1, value:No",
+            "condition": "type:value, controlName:q5.3.1, value:Yes",
             "labelMultiple": null
         },
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.3",
             "type": "select",
-            "selectOptions":
-                "Area based sampling, WASH clusters, Key informant lists, Community build frames\nArea based sampling",
-            "label": "Are any of these options a sensible way forward to replace the sampling frame for the sampling units?",
-            "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.2, value:No",
-            "labelMultiple": null
-        },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q5.3.4",
-            "type": "select",
-            "selectOptions": "Yes, No",
-            "label": "Is this list (sampling frame) up-to-date?",
+            "selectOptions": "Sample, All",
+            "label": "Are you planning to take a sample of [SUSi] or are you planning to cover every single [SUSi] in this stage?",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.3.1, value:Yes",
             "labelMultiple": null
         },
         {
             "isQuestion": "TRUE",
-            "controlName": "q5.3.5",
+            "controlName": "q5.3.4.1",
             "type": "select",
             "selectOptions": "Yes, No",
-            "label": "Are there any exclusions or omissions that you are aware of?",
+            "label": "Do you need to use strata at this stage?",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.1, value:Yes",
+            "condition": "type:value, controlName:q5.3.3, value:Sample",
             "labelMultiple": null
         },
         {
             "isQuestion": "TRUE",
-            "controlName": "q5.3.6",
-            "type": "text",
-            "label": "If yes, what are the biases that may be introduced by it?",
+            "controlName": "q5.3.4.2",
+            "type": "select",
+            "selectOptions": "Yes, No",
+            "label": "Did you consider your reporting requirements when you decided about the strata at this stage?",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.5, value:Yes",
+            "condition": "type:value, controlName:q5.3.4.1, value:Yes",
             "labelMultiple": null
         },
         {
+            "isQuestion": "TRUE",
+            "controlName": "q5.3.4.3",
+            "type": "select",
+            "selectOptions": "Simple random sampling, Probability proportional to size",
+            "label": "<p>Within each strata, are you planning to select the SUSi using<br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
+            "section": "Selecting the sampling units",
+            "condition": "type:value, controlName:q5.3.4.1, value:Yes",
+            "labelMultiple": null
+        },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.2",
+        //     "type": "select",
+        //     "selectOptions": "Yes, No",
+        //     "label": "Can a list be obtained from elsewhere?",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.1, value:No",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.3",
+        //     "type": "select",
+        //     "selectOptions":
+        //         "Area based sampling, WASH clusters, Key informant lists, Community build frames\nArea based sampling",
+        //     "label": "Are any of these options a sensible way forward to replace the sampling frame for the sampling units?",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.2, value:No",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.4",
+        //     "type": "select",
+        //     "selectOptions": "Yes, No",
+        //     "label": "Is this list (sampling frame) up-to-date?",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.1, value:Yes",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.5",
+        //     "type": "select",
+        //     "selectOptions": "Yes, No",
+        //     "label": "Are there any exclusions or omissions that you are aware of?",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.1, value:Yes",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.6",
+        //     "type": "text",
+        //     "label": "If yes, what are the biases that may be introduced by it?",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.5, value:Yes",
+        //     "labelMultiple": null
+        // },
+        // {
 
-            "isQuestion": "FALSE",
-            "controlName": "l5.4",
-            "type": "label",
-            "selectOptions": "",
-            "label": "You said that the information needs to be disaggregated by {{q4.2}}. Consider whether the sampling units at this stage need to be separated into strata according to the reporting criteria",
-            "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
-            "labelMultiple": null
-        },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q5.4",
-            "type": "repeat",
-            "selectOptions": "q4.2",
-            "label": "Show the list of possible reporting levels to and for each allow the selection of the level as a criteria for stratification. Roughly as follows",
-            "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
-            "labelMultiple": null
-        },
-        { "isQuestion": "TRUE", "controlName": "q5.4.1", "type": "select", "selectOptions": "Yes, No", "label": "Level will be used as a stratification factor?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null },
-        { "isQuestion": "TRUE", "controlName": "q5.4.2", "type": "select", "selectOptions": "Yes, No", "label": "Are there any groups of sampling units at this stage that should be grouped together to help in controlling variability?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null }]
+        //     "isQuestion": "FALSE",
+        //     "controlName": "l5.4",
+        //     "type": "label",
+        //     "selectOptions": "",
+        //     "label": "You said that the information needs to be disaggregated by {{q4.2}}. Consider whether the sampling units at this stage need to be separated into strata according to the reporting criteria",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.4",
+        //     "type": "repeat",
+        //     "selectOptions": "q4.2",
+        //     "label": "Show the list of possible reporting levels to and for each allow the selection of the level as a criteria for stratification. Roughly as follows",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
+        //     "labelMultiple": null
+        // },
+        // { "isQuestion": "TRUE", "controlName": "q5.4.1", "type": "select", "selectOptions": "Yes, No", "label": "Level will be used as a stratification factor?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null },
+        // { "isQuestion": "TRUE", "controlName": "q5.4.2", "type": "select", "selectOptions": "Yes, No", "label": "Are there any groups of sampling units at this stage that should be grouped together to help in controlling variability?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null }
+    ]

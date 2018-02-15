@@ -58,21 +58,15 @@ export class Stage5Component extends StagePage {
     super.openModal('StagePage',{stageID:stage, modalMode:true})
   }
   builderSlideChange(){
-    // update multi-stage builder text if appropriate
-    try {
-      this.builderStages = JSON.parse(this.form.value['q5.2'])
-      console.log('builder stages',this.builderStages)
-    } catch (error) {
-      this.builderStages = []
-    }
-    this.dataPrvdr.saveSurvey()
+    
+    this.dataPrvdr.saveSurvey(null,true)
     
   }
-  buildStage(index){
+  buildStage(index,title){
     console.log('building stage',index)
     let builderStage={
       index:index,
-      title:this.builderStages[index]
+      title:title
     }
     super.openModal('FrameBuilderPage',builderStage)
   }

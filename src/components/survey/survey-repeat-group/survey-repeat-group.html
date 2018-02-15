@@ -1,3 +1,19 @@
 <div>
-  
+    <h3>Survey Repeat Group</h3>
+    <div>ID: {{repeatID}}</div>
+    <div>Index: {{repeatIndex}}</div>
+    <div>Question Group: {{questionGroup}}</div>
+
+    <h3>Questions</h3>
+    <div [formGroup]="formGroup">
+        <div [formArrayName]="questionGroup">
+            <div *ngFor="let repeat of formGroup.controls[questionGroup].controls; let i=index">
+                <div>Repeat index: {{i}}</div>
+                <!-- <survey-question-group [repeatGroup]="questionGroup" [formGroup]="formGroup.controls[questionGroup].controls[i]"></survey-question-group> -->
+            </div>
+
+        </div>
+    </div>
+
+
 </div>

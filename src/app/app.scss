@@ -170,6 +170,12 @@ body{
         overflow-y: hidden
     }
 }
+// fix to stop height filling largest slide even when inactive
+// combine with @Viewchild for slides after view init: `this.slides.autoHeight=true`;
+.swiper-slide:not(.swiper-slide-active) > div {
+    display:none;
+}
+
 // ion-slides { height: 100%; }
 // .slide-zoom{
 //     height: 100%;

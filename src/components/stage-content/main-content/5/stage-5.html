@@ -101,17 +101,14 @@
         <!-- multi-stage builder slide -->
         <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
             <h4>Building multi-stage sampling frames</h4>
-            <p>The process of building a multi-stage sampling frame contains many of the same decision-making processes as a
-                single-stage strategy, however all of the decisions must be considered at every stage in repeat.
+            <p>We now must determine the strategy to select the individual sampling units for each of your sampling stages
             </p>
-            <p>Below you can see an outline of the sampling stages that you defined in the previous questions. For each stage
-                you should click on the corresponding box and answer the set of questions to decide on your overall sampling
-                approach.
+            <p>Click on each sampling stage below and answer the questions that follow
             </p>
             <!-- <tree-diagram [nodes]="form.value['q5.2']" style="width:300px; min-height:250px"></tree-diagram> -->
             <div class="builder-container">
-                <div *ngFor="let stage of form.value['q5.3']; let i=index; let last=last" class="builder-stage-container">
-                    <button ion-button class="builder-stage-select" (click)="buildStage(i)">{{builderStages[i] ? builderStages[i] : 'Stage '+(i+1)}}</button>
+                <div *ngFor="let stage of form.value['q5.2']; let i=index; let last=last" class="builder-stage-container">
+                    <button ion-button class="builder-stage-select" (click)="buildStage(i,stage)">{{stage}}</button>
                     <ion-icon name="arrow-down" class="builder-arrow-down" *ngIf="!last"></ion-icon>
                 </div>
             </div>

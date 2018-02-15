@@ -12,31 +12,40 @@ import { FormProvider } from '../../../providers/form/form'
 export class SurveyQuestionGroupComponent {
   @Input('showLabel') showLabel: boolean;
 
-  @Input() set filter(filterQuestions: any) {
+  @Input() set filter(filter: any) {
     // when question number or section set automatically filter the questions
-    this.filterQuestions = filterQuestions
+    this.filterQuestionsList = filter
     this._filterQuestions()
   };
+  // array of questions to show in repeat group
+  @Input() set repeatFilter(repeatFilter: string[]){
+    this._repeatFilterList = repeatFilter
+    console.log('repeat filter list',this._repeatFilterList)
+  }
   @Input() set section(section: string) {
     // survey subsection questions
     this._section = section
     this._filterQuestions()
   }
-  @Input() set omit(omit: any) {
-    // intended to omit specific question from group, although currently handled with question condition logic instead
-    this._omit = omit
+  // @Input() set repeatGroup(repeatGroup: string) {
+  //   // filter questions matching repeat group
+  //   this._repeatGroup = repeatGroup
+  //   this._filterQuestions()
+  // }
+
+  @Input() set repeatIndex(repeatIndex: number) {
+    // used to only show one set in repeat group
+    this.showAllRepeats = false
+    this._repeatIndex = repeatIndex
   }
-  @Input() set repeatIndex(repeatIndex: number){
-    console.log('repeat index',repeatIndex)
-    this.showAllRepeats=false
-    this._repeatIndex=repeatIndex
-  }
-  // used to only show one set in repeat group
-  filterQuestions: string[];
+
+  filterQuestionsList: string[];
+  _repeatFilterList:string[]=[];
   _section: string;
   _omit: string[] = [];
-  _repeatIndex:number;
-  showAllRepeats:boolean=true
+  _repeatIndex: number;
+  _repeatGroup: string;
+  showAllRepeats: boolean = true
   formGroup: FormGroup;
   allQuestions: any;
   groupQuestions: any;
@@ -47,27 +56,29 @@ export class SurveyQuestionGroupComponent {
   constructor(private formPrvdr: FormProvider) {
     // bind to master formgroup and questions
     this.formGroup = this.formPrvdr.getFormGroup()
-    this.allQuestions = this.formPrvdr.getQuestions()
+    this.allQuestions = this.formPrvdr.allQuestions
+    console.log('formgroup', this.formGroup)
     this.groupQuestions = this.allQuestions
   }
 
   _filterQuestions() {
     // filter questions by section and optionally also down to individual question number
-    let filtered = []
+    let filtered = this.allQuestions
+    // filter to match a given section
     if (this._section) {
       let section = this._section
-      let questions: any[] = this.allQuestions
-      filtered = questions.filter(q => {
+      filtered = filtered.filter(q => {
         return q.section == section
       })
-      if (this.filterQuestions) {
-        filtered = filtered.filter(q => {
-          return this.filterQuestions.indexOf(q.controlName) > -1
-        })
-      }
-      this.groupQuestions = filtered
-      console.log('group questions', this.groupQuestions)
     }
+    // filter down to individual questions
+    if (this.filterQuestionsList) {
+      filtered = filtered.filter(q => {
+        return this.filterQuestionsList.indexOf(q.controlName) > -1
+      })
+    }
+    this.groupQuestions = filtered
+    console.log('group questions', this.groupQuestions)
   }
 
   getRepeatGroupTitle(question, index) {

@@ -10,9 +10,7 @@ import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
 import { FormProvider } from '../../../providers/form/form'
-
-
-
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'survey-question',
@@ -34,18 +32,17 @@ export class SurveyQuestionComponent {
   multipleTextInput: any = ""
   multipleTextValues: any = [];
   valueSaved: boolean = false;
-  dragulaOptions={
+  dragulaOptions = {
     moves: function (el, source, handle, sibling) {
-      // allow move only if parent parent has data element (required as drag on button selects inner html first, then button, then parent div)
-      return handle.parentElement.parentElement.dataset.dragHandle;
+      // allow move on possible drag-handles (required as drag on button sometimes selects inner html first, then button, then parent div)
+      return el.dataset.dragHandle || handle.parentElement.parentElement.dataset.dragHandle;
     },
   }
 
-  constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr: FormProvider) {
+  constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr: FormProvider, private dragulaService: DragulaService) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
-
-
   }
+
   ngAfterViewInit() {
     this.questionKey = this.question.controlName
     this._generateSelectOptions()
@@ -54,6 +51,24 @@ export class SurveyQuestionComponent {
     // run any custom onInit triggers
     if (this.question.triggers && this.question.triggers.trigger == "onInit") { this._runCustomTriggers() }
     this.cdr.detectChanges()
+    // set dragula drop interaction (ideally should be split into seperate subcomponent extending question base)
+    if (this.question.options && this.question.options.dragDrop) {
+      this._addDragDropSubscriber()
+    }
+  }
+  _addDragDropSubscriber() {
+    // automatically save form values when rearranged using drag drop. Push final sampling unit back to array and reverse 
+    this.dragulaService.dropModel.subscribe(_ => {
+      let v = []
+      this.multipleTextValues.forEach(val=>v.push(val))
+      v.push('Final Sampling Unit')
+      console.log('v', v)
+      let patch = {}
+      patch[this.question.controlName] = v
+      this.formGroup.patchValue(patch)
+      console.log('formgroup', this.formGroup)
+    })
+
   }
   updateLabel(key) {
     // updates dynamic text labels if relevant 
@@ -81,14 +96,6 @@ export class SurveyQuestionComponent {
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
     this.events.publish('valueUpdated:' + update.controlName, update)
-    //this.events.publish('save')
-
-    //   this.valueSaved=true
-    //   let animator = new AnimationBuilder();
-    //   let el = this.saveMessage.nativeElement
-    //   animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
-    //  .then(_res=>{el.style.visibility="inherit"})
-
   }
 
   _runCustomTriggers() {
@@ -141,8 +148,11 @@ export class SurveyQuestionComponent {
       if (value == undefined || value == "" || !value == null) {
         value = []
       }
-      // else { 
-      //   value = JSON.parse(value) }
+      // remove initial FSU entry if available as added on later
+      let i = value.indexOf('Final Sampling Unit')
+      if(i>-1){
+       value.splice(i,1)
+      }
       this.multipleTextValues = value
     }
   }
@@ -171,14 +181,9 @@ export class SurveyQuestionComponent {
         console.log('test')
         try {
           el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
-        } catch (error) {
-
-        }
-
+        } catch (error) { }
         this.updateLabel(val)
       })
-
-
     }
 
   }
@@ -206,7 +211,7 @@ export class SurveyQuestionComponent {
 
   addTextMultiple() {
     // push response to array
-    this.multipleTextValues.push(this.multipleTextInput)
+    this.multipleTextValues.unshift(this.multipleTextInput)
     this.multipleTextInput = "";
     let patch = {}
     patch[this.questionKey] = this.multipleTextValues
@@ -260,13 +265,4 @@ export class SurveyQuestionComponent {
     }
     return true
   }
-
-
-
-
-
-
-
-
-
 }

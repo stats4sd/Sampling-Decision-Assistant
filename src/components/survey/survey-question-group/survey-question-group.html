@@ -13,7 +13,9 @@
               <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
                 <div class="repeat-heading">{{getRepeatGroupTitle(question,i)}}</div>
                 <div *ngFor="let q of question.repeatQuestions">
-                  <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[i]" [showLabel]="showLabel"></survey-question>
+                  <survey-question *ngIf="_repeatFilterList.indexOf(q.controlName)==-1" [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[i]"
+                    [showLabel]="showLabel">
+                  </survey-question>
                 </div>
               </div>
             </div>
@@ -24,7 +26,13 @@
               <div [formGroupName]="_repeatIndex">
                 <div class="repeat-heading">{{getRepeatGroupTitle(question,_repeatIndex)}}</div>
                 <div *ngFor="let q of question.repeatQuestions">
-                  <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]" [showLabel]="showLabel"></survey-question>
+                  <!-- filter out if using repeatFilter -->
+                  <div *ngIf="_repeatFilterList">
+                    <survey-question *ngIf="_repeatFilterList.indexOf(q.controlName)>-1" [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]"></survey-question>
+                  </div>
+                  <div *ngIf="!_repeatFilterList">
+                    <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]" [showLabel]="showLabel"></survey-question>
+                  </div>
                 </div>
               </div>
             </div>

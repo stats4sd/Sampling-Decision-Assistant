@@ -33,7 +33,8 @@ export class StagePage {
   refreshSlides: boolean;
   relevant:string
   loaded: boolean
-  stagesComplete = this.dataPrvdr.activeSurvey.stagesComplete
+  stagesComplete = this.dataPrvdr.activeSurvey.stagesComplete;
+  slideOptions={}
 
   constructor(
     public navCtrl: NavController,
@@ -68,6 +69,7 @@ export class StagePage {
   ionViewDidEnter() {
     //this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
     this.slides.lockSwipes(true)
+    this.slides.autoHeight=true;
     this.loaded = true
     this.navbar.backButtonClick = () => {
       let depth = location.hash.split('/').length

@@ -7,7 +7,7 @@ import questionMeta from '../questionMeta';
 @Injectable()
 export class FormProvider {
   public formGroup: FormGroup;
-  allQuestions = questionMeta
+  public allQuestions = questionMeta
   groupQuestions: any;
   section: any;
   // track questions to omit from main lists
@@ -75,14 +75,14 @@ export class FormProvider {
       return this.formGroup
     }
   }
-  getQuestions() {
-    // return questions pre-processed to remove repeat groups and other unwanted features
-    if (this.groupQuestions) { return this.groupQuestions }
-    else {
-      this._generateQuestionForm(questionMeta)
-      return this.groupQuestions
-    }
-  }
+  // getQuestions() {
+  //   // return questions pre-processed to remove repeat groups and other unwanted features
+  //   if (this.groupQuestions) { return this.groupQuestions }
+  //   else {
+  //     this._generateQuestionForm(questionMeta)
+  //     return this.groupQuestions
+  //   }
+  // }
 
 
 

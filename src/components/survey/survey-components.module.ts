@@ -5,6 +5,8 @@ import { IonicModule } from 'ionic-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 // import drag/drop package
 import {DragulaModule} from 'ng2-dragula'
+// import custom pipes
+import {PipesModule} from '../../pipes/pipes.module'
 
 import { SurveyQuestionComponent } from './survey-question/survey-question';
 import { SurveyQuestionGroupComponent } from './survey-question-group/survey-question-group';
@@ -24,7 +26,8 @@ import { SurveyLabelComponent } from './survey-label/survey-label';
     imports: [
         IonicModule,
         ReactiveFormsModule,
-        DragulaModule
+        DragulaModule,
+        PipesModule
     ],
     exports: [
         SurveyQuestionComponent,
