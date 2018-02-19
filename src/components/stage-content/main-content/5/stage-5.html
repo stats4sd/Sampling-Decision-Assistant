@@ -1,120 +1,25 @@
 <div class="slide-content">
 
     <ion-slides #frameBuilder class="stage-5-slides" (ionSlideDidChange)="builderSlideChange()">
+
+        <!-- multi-stage builder slide -->
+        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
+                <stage-5-frame-builder></stage-5-frame-builder>
+            </ion-slide>
+
         <!-- recap slide -->
         <ion-slide>
-            <h4>Introduction</h4>
-            <p>We will now find a method to select and reach the
-                <glossary-link text="sampling units" slug="sampling-unit"></glossary-link>
-                .
-            </p>
-            <p>
-                When selecting the sampling units, it is important to ensure that any biases are limited as much as possible. Sometimes this
-                is a relatively straight-forward process, but often it can involve multiple stages and more advanced techniques
-                such as the contstruction of
-                <glossary-link text="sampling frames." slug="sampling-frame"></glossary-link>
-            </p>
-            <p>To start, let us review some of the information that you have presented so far. Note that at any point you can
-                modify this to assist building an appropriate strategy</p>
-            <div class="info-card-container">
-                <ion-card *ngFor="let info of infoProvided" class="info-provided-card">
-                    <div style="display: flex" class="info-card-header">
-                        <div>{{info.heading}}</div>
-                        <ion-icon name="create" class="edit-button" (click)="editStage(info.stage)"></ion-icon>
-                    </div>
-                    <div style="padding:5px">
-                        <!-- specific cases for content boxes-->
-                        <div *ngIf="info.stage=='stage-1'">
-                            <survey-reference [controlName]="info.formControl"></survey-reference>
-                        </div>
-                        <div *ngIf="info.stage=='stage-2'">
-                            <survey-reference [controlName]="info.formControl"></survey-reference>
-                            <div>
-                                <span>&sigma; = </span>
-                                <survey-reference controlName="q2.2.2"></survey-reference>
-                            </div>
-
-                        </div>
-                        <div *ngIf="info.stage=='stage-3'">
-                            <survey-reference [controlName]="info.formControl"></survey-reference>
-                        </div>
-                        <div *ngIf="info.stage=='stage-4'">
-                            <div *ngIf="form.value['q4.1']=='One estimate'">
-                                <survey-reference [controlName]="info.formControl"></survey-reference>
-                            </div>
-                            <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
-                                <div>Disaggregated by:</div>
-                                <survey-reference controlName="q4.2" *ngIf="form.value['q4.2']==''"></survey-reference>
-                                <ul>
-                                    <li *ngFor="let estimate of processed.estimates">{{estimate}}</li>
-                                </ul>
-                            </div>
-                            <div *ngIf="form.value['q4.1']==''">
-                                <survey-reference [controlName]="info.formControl"></survey-reference>
-                            </div>
-                        </div>
-                    </div>
-
-                </ion-card>
-                <!-- <div class="dev-note" icon-left>
-                    <ion-icon name="bug"></ion-icon>Developer note: sampling unit should include full definition with exclusions and reporting
-                    level should include multiple</div> -->
-            </div>
+            <stage-5-recap></stage-5-recap>
         </ion-slide>
         <!-- single vs multi stage slide -->
         <ion-slide>
-            <h4>Sampling stages and frames</h4>
-            <p>The next step is to determine whether your sampling will be carried out over a single stage or multiple stages.</p>
-            <p>Consider the
-                <glossary-link text="final sampling units" slug="sampling-units"></glossary-link>
-                that make up your target population of
-                <survey-reference controlName="q3.1"></survey-reference>.</p>
-            <survey-question-group section="Selecting the sampling units" [filter]="['q5.1']"></survey-question-group>
-            <!-- q5.1 -->
-            <div *ngIf="form.value['q5.1']=='Yes'">
-                <p>As a final list does exist you have the choice to use it in a single stage sampling approach with
-                    <glossary-link text="simple random sampling" slug="simple-random-sampling"></glossary-link>, or you may still decide to use
-                    <glossary-link text="multiple stages" slug="multi-stage-sampling"></glossary-link>. Some of the pros and cons of each approach are discussed in the resources section.
-                </p>
-                <survey-question-group section="Selecting the sampling units" [filter]="['q5.1.1']"></survey-question-group>
-                <note *ngIf="form.value['q5.1.1'] =='Single-stage'" type='dev'>Next steps for single stage to be completed, multi stage more indicative</note>
-                <div *ngIf="form.value['q5.1.1']=='Multi-stage'">
-                    <!-- q5.2-->
-                    <div style="display: flex">
-                        <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']" style="flex:1"></survey-question-group>
-                    </div>
-
-                </div>
-            </div>
-            <div *ngIf="form.value['q5.1']=='No'">
-                <p>In this case you will need to use a
-                    <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>strategy. In order to do this you must first determine a set of sampling stages that
-                    will eventually narrow down to your final sampling units.
-                </p>
-                <!-- q5.2-->
-                <div style="display: flex">
-                    <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']" style="flex:1"></survey-question-group>
-                </div>
-            </div>
-
+            <stage-5-define-stages></stage-5-define-stages>
         </ion-slide>
-        <!-- multi-stage builder slide -->
-        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
-            <h4>Building multi-stage sampling frames</h4>
-            <p>We now must determine the strategy to select the individual sampling units for each of your sampling stages
-            </p>
-            <p>Click on each sampling stage below and answer the questions that follow
-            </p>
-            <!-- <tree-diagram [nodes]="form.value['q5.2']" style="width:300px; min-height:250px"></tree-diagram> -->
-            <div class="builder-container">
-                <div *ngFor="let stage of form.value['q5.2']; let i=index; let last=last" class="builder-stage-container">
-                    <button ion-button class="builder-stage-select" (click)="buildStage(i,stage)">{{stage}}</button>
-                    <ion-icon name="arrow-down" class="builder-arrow-down" *ngIf="!last"></ion-icon>
-                </div>
-            </div>
+        
 
-        </ion-slide>
     </ion-slides>
+
+    <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px">
         <button ion-button icon-left (click)="lastStep()" [disabled]="frameBuilderIndex==0" [style.opacity]="frameBuilderIndex==0 ? 0 : 1">
             <ion-icon name="arrow-back"></ion-icon>
@@ -124,47 +29,4 @@
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
     </div>
-
-
-    <!-- <p>...</p>
-    <p>
-        <ion-icon name="ios-list-box" style="font-size: 32px"></ion-icon>
-    </p>
-    <survey-question-group section="Selecting the sampling units" [filter]="['q5.1','q5.2','q5.3']"></survey-question-group> -->
-
-    <!-- <p>We will be using the following information that you have provided:</p>
-    <ion-card>
-        <table>
-
-        </table>
-    </ion-card> -->
-    <div *ngIf="form.value['q1.2']!=''">
-        <!-- <p>In the first section you specified that the main objective was:</p>
-        <div  class="main-objective quote">"{{form.value['q1.2']}}"</div> -->
-
-        <!-- <survey-question-group section="Selecting the sampling units" [filter]="['q5.1']"></survey-question-group>
-        <p *ngIf="form && form.value['q5.1']=='No'">If a complete list does not exist, it is possible to group sampling units in a way that allows us to select some of these
-            groups in a first step, and then select the final sampling units in each of the selected groups at random. This is
-            called
-            <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>.
-        </p>
-        <survey-question-group section="Selecting the sampling units" [filter]="['q5.2']"></survey-question-group> -->
-
-    </div>
-
-    <!-- <div *ngIf="form.value['q1.2']==''">
-        <p>In order to build a strategy it is important to complete the previous sampling stages first</p>
-        <button ion-button clear (click)="goBack()">Return to previous stages</button>
-    </div> -->
-
-    <!-- <p>
-        When selecting the sampling units, it is important to ensure they are selected at random. This means that every sampling
-        unit in the target population should have the same chance to be selected into the final sample.</p>
-    <p>
-        The easiest way to do this so is to draw a simple random sample from a complete and up-to-date list of all sampling units
-        in the target population. However, such a list often does not exist.</p> -->
-
-
-
-
 </div>

@@ -5,9 +5,11 @@
         <div *ngIf="question.type!='repeat'">
           <survey-question [question]="question" [formGroup]="formGroup" [showLabel]="showLabel"></survey-question>
         </div>
-        <!-- repeat groups -->
+
+        <!-- 
+        <!-- repeat groups 
         <div *ngIf="question.type=='repeat'">
-          <!-- show all repeats-->
+          <!-- show all repeats
           <div *ngIf="showAllRepeats">
             <div [formArrayName]="question.controlName">
               <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
@@ -20,13 +22,13 @@
               </div>
             </div>
           </div>
-          <!-- show selected repeat -->
+          <!-- show selected repeat 
           <div *ngIf="!showAllRepeats">
             <div [formArrayName]="question.controlName">
               <div [formGroupName]="_repeatIndex">
                 <div class="repeat-heading">{{getRepeatGroupTitle(question,_repeatIndex)}}</div>
                 <div *ngFor="let q of question.repeatQuestions">
-                  <!-- filter out if using repeatFilter -->
+                  <!-- filter out if using repeatFilter 
                   <div *ngIf="_repeatFilterList">
                     <survey-question *ngIf="_repeatFilterList.indexOf(q.controlName)>-1" [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]"></survey-question>
                   </div>
@@ -38,6 +40,7 @@
             </div>
           </div>
         </div>
+        -->
       </div>
     </div>
   </form>

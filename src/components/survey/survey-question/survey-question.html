@@ -1,117 +1,137 @@
 <!-- display single survey question -->
-<div class="container" *ngIf="question && shouldShowQuestion(question)">
-  <div [formGroup]="formGroup" style="flex:1">
-    <!-- question labels -->
-    <div *ngIf="question.type!='label' && question.type!='repeat' && showLabel!=false" class="question-label">
-      <div class="question-number dark">{{question.controlName}}</div>
-      <div>
-        <span id="questionLabelText" #questionLabelText *ngIf="question.label" [innerHtml]="question.label"></span>
-      </div>
 
-    </div>
-    <!-- text area input -->
-    <div *ngIf="question.type=='text'">
-      <ion-item>
-        <textarea id="textAreaInput" #textAreaInput (focusout)="saveValue()" (keyup)="resize()" [formControlName]="question.controlName"></textarea>
-      </ion-item>
-    </div>
-    <!-- number input -->
-    <div *ngIf="question.type=='number'">
-      <div style="display: flex">
-        <!-- optional prefix -->
-        <div *ngIf="question.options && question.options.prefix" class="prefix">
-          {{question.options.prefix}}
-        </div>
-        <ion-item>
-          <ion-input type="number" [max]="question.options && question.options.max ? question.options.max : null" [min]="question.options && question.options.min ? question.options.min : null"
-            (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
-        </ion-item>
-      </div>
-    </div>
-    <!-- select -->
-    <div *ngIf="question.type=='select'">
-      <ion-item *ngIf="!showSelectOther">
-        <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [formControlName]="question.controlName">
-          <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
-          <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <!-- select with type other -->
-      <ion-item *ngIf="showSelectOther">
-        <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
-          placeholder="please specify"></ion-input>
-      </ion-item>
-    </div>
-    <!-- text   -->
-    <div *ngIf="question.type=='textMultiple'">
-      <div style="display: flex">
-        <ion-item>
-          <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
-            type="text" [placeholder]="question.labelMultiple"></ion-input>
-        </ion-item>
-        <button ion-button (click)="addTextMultiple()">Add</button>
-      </div>
-      <!-- multiple list with optional drag-->
-      <div style="min-height: 6em; margin:10px 0">
-        <!-- placeholder bottom for arrow format in q5 -->
-        <div *ngIf="question.options && question.options.format=='arrow'" class="multiple-arrow-placeholder">
-          <button ion-button block icon-right class="placeholder-button"></button>
-          <div class="multiple-arrow-down">
-            <ion-icon name="arrow-down"></ion-icon>
-          </div>
-        </div>
-        <!-- drag drop for arrow format -->
-        <div [dragula]='"bag-one"' [dragulaOptions]="dragulaOptions" [dragulaModel]='multipleTextValues'>
-          <!-- ngfor with conditional reverse pipe -->
-          <div style="display:flex" *ngFor="let value of multipleTextValues, index as i" [attr.data-drag-handle]="question.options.dragDrop">
-            <!-- list format -->
-            <div class="multiple-list" *ngIf="!question.options || !question.options.format">
-              <span class="bullet"></span>
-              <span>{{value}}</span>
-              <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
-            </div>
-            <!-- arrow format -->
-            <div class="multiple-arrows" *ngIf="question.options && question.options.format=='arrow'">
-              <div style="display: flex" [attr.data-drag-handle]="question.options.dragDrop">
-                <button ion-button block icon-left class="multiple-arrows-button">
-                  <ion-icon name="reorder" [attr.data-drag-handle]="question.options.dragDrop"></ion-icon>
-                  <span style="flex-basis:100%; padding-right:20px">{{value}}</span>
-                </button>
-                <button ion-button icon-only clear (click)="removeTextMultiple(i)">
-                  <ion-icon name="remove-circle"></ion-icon>
-                </button>
-              </div>
-              <!-- downward arrow -->
-              <div class="multiple-arrow-down">
-                <ion-icon name="arrow-down"></ion-icon>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- placeholder bottom for arrow format in q5 -->
-        <div *ngIf="question.options && question.options.format=='arrow'">
-          <div class="multiple-arrow-placeholder">
-            <button ion-button block icon-right>
-              Final Sampling Unit
-            </button>
-          </div>
-          <div *ngIf="multipleTextValues.length>1" style="margin-top:1em; margin-left:15px" icon-left><ion-icon name="reorder"></ion-icon> Drag and drop the stages to change the order</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- label -->
-    <div *ngIf="question.type=='label'" class="question-label" style="margin:10px 0">
-      <span id="labelLabelText" #labelLabelText>{{question.label}}</span>
-    </div>
-  </div>
-
+<!-- repeat group questions -->
+<div *ngIf="question.type=='repeat'">
+  <h3>Repeat Group</h3>
+  <survey-repeat-group [question]="question" [formGroup]="formGroup"></survey-repeat-group>
 </div>
-<!-- <div  id="saveMessage" #saveMessage class="bookmark" >
-  <div>saved</div>
-</div> -->
+
+<!-- non-repeat group questions -->
+<div *ngIf="question.type!=repeat">
+  <div class="container" *ngIf="question && shouldShowQuestion(question)">
+    <div [formGroup]="formGroup" style="flex:1">
+      <!-- question labels -->
+      <div *ngIf="question.type!='label' && question.type!='repeat' && showLabel!=false" class="question-label">
+        <div class="question-number dark">{{question.controlName}}</div>
+        <div>
+          <span id="questionLabelText" #questionLabelText *ngIf="question.label" [innerHtml]="question.label"></span>
+        </div>
+
+      </div>
+      <!-- text area input -->
+      <div *ngIf="question.type=='text'">
+        <ion-item>
+          <textarea id="textAreaInput" #textAreaInput (focusout)="saveValue()" (keyup)="resize()" [formControlName]="question.controlName"></textarea>
+        </ion-item>
+      </div>
+      <!-- number input -->
+      <div *ngIf="question.type=='number'">
+        <div style="display: flex">
+          <!-- optional prefix -->
+          <div *ngIf="question.options && question.options.prefix" class="prefix">
+            {{question.options.prefix}}
+          </div>
+          <ion-item>
+            <ion-input type="number" [max]="question.options && question.options.max ? question.options.max : null" [min]="question.options && question.options.min ? question.options.min : null"
+              (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+      <!-- select -->
+      <div *ngIf="question.type=='select'">
+        <ion-item *ngIf="!showSelectOther">
+          <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [formControlName]="question.controlName">
+            <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
+            <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <!-- select with type other -->
+        <ion-item *ngIf="showSelectOther">
+          <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
+            placeholder="please specify"></ion-input>
+        </ion-item>
+      </div>
+      <!-- text multiple   -->
+      <div *ngIf="question.type=='textMultiple'">
+        <div style="display: flex; padding:5px">
+          <ion-item>
+            <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
+              type="text" [placeholder]="question.labelMultiple"></ion-input>
+          </ion-item>
+          <button ion-button (click)="addTextMultiple()">Add</button>
+        </div>
+        <!-- multiple list with optional drag-->
+        <div style="margin:10px 0">
+          <!-- placeholder bottom for arrow format in q5 -->
+          <div *ngIf="question.options && question.options.format=='arrow'" class="multiple-arrow-placeholder">
+            <button ion-button block icon-right class="placeholder-button"></button>
+            <div class="multiple-arrow-down">
+              <ion-icon name="arrow-down"></ion-icon>
+            </div>
+          </div>
+          <!-- drag drop for arrow format -->
+          <div [dragula]='"bag-one"' [dragulaOptions]="dragulaOptions" [dragulaModel]='multipleTextValues'>
+            <!-- ngfor with conditional reverse pipe -->
+            <div style="display:flex" *ngFor="let value of multipleTextValues, index as i" [attr.data-drag-handle]="question.options && question.options.dragDrop">
+              <!-- list format -->
+              <div class="multiple-list" *ngIf="!question.options || !question.options.format">
+                <span class="bullet"></span>
+                <span>{{value}}</span>
+                <span style="cursor: pointer">
+                  <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
+                </span>
+              </div>
+              <!-- arrow format -->
+              <div class="multiple-arrows" *ngIf="question.options && question.options.format=='arrow'">
+                <div style="display: flex" [attr.data-drag-handle]="question.options.dragDrop">
+                  <button ion-button block icon-left class="multiple-arrows-button">
+                    <ion-icon name="reorder" [attr.data-drag-handle]="question.options.dragDrop"></ion-icon>
+                    <span style="flex-basis:100%; padding-right:20px">{{value}}</span>
+                  </button>
+                  <button ion-button icon-only clear (click)="removeTextMultiple(i)">
+                    <ion-icon name="remove-circle"></ion-icon>
+                  </button>
+                </div>
+                <!-- downward arrow -->
+                <div class="multiple-arrow-down">
+                  <ion-icon name="arrow-down"></ion-icon>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- placeholder bottom for arrow format in q5 -->
+          <div *ngIf="question.options && question.options.format=='arrow'">
+            <div class="multiple-arrow-placeholder">
+              <button ion-button block icon-right>
+                Final Sampling Unit
+              </button>
+            </div>
+            <div *ngIf="multipleTextValues.length>1" style="margin-top:1em; margin-left:15px" icon-left>
+              <ion-icon name="reorder"></ion-icon> Drag and drop the stages to change the order</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- label -->
+      <div *ngIf="question.type=='label'" class="question-label" style="margin:10px 0">
+        <span id="labelLabelText" #labelLabelText>{{question.label}}</span>
+      </div>
+
+      <!-- custom types -->
+      <div *ngIf="question.type.indexOf('custom')>-1">
+        <question-base [question]="question" [formGroup]="formGroup"></question-base>
+      </div>
+    </div>
+
+  </div>
+  <!-- <div  id="saveMessage" #saveMessage class="bookmark" >
+    <div>saved</div>
+  </div> -->
+</div>
+
+
 
 <!-- fallback if no question provided -->
 <div class="container" *ngIf="!question">

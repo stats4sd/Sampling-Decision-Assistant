@@ -5,19 +5,33 @@
         of selection differently.
     </p>
     <p>The first question is to decide if you need wish to divide your population to produce
-    <glossary-link text="disaggregated estimates" slug="disaggregated-estimate"></glossary-link>
+        <glossary-link slug="disaggregated-estimate">disaggregated estimates</glossary-link>
     </p>
     <help-icon resource="testResource"></help-icon>
     <survey-question-group section="At what level do you need to report these results" [filter]="['q4.1']" [showLabel]=true></survey-question-group>
-    
+
     <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
-        <survey-question-group  section="At what level do you need to report these results" [filter]="['q4.2']" [showLabel]=true></survey-question-group>
+        <p>Specify the different reporting levels. Be as specific as possible (e.g. if you wish to produce seperate reports
+            for camps A and B, you will likely need to specify the level 'camp')</p>
+        <survey-question-group [showLabel]="false" section="At what level do you need to report these results" [filter]="['q4.2']"
+            [showLabel]=true></survey-question-group>
+        <p>Here is a list of your target population characteristics for reference If any of these also form reporting levels make sure they are included in the list above (e.g. if you plan to compare time periods 2017 and 2018, you may wish to specify 'year' as a reporting level)</p>
+        <ul>
+            <li *ngIf="form.value['q3.2']">Geographic:
+                <survey-reference controlName="q3.2"></survey-reference>
+            </li>
+            <li *ngIf="form.value['q3.3']">Population Group:
+                <survey-reference controlName="q3.3"></survey-reference>
+            </li>
+            <li *ngIf="form.value['q3.4']">Time:
+                <survey-reference controlName="q3.4"></survey-reference>
+            </li>
+        </ul>
     </div>
     <div *ngIf="form.value['q4.1']=='One estimate'">
-            <survey-question-group  section="At what level do you need to report these results" [filter]="['q4.3']" [showLabel]=true></survey-question-group>
+        <survey-question-group section="At what level do you need to report these results" [filter]="['q4.3']" [showLabel]=true></survey-question-group>
     </div>
-    <stage-complete *ngIf="form.value['q4.1'] && form.value['q4.2']"></stage-complete>
-    <stage-complete *ngIf="form.value['q4.1'] && form.value['q4.3']"></stage-complete>
+    <stage-complete stageNumber=4 [complete]="dataPrvdr.activeSurvey.stagesComplete[4]" *ngIf="form.value['q4.1'] || form.value['q4.2']"></stage-complete>
 
 
 </div>

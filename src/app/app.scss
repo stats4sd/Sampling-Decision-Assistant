@@ -157,7 +157,7 @@ body{
     font-size: 14px;
     text-align: left;
     line-height: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 .swiper-slide{
     display: block!important;
@@ -175,35 +175,6 @@ body{
 .swiper-slide:not(.swiper-slide-active) > div {
     display:none;
 }
-
-// ion-slides { height: 100%; }
-// .slide-zoom{
-//     height: 100%;
-//     display: flex;
-//     // overflow: scroll;
-//     flex-direction: column;
-// }
-// .slide-content{
-//     max-height: calc(100vh - 140px);
-//     //padding-top:10px;
-//     overflow: scroll;
-//     font-size: 14px;
-//     text-align: left;
-//     line-height: 18px;
-//     // interpolated variable
-//     width:calc(100% - 16px);
-//     max-width: calc(#{$max-app-width} - 64px)
-// }
-// .central-content{
-//     position: absolute;
-//     width:calc(100vw - 32px);
-//     max-width: calc(#{$max-app-width} - 32px);
-//     // max-width: 468px;
-//     margin-top:16px;
-//     max-height: calc(100vh - 164px)
-    
-// }
-// .swiper-slide{width:100%!important}
 
 // --------------------------------------------------
 // glossary
@@ -247,7 +218,7 @@ ion-card{
 }
 
 // --------------------------------------------------
-// app root centering
+// app root centering for wide display
 
 @media screen and (min-width:$max-app-width){
     body{
@@ -262,28 +233,17 @@ ion-card{
         border-radius: 10px;
         border: 1px solid white;
     }
-    // body{
-    //     background-color: color($colors,primary);
-    // }
-    // .app-root, .ion-page{
-    //     margin:5px auto;
-    //     position: inherit!important;
-    //     padding: 5px;
-    //     max-width: $max-app-width;
-    //     height:calc(100vh - 10px);
-    // }
-    // .app-root, .menu, .menu-inner{
-    //     left: calc(50% - #{$max-app-width}/2);
-    // }
     
     
     // modal fix for screen resizing
     .modal-wrapper{
         left: calc(50% - #{$max-app-width}/2);
-        top: calc(50% - #{$max-app-width}/2);
+        top: 0px;
         position: absolute;
         width: $max-app-width;
-        height: $max-app-width;
+        height: calc(100vh - 20px);
+        //margin-top:100px;
+
     }
 }
 // --------------------------------------------------

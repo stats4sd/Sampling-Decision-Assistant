@@ -166,7 +166,7 @@ export default
             "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", "controlName": "q4.2", "type": "textMultiple", "selectOptions": "", "label": "Please specify the levels of disaggregation, be as specific in your replies", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
+            "isQuestion": "TRUE", "controlName": "q4.2", "type": "textMultiple", "selectOptions": "", "label": "Please specify the levels of disaggregation, be specific in your replies", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
         },
         {
             "isQuestion": "TRUE", "controlName": "q4.3", "type": "text", "selectOptions": "", "label": "Provide a name or reference for the estimate", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:One estimate"
@@ -259,7 +259,7 @@ export default
             "controlName": "q5.3.4.1",
             "type": "select",
             "selectOptions": "Yes, No",
-            "label": "Do you need to use strata at this stage?",
+            "label": "Do you need to use stratification at this stage?",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.3.3, value:Sample",
             "labelMultiple": null
@@ -267,9 +267,9 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.2",
-            "type": "select",
+            "type": "custom-strata-select",
             "selectOptions": "Yes, No",
-            "label": "Did you consider your reporting requirements when you decided about the strata at this stage?",
+            "label": "What are the strata you wish to use during this stage?",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.3.4.1, value:Yes",
             "labelMultiple": null

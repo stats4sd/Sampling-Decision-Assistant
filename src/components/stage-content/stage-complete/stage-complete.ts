@@ -12,10 +12,10 @@ export class StageCompleteComponent extends StagePage {
 
   @Input('complete') complete: boolean
   @Input('disabled') disabled: boolean
-  @Input('stageNumber') stageNumber:number
-  @Input('text') text:string;
+  @Input('stageNumber') stageNumber: number
+  @Input('text') text: string;
   lastCall: number = 0
-  sectionValid:boolean = false
+  sectionValid: boolean = false
 
 
   verify(stageNumber: number, formValues) {
@@ -33,19 +33,20 @@ export class StageCompleteComponent extends StagePage {
         }
       }
       case s == 2: {
-        if (v['q2.4']) {  return true}
-        else{
+        if (v['q2.4']) { return true }
+        else {
           this.dataPrvdr.activeSurvey.stagesComplete[2] = false
           return false
         }
-        
+
       }
       case s == 3: {
+        // add patch for 3.5 value
         return true
       }
       case s == 4: {
-        console.log('evaluating section valid 4')
-        break
+        if (v['q4.2']) { return true }
+        if (v['q4.3']) { return true }
       }
       case s == 5: {
         console.log('evaluating section valid 5')
@@ -73,20 +74,37 @@ export class StageCompleteComponent extends StagePage {
     }
 
   }
-  nextStage(){
+  nextStage() {
     // push next stage page and remove currnet page from nav stack to allow direct nav back to home. Could also be done with slugs, will need
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history
-    let next:number = this.stage.number+1
-    this.navCtrl.push('StagePage',{stageID:'stage-'+next}).then(
-      _=>{
-        this.navCtrl.remove(this.navCtrl.length()-2)
+    let next: number = this.stage.number + 1
+    this.navCtrl.push('StagePage', { stageID: 'stage-' + next }).then(
+      _ => {
+        this.navCtrl.remove(this.navCtrl.length() - 2)
         //this.dataPrvdr.saveSurvey()
       }
 
     )
   }
-  toggleCheckbox(){
-    console.log('toggling checkbox',this.dataPrvdr.activeSurvey.stagesComplete[this.stage.number])
+  toggleCheckbox() {
+    console.log('toggling checkbox', this.dataPrvdr.activeSurvey.stagesComplete[this.stage.number])
+    if(this.stage.number==3){this._patchSection3()}
     this.dataPrvdr.saveSurvey()
+  }
+  _patchSection3() {
+    let text = this.form.value['q3.1']
+    if (this.form.value['q3.2']) {
+      text = text + " located in " + this.form.value['q3.2']
+    }
+    if (this.form.value['q3.3']) {
+      text = text + " during " + this.form.value['q3.3']
+    }
+    if (this.form.value['q3.4']) {
+      text = text + " and " + this.form.value['q3.4']
+    }
+    else { text = "" }
+    let patch = {}
+    patch['q3.5'] = text
+    this.form.patchValue(patch)
   }
 }

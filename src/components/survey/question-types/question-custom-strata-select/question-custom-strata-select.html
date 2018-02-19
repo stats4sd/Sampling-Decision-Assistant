@@ -1,0 +1,26 @@
+<div class="question-container">
+  <div style="display: flex;">
+    <div >
+      <p *ngIf="reportingLevels!=''">Select any of the reporting levels you defined to use as strata</p>
+      <ion-list *ngIf="reportingLevels!=''">
+        <ion-item *ngFor="let level of reportingLevels">
+          <ion-label>{{level}}</ion-label>
+          <ion-checkbox [(ngModel)]="selected[level]" (ionChange)="strataChanged()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngFor="let strata of customStrata">
+          <ion-label>{{strata}}</ion-label>
+          <ion-checkbox [(ngModel)]="selected[strata]" (ionChange)="strataChanged()"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div>
+      <p>Specify any additional strata you wish to use for this stage using the box below</p>
+      <div style="display: flex; padding:5px">
+        <ion-item>
+          <ion-input [(ngModel)]="strataInput" type="text"></ion-input>
+        </ion-item>
+        <button ion-button (click)="addStrata()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,13 +29,11 @@ export class Stage5Component extends StagePage {
     this.navCtrl.pop()
   }
   ngOnInit(){
-    console.log('stage 5 slides',this.frameBuilder)
     this._processValues()
 
   }
   _processValues(){
     // perform specific tasks related to displaying survey values in nice way
-    console.log('form values',this.form.value)
     if(this.form.value['q4.1']=='Disaggregated estimates'){
       // put disaggregated estimates back into array format for display
       try {
@@ -44,7 +42,6 @@ export class Stage5Component extends StagePage {
         
       }
     }
-    console.log('processed',this.processed)
   }
   nextStep(){
     this.frameBuilderIndex ++
@@ -63,7 +60,6 @@ export class Stage5Component extends StagePage {
     
   }
   buildStage(index,title){
-    console.log('building stage',index)
     let builderStage={
       index:index,
       title:title

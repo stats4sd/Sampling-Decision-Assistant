@@ -13,6 +13,10 @@ import { SurveyQuestionGroupComponent } from './survey-question-group/survey-que
 import { SurveyReferenceComponent } from './survey-reference/survey-reference';
 import { SurveyRepeatGroupComponent } from './survey-repeat-group/survey-repeat-group';
 import { SurveyLabelComponent } from './survey-label/survey-label';
+// additional custom question types
+import { QuestionBaseComponent } from './question-types/question-base/question-base';
+import { QuestionCustomStrataSelectComponent } from './question-types/question-custom-strata-select/question-custom-strata-select';
+
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -22,6 +26,8 @@ import { SurveyLabelComponent } from './survey-label/survey-label';
         SurveyReferenceComponent,
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
+        QuestionBaseComponent,
+        QuestionCustomStrataSelectComponent
     ],
     imports: [
         IonicModule,
@@ -35,6 +41,8 @@ import { SurveyLabelComponent } from './survey-label/survey-label';
         SurveyReferenceComponent,
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
+        QuestionBaseComponent,
+        QuestionCustomStrataSelectComponent
     ]
 })
 export class SurveyComponentsModule { }

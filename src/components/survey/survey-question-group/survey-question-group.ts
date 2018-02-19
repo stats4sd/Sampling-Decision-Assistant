@@ -20,7 +20,6 @@ export class SurveyQuestionGroupComponent {
   // array of questions to show in repeat group
   @Input() set repeatFilter(repeatFilter: string[]){
     this._repeatFilterList = repeatFilter
-    console.log('repeat filter list',this._repeatFilterList)
   }
   @Input() set section(section: string) {
     // survey subsection questions
@@ -55,9 +54,8 @@ export class SurveyQuestionGroupComponent {
 
   constructor(private formPrvdr: FormProvider) {
     // bind to master formgroup and questions
-    this.formGroup = this.formPrvdr.getFormGroup()
+    this.formGroup = this.formPrvdr.formGroup
     this.allQuestions = this.formPrvdr.allQuestions
-    console.log('formgroup', this.formGroup)
     this.groupQuestions = this.allQuestions
   }
 
@@ -78,7 +76,6 @@ export class SurveyQuestionGroupComponent {
       })
     }
     this.groupQuestions = filtered
-    console.log('group questions', this.groupQuestions)
   }
 
   getRepeatGroupTitle(question, index) {

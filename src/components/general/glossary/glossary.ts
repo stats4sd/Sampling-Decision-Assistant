@@ -35,7 +35,7 @@ export class GlossaryComponent {
       'representative-sample', 'non-representative-sample'],
       2: [],
       3: [],
-      4: [],
+      4: ['disaggregate-estimates'],
       5: [],
       6: []
     }

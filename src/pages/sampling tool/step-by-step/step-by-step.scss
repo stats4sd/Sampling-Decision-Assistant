@@ -1,5 +1,9 @@
 page-step-by-step {
     // most in app.scss
+    .button[disabled]{
+        opacity: 0.3;
+        color:#bcbcbc
+    }
     .card{
         max-width: 300px;
         margin:10px 0 0 10px;

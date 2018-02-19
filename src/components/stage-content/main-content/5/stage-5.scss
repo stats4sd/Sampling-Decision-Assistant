@@ -37,21 +37,6 @@ stage-5 {
         text-align: left;
         
     }
-    // builder
-    .builder-stage-container, .builder-container{
-        display: flex;
-        flex-direction: column;
-        max-width: 200px;
-        text-align: center;
-    }
-    .builder-container{
-        margin:auto;
-    }
-    .builder-arrow-down{
-        font-size: x-large;
-    }
-    .reference-text{
-        padding:0!important
-    }
+    
 
 }

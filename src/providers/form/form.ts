@@ -30,61 +30,40 @@ export class FormProvider {
   getSurveyValue(key) {
     return this.formGroup.value[key]
   }
-  initFormValues(values) {
+  initFormValues(values,formGroup?:FormGroup) {
+    if(!formGroup){formGroup=this.formGroup}
     // set values, building controls as required ( in simple mode, currently skipping any validators)
     Object.keys(values).forEach(key => {
       let val = values[key]
       // load string values
-      if (typeof (val) == "string") {
-        let patch = {}
-        patch[key] = val
-        this.formGroup.patchValue(patch)
-      }
+      let patch = {}
+      patch[key] = val
+      if (typeof (val) == "string") {formGroup.patchValue(patch)}
+      if (typeof (val) == "number") {formGroup.patchValue(patch)}
       // handle arrays
       else if (val instanceof Array) {
-        if (typeof val[0] == "string") {
-          // handle array values stored as strings (e.g. lists)
-          let patch = {}
-          patch[key] = val
-          this.formGroup.patchValue(patch)
-        }
+        // handle array values stored as strings (e.g. lists)
+        if (typeof val[0] == "string") {formGroup.patchValue(patch)}
         else {
           // handle values stores as objects (e.g. repeat groups)
           // create controls for repeat group questions
           let question = this.allQuestions.filter(q => { return q.controlName == key })[0]
           let repeatQs = this._generateRepeatQuestions(question)
+          // build repeat formgroup
+          let repeatGroup = this._generateQuestionForm(repeatQs)
+          let repeatGroupArray=[]
           // update value on repeatQs
-          for (let repeat of val) {
-            repeatQs.map(q => {
-              q.value = repeat[q.controlName]
-            })
-            const control = <FormArray>this.formGroup.controls[key]
-            control.push(this._buildRepeatGroup(repeatQs))
+          for (let repeatValues of val) {
+            let group = this.initFormValues(repeatValues,repeatGroup)
+            repeatGroupArray.push(group)
           }
+          formGroup.setControl(key, this.fb.array(repeatGroupArray))
         }
-
       }
     })
-    console.log('formgroup', this.formGroup)
+    console.log('formgroup set',formGroup)
+    return formGroup
   }
-
-  getFormGroup() {
-    if (this.formGroup) { return this.formGroup }
-    else {
-      this.formGroup = this._generateQuestionForm(questionMeta)
-      return this.formGroup
-    }
-  }
-  // getQuestions() {
-  //   // return questions pre-processed to remove repeat groups and other unwanted features
-  //   if (this.groupQuestions) { return this.groupQuestions }
-  //   else {
-  //     this._generateQuestionForm(questionMeta)
-  //     return this.groupQuestions
-  //   }
-  // }
-
-
 
   _customUpdateTriggers(update) {
     // things that don't fall naturally into template
@@ -109,7 +88,6 @@ export class FormProvider {
     // filter out invalid questions (keep non-questions as may be labels or feedback)
     questions = questions.filter(q => {
       if (!q.controlName || q.controlName == "") { return false }
-      // if(q.isQuestion!="TRUE"){return false}
       return true
     })
     // generate conditions
@@ -128,18 +106,20 @@ export class FormProvider {
         displayQs.push(q)
       }
       else {
+        if (!q.value) { q.value = "" }
+        questionGroup[q.controlName] = q.value
         // skip questions included in repeat groups unless repeat group
-        if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
-          if (!q.value) { q.value = "" }
-          displayQs.push(q)
-          // omit non question from form (but keep in display)
-          if (q.isQuestion == "TRUE") {
-            questionGroup[q.controlName] = q.value
-          }
-        }
+        // if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
+        //   if (!q.value) { q.value = "" }
+        //   displayQs.push(q)
+        //   // omit non question from form (but keep in display)
+        //   if (q.isQuestion == "TRUE") {
+        //     questionGroup[q.controlName] = q.value
+        //   }
+        // }
       }
     });
-    if (!repeatGroup) { this.groupQuestions = displayQs }
+    //if (!repeatGroup) { this.groupQuestions = displayQs }
     // remove label and other parts not interested in final formgroup
     return this.fb.group(questionGroup)
 
@@ -151,16 +131,13 @@ export class FormProvider {
     let repeatQs: any = this.allQuestions.filter(q => {
       // match 3.2.1 and 3.2.2 to 3.2 group
       if (q.controlName.indexOf(groupPrefix) > -1 && q.controlName != groupPrefix) {
-        this.repeatChildren.push(q.controlName)
+        //this.repeatChildren.push(q.controlName)
         return true
       }
     })
     // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
     this.events.unsubscribe('arrayChange:' + question.selectOptions)
-    console.log('subscribing array change', question.selectOptions)
     this.events.subscribe('arrayChange:' + question.selectOptions, update => {
-      console.log('array change:' + question.selectOptions, update)
-      console.log('pushing repeat to ' + question.controlName)
       const control = <FormArray>this.formGroup.controls[groupPrefix]
       if (update.type == "push") {
         // push a repeat to the question group
@@ -175,7 +152,6 @@ export class FormProvider {
         }
         if (!update.empty) { control.push(this._buildRepeatGroup(repeatQs)) }
       }
-      console.log('formgroup', this.formGroup)
     })
     return repeatQs
   }
