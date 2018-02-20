@@ -11,7 +11,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="formGroup.value['q5.3']">
   <p>You said you need a stage where you sample
     <strong>{{builderStage.title}}</strong>. This section will help you to make decisions about how to select the [SUSi]</p>
   <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.1']" [repeatIndex]="builderStage.index"></survey-question-group>
@@ -23,7 +23,7 @@
     <p>Stratification: Some explanation will be written about what it is with pointers to resources and the reasons why stratification
       is used (reporting and efficiency) create some space for the explanation. Remember that when using stratification the
       process of sampling is repeated independently within each stratum</p>
-    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.1','q5.3.4.2','q5.3.4.3']" [repeatIndex]="builderStage.index"></survey-question-group>
+    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.1','q5.3.4.2','q5.3.4.3']" [repeatIndex]="builderStage.index" [repeatID]="builderStage.title"></survey-question-group>
 
   </div>
   <p *ngIf="formGroup.value['q5.3'][builderStage.index]['q5.3.3']=='All'">

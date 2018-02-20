@@ -30,38 +30,37 @@ export class FormProvider {
   getSurveyValue(key) {
     return this.formGroup.value[key]
   }
-  initFormValues(values,formGroup?:FormGroup) {
-    if(!formGroup){formGroup=this.formGroup}
+  getQuestion(controlName) {
+    for (let question of this.allQuestions) {
+      if (question.controlName == controlName) { return question }
+    }
+  }
+  initFormValues(values, formGroup?: FormGroup) {
+    if (!formGroup) { formGroup = this.formGroup }
     // set values, building controls as required ( in simple mode, currently skipping any validators)
     Object.keys(values).forEach(key => {
       let val = values[key]
       // load string values
       let patch = {}
       patch[key] = val
-      if (typeof (val) == "string") {formGroup.patchValue(patch)}
-      if (typeof (val) == "number") {formGroup.patchValue(patch)}
+      if (typeof (val) == "string") { formGroup.patchValue(patch) }
+      if (typeof (val) == "number") { formGroup.patchValue(patch) }
       // handle arrays
       else if (val instanceof Array) {
         // handle array values stored as strings (e.g. lists)
-        if (typeof val[0] == "string") {formGroup.patchValue(patch)}
+        if (typeof val[0] == "string") { formGroup.patchValue(patch) }
         else {
-          // handle values stores as objects (e.g. repeat groups)
-          // create controls for repeat group questions
-          let question = this.allQuestions.filter(q => { return q.controlName == key })[0]
-          let repeatQs = this._generateRepeatQuestions(question)
-          // build repeat formgroup
-          let repeatGroup = this._generateQuestionForm(repeatQs)
-          let repeatGroupArray=[]
-          // update value on repeatQs
-          for (let repeatValues of val) {
-            let group = this.initFormValues(repeatValues,repeatGroup)
-            repeatGroupArray.push(group)
-          }
-          formGroup.setControl(key, this.fb.array(repeatGroupArray))
+          val.forEach(v => {
+            // handle values stores as objects (e.g. repeat groups)
+            // simply pushes nested values as new control group (omitting any validators etc.)
+            let arrayControl: any = formGroup.controls[key]
+            let group: FormGroup = this.fb.group(v)
+            arrayControl.push(group)
+          })
+
         }
       }
     })
-    console.log('formgroup set',formGroup)
     return formGroup
   }
 
@@ -109,14 +108,14 @@ export class FormProvider {
         if (!q.value) { q.value = "" }
         questionGroup[q.controlName] = q.value
         // skip questions included in repeat groups unless repeat group
-        // if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
-        //   if (!q.value) { q.value = "" }
-        //   displayQs.push(q)
-        //   // omit non question from form (but keep in display)
-        //   if (q.isQuestion == "TRUE") {
-        //     questionGroup[q.controlName] = q.value
-        //   }
-        // }
+        if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
+          if (!q.value) { q.value = "" }
+          displayQs.push(q)
+          // omit non question from form (but keep in display)
+          if (q.isQuestion == "TRUE") {
+            questionGroup[q.controlName] = q.value
+          }
+        }
       }
     });
     //if (!repeatGroup) { this.groupQuestions = displayQs }
@@ -126,7 +125,10 @@ export class FormProvider {
   }
 
   _generateRepeatQuestions(question) {
-    // takes a question prefix and groups all sub questions into a repeat group
+    // get list of questions that make up repeat group. 
+    //2 methods - matches all controlnames with same prefix (works but wouldn't allow nested repeat)
+    // or add 'repeatGroup' meta data to question
+    // **** currently using first, should change to second ***
     let groupPrefix = question.controlName
     let repeatQs: any = this.allQuestions.filter(q => {
       // match 3.2.1 and 3.2.2 to 3.2 group

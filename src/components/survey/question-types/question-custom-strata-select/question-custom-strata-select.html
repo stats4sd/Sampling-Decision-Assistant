@@ -1,7 +1,8 @@
 <div class="question-container">
   <div style="display: flex;">
-    <div >
+    <div>
       <p *ngIf="reportingLevels!=''">Select any of the reporting levels you defined to use as strata</p>
+      <p *ngIf="reportingLevels==''">No reporting levels specified</p>
       <ion-list *ngIf="reportingLevels!=''">
         <ion-item *ngFor="let level of reportingLevels">
           <ion-label>{{level}}</ion-label>

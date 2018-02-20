@@ -1,19 +1,50 @@
-<div>
-    <h3>Survey Repeat Group</h3>
-    <div>ID: {{repeatID}}</div>
-    <div>Index: {{repeatIndex}}</div>
-    <div>Question Group: {{questionGroup}}</div>
-
-    <h3>Questions</h3>
-    <div [formGroup]="formGroup">
-        <div [formArrayName]="questionGroup">
-            <div *ngFor="let repeat of formGroup.controls[questionGroup].controls; let i=index">
-                <div>Repeat index: {{i}}</div>
-                <!-- <survey-question-group [repeatGroup]="questionGroup" [formGroup]="formGroup.controls[questionGroup].controls[i]"></survey-question-group> -->
-            </div>
-
+<!-- <div [formGroup]="formGroup">
+    <div [formArrayName]="question.controlName"> -->
+<div [ngSwitch]="displayMode">
+    <!-- <div *ngSwitchCase="'individual'" [formGroupName]="repeatIndex"> -->
+    <div *ngSwitchCase="'individual'">
+        <div [formGroup]="formGroup.controls[question.controlName].controls[repeatIndex]">
+            <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion"></survey-question>
         </div>
     </div>
-
-
+    <div *ngSwitchDefault>
+        <div *ngFor="let repeat of formGroup.controls[question.controlName].controls; let i=index">
+            <!-- <div [formGroupName]="i"> -->
+            <div [formGroup]="formGroup.controls[question.controlName].controls[i]">
+                <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion"></survey-question>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- </div>
+</div> -->
+
+<!-- <div [ngSwitch]="displayMode">
+    <div *ngSwitchCase="'individual'">
+        <div>Survey Repeat Group: {{repeatIndex}}</div>
+        <survey-question *ngFor="let question of repeatQuestions" (onValueChange)="valueUpdated(question.controlName,$event)" [question]="question"></survey-question>
+    </div>
+</div> -->
+
+<!-- single display -->
+<!-- <div *ngSwitchCase="'individual'">
+                <div *ngFor="let repeat of formGroup.controls['testArray'].controls; let i=index">
+                    <div [formGroupName]="i">{{i}}</div>
+                </div>
+            </div> -->
+<!-- default display (show all repeat groups in list) -->
+<!-- <div *ngSwitchDefault>
+                <div *ngFor="let repeatGroup of formGroup.controls[question.controlName].controls; let i = index">
+                    <survey-question-group [formGroup]="repeatGroup" [questions]="repeatQuestions" [filter]="repeatFilter"></survey-question-group>
+                </div>
+            </div> -->
+
+
+<!-- <div [ngSwitch]="displayMode">
+    <div *ngSwitchCase="'individual'">
+        <div>Survey Repeat Group: {{repeatIndex}}</div>
+        <survey-question *ngFor="let question of repeatQuestions" (onValueChange)="valueUpdated($event)" [question]="question"></survey-question>
+    </div>
+    <div *ngSwitchDefault>
+    </div>
+</div> -->

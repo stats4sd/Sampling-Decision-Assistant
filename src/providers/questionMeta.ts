@@ -227,6 +227,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.1",
+            "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Yes, No",
             "label": "Do you have a list of all [SUSi] in this stage?",
@@ -237,6 +238,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.2",
+            "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Yes - proceed, No - highlight the disadvantages and suggest ways of updating it",
             "label": "Is the list as complete and up-to-date as possible?",
@@ -247,6 +249,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.3",
+            "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Sample, All",
             "label": "Are you planning to take a sample of [SUSi] or are you planning to cover every single [SUSi] in this stage?",
@@ -257,6 +260,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.1",
+            "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Yes, No",
             "label": "Do you need to use stratification at this stage?",
@@ -267,6 +271,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.2",
+            "repeatGroup":"q5.3",
             "type": "custom-strata-select",
             "selectOptions": "Yes, No",
             "label": "What are the strata you wish to use during this stage?",
@@ -277,6 +282,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.3",
+            "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Simple random sampling, Probability proportional to size",
             "label": "<p>Within each strata, are you planning to select the SUSi using<br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
@@ -346,15 +352,4 @@ export default
         //     "labelMultiple": null
         // },
         // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.4",
-        //     "type": "repeat",
-        //     "selectOptions": "q4.2",
-        //     "label": "Show the list of possible reporting levels to and for each allow the selection of the level as a criteria for stratification. Roughly as follows",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
-        //     "labelMultiple": null
-        // },
-        // { "isQuestion": "TRUE", "controlName": "q5.4.1", "type": "select", "selectOptions": "Yes, No", "label": "Level will be used as a stratification factor?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null },
-        // { "isQuestion": "TRUE", "controlName": "q5.4.2", "type": "select", "selectOptions": "Yes, No", "label": "Are there any groups of sampling units at this stage that should be grouped together to help in controlling variability?", "section": "Selecting the sampling units", "condition": "", "labelMultiple": null }
     ]

@@ -17,8 +17,16 @@ export class StageCompleteComponent extends StagePage {
   lastCall: number = 0
   sectionValid: boolean = false
 
+  ngOnInit(){
+    // subscribe to form value changes to mark when section complete
+    this.formPrvdr.formGroup.valueChanges.subscribe(
+      v=>{this.checkSectionValid(v)}
+    )
+  }
+
 
   verify(stageNumber: number, formValues) {
+    console.log('verifying',formValues, stageNumber)
     const s = stageNumber
     // run verfication checks to see if form valid. takes current form values as input
     const v = formValues
@@ -69,11 +77,11 @@ export class StageCompleteComponent extends StagePage {
     if (now - this.lastCall > 300) {
       this.lastCall = now
       setTimeout(() => {
-        this.sectionValid = this.verify(this.stage.number, v)
+        this.sectionValid = this.verify(this.stage.number, this.formPrvdr.formGroup.value)
       }, 100);
     }
-
   }
+
   nextStage() {
     // push next stage page and remove currnet page from nav stack to allow direct nav back to home. Could also be done with slugs, will need
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history

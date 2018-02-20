@@ -1,8 +1,8 @@
-// not currently used as all repeat group logic handled by survey-question-group
-// but might in future to help make tidier
+// repeat group binding similar to survey-group bindings however manually update correct form controls
+// as binding does not always get the correct index
 
 import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators, FormArrayName, FormGroupName } from '@angular/forms';
 import { FormProvider } from '../../../providers/form/form'
 
 @Component({
@@ -11,12 +11,52 @@ import { FormProvider } from '../../../providers/form/form'
 })
 export class SurveyRepeatGroupComponent {
 
-  @Input('repeatIndex') repeatIndex:string;
-  @Input('repeatID') repeatID:string;
-  @Input('questionGroup') questionGroup:string
+  @Input('repeatIndex') repeatIndex: number;
+  @Input('repeatFilter') repeatFilter: string[]
+  @Input('repeatID') repeatID: string;
+  @Input('question') question: any
 
-  formGroup = this.formPrvdr.formGroup
-  constructor(private formPrvdr:FormProvider) {  }
+  repeatQuestions: any;
+  displayMode: string;
+  formGroup: FormGroup
+
+  constructor(private formPrvdr: FormProvider, private fb: FormBuilder) {
+    this.formGroup = this.formPrvdr.formGroup
+  }
+
+  get repeatArray(): FormArray {
+    // short method to return formArray control from main formGroup on get request
+    let array = this.formGroup.controls[this.question.controlName] as FormArray;
+    console.log('array', array)
+    return array
+  };
+
+  ngOnInit() {
+    this.getRepeatQuestions()
+    if (this.repeatIndex > -1) { this.displayMode = 'individual' }
+    if (!this.formGroup) { this.formGroup = this.formPrvdr.formGroup }
+  }
+
+  getRepeatQuestions() {
+    let repeatQuestions = this.formPrvdr._generateRepeatQuestions(this.question)
+    if (this.repeatFilter) {
+      repeatQuestions = repeatQuestions.filter(q => {
+        return this.repeatFilter.indexOf(q.controlName) > -1
+      })
+    }
+    console.log('repeat questions', repeatQuestions)
+    this.repeatQuestions = repeatQuestions
+  }
+
+  // valueUpdated(repeatControlName, value) {
+  //   console.log('value updated', value)
+  //   console.log('patching index', this.repeatIndex)
+  //   let patch = {}
+  //   patch[repeatControlName] = value
+  //   let formArray: any = this.formGroup.controls[this.question.controlName]
+  //   formArray.controls[this.repeatIndex].patchValue(patch)
+  //   console.log('values', this.formGroup.value)
+  // }
 
 
 }

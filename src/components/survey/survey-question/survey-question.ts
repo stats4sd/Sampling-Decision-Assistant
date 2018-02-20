@@ -1,34 +1,52 @@
 /* Takes a question and binds to appropriate input mechanism 
-Additional features:
-- auto-save on focusout or change for all elements
-- automatic resize for textareas
+utilises custom form binding, find out more here:
+// https://netbasal.com/angular-custom-form-controls-made-easy-4f963341c8e2
+// http://anasfirdousi.com/how-to-make-custom-angular-components-form-enabled-ngModel-enabled.html
+// http://blog.rangle.io/angular-2-ngmodel-and-custom-form-components/
 */
 
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef, forwardRef } from '@angular/core';
+import { FormGroup, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
 import { FormProvider } from '../../../providers/form/form'
 import { DragulaService } from 'ng2-dragula';
+import { DataProvider } from '../../../providers/data/data';
+
+// settings to enable a model binding
+export const VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => SurveyQuestionComponent),
+  multi: true,
+};
 
 @Component({
   selector: 'survey-question',
-  templateUrl: 'survey-question.html'
+  templateUrl: 'survey-question.html',
+  providers: [VALUE_ACCESSOR]
 })
-export class SurveyQuestionComponent {
+export class SurveyQuestionComponent implements ControlValueAccessor {
   @Input('question') question;
-  @Input('formGroup') formGroup: FormGroup;
-  @Input('showLabel') showLabel: boolean;;
+  @Input('showLabel') showLabel: boolean;
+  @Input() set controlName(controlName: string) { this.question = this.formPrvdr.getQuestion(controlName) }
+  @Output() onValueChange = new EventEmitter<any>();
   @ViewChild('textAreaInput') textAreaInput: ElementRef
   @ViewChild('saveMessage') saveMessage: ElementRef
+
+  value: any;
+  propagateChange: any = () => { };
+  showQuestion: boolean = true
+
   questionKey: string
+
   selectOtherValue: any = "";
   selectOptionsArray: string[];
   initialScrollHeight: number;
   showSelectOther: boolean = false;
   originalLabel: string;
   dynamicText: any = {};
+  trackingChanges:boolean=false;
   multipleTextInput: any = ""
   multipleTextValues: any = [];
   valueSaved: boolean = false;
@@ -39,38 +57,164 @@ export class SurveyQuestionComponent {
     },
   }
 
-  constructor(private cdr: ChangeDetectorRef, private events: Events, private formPrvdr: FormProvider, private dragulaService: DragulaService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private events: Events,
+    public formPrvdr: FormProvider,
+    private dragulaService: DragulaService) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
   }
+  // *****************************************************
+  // functions required to allow model binding 
+  //******************************************************
 
-  ngAfterViewInit() {
+  writeValue(value: any) {
+    // method auto bound for ng-model write
+    if (value) { this.value = value }
+  }
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: () => void): void { }
+
+  // generic change function, sometimes uses value from bound ngmodel, sometimes from change function calls
+  valueUpdated(value?, e?) {
+    if (!value) { value = this.value }
+    if (e) { value = e.target.value }
+    // propagate value update for use in ngModel or form binding
+    this.propagateChange(value);
+    // notify change through emitter also for tracking in repeat group questions
+    this.onValueChange.emit(value)
+
+    //***note - should add form value change subscribers */
+    // e.g. this.formGroup.get(controlName).valueChanges.subscribe( x => console.log(x));
+    // publish key-value pair in event picked up by data provider to update
+    // let update = { controlName: this.question.controlName, value: value, section: this.question.section }
+    // this.events.publish('valueUpdate', update)
+    // this.events.publish('valueUpdated:' + update.controlName, update)
+    // console.log('values',this.formPrvdr.formGroup.value)
+  }
+
+  // **********************************************************************************************
+  // specific functions for question types which could be later moved to individual components
+  //***********************************************************************************************
+
+  ngOnInit() {
+    // check if should show question
+    this.showQuestion = this.checkQuestionConditions(this.question)
     this.questionKey = this.question.controlName
-    this._generateSelectOptions()
-    this._generateMultipleValues()
     this._prepareDynamicText()
-    // run any custom onInit triggers
+    // // run any custom onInit triggers
     if (this.question.triggers && this.question.triggers.trigger == "onInit") { this._runCustomTriggers() }
     this.cdr.detectChanges()
-    // set dragula drop interaction (ideally should be split into seperate subcomponent extending question base)
-    if (this.question.options && this.question.options.dragDrop) {
-      this._addDragDropSubscriber()
+    // apply specific init for question types
+    if (this.question.type == "select") { this.generateSelectOptions() }
+    if (this.question.type == "textMultiple") {
+      this._generateMultipleValues()
+      // set dragula drop interaction (ideally should be split into seperate subcomponent extending question base)
+      if (this.question.options && this.question.options.dragDrop) {
+        this._addDragDropSubscriber()
+      }
     }
   }
+
+  // ************** select **************************************************
+  selectUpdated(value) {
+    if (value == "Other (please specify)") {
+      this.showSelectOther = true
+    }
+    else {
+      this.valueUpdated(value)
+    }
+  }
+  generateSelectOptions() {
+    // parse select options to array
+    if (this.question.selectOptions != "") {
+      let options
+      try {
+        options = this.question.selectOptions.split(",")
+      } catch (error) {
+        options = []
+      }
+      // trim whitespace at start if present
+      options = options.map(el => { return el.trim() })
+      this.selectOptionsArray = options
+      // if value not in options populate
+      let value = this.formPrvdr.getSurveyValue(this.question.controlName)
+      if (value != "") {
+        if (this.selectOptionsArray.indexOf(value) == -1) {
+          // this.showSelectOther=true
+          this.selectOtherValue = value
+        }
+      }
+    }
+  }
+
+  // ************** text multiple*********************************************
   _addDragDropSubscriber() {
     // automatically save form values when rearranged using drag drop. Push final sampling unit back to array and reverse 
     this.dragulaService.dropModel.subscribe(_ => {
       let v = []
-      this.multipleTextValues.forEach(val=>v.push(val))
+      this.multipleTextValues.forEach(val => v.push(val))
       v.push('Final Sampling Unit')
-      console.log('v', v)
       let patch = {}
       patch[this.question.controlName] = v
-      this.formGroup.patchValue(patch)
+      this.formPrvdr.formGroup.patchValue(patch)
       this._generateMultipleValues()
-      console.log('formgroup', this.formGroup)
     })
-
   }
+  _generateMultipleValues() {
+    if (this.question.type == "textMultiple") {
+      let value = this.formPrvdr.getSurveyValue(this.questionKey)
+      if (value == undefined || value == "" || !value == null) {
+        value = []
+      }
+      // remove initial FSU entry if available as added on later
+      let i = value.indexOf('Final Sampling Unit')
+      if (i > -1) {
+        value.splice(i, 1)
+      }
+      this.multipleTextValues = value
+    }
+  }
+  addTextMultiple() {
+    // push response to array
+    this.multipleTextValues.unshift(this.multipleTextInput)
+    this.multipleTextInput = "";
+    let patch = {}
+    patch[this.questionKey] = this.multipleTextValues
+    this.formPrvdr.formGroup.patchValue(patch)
+    // notify for anything trying to monitor changes to array (e.g. repeat groups)
+    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'push', value: this.multipleTextValues })
+  }
+  removeTextMultiple(index) {
+    this.multipleTextValues.splice(index, 1)
+    let patch = {}
+    patch[this.questionKey] = this.multipleTextValues
+    this.formPrvdr.formGroup.patchValue(patch)
+    // notify for anything trying to monitor changes to array (e.g. repeat groups)
+    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues })
+  }
+  updateSelectOther(e) {
+    let value = e.target.value
+    let patch = {}
+    let key = this.question.controlName
+    patch[key] = value
+    this.formPrvdr.formGroup.patchValue(patch)
+    if (value == "") {
+      this.showSelectOther = false
+    }
+  }
+
+
+
+
+  // **********************************************************************************************
+  // Other functions
+  //***********************************************************************************************
+
+
+
   updateLabel(key) {
     // updates dynamic text labels if relevant 
     if (this.dynamicText[key]) {
@@ -85,19 +229,10 @@ export class SurveyQuestionComponent {
             instances[i].innerHTML = value;
         }
       }
-
     }
     console.log('label updated')
   }
 
-  saveValue() {
-    // save value on update (do not exclude "" in case user might have deleted a value)
-    let value = this.formGroup.value[this.question.controlName]
-    let update = { controlName: this.question.controlName, value: value, section: this.question.section }
-    // publish key-value pair in event picked up by data provider to update
-    this.events.publish('valueUpdate', update)
-    this.events.publish('valueUpdated:' + update.controlName, update)
-  }
 
   _runCustomTriggers() {
     // fires custom triggers saved in the question object
@@ -115,48 +250,12 @@ export class SurveyQuestionComponent {
       console.log('setting value', controlName, value)
       let patch = {}
       patch[controlName] = value
-      this.formGroup.patchValue(patch)
+      this.formPrvdr.formGroup.patchValue(patch)
     })
   }
 
 
 
-  _generateSelectOptions() {
-    // parse select options to array
-    if (this.question.selectOptions != "") {
-      let options
-      try {
-        options = this.question.selectOptions.split(",")
-      } catch (error) {
-        options = []
-      }
-      // trim whitespace at start if present
-      options = options.map(el => { return el.trim() })
-      this.selectOptionsArray = options
-      // if value not in options populate
-      let value = this.formGroup.value[this.question.controlName]
-      if (value != "") {
-        if (this.selectOptionsArray.indexOf(value) == -1) {
-          // this.showSelectOther=true
-          this.selectOtherValue = value
-        }
-      }
-    }
-  }
-  _generateMultipleValues() {
-    if (this.question.type == "textMultiple") {
-      let value = this.formPrvdr.getSurveyValue(this.questionKey)
-      if (value == undefined || value == "" || !value == null) {
-        value = []
-      }
-      // remove initial FSU entry if available as added on later
-      let i = value.indexOf('Final Sampling Unit')
-      if(i>-1){
-       value.splice(i,1)
-      }
-      this.multipleTextValues = value
-    }
-  }
   _prepareDynamicText() {
     // search through text string for instances of variable references contained between {{ }}
     // NOTE, could be improved via event listeners for updates? (and possibly change event listener to announce which question changed)
@@ -174,7 +273,7 @@ export class SurveyQuestionComponent {
         // populate match text and current val. get current val from provider in case it is outside of current question group
         this.dynamicText[val] = {
           matchText: matches.text[i],
-          currentValue: this.formGroup.value[val]
+          currentValue: this.formPrvdr.formGroup.value[val]
         }
         // apply css
         let el = document.getElementById(this.question.type + 'LabelText')
@@ -188,48 +287,11 @@ export class SurveyQuestionComponent {
     }
 
   }
-  selectUpdated() {
-    let value = this.formGroup.value[this.question.controlName]
-    if (value == "Other (please specify)") {
-      this.showSelectOther = true
-    }
-    else {
-      this.saveValue()
-    }
-  }
 
-  updateSelectOther(e) {
-    let value = e.target.value
-    let patch = {}
-    let key = this.question.controlName
-    patch[key] = value
-    this.formGroup.patchValue(patch)
-    this.saveValue()
-    if (value == "") {
-      this.showSelectOther = false
-    }
-  }
 
-  addTextMultiple() {
-    // push response to array
-    this.multipleTextValues.unshift(this.multipleTextInput)
-    this.multipleTextInput = "";
-    let patch = {}
-    patch[this.questionKey] = this.multipleTextValues
-    this.formGroup.patchValue(patch)
-    // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'push', value: this.multipleTextValues })
-    this.saveValue()
-  }
-  removeTextMultiple(index) {
-    this.multipleTextValues.splice(index, 1)
-    let patch = {}
-    patch[this.questionKey] = this.multipleTextValues
-    this.formGroup.patchValue(patch)
-    // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues })
-    this.saveValue()
-  }
+
+
+
 
   resize() {
     // increase height on text area automatically except when first entry row (looks jumpy otherwise as 10px increase on first char)
@@ -242,28 +304,36 @@ export class SurveyQuestionComponent {
     }
 
   }
-  shouldShowQuestion(question) {
+  checkQuestionConditions(question) {
     // test logic from condition property against form
     // currently implemented for specific previous values
+    let formGroup = this.formPrvdr.formGroup
     if (question.hasOwnProperty('conditionJson')) {
       let condition = question.conditionJson
-      if (this.formGroup && this.formGroup.value) {
-        if (this.formGroup.value.hasOwnProperty(condition.controlName)) {
+        if (formGroup.value.hasOwnProperty(condition.controlName)) {
+          this._trackChanges()
           if (condition.type == "prerequisite") {
-            if (this.formGroup.value[condition.controlName] && this.formGroup.value[condition.controlName] != '') {
+            if (formGroup.value[condition.controlName] && formGroup.value[condition.controlName] != '') {
               return true
             }
           }
           if (condition.type == "value") {
-            if (this.formGroup.value[condition.controlName] == condition.value) {
+            if (formGroup.value[condition.controlName] == condition.value) {
               return true
             }
           }
           else { return false }
         }
-      }
-      return false
     }
     return true
+  }
+  _trackChanges(control?){
+    // subscribe to form changes to recheck show question condition
+    if(!this.trackingChanges){
+      this.formPrvdr.formGroup.valueChanges.subscribe(
+        v=>{this.showQuestion = this.checkQuestionConditions(this.question)
+      }
+      )
+    }
   }
 }

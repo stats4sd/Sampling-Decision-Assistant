@@ -11,41 +11,23 @@ import { FormProvider } from '../../../providers/form/form'
 
 export class SurveyQuestionGroupComponent {
   @Input('showLabel') showLabel: boolean;
-
   @Input() set filter(filter: any) {
     // when question number or section set automatically filter the questions
     this.filterQuestionsList = filter
-    this._filterQuestions()
   };
-  // array of questions to show in repeat group
-  @Input() set repeatFilter(repeatFilter: string[]){
-    this._repeatFilterList = repeatFilter
-  }
-  @Input() set section(section: string) {
-    // survey subsection questions
-    this._section = section
-    this._filterQuestions()
-  }
-  // @Input() set repeatGroup(repeatGroup: string) {
-  //   // filter questions matching repeat group
-  //   this._repeatGroup = repeatGroup
-  //   this._filterQuestions()
-  // }
+  @Input('section') section:string
+  @Input('questions') questions:any[]
+  @Input('formGroup') formGroup:FormGroup
 
-  @Input() set repeatIndex(repeatIndex: number) {
-    // used to only show one set in repeat group
-    this.showAllRepeats = false
-    this._repeatIndex = repeatIndex
-  }
+  // variables passed onto survey-repeat-group in case of repeat group question
+  @Input('repeatFilter') repeatFilter:string[]
+  @Input('repeatIndex') repeatIndex: number 
+  @Input('repeatID') repeatID: string
+  @Input('formArrayName') formArrayName:any;
+  @Input('formGroupName') formGroupName:any;
 
   filterQuestionsList: string[];
-  _repeatFilterList:string[]=[];
-  _section: string;
-  _omit: string[] = [];
-  _repeatIndex: number;
-  _repeatGroup: string;
-  showAllRepeats: boolean = true
-  formGroup: FormGroup;
+  //formGroup: FormGroup;
   allQuestions: any;
   groupQuestions: any;
 
@@ -55,16 +37,23 @@ export class SurveyQuestionGroupComponent {
   constructor(private formPrvdr: FormProvider) {
     // bind to master formgroup and questions
     this.formGroup = this.formPrvdr.formGroup
-    this.allQuestions = this.formPrvdr.allQuestions
+  }
+  ngOnInit(){
+    // initialise questions from list provided (or load all) and filter
+    if(this.questions){this.allQuestions=this.questions}
+    else{this.allQuestions = this.formPrvdr.allQuestions}
     this.groupQuestions = this.allQuestions
+    this._filterQuestions()
+    // set formgroup
+    if(!this.formGroup){this.formGroup=this.formPrvdr.formGroup}
   }
 
   _filterQuestions() {
     // filter questions by section and optionally also down to individual question number
     let filtered = this.allQuestions
     // filter to match a given section
-    if (this._section) {
-      let section = this._section
+    if (this.section) {
+      let section = this.section
       filtered = filtered.filter(q => {
         return q.section == section
       })
@@ -78,14 +67,14 @@ export class SurveyQuestionGroupComponent {
     this.groupQuestions = filtered
   }
 
-  getRepeatGroupTitle(question, index) {
-    try {
-      let indices = JSON.parse(this.formGroup.value[question.selectOptions])
-      if (indices.length < 2) { return "" }
-      else { return indices[index] }
-    } catch (error) {
-      return ""
-    }
+  // getRepeatGroupTitle(question, index) {
+  //   try {
+  //     let indices = JSON.parse(this.formGroup.value[question.selectOptions])
+  //     if (indices.length < 2) { return "" }
+  //     else { return indices[index] }
+  //   } catch (error) {
+  //     return ""
+  //   }
 
-  }
+  // }
 }

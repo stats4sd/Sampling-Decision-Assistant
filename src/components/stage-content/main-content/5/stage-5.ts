@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Slides} from 'ionic-angular'
 import { StagePage } from '../../../../pages/sampling tool/step-by-step/stage/stage';
+import { FormArray, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class Stage5Component extends StagePage {
     this.dataPrvdr.saveSurvey(null,true)
     
   }
-  buildStage(index,title){
+  buildStage(index:number,title){
     let builderStage={
       index:index,
       title:title

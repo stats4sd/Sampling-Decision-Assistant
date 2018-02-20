@@ -1,26 +1,25 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { QuestionBaseComponent } from '../question-base/question-base';
-import { FormGroup } from '@angular/forms';
+import { SurveyQuestionComponent } from '../../survey-question/survey-question';
 
 /*
 Custom component to display list of options from previous question with own input
-Note, uses formPrvdr.formGroup as well as formGroup as latter binds to repeat group
 */
 
 @Component({
   selector: 'question-custom-strata-select',
   templateUrl: 'question-custom-strata-select.html'
 })
-export class QuestionCustomStrataSelectComponent extends QuestionBaseComponent {
-  @Input() set value(value: any) {
-    this.getReportingLevels()
-    this.setSavedValue(value)
-  }
-  @Output() valueUpdated = new EventEmitter<any>();
+export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent {
   selected: any = {}
   customStrata: string[] = []
   strataInput: string;
   reportingLevels: any[] = []
+
+  writeValue(value: any) {
+    // custom write function to override survey-question
+    this.setSavedValue(value)
+  }
 
   ngOnInit() {
     // preload additional data before component rendered. hooks after input() sets so 
@@ -28,7 +27,7 @@ export class QuestionCustomStrataSelectComponent extends QuestionBaseComponent {
     this.getReportingLevels()
   }
   getReportingLevels(){
-    this.reportingLevels = this.getValue('q4.2')
+    this.reportingLevels = this.formPrvdr.getSurveyValue('q4.2')
     console.log('reporting levels', this.reportingLevels)
   }
   setSavedValue(values: any[]) {
@@ -60,7 +59,7 @@ export class QuestionCustomStrataSelectComponent extends QuestionBaseComponent {
     }
     console.log('selectedArray', selectedArray)
     // send output emitter to update value
-    this.valueUpdated.emit(selectedArray);
+    this.valueUpdated(selectedArray);
   }
 
 }
