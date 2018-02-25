@@ -1,0 +1,60 @@
+<div class="question-container">
+  <h3>Custom Stages Define</h3>
+  <form style="display: flex; padding:5px">
+    <ion-item>
+      <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
+        type="text" placeholder="Sampling Stages"></ion-input>
+    </ion-item>
+    <button ion-button (click)="addSamplingStage()" type="submit" [disabled]="!multipleTextInput">Add</button>
+  </form>
+  <!-- multiple list with optional drag-->
+  <div style="margin:10px 0">
+    <!-- drag drop for arrow format -->
+    <div [dragula]="'bag-one'" [dragulaOptions]="dragulaOptions" [dragulaModel]="stages">
+      <div *ngFor="let stage of stages; let i=index; let last=last">
+        <div class="multiple-arrows" *ngIf="!last">
+          <div class="multiple-arrow-down">
+            <ion-icon name="arrow-down"></ion-icon>
+          </div>
+          <div style="display: flex">
+            <button ion-button icon-only clear [disabled]="last" [attr.data-drag-handle]="last ? 'no-drag' : 'drag'">
+              <ion-icon name="reorder"></ion-icon>
+            </button>
+            <button ion-button block icon-left class="multiple-arrows-button">
+              <span style="flex-basis:100%">{{stage}}</span>
+            </button>
+            <button ion-button icon-only clear (click)="removeSamplingStage(i)" [disabled]="last">
+              <ion-icon name="remove-circle"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- last element -->
+    <div>
+      <div class="multiple-arrows">
+        <div class="multiple-arrow-down">
+          <ion-icon name="arrow-down"></ion-icon>
+        </div>
+        <div style="display: flex">
+          <button ion-button icon-only clear disabled>
+            <ion-icon name="reorder"></ion-icon>
+          </button>
+          <button ion-button block icon-left class="multiple-arrows-button">
+            <span style="flex-basis:100%">{{finalSamplingUnit}}</span>
+          </button>
+          <button ion-button icon-only clear (click)="removeSamplingStage(i)" disabled>
+            <ion-icon name="remove-circle"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- placeholder bottom for arrow format in q5 -->
+    <!-- <div>
+      <div *ngIf="formPrvdr.formGroup.controls[repeatControl].controls.length>2" style="margin-top:1em; margin-left:15px" icon-left>
+        <ion-icon name="reorder"></ion-icon> Drag and drop the stages to change the order</div>
+    </div> -->
+  </div>
+</div>

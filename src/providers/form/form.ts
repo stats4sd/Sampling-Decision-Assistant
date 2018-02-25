@@ -171,6 +171,13 @@ export class FormProvider {
     if (parentID) { repeatGroup.addControl('_parentID', this.fb.control(parentID)) }
     return repeatGroup
   }
+  generateRepeatFormGroup(repeatControlName,parentID?){
+    // method called from outside to generate a repeat formgroup based on control
+    let repeatBase = this.getQuestion(repeatControlName)
+    let repeatQs = this._generateRepeatQuestions(repeatBase)
+    let repeatFormGroup = this._buildRepeatGroup(repeatQs,parentID)
+    return repeatFormGroup
+  }
 
   _addSubQuestion(template) {
     // create nested group

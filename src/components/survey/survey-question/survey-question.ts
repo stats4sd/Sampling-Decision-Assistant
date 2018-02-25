@@ -6,12 +6,11 @@ utilises custom form binding, find out more here:
 */
 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef, forwardRef } from '@angular/core';
-import { FormGroup, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { FormGroup, NG_VALUE_ACCESSOR, ControlValueAccessor, FormArray, FormControl } from '@angular/forms';
 import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
 import { FormProvider } from '../../../providers/form/form'
-import { DragulaService } from 'ng2-dragula';
 import { DataProvider } from '../../../providers/data/data';
 
 // settings to enable a model binding
@@ -40,7 +39,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   showQuestion: boolean = true
 
   questionKey: string
-
   selectOtherValue: any = "";
   selectOptionsArray: string[];
   initialScrollHeight: number;
@@ -50,20 +48,15 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   trackingChanges: boolean = false;
   multipleTextInput: any = ""
   multipleTextValues: any = [];
-  finalSamplingUnit: string = "";
   valueSaved: boolean = false;
-  dragulaOptions = {
-    moves: function (el, source, handle, sibling) {
-      // allow move on possible drag-handles (required as drag on button sometimes selects inner html first, then button, then parent div)
-      return el.dataset.dragHandle || handle.parentElement.parentElement.dataset.dragHandle;
-    },
-  }
+
 
   constructor(
     private cdr: ChangeDetectorRef,
     private events: Events,
     public formPrvdr: FormProvider,
-    private dragulaService: DragulaService) {
+    public dataPrvdr: DataProvider,
+  ) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
   }
   // *****************************************************
@@ -87,7 +80,8 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     this.propagateChange(value);
     // notify change through emitter also for tracking in repeat group questions
     this.onValueChange.emit(value)
-    console.log('formgroup', this.formPrvdr.formGroup)
+    //console.log('formgroup', this.formPrvdr.formGroup)
+    this.dataPrvdr.saveSurvey(null, true)
     //***note - should add form value change subscribers */
     // e.g. this.formGroup.get(controlName).valueChanges.subscribe( x => console.log(x));
     // publish key-value pair in event picked up by data provider to update
@@ -104,7 +98,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   ngOnInit() {
     // check if should show question
     this.attachListeners()
-
     this.questionKey = this.question.controlName
     this._prepareDynamicText()
     // // run any custom onInit triggers
@@ -114,11 +107,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (this.question.type == "select") { this.generateSelectOptions() }
     if (this.question.type == "textMultiple") {
       this._generateMultipleValues()
-      this.finalSamplingUnit = this.formPrvdr.formGroup.value['q3.1']
-      // set dragula drop interaction (ideally should be split into seperate subcomponent extending question base)
-      if (this.question.options && this.question.options.dragDrop) {
-        this._addDragDropSubscriber()
-      }
     }
   }
 
@@ -155,33 +143,14 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   }
 
   // ************** text multiple*********************************************
-  _addDragDropSubscriber() {
-    // automatically save form values when rearranged using drag drop. Push final sampling unit back to array and reverse 
-    this.dragulaService.dropModel.subscribe(_ => {
-      let v = []
-      this.multipleTextValues.forEach(val => v.push(val))
-      //v.push('Final Sampling Unit')
-      let patch = {}
-      patch[this.question.controlName] = v
-      this.formPrvdr.formGroup.patchValue(patch)
-      this._generateMultipleValues()
-    })
-  }
+
   _generateMultipleValues() {
-    if (this.question.type == "textMultiple") {
-      let value = this.formPrvdr.getSurveyValue(this.questionKey)
-      console.log('value', value)
-      if (value == undefined || value == "" || value == null) {
-        value = []
-      }
-      // remove initial FSU entry if available as added on later
-      // let i = value.indexOf('Final Sampling Unit')
-      // if (i > -1) {
-      //   value.splice(i, 1)
-      // }
-      this.multipleTextValues = value
+    let value = this.formPrvdr.getSurveyValue(this.questionKey)
+    console.log('value', value)
+    if (value == undefined || value == "" || value == null) {
+      value = []
     }
-    this._reorderBuildStages()
+    this.multipleTextValues = value
   }
   addTextMultiple() {
     // push response to array
@@ -198,7 +167,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
       value: this.multipleTextValues,
       pushValue: pushValue
     })
-    this._reorderBuildStages()
   }
   removeTextMultiple(index) {
     let removeValue = this.multipleTextValues[index]
@@ -208,25 +176,8 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     this.formPrvdr.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
     this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues, removeValue: removeValue })
-    this._reorderBuildStages()
-  }
-  _reorderBuildStages() {
-    // quick method to adjsut the way the data is displayed as stages might have been reorder and by default
-    // splice to array instead of push like controls
-    let orderedControls = []
-    for (let stage of this.formPrvdr.getSurveyValue('q5.2')) {
-      let control = this._getControl(stage)
-      orderedControls.push(control)
-    }
-    console.log('ordered controls', orderedControls)
   }
 
-  _getControl(id) {
-    let formArray:any = this.formPrvdr.formGroup.controls['q5.3'] 
-    for (let control of formArray.controls) {
-      if (control.value._parentID == id) { return control }
-    }
-  }
 
   updateSelectOther(e) {
     let value = e.target.value
@@ -339,7 +290,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   }
   attachListeners() {
     // 
-    if (this.question.hasOwnProperty('conditionJson')) { this.checkQuestionConditions() }
+    if (this.question.hasOwnProperty('conditionJson')) { this.showQuestion = this.checkQuestionConditions() }
   }
   checkQuestionConditions(formValues?) {
     // test logic from condition property against form, and setup listener to monitor changes
@@ -370,7 +321,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   }
 
-  _trackValueChanges(control: string, formGroup: FormGroup) {
+  _trackValueChanges(controlName: string, formGroup: FormGroup) {
     // subscribe to value changes on form control to recheck show question condition
     //console.log('tracking value changes',control,formGroup)
     formGroup.valueChanges.subscribe(

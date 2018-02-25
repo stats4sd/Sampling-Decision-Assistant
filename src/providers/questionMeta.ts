@@ -166,7 +166,12 @@ export default
             "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", "controlName": "q4.2", "type": "textMultiple", "selectOptions": "", "label": "Please specify the levels of disaggregation, be specific in your replies", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
+            "isQuestion": "TRUE", 
+            "controlName": "q4.2", 
+            "type": "textMultiple", 
+            "selectOptions": "", 
+            "label": "Please specify the levels of disaggregation, be specific in your replies", 
+            "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
         },
         {
             "isQuestion": "TRUE", "controlName": "q4.3", "type": "text", "selectOptions": "", "label": "Provide a name or reference for the estimate", "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:One estimate"
@@ -195,18 +200,11 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.2",
-            "type": "textMultiple",
+            "type": "custom-stages-define",
             "selectOptions": "",
             "label": "What are the sampling stages that will allow you to reach the final sampling unit?",
             "section": "Selecting the sampling units",
             "condition": "",
-            // "condition": "type:multiple, logic:OR, conditions:[{controlName:q5.1, value:No},{controlName:q5.1.1, value:Multi-stage}]",
-            "labelMultiple": "Sampling stages",
-            // "triggers": {
-            //     "description": 'automatically populate first entry with final sampling unit',
-            //     "function": "this.multipleTextValues=['Final Sampling Unit'];this.setValue('q5.2',['Final Sampling Unit'],true)",
-            //     "trigger": "onInit"
-            // },
             options: {
                 format: 'arrow',
                 dragDrop:true

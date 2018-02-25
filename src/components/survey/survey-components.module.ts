@@ -15,6 +15,7 @@ import { SurveyRepeatGroupComponent } from './survey-repeat-group/survey-repeat-
 import { SurveyLabelComponent } from './survey-label/survey-label';
 // additional custom question types
 import { QuestionCustomStrataSelectComponent } from './question-types/question-custom-strata-select/question-custom-strata-select';
+import { QuestionCustomStagesDefineComponent} from './question-types/question-custom-stages-define/question-custom-stages-define'
 
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
@@ -25,7 +26,8 @@ import { QuestionCustomStrataSelectComponent } from './question-types/question-c
         SurveyReferenceComponent,
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
-        QuestionCustomStrataSelectComponent
+        QuestionCustomStrataSelectComponent,
+        QuestionCustomStagesDefineComponent
     ],
     imports: [
         IonicModule,
@@ -39,7 +41,8 @@ import { QuestionCustomStrataSelectComponent } from './question-types/question-c
         SurveyReferenceComponent,
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
-        QuestionCustomStrataSelectComponent
+        QuestionCustomStrataSelectComponent,
+        QuestionCustomStagesDefineComponent
     ]
 })
 export class SurveyComponentsModule { }

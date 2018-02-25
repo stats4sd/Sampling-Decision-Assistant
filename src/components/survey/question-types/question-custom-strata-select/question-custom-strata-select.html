@@ -9,6 +9,8 @@
           <ion-label>{{level}}</ion-label>
           <ion-checkbox [(ngModel)]="selected[level]" (ionChange)="strataChanged()"></ion-checkbox>
         </ion-item>
+      </ion-list>
+      <ion-list>
         <ion-list-header>Additional Strata</ion-list-header>
         <ion-item *ngFor="let strata of customStrata">
           <ion-label>{{strata}}</ion-label>

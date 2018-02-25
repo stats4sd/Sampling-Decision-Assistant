@@ -66,42 +66,20 @@ survey-question {
         border-radius: 50%;
     }
     .multiple-list {
-        width: 100%;
-        display: inline-block;
-        margin: 5px 75px 0 20px;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        margin: 5px 75px 5px 20px;
         font-size: medium;
         color: rgba(0, 0, 0, 0.9);
         border: 1px solid rgba(0, 0, 0, 0.3);
         padding: 5px;
     }
-    .multiple-remove-button {
-        float: right;
-        color: color($colors, primary)
+    .multiple-list-value{
+        flex-basis: 100%;
+        margin-left:10px;
     }
-    .multiple-arrows {
-        width: 100%;
-        max-width: 300px;
-        text-align: center;
-        margin-left: 15px; // margin-top:2em;
-    }
-    .multiple-arrow-placeholder {
-        width: 300px;
-        margin-left: 15px;
-        text-align: center;
-        .button, .fsu-text {
-            width: 250px;
-        }
-        .placeholder-button {
-            opacity: 0.4;
-            background-color: unset;
-            border: 2px black dashed;
-        }
-    }
-    .fsu-text{font-size: smaller}
-    .multiple-arrow-down {
-        font-size: 28px;
-        margin-right: 36px;
-    }
+   
     .prefix {
         display: flex;
         flex-direction: column;
