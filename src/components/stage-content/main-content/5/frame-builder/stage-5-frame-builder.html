@@ -9,30 +9,30 @@
     <ion-col col-3>Stage</ion-col>
     <ion-col>Frame</ion-col>
   </ion-row>
-  <ion-row *ngFor="let stage of form.value['q5.2']; let i=index; let last=last">
+  <ion-row *ngFor="let stageControl of form.controls['q5.3'].controls; let i=index; let last=last">
     <ion-col col-3 class="stage-name">
-      <div>{{stage}}</div>
+      <div>{{stageControl.value._parentID}}</div>
     </ion-col>
-    <ion-col class="cell build-stage hover" *ngIf="form.value['q5.3'][i]">
+    <ion-col class="cell build-stage hover">
       <!-- build frame button -->
-      <div class="builder-stage-select" (click)="buildStage(i,stage)" *ngIf="form.value['q5.3'][i]['q5.3.1']==''">
+      <div class="builder-stage-select" (click)="buildStage(stageControl,i)" *ngIf="stageControl.value['q5.3.1']==''">
         <div icon-right>
             Build frame<ion-icon name="arrow-forward"></ion-icon></div>
       </div>
       <!-- built frame info -->
-      <div (click)="buildStage(i,stage)" *ngIf="form.value['q5.3'][i]['q5.3.1']!=''" class="built-frame-info">
+      <div (click)="buildStage(stageControl,i)" *ngIf="stageControl.value['q5.3.1']!=''" class="built-frame-info">
         <ion-list no-lines>
-          <ion-item *ngIf="form.value['q5.3'][i]['q5.3.1']!=''">
+          <ion-item *ngIf="stageControl.value['q5.3.1']!=''">
             <ion-label>List</ion-label>
-            <ion-note item-end>{{form.value['q5.3'][i]['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</ion-note>
+            <ion-note item-end>{{stageControl.value['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</ion-note>
           </ion-item>
-          <ion-item *ngIf="form.value['q5.3'][i]['q5.3.3']!=''">
+          <ion-item *ngIf="stageControl.value['q5.3.3']!=''">
               <ion-label>Selected Units</ion-label>
-              <ion-note item-end>{{form.value['q5.3'][i]['q5.3.3']=='All' ? 'All Units' : 'Sample'}}</ion-note>
+              <ion-note item-end>{{stageControl.value['q5.3.3']=='All' ? 'All Units' : 'Sample'}}</ion-note>
             </ion-item>
-          <ion-item *ngIf="form.value['q5.3'][i]['q5.3.4.1']!=''">
+          <ion-item *ngIf="stageControl.value['q5.3.4.1']!=''">
               <ion-label>Stratification</ion-label>
-              <ion-note item-end>{{form.value['q5.3'][i]['q5.3.4.1']=='No' ? 'None' : 'Yes:(strata list here)'}}</ion-note>
+              <ion-note item-end>{{stageControl.value['q5.3.4.1']=='No' ? 'None' : 'Yes:(strata list here)'}}</ion-note>
             </ion-item>
         </ion-list>
 

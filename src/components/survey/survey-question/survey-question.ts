@@ -30,6 +30,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   @Input('question') question;
   @Input('showLabel') showLabel: boolean;
   @Input() set controlName(controlName: string) { this.question = this.formPrvdr.getQuestion(controlName) }
+  @Input('repeatFormGroup') repeatFormGroup: FormGroup
   @Output() onValueChange = new EventEmitter<any>();
   @ViewChild('textAreaInput') textAreaInput: ElementRef
   @ViewChild('saveMessage') saveMessage: ElementRef
@@ -46,9 +47,10 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   showSelectOther: boolean = false;
   originalLabel: string;
   dynamicText: any = {};
-  trackingChanges:boolean=false;
+  trackingChanges: boolean = false;
   multipleTextInput: any = ""
   multipleTextValues: any = [];
+  finalSamplingUnit: string = "";
   valueSaved: boolean = false;
   dragulaOptions = {
     moves: function (el, source, handle, sibling) {
@@ -85,7 +87,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     this.propagateChange(value);
     // notify change through emitter also for tracking in repeat group questions
     this.onValueChange.emit(value)
-
+    console.log('formgroup', this.formPrvdr.formGroup)
     //***note - should add form value change subscribers */
     // e.g. this.formGroup.get(controlName).valueChanges.subscribe( x => console.log(x));
     // publish key-value pair in event picked up by data provider to update
@@ -101,7 +103,8 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   ngOnInit() {
     // check if should show question
-    this.showQuestion = this.checkQuestionConditions(this.question)
+    this.attachListeners()
+
     this.questionKey = this.question.controlName
     this._prepareDynamicText()
     // // run any custom onInit triggers
@@ -111,6 +114,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (this.question.type == "select") { this.generateSelectOptions() }
     if (this.question.type == "textMultiple") {
       this._generateMultipleValues()
+      this.finalSamplingUnit = this.formPrvdr.formGroup.value['q3.1']
       // set dragula drop interaction (ideally should be split into seperate subcomponent extending question base)
       if (this.question.options && this.question.options.dragDrop) {
         this._addDragDropSubscriber()
@@ -156,7 +160,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     this.dragulaService.dropModel.subscribe(_ => {
       let v = []
       this.multipleTextValues.forEach(val => v.push(val))
-      v.push('Final Sampling Unit')
+      //v.push('Final Sampling Unit')
       let patch = {}
       patch[this.question.controlName] = v
       this.formPrvdr.formGroup.patchValue(patch)
@@ -166,35 +170,64 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   _generateMultipleValues() {
     if (this.question.type == "textMultiple") {
       let value = this.formPrvdr.getSurveyValue(this.questionKey)
-      if (value == undefined || value == "" || !value == null) {
+      console.log('value', value)
+      if (value == undefined || value == "" || value == null) {
         value = []
       }
       // remove initial FSU entry if available as added on later
-      let i = value.indexOf('Final Sampling Unit')
-      if (i > -1) {
-        value.splice(i, 1)
-      }
+      // let i = value.indexOf('Final Sampling Unit')
+      // if (i > -1) {
+      //   value.splice(i, 1)
+      // }
       this.multipleTextValues = value
     }
+    this._reorderBuildStages()
   }
   addTextMultiple() {
     // push response to array
+    let pushValue = this.multipleTextInput
     this.multipleTextValues.unshift(this.multipleTextInput)
     this.multipleTextInput = "";
     let patch = {}
     patch[this.questionKey] = this.multipleTextValues
     this.formPrvdr.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'push', value: this.multipleTextValues })
+    this.events.publish('arrayChange:' + this.questionKey, {
+      controlName: this.questionKey,
+      type: 'push',
+      value: this.multipleTextValues,
+      pushValue: pushValue
+    })
+    this._reorderBuildStages()
   }
   removeTextMultiple(index) {
+    let removeValue = this.multipleTextValues[index]
     this.multipleTextValues.splice(index, 1)
     let patch = {}
     patch[this.questionKey] = this.multipleTextValues
     this.formPrvdr.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues })
+    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues, removeValue: removeValue })
+    this._reorderBuildStages()
   }
+  _reorderBuildStages() {
+    // quick method to adjsut the way the data is displayed as stages might have been reorder and by default
+    // splice to array instead of push like controls
+    let orderedControls = []
+    for (let stage of this.formPrvdr.getSurveyValue('q5.2')) {
+      let control = this._getControl(stage)
+      orderedControls.push(control)
+    }
+    console.log('ordered controls', orderedControls)
+  }
+
+  _getControl(id) {
+    let formArray:any = this.formPrvdr.formGroup.controls['q5.3'] 
+    for (let control of formArray.controls) {
+      if (control.value._parentID == id) { return control }
+    }
+  }
+
   updateSelectOther(e) {
     let value = e.target.value
     let patch = {}
@@ -304,36 +337,46 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     }
 
   }
-  checkQuestionConditions(question) {
-    // test logic from condition property against form
+  attachListeners() {
+    // 
+    if (this.question.hasOwnProperty('conditionJson')) { this.checkQuestionConditions() }
+  }
+  checkQuestionConditions(formValues?) {
+    // test logic from condition property against form, and setup listener to monitor changes
     // currently implemented for specific previous values
-    let formGroup = this.formPrvdr.formGroup
-    if (question.hasOwnProperty('conditionJson')) {
-      let condition = question.conditionJson
-        if (formGroup.value.hasOwnProperty(condition.controlName)) {
-          this._trackChanges()
-          if (condition.type == "prerequisite") {
-            if (formGroup.value[condition.controlName] && formGroup.value[condition.controlName] != '') {
-              return true
-            }
-          }
-          if (condition.type == "value") {
-            if (formGroup.value[condition.controlName] == condition.value) {
-              return true
-            }
-          }
-          else { return false }
-        }
+    let condition = this.question.conditionJson
+    let control = condition.controlName
+    // when running for the first time determine whether to use main form or nested repeat
+    if (!formValues) {
+      let formGroup: FormGroup
+      if (this.formPrvdr.formGroup.controls.hasOwnProperty(control)) {
+        formGroup = this.formPrvdr.formGroup
+      }
+      else if (this.repeatFormGroup && this.repeatFormGroup.controls.hasOwnProperty(control)) {
+        formGroup = this.repeatFormGroup
+      }
+      else { console.error('control not found', control); return true }
+      formValues = formGroup.value
+      this._trackValueChanges(condition.controlName, formGroup)
+    }
+    // test condition
+    if (condition.type == "prerequisite") {
+      return formValues[condition.controlName] && formValues[condition.controlName] != ''
+    }
+    if (condition.type == "value") {
+      return formValues[condition.controlName] == condition.value
     }
     return true
+
   }
-  _trackChanges(control?){
-    // subscribe to form changes to recheck show question condition
-    if(!this.trackingChanges){
-      this.formPrvdr.formGroup.valueChanges.subscribe(
-        v=>{this.showQuestion = this.checkQuestionConditions(this.question)
+
+  _trackValueChanges(control: string, formGroup: FormGroup) {
+    // subscribe to value changes on form control to recheck show question condition
+    //console.log('tracking value changes',control,formGroup)
+    formGroup.valueChanges.subscribe(
+      v => {
+        this.showQuestion = this.checkQuestionConditions(v)
       }
-      )
-    }
+    )
   }
 }

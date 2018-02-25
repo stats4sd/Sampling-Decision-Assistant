@@ -3,15 +3,16 @@
 <div [ngSwitch]="displayMode">
     <!-- <div *ngSwitchCase="'individual'" [formGroupName]="repeatIndex"> -->
     <div *ngSwitchCase="'individual'">
-        <div [formGroup]="formGroup.controls[question.controlName].controls[repeatIndex]">
-            <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion"></survey-question>
+        <div class="group-heading" *ngIf="subFormGroup.value._parentID">{{subFormGroup.value._parentID}}</div>
+        <div [formGroup]="subFormGroup">
+            <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion" [repeatFormGroup]="formGroup.controls[question.controlName].controls[repeatIndex]"></survey-question>
         </div>
     </div>
     <div *ngSwitchDefault>
         <div *ngFor="let repeat of formGroup.controls[question.controlName].controls; let i=index">
             <!-- <div [formGroupName]="i"> -->
             <div [formGroup]="formGroup.controls[question.controlName].controls[i]">
-                <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion"></survey-question>
+                <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion" [repeatFormGroup]="formGroup.controls[question.controlName].controls[i]"></survey-question>
             </div>
         </div>
     </div>

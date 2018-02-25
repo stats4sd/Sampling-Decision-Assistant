@@ -26,7 +26,6 @@ export class StageCompleteComponent extends StagePage {
 
 
   verify(stageNumber: number, formValues) {
-    console.log('verifying',formValues, stageNumber)
     const s = stageNumber
     // run verfication checks to see if form valid. takes current form values as input
     const v = formValues

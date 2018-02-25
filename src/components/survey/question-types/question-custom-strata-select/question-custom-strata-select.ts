@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { QuestionBaseComponent } from '../question-base/question-base';
 import { SurveyQuestionComponent } from '../../survey-question/survey-question';
 
 /*
@@ -15,10 +14,8 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
   customStrata: string[] = []
   strataInput: string;
   reportingLevels: any[] = []
-
-  writeValue(value: any) {
-    // custom write function to override survey-question
-    this.setSavedValue(value)
+  @Input() set preloadValue(v: any[]) {
+    if (v) { this.setSavedValue(v) }
   }
 
   ngOnInit() {
@@ -26,19 +23,25 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     // all need to call after initial set value input
     this.getReportingLevels()
   }
-  getReportingLevels(){
-    this.reportingLevels = this.formPrvdr.getSurveyValue('q4.2')
-    console.log('reporting levels', this.reportingLevels)
+  getReportingLevels() {
+    let levels = this.formPrvdr.getSurveyValue('q4.2')
+    console.log('levels',levels)
+    if (levels == "") { levels = [] }
+    this.reportingLevels = levels
   }
   setSavedValue(values: any[]) {
     // set saved value templates for when loading value from saved
     console.log('preloading value', values)
-    for (let v of values) {
+    if (this.reportingLevels.length==0) { this.getReportingLevels }
+    values.forEach(v => {
+      console.log('v', v)
       if (this.reportingLevels.indexOf(v) == -1) {
-        this.reportingLevels.push(v)
+        this.customStrata.push(v)
       }
       this.selected[v] = true
-    }
+    })
+    console.log('selected', this.selected)
+    console.log('custom strata', this.customStrata)
   }
 
 
@@ -59,7 +62,7 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     }
     console.log('selectedArray', selectedArray)
     // send output emitter to update value
-    this.valueUpdated(selectedArray);
+    this.onValueChange.emit(selectedArray)
   }
 
 }

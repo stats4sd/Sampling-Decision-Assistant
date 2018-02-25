@@ -1,9 +1,0 @@
-<!-- 
-- conditionally show different components based on set question type (could use dynamic component loader instead)
-- does not pass formgroups as value patching handled in this parent component instead
-- note, using _ prefix before variables as multiple input bindings get confused
--->
-<div>type:{{_question.type}}</div>
-<div [ngSwitch]="_question.type">
-    <!-- <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [value]="value" (valueUpdated)="setValue($event)"></question-custom-strata-select> -->
-</div>

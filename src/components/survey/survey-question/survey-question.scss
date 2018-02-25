@@ -1,4 +1,5 @@
 survey-question {
+
     .invisible {
         visibility: hidden;
     }
@@ -87,7 +88,7 @@ survey-question {
         width: 300px;
         margin-left: 15px;
         text-align: center;
-        .button {
+        .button, .fsu-text {
             width: 250px;
         }
         .placeholder-button {
@@ -96,6 +97,7 @@ survey-question {
             border: 2px black dashed;
         }
     }
+    .fsu-text{font-size: smaller}
     .multiple-arrow-down {
         font-size: 28px;
         margin-right: 36px;

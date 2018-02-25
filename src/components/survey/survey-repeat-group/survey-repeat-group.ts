@@ -19,6 +19,10 @@ export class SurveyRepeatGroupComponent {
   repeatQuestions: any;
   displayMode: string;
   formGroup: FormGroup
+  get subFormGroup():FormGroup{
+    let repeatFormGroup = this.formGroup.controls[this.question.controlName] as FormArray
+    return repeatFormGroup.controls[this.repeatIndex] as FormGroup
+  }
 
   constructor(private formPrvdr: FormProvider, private fb: FormBuilder) {
     this.formGroup = this.formPrvdr.formGroup
@@ -27,7 +31,6 @@ export class SurveyRepeatGroupComponent {
   get repeatArray(): FormArray {
     // short method to return formArray control from main formGroup on get request
     let array = this.formGroup.controls[this.question.controlName] as FormArray;
-    console.log('array', array)
     return array
   };
 
@@ -44,7 +47,6 @@ export class SurveyRepeatGroupComponent {
         return this.repeatFilter.indexOf(q.controlName) > -1
       })
     }
-    console.log('repeat questions', repeatQuestions)
     this.repeatQuestions = repeatQuestions
   }
 

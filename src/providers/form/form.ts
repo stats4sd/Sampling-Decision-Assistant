@@ -44,23 +44,30 @@ export class FormProvider {
       let patch = {}
       patch[key] = val
       if (typeof (val) == "string") { formGroup.patchValue(patch) }
-      if (typeof (val) == "number") { formGroup.patchValue(patch) }
       // handle arrays
       else if (val instanceof Array) {
         // handle array values stored as strings (e.g. lists)
-        if (typeof val[0] == "string") { formGroup.patchValue(patch) }
+        if (typeof val[0] == "string") {
+          patch[key] = val
+          formGroup.patchValue(patch)
+        }
         else {
-          val.forEach(v => {
-            // handle values stores as objects (e.g. repeat groups)
-            // simply pushes nested values as new control group (omitting any validators etc.)
-            let arrayControl: any = formGroup.controls[key]
-            let group: FormGroup = this.fb.group(v)
-            arrayControl.push(group)
+          // handle values stores as objects (e.g. repeat groups)
+          // iterate over each value array (repeatGroup)
+          let arrayControl: FormArray = formGroup.controls[key] as FormArray
+          val.forEach((repeatGroup,i) => {
+            // initialise without values and then patch to ensure correct representation of arrays
+            let repeatFormGroup = this.fb.group({})
+            Object.keys(repeatGroup).forEach(repeatKey=>{
+              let repeatVal = repeatGroup[repeatKey]
+              repeatFormGroup.addControl(repeatKey,this.fb.control(repeatVal))
+            })
+             arrayControl.push(repeatFormGroup)
           })
-
         }
       }
     })
+    console.log('formgroup', this.formGroup)
     return formGroup
   }
 
@@ -94,7 +101,6 @@ export class FormProvider {
       if (q.condition != "") { return this._generateConditionOptions(q) }
       else { return q }
     })
-    let displayQs = []
     questions.forEach(q => {
       // build templates for any repeat groups
       if (q.type == "repeat") {
@@ -102,26 +108,17 @@ export class FormProvider {
         let repeatQs = this._generateRepeatQuestions(q)
         q.repeatQuestions = repeatQs
         questionGroup[q.controlName] = this.fb.array([])
-        displayQs.push(q)
       }
       else {
         if (!q.value) { q.value = "" }
-        questionGroup[q.controlName] = q.value
-        // skip questions included in repeat groups unless repeat group
-        if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
-          if (!q.value) { q.value = "" }
-          displayQs.push(q)
-          // omit non question from form (but keep in display)
-          if (q.isQuestion == "TRUE") {
-            questionGroup[q.controlName] = q.value
-          }
+        // omit non questions and repeat questions (unless building repeat group)
+        if (q.isQuestion == "TRUE") {
+          if (!q.hasOwnProperty('repeatGroup')) { questionGroup[q.controlName] = q.value }
+          else if (repeatGroup) { questionGroup[q.controlName] = q.value }
         }
       }
     });
-    //if (!repeatGroup) { this.groupQuestions = displayQs }
-    // remove label and other parts not interested in final formgroup
     return this.fb.group(questionGroup)
-
   }
 
   _generateRepeatQuestions(question) {
@@ -140,13 +137,23 @@ export class FormProvider {
     // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
     this.events.unsubscribe('arrayChange:' + question.selectOptions)
     this.events.subscribe('arrayChange:' + question.selectOptions, update => {
+      console.log('array changed', update)
       const control = <FormArray>this.formGroup.controls[groupPrefix]
       if (update.type == "push") {
-        // push a repeat to the question group
-        control.push(this._buildRepeatGroup(repeatQs))
+        control.push(this._buildRepeatGroup(repeatQs, update.pushValue))
       }
       if (update.type == "splice") {
-        control.removeAt(update.index)
+        // check against parent ids to remove. if no parent ids exist simply remove index given
+        let removeIndex = update.index
+        control.value.forEach((v, i) => {
+          if (v._parentID == update.removeValue) { removeIndex = i }
+        })
+        control.removeAt(removeIndex)
+      }
+      // *** NEED METHOD FOR REORDERING FROM DRAG AND DROP ///
+      // (currently not vital as array splicing done with check of _parentID)
+      if (update.type == "reorder") {
+
       }
       if (update.type == "reset") {
         for (let i = control.length; i > 0; i--) {
@@ -158,8 +165,10 @@ export class FormProvider {
     return repeatQs
   }
 
-  _buildRepeatGroup(repeatQs) {
+  _buildRepeatGroup(repeatQs, parentID?) {
+    // build repeat group and attach parentID if linked to another control
     let repeatGroup = this._generateQuestionForm(repeatQs, true)
+    if (parentID) { repeatGroup.addControl('_parentID', this.fb.control(parentID)) }
     return repeatGroup
   }
 

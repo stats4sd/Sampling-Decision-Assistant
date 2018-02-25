@@ -14,7 +14,6 @@ import { SurveyReferenceComponent } from './survey-reference/survey-reference';
 import { SurveyRepeatGroupComponent } from './survey-repeat-group/survey-repeat-group';
 import { SurveyLabelComponent } from './survey-label/survey-label';
 // additional custom question types
-import { QuestionBaseComponent } from './question-types/question-base/question-base';
 import { QuestionCustomStrataSelectComponent } from './question-types/question-custom-strata-select/question-custom-strata-select';
 
 
@@ -26,7 +25,6 @@ import { QuestionCustomStrataSelectComponent } from './question-types/question-c
         SurveyReferenceComponent,
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
-        QuestionBaseComponent,
         QuestionCustomStrataSelectComponent
     ],
     imports: [
@@ -41,7 +39,6 @@ import { QuestionCustomStrataSelectComponent } from './question-types/question-c
         SurveyReferenceComponent,
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
-        QuestionBaseComponent,
         QuestionCustomStrataSelectComponent
     ]
 })

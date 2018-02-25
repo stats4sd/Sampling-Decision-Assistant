@@ -230,7 +230,7 @@ export default
             "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Yes, No",
-            "label": "Do you have a list of all [SUSi] in this stage?",
+            "label": "Do you have a list of all sampling units in this stage?",
             "section": "Selecting the sampling units",
             "condition": "",
             "labelMultiple": null
@@ -252,7 +252,7 @@ export default
             "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Sample, All",
-            "label": "Are you planning to take a sample of [SUSi] or are you planning to cover every single [SUSi] in this stage?",
+            "label": "Are you planning to take a sample from the list or are you planning to use all units in this stage?",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.3.1, value:Yes",
             "labelMultiple": null
@@ -285,7 +285,7 @@ export default
             "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Simple random sampling, Probability proportional to size",
-            "label": "<p>Within each strata, are you planning to select the SUSi using<br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
+            "label": "<p>Within each strata, are you planning to select the sampling units using<br><br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.3.4.1, value:Yes",
             "labelMultiple": null

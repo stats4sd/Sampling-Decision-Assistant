@@ -19,9 +19,6 @@ export class Stage5Component extends StagePage {
   ]
   builderStages:any=[];
   stageBuilt:any={};
-  processed={
-    estimates:[]
-  }
 
   @ViewChild('frameBuilder') frameBuilder:Slides;
   frameBuilderIndex:number=0
@@ -29,21 +26,7 @@ export class Stage5Component extends StagePage {
   goBack(){
     this.navCtrl.pop()
   }
-  ngOnInit(){
-    this._processValues()
-
-  }
-  _processValues(){
-    // perform specific tasks related to displaying survey values in nice way
-    if(this.form.value['q4.1']=='Disaggregated estimates'){
-      // put disaggregated estimates back into array format for display
-      try {
-        this.processed.estimates=JSON.parse(this.form.value['q4.2'])
-      } catch (error) {
-        
-      }
-    }
-  }
+ 
   nextStep(){
     this.frameBuilderIndex ++
     this.frameBuilder.slideNext()
@@ -60,12 +43,10 @@ export class Stage5Component extends StagePage {
     this.dataPrvdr.saveSurvey(null,true)
     
   }
-  buildStage(index:number,title){
-    let builderStage={
-      index:index,
-      title:title
-    }
-    super.openModal('FrameBuilderPage',builderStage)
+  buildStage(stageFormControl,stageIndex){
+    // get formgroup matching stage name to parentID
+    let params={stageFormGroup:stageFormControl,stageIndex:stageIndex}
+    super.openModal('FrameBuilderPage',params)
   }
 
 }

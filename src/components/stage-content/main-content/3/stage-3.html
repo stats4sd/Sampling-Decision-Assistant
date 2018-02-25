@@ -31,7 +31,7 @@
             <span *ngIf="form.value['q3.3']"> with specific interest in
                 <survey-reference [controlName]="'q3.3'"></survey-reference>
             </span>
-            <span *ngIf="form.value['q3.4']"> .Time period: 
+            <span *ngIf="form.value['q3.4']">. Time period: 
                 <survey-reference [controlName]="'q3.4'"></survey-reference>
             </span>
 
@@ -42,13 +42,7 @@
             <ion-checkbox [(ngModel)]="verificationBox" (ionChange)="verify()"></ion-checkbox>
         </ion-item> -->
         <stage-complete stageNumber=3 [complete]="dataPrvdr.activeSurvey.stagesComplete[3]" text="Yes, it is an accurate description"></stage-complete>
-
-
     </div>
-
-
-
-
     <!-- <p>
         You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
         a better understanding that should help in your decision making.
