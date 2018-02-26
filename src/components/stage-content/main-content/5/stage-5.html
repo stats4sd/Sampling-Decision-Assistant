@@ -1,10 +1,7 @@
 <div class="slide-content">
 
     <ion-slides #frameBuilder class="stage-5-slides" (ionSlideDidChange)="builderSlideChange()">
-        <!-- define strata slide -->
-        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
-            <stage-5-define-strata></stage-5-define-strata>
-        </ion-slide>
+
         <!-- recap slide -->
         <ion-slide>
             <stage-5-recap></stage-5-recap>
@@ -16,6 +13,10 @@
         <!-- multi-stage builder slide -->
         <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
             <stage-5-frame-builder></stage-5-frame-builder>
+        </ion-slide>
+        <!-- define strata slide -->
+        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
+            <stage-5-define-strata></stage-5-define-strata>
         </ion-slide>
 
 
