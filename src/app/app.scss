@@ -59,6 +59,8 @@ h2{
         height:6rem;
     }
 }
+// multi-line text in buttons
+.button-inner{white-space: normal}
 body{
     user-select: text;
     font-family: 'proxima_nova', lato, sans-serif!important;
@@ -143,9 +145,9 @@ body{
     
 }
 @media screen and (min-width:$max-app-width){
-    .segment-container{
-        // bottom:2rem;
-    }
+    // .segment-container{
+    //     // bottom:2rem;
+    // }
 }
 // allow vertical scroll in slides
 .central-inner-content{

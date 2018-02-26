@@ -1,4 +1,4 @@
-stage-5-frame-builder {
+stage-5-define-strata {
     .builder-stage-container,
     .builder-container {
         max-width: 600px;
@@ -28,6 +28,11 @@ stage-5-frame-builder {
         min-height:3em;
         text-align: center;
     }
+    .col{padding:5px 0}
+    .required{
+        background-color: #FCE5E3;
+        input{}
+    }
     .stage-name{
         text-align: center;
     }
@@ -54,5 +59,11 @@ stage-5-frame-builder {
     }
     .list{
         margin-bottom: 0;
+    }
+
+    .center{
+        input{
+            text-align: center;
+        }
     }
 }

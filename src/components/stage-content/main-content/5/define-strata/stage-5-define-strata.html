@@ -1,0 +1,31 @@
+<h4>Define strata</h4>
+
+<p>The final step is to specify the number or names of strata for each stage where stratification will be used. For example,
+    if you have chosen to stratify by gender you may wish to specify 'male' and 'female' strata</p>
+
+<ion-grid class="builder-container">
+    <ion-row class="row-headers">
+        <ion-col col-2>Stratification</ion-col>
+        <ion-col col-2>Number of Strata</ion-col>
+        <ion-col col class="left">Names of Strata</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let strataGroup of strataList">
+        <ion-col col-2>{{strataGroup}}</ion-col>
+        <ion-col col-2 class="center">
+            <ion-input type="number" (ionChange)="setStrataNumber($event,strataGroup)" [(ngModel)]="strata[strataGroup].number"></ion-input>
+        </ion-col>
+        <ion-col col>
+            <div *ngFor="let strataName of strata[strataGroup].names; let i=index">
+                <ion-item>
+                    <ion-input [placeholder]="'strata '+(i+1)" [(ngModel)]="strata[strataGroup].names[i].label" (focusout)="saveStrata()"></ion-input>
+                </ion-item>
+
+            </div>
+
+        </ion-col>
+
+    </ion-row>
+
+</ion-grid>
+
+<stage-complete stageNumber=5 [complete]="dataPrvdr.activeSurvey.stagesComplete[5]" text="Mark stage as complete"></stage-complete>

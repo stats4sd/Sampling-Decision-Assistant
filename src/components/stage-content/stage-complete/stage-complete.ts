@@ -19,6 +19,7 @@ export class StageCompleteComponent extends StagePage {
 
   ngOnInit(){
     // subscribe to form value changes to mark when section complete
+    this.checkSectionValid()
     this.formPrvdr.formGroup.valueChanges.subscribe(
       v=>{this.checkSectionValid(v)}
     )
@@ -57,7 +58,7 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 5: {
         console.log('evaluating section valid 5')
-        break
+        return true
       }
       case s == 6: {
         console.log('evaluating section valid 6')
@@ -70,7 +71,7 @@ export class StageCompleteComponent extends StagePage {
     }
   }
 
-  checkSectionValid(v) {
+  checkSectionValid(v?) {
     // initial function to throttle verification call to only run max once per 200ms to avoid multiple change detection calls
     const now = (new Date).getTime()
     if (now - this.lastCall > 300) {

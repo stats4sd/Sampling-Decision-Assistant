@@ -19,12 +19,13 @@ export class Stage5Component extends StagePage {
   ]
   builderStages: any = [];
   stageBuilt: any = {};
+  frameBuilderActiveSlide:number=0;
+  showStrataDefineSlide:boolean=false
 
   @ViewChild('frameBuilder') frameBuilder: Slides;
   frameBuilderIndex: number = 0
 
   ngAfterViewInit() {
-    console.log('framebuilder', this.frameBuilder)
     if (this.frameBuilder) {
       this.frameBuilder.lockSwipes(true)
     }
@@ -51,11 +52,20 @@ export class Stage5Component extends StagePage {
   }
   builderSlideChange() {
     this.dataPrvdr.saveSurvey(null, true)
+    this.frameBuilderActiveSlide=this.frameBuilder.getActiveIndex()
+    this.showStrataDefineSlide = this._showStrataDefineSlide()
   }
   buildStage(stageFormControl, stageIndex) {
     // get formgroup matching stage name to parentID
     let params = { stageFormGroup: stageFormControl, stageIndex: stageIndex }
     super.openModal('FrameBuilderPage', params)
+  }
+
+  _showStrataDefineSlide(){
+    for(let stage of this.form.value['q5.3']){
+      if(stage['q5.3.4.1']=='Yes'){return true}
+    }
+    return false
   }
 
 }

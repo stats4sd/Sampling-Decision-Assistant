@@ -288,6 +288,15 @@ export default
             "condition": "type:value, controlName:q5.3.4.1, value:Yes",
             "labelMultiple": null
         },
+        {
+            "isQuestion": "TRUE",
+            "controlName": "strata",
+            "type": "custom",
+            "label": "Specify the individual strata you will us",
+            "section": "Selecting the sampling units",
+            "condition": "type:value, controlName:q5.3.4.1, value:Yes",
+            "labelMultiple": null
+        },
         // {
         //     "isQuestion": "TRUE",
         //     "controlName": "q5.3.2",

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 // import ionic module if plan to use ionic components
 import { IonicModule } from 'ionic-angular';
-import {GeneralComponentsModule} from '../general/generalComponents.module';
-import {SurveyComponentsModule} from '../survey/survey-components.module'
+import { GeneralComponentsModule } from '../general/generalComponents.module';
+import { SurveyComponentsModule } from '../survey/survey-components.module'
 
 import { StageIntroComponent } from './intro-sections/stage-intro';
 import { StageCompleteComponent } from './stage-complete/stage-complete';
@@ -14,6 +14,7 @@ import { Stage5Component } from './main-content/5/stage-5';
 import { Stage5_FrameBuilderComponent } from './main-content/5/frame-builder/stage-5-frame-builder';
 import { Stage5_RecapComponent } from './main-content/5/recap/stage-5-recap';
 import { Stage5_DefineStagesComponent } from './main-content/5/define-stages/stage-5-define-stages';
+import { Stage5_DefineStrataComponent } from './main-content/5/define-strata/stage-5-define-strata'
 import { Stage6Component } from './main-content/6/stage-6';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
@@ -27,6 +28,7 @@ import { Stage6Component } from './main-content/6/stage-6';
         Stage5_FrameBuilderComponent,
         Stage5_RecapComponent,
         Stage5_DefineStagesComponent,
+        Stage5_DefineStrataComponent,
         Stage6Component,
         StageIntroComponent,
         StageCompleteComponent
@@ -45,6 +47,7 @@ import { Stage6Component } from './main-content/6/stage-6';
         Stage5_FrameBuilderComponent,
         Stage5_RecapComponent,
         Stage5_DefineStagesComponent,
+        Stage5_DefineStrataComponent,
         Stage6Component,
         StageIntroComponent,
         StageCompleteComponent

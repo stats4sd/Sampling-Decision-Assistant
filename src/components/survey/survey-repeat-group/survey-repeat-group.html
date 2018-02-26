@@ -3,7 +3,7 @@
 <div [ngSwitch]="displayMode">
     <!-- <div *ngSwitchCase="'individual'" [formGroupName]="repeatIndex"> -->
     <div *ngSwitchCase="'individual'">
-        <div class="group-heading" *ngIf="subFormGroup.value._parentID">{{subFormGroup.value._parentID}}</div>
+        <!-- <div class="group-heading" *ngIf="subFormGroup.value._parentID">{{subFormGroup.value._parentID}}</div> -->
         <div [formGroup]="subFormGroup">
             <survey-question *ngFor="let repeatQuestion of repeatQuestions" [formControlName]="repeatQuestion.controlName" [question]="repeatQuestion" [repeatFormGroup]="formGroup.controls[question.controlName].controls[repeatIndex]"></survey-question>
         </div>
