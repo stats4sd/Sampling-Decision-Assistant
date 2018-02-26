@@ -30,6 +30,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   @Input('showLabel') showLabel: boolean;
   @Input() set controlName(controlName: string) { this.question = this.formPrvdr.getQuestion(controlName) }
   @Input('repeatFormGroup') repeatFormGroup: FormGroup
+  @Input('formGroup') formGroup:FormGroup;
   @Output() onValueChange = new EventEmitter<any>();
   @ViewChild('textAreaInput') textAreaInput: ElementRef
   @ViewChild('saveMessage') saveMessage: ElementRef
@@ -97,6 +98,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   ngOnInit() {
     // check if should show question
+    this.setFormGroup()
     this.attachListeners()
     this.questionKey = this.question.controlName
     this._prepareDynamicText()
@@ -107,6 +109,18 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (this.question.type == "select") { this.generateSelectOptions() }
     if (this.question.type == "textMultiple") {
       this._generateMultipleValues()
+    }
+  }
+
+  setFormGroup(){
+    // automatically load repeat/specified/default formgroup in case not passed into question
+    if(this.repeatFormGroup){this.formGroup=this.repeatFormGroup}
+    else{
+      if(!this.formGroup){this.formGroup=this.formPrvdr.formGroup}
+    }
+    // check control and create new if doesn't exist
+    if(!this.formGroup.controls[this.question.controlName]){
+      this.formGroup.addControl(this.question.controlName,new FormControl(''))
     }
   }
 

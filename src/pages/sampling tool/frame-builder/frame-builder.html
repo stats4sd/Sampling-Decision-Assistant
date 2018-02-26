@@ -23,8 +23,12 @@
     <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.1','q5.3.4.2','q5.3.4.3']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
 
   </div>
-  <p *ngIf="stageFormGroup.value['q5.3.3']=='All'">
-    If you are selected all the units at this stage, it is likely that the sampling units in the previous stage can be considered
-    as clusters for the purpose of analysis. The Sampling Decision Assistant will include this in the summary of your sampling
-    scheme. </p>
+  <div *ngIf="stageFormGroup.value['q5.3.3']=='All'">
+    <p>
+      If you are selected all the units at this stage, it is likely that the sampling units in the previous stage can be considered
+      as clusters for the purpose of analysis. The Sampling Decision Assistant will include this in the summary of your sampling
+      scheme. </p>
+    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.3.1']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+  </div>
+
 </ion-content>

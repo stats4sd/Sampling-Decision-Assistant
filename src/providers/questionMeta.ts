@@ -257,6 +257,16 @@ export default
         },
         {
             "isQuestion": "TRUE",
+            "controlName": "q5.3.3.1",
+            "repeatGroup":"q5.3",
+            "type": "number",
+            "label": "How many units are there in the list? (If you are not sure make an estimate, this can be changed later)",
+            "section": "Selecting the sampling units",
+            "condition": "type:value, controlName:q5.3.3, value:All",
+            "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE",
             "controlName": "q5.3.4.1",
             "repeatGroup":"q5.3",
             "type": "select",
