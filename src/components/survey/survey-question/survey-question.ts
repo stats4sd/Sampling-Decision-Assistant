@@ -82,7 +82,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     // notify change through emitter also for tracking in repeat group questions
     this.onValueChange.emit(value)
     //console.log('formgroup', this.formPrvdr.formGroup)
-    this.dataPrvdr.saveSurvey(null, true)
+    this.dataPrvdr.backgroundSave()
     //***note - should add form value change subscribers */
     // e.g. this.formGroup.get(controlName).valueChanges.subscribe( x => console.log(x));
     // publish key-value pair in event picked up by data provider to update

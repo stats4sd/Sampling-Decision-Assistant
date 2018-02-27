@@ -110,7 +110,7 @@ export class StagePage {
     this.modalCtrl.create(component, params).present()
   }
   closeModal() {
-    this.dataPrvdr.saveSurvey()
+    this.dataPrvdr.backgroundSave()
     this.viewCtrl.dismiss()
   }
   scrollDown() {

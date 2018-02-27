@@ -85,7 +85,7 @@ export class StepByStepPage {
     modal.present()
   }
   save(){
-    this.dataPrvdr.saveSurvey()
+    this.dataPrvdr.backgroundSave()
   }
   pushPage(page){
     console.log('pushing page')

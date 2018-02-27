@@ -6,6 +6,7 @@
     </ion-item>
     <button ion-button (click)="addSamplingStage()" type="submit" [disabled]="!multipleTextInput">Add</button>
   </form>
+
   <!-- multiple list with optional drag-->
   <div style="margin:10px 0">
     <!-- drag drop for arrow format -->
@@ -50,10 +51,10 @@
     </div>
 
 
-    <!-- placeholder bottom for arrow format in q5 -->
-    <!-- <div>
-      <div *ngIf="formPrvdr.formGroup.controls[repeatControl].controls.length>2" style="margin-top:1em; margin-left:15px" icon-left>
-        <ion-icon name="reorder"></ion-icon> Drag and drop the stages to change the order</div>
-    </div> -->
+    <div *ngIf="formPrvdr.formGroup.controls[repeatControl].controls.length>2" style="margin-top:1em; margin-left:15px" icon-left>
+      You can use the
+      <ion-icon name="reorder" style="margin-left:5px"></ion-icon> handle to drag and change the order of stages
+    </div>
+
   </div>
 </div>

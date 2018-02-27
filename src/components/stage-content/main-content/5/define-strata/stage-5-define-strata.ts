@@ -12,16 +12,13 @@ export class Stage5_DefineStrataComponent extends Stage5Component {
   strataList:string[]
 
   ngOnInit() {
-    console.log('define strata init')
     this.preloadStrata()
     this.getListOfStrata(this.form.value['q5.3'])
     this.form.controls['q5.3'].valueChanges.subscribe(v => this.getListOfStrata(v))
   }
 
   preloadStrata(){
-    console.log('preloading strata',this.form.value.strata)
     if(this.form.value.strata!="" && this.form.value.strata!=undefined){
-      console.log('preloading',this.form.value.strata)
       this.strata=JSON.parse(this.form.value['strata'])
     }
   }
@@ -48,7 +45,6 @@ export class Stage5_DefineStrataComponent extends Stage5Component {
     let patch:any={}
     patch.strata=JSON.stringify(this.strata)
     this.form.patchValue(patch)
-    console.log('form',this.form)
   }
 
   getListOfStrata(v) {
@@ -64,8 +60,6 @@ export class Stage5_DefineStrataComponent extends Stage5Component {
         }
       }
       this.strataList=Object.keys(strataList)
-      console.log('strataList',this.strataList)
-      console.log('strata',this.strata)
     }
 
   }

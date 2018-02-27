@@ -1,19 +1,20 @@
 stage-5-define-strata {
+    
     .builder-stage-container,
     .builder-container {
         max-width: 600px;
-        margin:unset;
+        margin: unset;
     }
-    .build-stage{
+    .build-stage {
         min-height: 3em;
-        flex:1;
-        min-height:3em;
+        flex: 1;
+        min-height: 3em;
         text-align: center;
         align-items: center;
         display: flex;
         justify-content: center;
         font-weight: bold;
-        color: color($colors,primary)
+        color: color($colors, primary)
     }
     .row-headers {
         background-color: rgb(250, 250, 250);
@@ -22,26 +23,27 @@ stage-5-define-strata {
         text-align: center;
     }
     .row {
-        align-items: center;
-        //border-bottom: 1px solid rgb(232, 232, 232); 
-        border-bottom: 1px solid rgb(232, 232, 232); 
-        min-height:3em;
+        align-items: center; //border-bottom: 1px solid rgb(232, 232, 232); 
+        border-bottom: 1px solid rgb(232, 232, 232);
+        min-height: 3em;
         text-align: center;
     }
-    .col{padding:5px 0}
-    .required{
+    .col {
+        padding: 5px 0
+    }
+    .required {
         background-color: #FCE5E3;
-        input{}
+        input {}
     }
-    .stage-name{
+    .stage-name {
         text-align: center;
     }
-    .hover{
+    .hover {
         // add fade when background hover enabled (could use 'all' to apply to all transitions)
         transition: background-color .3s ease;
         cursor: pointer;
     }
-    .hover:hover{
+    .hover:hover {
         background-color: rgb(230, 247, 255);
         font-weight: bold;
     }
@@ -51,18 +53,16 @@ stage-5-define-strata {
     .reference-text {
         padding: 0!important
     }
-
-    .item{
+    .item {
         background-color: unset;
         font-size: small;
         border-bottom: unset;
     }
-    .list{
+    .list {
         margin-bottom: 0;
     }
-
-    .center{
-        input{
+    .center {
+        input {
             text-align: center;
         }
     }

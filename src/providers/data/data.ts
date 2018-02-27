@@ -15,6 +15,7 @@ export class DataProvider {
   public activeSurvey: any;
   public questionMeta = questionMeta;
   private _dbVersion = 1;
+  private isSaving:boolean=false
 
   constructor(
     public storage: Storage,
@@ -29,7 +30,25 @@ export class DataProvider {
     }
     console.log('loading saved projects')
     this.loadSavedSurveys()
-    this.events.subscribe('save', _ => this.saveSurvey())
+    //this.events.subscribe('save', _ => this.saveSurvey())
+    // save survey whenever value changes, includes throttle to prevent multiple
+    this.formPrvdr.formGroup.valueChanges.subscribe(_=>{
+      this.backgroundSave()
+    })
+  }
+  backgroundSave(){
+    // throttled save of survey, pulling values from master formgroup
+    if(!this.isSaving){
+      this.isSaving=true
+      setTimeout(_=>{
+        this.activeSurvey.values=this.formPrvdr.formGroup.value
+        this.saveSurvey(this.activeSurvey,true).then(res=>{
+          console.log('saved')
+          this.isSaving=false
+        })
+      },500)
+    }
+    
   }
 
   createNewSurvey(title: string, backgroundMode?: boolean) {
@@ -70,29 +89,26 @@ export class DataProvider {
           _ => {
             if (!backgroundMode) {
               this.showNotification('Imported Successfully')
-              resolve('saved')
             }
+            resolve('saved')
 
           })
       }
       else if (this.activeSurvey.title) {
-        console.log('saving survey', this.activeSurvey)
         let title = this.activeSurvey.title
         this.savedSurveys[title] = this.activeSurvey
         this.activeSurvey.values = this.formPrvdr.formGroup.value
         this.activeSurvey._dbVersion = this._dbVersion
-        console.log('saved surveys', this.savedSurveys)
         this.saveToStorage('savedSurveys', this.savedSurveys).then(
           _ => {
             if (!backgroundMode) {
               this.showNotification('Progress Saved')
-              resolve('saved')
             }
+            resolve('saved')
           }
         )
       }
       else {
-        console.log('need survey name', this.activeSurvey)
         resolve('saved')
       }
     })
