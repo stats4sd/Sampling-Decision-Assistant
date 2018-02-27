@@ -21,30 +21,37 @@
 
     <!-- build frame button -->
     <ion-col class="cell build-stage hover" (click)="buildStage(stageControl,i)" *ngIf="stageControl.value['q5.3.1']==''">
-
       <div icon-right>
-        Build frame
+        Make sampling decisions for stage
         <ion-icon name="arrow-forward"></ion-icon>
       </div>
     </ion-col>
 
-    <!-- built frame info -->
+    <!-- Built frame info -->
+
+    <!-- Frame -->
     <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
       <div>{{stageControl.value['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</div>
     </ion-col>
 
+    <!-- Units -->
     <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
-      <div>{{stageControl.value['q5.3.3']=='All' ? 'All Units' : 'Sample'}}</div>
+      <div *ngIf="stageControl.value['q5.3.3']=='All'">
+        <div>All Units</div><div class="sample-size">(n={{stageControl.value['q5.3.3.1']}})</div>
+      </div>
+      <div *ngIf="stageControl.value['q5.3.3']=='Sample'">Sample</div>
     </ion-col>
 
+    <!-- Stratification -->
     <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
-      <div *ngIf="stageControl.value['q5.3.4.1']=='No'">None</div>
+      <div *ngIf="stageControl.value['q5.3.4.1']!='Yes'"><ion-note>None</ion-note></div>
       <div *ngIf="stageControl.value['q5.3.4.1']=='Yes'">
         <div *ngFor="let strata of stageControl.value['q5.3.4.2']">
           {{strata}}
         </div>
       </div>
 
+    <!-- Edit button -->
     </ion-col>
     <ion-col col-1 *ngIf="stageControl.value['q5.3.1']!=''">
       <button ion-button icon-only clear (click)="buildStage(stageControl,i)"><ion-icon name="create"></ion-icon></button>

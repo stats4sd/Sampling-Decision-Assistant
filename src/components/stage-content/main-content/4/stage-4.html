@@ -11,7 +11,7 @@
     <survey-question-group section="At what level do you need to report these results" [filter]="['q4.1']" [showLabel]=true></survey-question-group>
 
     <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
-        <p>Specify the different levels that you wish to produce reports for (e.g. if you wish to produce seperate reports
+        <p>Specify the different levels that you wish to produce estimates for (e.g. if you wish to produce seperate estimates
             for camps A and B, you will likely need to specify the level 'camp')</p>
         <survey-question-group [showLabel]="false" section="At what level do you need to report these results" [filter]="['q4.2']"
             [showLabel]=true></survey-question-group>
