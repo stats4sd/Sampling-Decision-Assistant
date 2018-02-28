@@ -1,6 +1,16 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+## 0.8.0 (27th February 2018)
+
+Stage 5 - The logic for the most complex case scenarios (e.g. multiple stages with sampling and stratification at each stage) is up and ready for wider testing. This required a rewrite of how much of the data was handled to better track nested and linked variables, and provide easier creation of custom question interfaces. 
+
+Stage 6 - First draft of a sampling tree diagram is now available, linking to the data from stage 5. This will be built on in the upcoming updates to allow for allocation of sample sizes throughout all stages.
+
+Lots of bug fixes and minor style improvements (e.g. stage completion notifications for all stages, fewer double scroll bars, improvements for microsoft edge)
+
+Background save and load - all changes are now immediately saved and a draft survey can be recovered and resumed if not properly saved  
+
 ## 0.7.2 (14th February 2018)
 
 Stage 5 - further development of multi-stage building strategy (incomplete)

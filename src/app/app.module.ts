@@ -22,6 +22,7 @@ import { DecisionToolMenuComponent } from '../components/general/decision-tool-m
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp,
+      
       // {
       //locationStrategy: 'path'
       // }, 

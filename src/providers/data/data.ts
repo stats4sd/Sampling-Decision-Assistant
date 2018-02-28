@@ -28,9 +28,7 @@ export class DataProvider {
       stagesComplete: [null, false, false, false, false, false, false],
       title:'(unsaved project)'
     }
-    console.log('loading saved projects')
     this.loadSavedSurveys()
-    //this.events.subscribe('save', _ => this.saveSurvey())
     // save survey whenever value changes, includes throttle to prevent multiple
     this.formPrvdr.formGroup.valueChanges.subscribe(_=>{
       this.backgroundSave()
@@ -58,25 +56,21 @@ export class DataProvider {
       values: {},
       stagesComplete: [null, false, false, false, false, false, false]
     }
-    console.log('new survey created', this.activeSurvey)
     this.savedSurveys[title] = this.activeSurvey
     this.saveSurvey(null, backgroundMode);
   }
 
   deleteSurvey(title) {
-    console.log('deleting', title, this.savedSurveys)
     if (this.activeSurvey && this.activeSurvey.title == title) {
       this.activeSurvey = null
     }
     delete this.savedSurveys[title]
     if (!this.savedSurveys) { this.savedSurveys = {} }
-    console.log('saved surveys', this.savedSurveys)
     return this.saveToStorage('savedSurveys', this.savedSurveys)
   }
 
   loadSurvey(survey) {
     this.activeSurvey = survey
-    console.log('loading survey', survey)
     this.formPrvdr.initFormValues(survey.values)
   }
 
@@ -125,14 +119,12 @@ export class DataProvider {
   loadSavedSurveys() {
     this.getFromStorage('savedSurveys').then(
       res => {
-        console.log('saved surveys retrieved',res)
         this.savedSurveys = res ? res : {}
         // remove old format
         Object.keys(this.savedSurveys).forEach(k => {
           let survey = res[k]
           if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { delete this.savedSurveys[k] }
         })
-        console.log('surveys loaded', this.savedSurveys)
         // load testing survey by default if created for faster dev workflow //
         if (this.savedSurveys._testing) { this.loadSurvey(this.savedSurveys._testing) }
         else if (this.savedSurveys['(unsaved project)']) {
@@ -142,15 +134,12 @@ export class DataProvider {
         else {
           // else save new to '(unsaved project)'
           let d = new Date
-          console.log(d.toDateString)
           this.createNewSurvey('(unsaved project)', true)
         }
-        console.log('active survey', this.activeSurvey)
       }
     )
   }
   promptSurveyResume(survey) {
-    console.log('resume previous?')
     // give option to resume previous survey
     this.alertCtrl.create({
       title: 'Resume project?',
@@ -195,7 +184,6 @@ export class DataProvider {
   export() {
     // export as xlsx
     let rows = this.prepareExport()
-    console.log('active survey', this.activeSurvey)
     const ws_name = this.activeSurvey.title;
     const wb: WorkBook = { SheetNames: [], Sheets: {} };
     const ws: any = utils.json_to_sheet(rows);
@@ -237,7 +225,6 @@ export class DataProvider {
     // assumes data read in base64 format. Reads workbook data, runs prepare to convert back into correct format and saves to db
     let data = reader.result
     var workbook = read(data, { type: 'binary' });
-    console.log('workbook', workbook)
     let sheetName = workbook.SheetNames[0]
     let jsonArr = utils.sheet_to_json(workbook.Sheets[sheetName])
     let values = this.prepareImport(jsonArr)
@@ -267,12 +254,10 @@ export class DataProvider {
   prepareExport() {
     // iterate over json, where array object flatten. Currently bespoke for repeat groups (not generalised)
     let values = this.formPrvdr.formGroup.value
-    console.log('values', values)
     let json = {}
     for (let key in values) {
       if (values.hasOwnProperty(key)) { json[key] = values[key] }
     }
-    console.log('preparing export', json)
     let rows = []
     // prepare labels
     let labels = {}
@@ -310,7 +295,6 @@ export class DataProvider {
   }
   prepareImport(arr) {
     // inverse of above for importing data back in
-    console.log('stage 1', arr)
     let processed = {}
     arr.forEach((el, i) => {
       let id = el.id
@@ -318,7 +302,6 @@ export class DataProvider {
       if (val == "Not answered") { val = "" }
       // rebuild repeat group holder
       if (val == "repeat-group") {
-        console.log('rebuilding repeat group', val)
         processed[id] = []
       }
       // populate repeat group entries
@@ -338,7 +321,6 @@ export class DataProvider {
       // add all other data
       else { processed[id] = val }
     })
-    console.log('processed', processed)
     return processed
 
   }

@@ -18,7 +18,7 @@ The project is linked to a remote firebase server for deployment. Memebers of SS
 
 ## Build notes
 ### Updating changelog
-`pages/_changelog/changelog.ts` -> version number and date
+`pages/_changelog/version.ts` -> version number and date
 `pages/_changelog/changelog.md` -> changelog markdown
 `pages/_changelog/changelog.html` -> rendered html of changelog (currently manually generated)
 
@@ -46,3 +46,7 @@ if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouc
 
 ### Vis.JS
 External package vis.js is used for tree diagrams. Due to hammer.js conflicts it is not imported from npm and instead sits in the /assets/js folder. To update to latest version download and place in the folder.
+
+### ngx-image-viewer
+Currently only installed to show images from roadmap. Can remove alongside font awesome if not required in future.
+(font awesome loaded from index.html with files in assets/js/fontawesome)

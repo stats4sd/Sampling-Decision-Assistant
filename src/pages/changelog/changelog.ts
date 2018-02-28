@@ -20,6 +20,7 @@ export class ChangelogPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChangelogPage');
   }
+
   // tree diagram demo
   ngAfterViewInit() {
     // create an array with nodes

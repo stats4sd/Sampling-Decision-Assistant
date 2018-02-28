@@ -8,4 +8,12 @@ question-custom-strata-select {
     .list-header{
         margin-bottom: 0
     }
+
+    .item-md.item-checkbox-disabled ion-label{
+        opacity: 0.9!important;
+        text-decoration: line-through;
+    }
+    .checkbox-md.checkbox-disabled{
+        opacity: 0.3;
+    }
 }

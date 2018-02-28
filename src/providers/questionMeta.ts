@@ -255,36 +255,36 @@ export default
             "condition": "type:value, controlName:q5.3.1, value:Yes",
             "labelMultiple": null
         },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q5.3.3.1",
-            "repeatGroup":"q5.3",
-            "type": "number",
-            "label": "How many units are there in the list? (If you are not sure make an estimate, this can be changed later)",
-            "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.3, value:All",
-            "labelMultiple": null
-        },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q5.3.4.1",
-            "repeatGroup":"q5.3",
-            "type": "select",
-            "selectOptions": "Yes, No",
-            "label": "Do you need to use stratification at this stage?",
-            "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.3, value:Sample",
-            "labelMultiple": null
-        },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.3.1",
+        //     "repeatGroup":"q5.3",
+        //     "type": "number",
+        //     "label": "How many units are there in the list? (If you are not sure make an estimate, this can be changed later)",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.3, value:All",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q5.3.4.1",
+        //     "repeatGroup":"q5.3",
+        //     "type": "select",
+        //     "selectOptions": "Yes, No",
+        //     "label": "Do you want to use any stratification at this stage?",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.3, value:Sample",
+        //     "labelMultiple": null
+        // },
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.2",
             "repeatGroup":"q5.3",
             "type": "custom-strata-select",
             "selectOptions": "Yes, No",
-            "label": "What are the strata you wish to use during this stage?",
+            "label": "Can the stage be stratified by any of your reporting levels?",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.4.1, value:Yes",
+            "condition": "type:value, controlName:q5.3.3, value:All",
             "labelMultiple": null
         },
         {
@@ -293,9 +293,9 @@ export default
             "repeatGroup":"q5.3",
             "type": "select",
             "selectOptions": "Simple random sampling, Probability proportional to size",
-            "label": "<p>Within each strata, are you planning to select the sampling units using<br><br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
+            "label": "<p>Are you planning to select the sampling units using<br><br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.4.1, value:Yes",
+            "condition": "type:value, controlName:q5.3.3, value:Sample",
             "labelMultiple": null
         },
         {

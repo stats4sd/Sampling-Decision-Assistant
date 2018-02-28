@@ -3,7 +3,8 @@ note {
         padding:5px;
         display: flex;
         align-items: center;
-        background-color: rgba(128, 128, 128, 0.6)
+        background-color: rgba(128, 128, 128, 0.6);
+        margin:5px 0 20px 0;
     }
     .warning, .alert{
         background-color: rgba(250, 78, 78, 0.541)

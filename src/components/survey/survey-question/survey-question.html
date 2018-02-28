@@ -80,7 +80,7 @@
           </div>
 
           <!-- custom types -->
-          <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [preloadValue]="value" (onValueChange)="valueUpdated($event)"></question-custom-strata-select>
+          <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [formGroup]="formGroup" [repeatFormGroup]="repeatFormGroup" [preloadValue]="value" (onValueChange)="valueUpdated($event)"></question-custom-strata-select>
           <question-custom-stages-define *ngSwitchCase="'custom-stages-define'" (onValueChange)="valueUpdated($event)"></question-custom-stages-define>
           <!-- <question-base [question]="question" (onUpdate)="valueUpdated($event)"></question-base> -->
         </div>

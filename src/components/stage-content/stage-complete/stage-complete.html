@@ -4,7 +4,7 @@
     <ion-label *ngIf="text">{{text}}</ion-label>
     <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="dataPrvdr.activeSurvey.stagesComplete[stage.number]" (ionChange)="toggleCheckbox()"></ion-checkbox>
   </ion-item>
-  <button ion-button icon-right *ngIf="dataPrvdr.activeSurvey.stagesComplete[stageNumber]" (click)="nextStage()">
+  <button ion-button icon-right *ngIf="dataPrvdr.activeSurvey.stagesComplete[stageNumber] && !hideButton" (click)="nextStage()">
     Next Stage
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

@@ -1,6 +1,25 @@
 stage-6 {
-    .tree-diagram{
+    .tree-diagram {
         width: calc(100% - 50px);
-        height: 500px;
+        height: 300px;
+        background-color: rgba(97, 101, 103, 0.08);
+        border: 1px solid rgba(130, 148, 158, 0.4);
+    } 
+    // track color variables
+    .n1 {
+        border: #2B7CE9;
+        background: #91bfdb,
+    }
+    .n2 {
+        border: #f1f131;
+        background: #ffffbf,
+    }
+    .n3 {
+        border: #e25f21;
+        background: #f0b89e;
+        .highlight {
+            background: #f5e3da;
+            border: #a33f11
+        }
     }
 }

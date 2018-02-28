@@ -14,6 +14,7 @@ export class StageCompleteComponent extends StagePage {
   @Input('disabled') disabled: boolean
   @Input('stageNumber') stageNumber: number
   @Input('text') text: string;
+  @Input('hideButton') hideButton:boolean;
   lastCall: number = 0
   sectionValid: boolean = false
 
@@ -89,9 +90,7 @@ export class StageCompleteComponent extends StagePage {
     this.navCtrl.push('StagePage', { stageID: 'stage-' + next }).then(
       _ => {
         this.navCtrl.remove(this.navCtrl.length() - 2)
-        //this.dataPrvdr.saveSurvey()
       }
-
     )
   }
   toggleCheckbox() {

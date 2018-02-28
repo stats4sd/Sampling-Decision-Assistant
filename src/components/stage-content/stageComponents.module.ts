@@ -11,7 +11,7 @@ import { Stage2Component } from './main-content/2/stage-2';
 import { Stage3Component } from './main-content/3/stage-3';
 import { Stage4Component } from './main-content/4/stage-4';
 import { Stage5Component } from './main-content/5/stage-5';
-import { Stage5_FrameBuilderComponent } from './main-content/5/frame-builder-overview/stage-5-frame-builder';
+import { Stage5_FrameBuilderOverviewComponent } from './main-content/5/frame-builder-overview/stage-5-frame-builder-overview';
 import { Stage5_RecapComponent } from './main-content/5/recap/stage-5-recap';
 import { Stage5_DefineStagesComponent } from './main-content/5/define-stages/stage-5-define-stages';
 import { Stage5_DefineStrataComponent } from './main-content/5/define-strata/stage-5-define-strata'
@@ -25,7 +25,7 @@ import { Stage6Component } from './main-content/6/stage-6';
         Stage3Component,
         Stage4Component,
         Stage5Component,
-        Stage5_FrameBuilderComponent,
+        Stage5_FrameBuilderOverviewComponent,
         Stage5_RecapComponent,
         Stage5_DefineStagesComponent,
         Stage5_DefineStrataComponent,
@@ -44,7 +44,7 @@ import { Stage6Component } from './main-content/6/stage-6';
         Stage3Component,
         Stage4Component,
         Stage5Component,
-        Stage5_FrameBuilderComponent,
+        Stage5_FrameBuilderOverviewComponent,
         Stage5_RecapComponent,
         Stage5_DefineStagesComponent,
         Stage5_DefineStrataComponent,

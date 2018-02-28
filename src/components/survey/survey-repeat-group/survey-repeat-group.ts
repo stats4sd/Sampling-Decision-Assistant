@@ -14,7 +14,8 @@ export class SurveyRepeatGroupComponent {
   @Input('repeatIndex') repeatIndex: number;
   @Input('repeatFilter') repeatFilter: string[]
   @Input('repeatID') repeatID: string;
-  @Input('question') question: any
+  @Input('question') question: any;
+  @Input('showLabel') showLabel:any;
 
   repeatQuestions: any;
   displayMode: string;

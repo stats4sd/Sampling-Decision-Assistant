@@ -14,21 +14,34 @@
   <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.1']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
   <div>Note: this list will be the sampling frame for this stage</div>
   <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.2']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+
+  <note type="dev" *ngIf="stageFormGroup.value['q5.3.2']=='No - highlight the disadvantages and suggest ways of updating it'"><strong>Incomplete list</strong> - 
+  Here will include some information and advice on how to handle incomplete or outdated lists</note>
+
   <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.3']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
 
-  <div *ngIf="stageFormGroup.value['q5.3.3']=='Sample'">
-    <p>Stratification: Some explanation will be written about what it is with pointers to resources and the reasons why stratification
-      is used (reporting and efficiency) create some space for the explanation. Remember that when using stratification the
-      process of sampling is repeated independently within each stratum</p>
-    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.1','q5.3.4.2','q5.3.4.3']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+  <note type="dev" *ngIf="stageFormGroup.value['q5.3.1']=='No'"><strong>Building a list</strong> - More questions will follow here to help users determine a strategy for the building a suitable sampling
+    frame, such as through the use of key informants or area-based sampling</note>
 
-  </div>
+    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.3']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+
+  <note type="dev" *ngIf="stageFormGroup.value['q5.3.3']=='Sample'"><strong>Stratification</strong> - Some explanation will be written about what it is with pointers to resources and the reasons why stratification
+    is used (reporting and efficiency) create some space for the explanation. Remember that when using stratification the
+    process of sampling is repeated independently within each stratum</note>
+
   <div *ngIf="stageFormGroup.value['q5.3.3']=='All'">
     <p>
       If you are selected all the units at this stage, it is likely that the sampling units in the previous stage can be considered
       as clusters for the purpose of analysis. The Sampling Decision Assistant will include this in the summary of your sampling
       scheme. </p>
-    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.3.1']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+    
   </div>
+
+  <!-- Use of reporting domains  -->
+  <div *ngIf="stageFormGroup.value['q5.3.3']!='' || stageFormGroup.value['q5.3.1']=='No'">
+    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.2']" [repeatIndex]="stageRepeatIndex" [showLabel]="false"></survey-question-group>
+
+  </div>
+
 
 </ion-content>

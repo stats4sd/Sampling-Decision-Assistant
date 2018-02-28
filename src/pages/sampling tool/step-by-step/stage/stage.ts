@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Slides, Events, Navbar, ModalContr
 import { FormGroup } from '@angular/forms';
 import { DataProvider } from '../../../../providers/data/data';
 import { FormProvider } from '../../../../providers/form/form'
-import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
+// import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
 import animationStates from '../../../../providers/animationStates'
 
 

@@ -1,24 +1,34 @@
 <div class="question-container">
   <div style="display: flex;">
     <div>
-      <p *ngIf="reportingLevels!=''">Select any of the reporting levels you defined to use as strata</p>
-      <p *ngIf="reportingLevels==''">No reporting levels specified</p>
+      <p *ngIf="reportingLevels!=''">Can the
+        <strong>{{_parentID}}</strong> sampling units form strata to satisfy any of your reporting requirements?
+        <br> If yes select from the list below.</p>
+      <p *ngIf="reportingLevels==''">No reporting levels have been specified. This can be changed in section 4.</p>
       <ion-list *ngIf="reportingLevels!=''">
-        <ion-list-header>Reporting Levels</ion-list-header>
+        <ion-list-header>Reporting Level</ion-list-header>
         <ion-item *ngFor="let level of reportingLevels">
           <ion-label>{{level}}</ion-label>
-          <ion-checkbox [(ngModel)]="selected[level]" (ionChange)="strataChanged()"></ion-checkbox>
+          <ion-checkbox (ionChange)="selectLevel(level)" [(ngModel)]="selected[level]" [disabled]="alreadySelected[level]"></ion-checkbox>
         </ion-item>
       </ion-list>
-      <ion-list>
+    </div>
+  </div>
+</div>
+
+<!-- Old code snippets -->
+
+<!-- <ion-checkbox [(ngModel)]="selected[level]" (ionChange)="strataChanged()"></ion-checkbox> -->
+
+<!-- <ion-list>
         <ion-list-header>Additional Strata</ion-list-header>
         <ion-item *ngFor="let strata of customStrata">
           <ion-label>{{strata}}</ion-label>
           <ion-checkbox [(ngModel)]="selected[strata]" (ionChange)="strataChanged()"></ion-checkbox>
         </ion-item>
-      </ion-list>
-    </div>
-    <div>
+      </ion-list> -->
+
+<!-- <div>
       <p style="padding-left:22px">Specify any additional strata you wish to use for this stage using the box below</p>
       <div style="display: flex; padding:5px">
         <ion-item>
@@ -26,6 +36,4 @@
         </ion-item>
         <button ion-button (click)="addStrata()" type="submit">Add</button>
       </div>
-    </div>
-  </div>
-</div>
+    </div> -->

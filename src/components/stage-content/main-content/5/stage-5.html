@@ -12,7 +12,7 @@
         </ion-slide>
         <!-- multi-stage builder slide -->
         <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
-            <stage-5-frame-builder></stage-5-frame-builder>
+            <stage-5-frame-builder-overview></stage-5-frame-builder-overview>
         </ion-slide>
         <!-- define strata slide -->
         <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
@@ -29,7 +29,10 @@
             <ion-icon name="arrow-back"></ion-icon>
             Back
         </button>
-        <button ion-button icon-right (click)="nextStep()" *ngIf="frameBuilderActiveSlide < 2 || showStrataDefineSlide">Next
+        <button ion-button icon-right (click)="nextStep()" *ngIf="frameBuilderActiveSlide < 3">Next
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        <button ion-button icon-right (click)="nextStage()" *ngIf="frameBuilderActiveSlide >= 3 && dataPrvdr.activeSurvey.stagesComplete[5]">Next Stage
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
     </div>

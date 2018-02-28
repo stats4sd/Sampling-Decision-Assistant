@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { concat } from 'ngx-file-drop/node_modules/rxjs/operators/concat';
+// import { concat } from 'ngx-file-drop/node_modules/rxjs/operators/concat';
 
 @Component({
   selector: 'glossary-link',

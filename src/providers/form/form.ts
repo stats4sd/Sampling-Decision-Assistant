@@ -68,6 +68,7 @@ export class FormProvider {
       }
     })
     console.log('formgroup', this.formGroup)
+    this.events.publish('form:initComplete')
     return formGroup
   }
 

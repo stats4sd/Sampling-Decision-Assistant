@@ -34,6 +34,13 @@ export class Stage5Component extends StagePage {
   goBack() {
     this.navCtrl.pop()
   }
+  nextStage(){
+    this.navCtrl.push('StagePage', { stageID: 'stage-6'}).then(
+      _ => {
+        this.navCtrl.remove(this.navCtrl.length() - 2)
+      }
+    )
+  }
 
   nextStep() {
     this.frameBuilder.lockSwipes(false)

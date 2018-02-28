@@ -9,7 +9,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 export class Stage5_DefineStrataComponent extends Stage5Component {
 
   strata: any = {}
-  strataList:string[]
+  strataList: string[]
 
   ngOnInit() {
     this.preloadStrata()
@@ -17,33 +17,33 @@ export class Stage5_DefineStrataComponent extends Stage5Component {
     this.form.controls['q5.3'].valueChanges.subscribe(v => this.getListOfStrata(v))
   }
 
-  preloadStrata(){
-    if(this.form.value.strata!="" && this.form.value.strata!=undefined){
-      this.strata=JSON.parse(this.form.value['strata'])
+  preloadStrata() {
+    if (this.form.value.strata != "" && this.form.value.strata != undefined) {
+      this.strata = JSON.parse(this.form.value['strata'])
     }
   }
 
-  setStrataNumber(e,strataName) {
+  setStrataNumber(e, strataName) {
     let strataNames = {}
     // push new name entries
-    for(let i=0;i<e.value;i++){
-      if(!this.strata[strataName].names[i]){
-        this.strata[strataName].names.push({label:''})
+    for (let i = 0; i < e.value; i++) {
+      if (!this.strata[strataName].names[i]) {
+        this.strata[strataName].names.push({ label: '' })
       }
     }
     // remove additional names when decreased
     let l = this.strata[strataName].names.length
     let target = e.value
-    let removeCount = l-target
-    this.strata[strataName].names.splice(target,l-target)
+    let removeCount = l - target
+    this.strata[strataName].names.splice(target, l - target)
     this.saveStrata()
   }
 
-  saveStrata(){
+  saveStrata() {
     // stringify result and save as 'strata' on formgroup (not using standard question interaction for simplicity)
-    if(!this.form.value.strata){this.form.addControl('strata',new FormControl(''))}
-    let patch:any={}
-    patch.strata=JSON.stringify(this.strata)
+    if (!this.form.value.strata) { this.form.addControl('strata', new FormControl('')) }
+    let patch: any = {}
+    patch.strata = JSON.stringify(this.strata)
     this.form.patchValue(patch)
   }
 
@@ -52,14 +52,14 @@ export class Stage5_DefineStrataComponent extends Stage5Component {
     if (v) {
       let strataList = {}
       for (let stage of v) {
-        if (stage['q5.3.4.2'] != '') {
-          for (let strata of stage['q5.3.4.2']) {
-            strataList[strata] = true
-            if(!this.strata[strata]){this.strata[strata]={names:[]}}
-          }
+        let strata = stage['q5.3.4.2']
+        if (strata && strata != '') {
+          strataList[strata] = true
+          if (!this.strata[strata]) { this.strata[strata] = { names: [] } }
         }
       }
-      this.strataList=Object.keys(strataList)
+      this.strataList = Object.keys(strataList)
+      console.log('strata list',this.strataList)
     }
 
   }

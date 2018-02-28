@@ -1,11 +1,12 @@
-<h4>Define Strata</h4>
+<h4>Define Reporting Level Classifications</h4>
 
-<p>The final step in this stage is to specify the number and names of strata for each stage where stratification will be used. For example,
-    if you have chosen to stratify by gender you may wish to specify seperate 'male' and 'female' strata</p>
+<p>The final step in this stage is to specify the number and names of classifications used in each of your reporting levels.
+    <br>For example, if you wish to report on seperate geographical regions you should specify the number of regions and your
+    preferred way to denote them.</p>
 
 <ion-grid class="builder-container">
     <ion-row class="row-headers">
-        <ion-col col-2>Strata</ion-col>
+        <ion-col col-2>Reporting Level</ion-col>
         <ion-col col-2>Number of Classifications</ion-col>
         <ion-col col class="left">Names of Classifications</ion-col>
     </ion-row>
@@ -28,4 +29,4 @@
 
 </ion-grid>
 
-<stage-complete stageNumber=5 [complete]="dataPrvdr.activeSurvey.stagesComplete[5]" text="Mark stage as complete"></stage-complete>
+<stage-complete stageNumber=5 [complete]="dataPrvdr.activeSurvey.stagesComplete[5]" text="Mark stage as complete" hideButton="true"></stage-complete>
