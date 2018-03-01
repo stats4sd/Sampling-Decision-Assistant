@@ -65,7 +65,7 @@
     </ion-col>
 
     <!-- Edit button -->
-    <div class="edit-button-container">
+    <div class="edit-button-container" *ngIf="stageControl.value['q5.3.1']!=''">
       <div class="edit-button" *ngIf="stageControl.value['q5.3.1']!=''" (click)="buildStage(stageControl,i)">
         <button ion-button icon-left clear >
           <ion-icon name="create"></ion-icon>Edit

@@ -1,63 +1,60 @@
 export default {
-    // n1 - blue to be sampled
-    n1: {
+    //blue to be sampled
+    samplingUnit: {
         color: {
             border: '#2B7CE9',
             background: '#91bfdb',
         },
         shape: "ellipse",
     },
-    // n2 - yellow reporting level but not specified
-    n2: {
-        color: {
-            border: '#f1f131',
-            background: '#ffffbf',
-        },
-        shape: "box",
-    },
-    // n3 - reporting level size specified
-    n3: {
+  
+    reportingLevel: {
         color: {
             border: '#e25f21',
             background: '#f0b89e',
+            highlight: {
+                background: '#f5e3da',
+                border: '#e25f21'
+            }
+        },
+        shape: "box",
+    },
+    sampleSize: {
+        color: {
+            border: '#2B7CE9',
+            background: '#e0f3f8',
+            highlight: {
+                background: '#fff7da',
+                border: '#2B7CE9'
+            }
+        },
+        shape: "box",
+    },
+    popSize: {
+        color: {
+            border: '#e25f21',
+            background: '#F3F3F3',
             highlight:{
-                background:'#f5e3da',
+                background:'#fff7da',
                 border:'#e25f21'
             }
         },
-        shape: "box",
-    },
-    // n1 title - blue to be sampled
-    n1t: {
-        color: {
-            border: '#2B7CE9',
-            background: 'rgba(255,255,255,0.8)',
-            highlight:{
-                background:'#fff7da',
-                border:'#2B7CE9'
-            }
-        },
-        shape: "box",
-    },
-    // n2 title - 
-    n2t: {
-        color: {
-            border: '#f1f131',
-            background: '#ffffbf',
-        },
         shape: "text",
+        margin:{
+            left:50,
+            bottom:50
+        }
     },
-    // n3 title - reporting level size specified
-    n3t: {
+    stageTitle: {
         color: {
             border: '#e25f21',
             background: '#ffffff',
-            highlight:{
+            highlight: {
                 background: '#fff7da',
-                border:'#e25f21'
+                border: '#e25f21'
             }
         },
-        shape: "box",
+        shape: "ellipse",
     },
 
     nodesDefault: {

@@ -95,23 +95,8 @@ export class StageCompleteComponent extends StagePage {
   }
   toggleCheckbox() {
     console.log('toggling checkbox', this.dataPrvdr.activeSurvey.stagesComplete[this.stage.number])
-    if(this.stage.number==3){this._patchSection3()}
+    //if(this.stage.number==3){this._patchSection3()}
     this.dataPrvdr.backgroundSave()
   }
-  _patchSection3() {
-    let text = this.form.value['q3.1']
-    if (this.form.value['q3.2']) {
-      text = text + " located in " + this.form.value['q3.2']
-    }
-    if (this.form.value['q3.3']) {
-      text = text + " during " + this.form.value['q3.3']
-    }
-    if (this.form.value['q3.4']) {
-      text = text + " and " + this.form.value['q3.4']
-    }
-    else { text = "" }
-    let patch = {}
-    patch['q3.5'] = text
-    this.form.patchValue(patch)
-  }
+  
 }

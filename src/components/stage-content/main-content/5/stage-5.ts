@@ -10,13 +10,6 @@ import { FormArray, FormGroup } from '@angular/forms';
 })
 export class Stage5Component extends StagePage {
 
-
-  infoProvided = [
-    { heading: 'Main Objective', image: '', formControl: 'q1.3', stage: 'stage-1' },
-    { heading: 'Key Indicator', image: '', formControl: 'q2.1.1', stage: 'stage-2' },
-    { heading: 'Sampling Unit', image: '', formControl: 'q3.5', stage: 'stage-3' },
-    { heading: 'Reporting Level', image: '', formControl: 'q4.3', stage: 'stage-4' },
-  ]
   builderStages: any = [];
   stageBuilt: any = {};
   frameBuilderActiveSlide:number=0;

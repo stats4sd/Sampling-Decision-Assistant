@@ -1,8 +1,32 @@
 <div class="slide-content">
-    <h4>Allocating resources</h4>
-    <note type='dev'>Section to be built, this will incorporate the structures built in section 5 and options to help specify sample sizes
-        distributed over the stages</note>
-</div>
+    <ion-slides #stageSlides class="stage-6-slides" (ionSlideDidChange)="builderSlideChange()">
+        <!-- recap slide -->
+        <ion-slide>
+            <h4>Allocating resources</h4>
+            <p>The final step in this process is to determine the number of units that should be sampled at every stage in the process</p>
+            <p>The results will be based the hierarchy of sampling stages and reporting levels that you have specified, alongside </p>
+            <tree-diagram></tree-diagram>
+        </ion-slide>
 
-<div>Diagram</div>
-<div id="mynetwork" class="tree-diagram"></div>
+        <ion-slide>
+            <note type='dev'>Section to be built, this will incorporate the structures built in section 5 and options to help specify sample
+                sizes distributed over the stages</note>
+        </ion-slide>
+    </ion-slides>
+
+
+    <!-- Next and back buttons -->
+    <div style="display: flex; justify-content:space-between; padding-bottom:20px">
+        <button ion-button icon-left (click)="lastStep()" [disabled]="stageSlidesIndex==0" [style.opacity]="stageSlidesIndex==0 ? 0 : 1">
+            <ion-icon name="arrow-back"></ion-icon>
+            Back
+        </button>
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex < 3">Next
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        <button ion-button icon-right (click)="nextStage()" *ngIf="stageSlidesIndex >= 3 && dataPrvdr.activeSurvey.stagesComplete[5]">Next Stage
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </div>
+
+</div>
