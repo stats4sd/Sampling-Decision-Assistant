@@ -8,6 +8,7 @@ import stage3Resources from './data/stage-3-resources'
 import stage4Resources from './data/stage-4-resources'
 import stage5Resources from './data/stage-5-resources'
 import stage6Resources from './data/stage-6-resources'
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'resources',
@@ -23,9 +24,10 @@ export class ResourcesComponent {
   questions: any[] = []
   relevant: string = "N/A"
 
-  constructor(private events: Events) {
+  constructor(private events: Events, private sanitizer: DomSanitizer) {
     this.events.unsubscribe('help:clicked')
     this.events.subscribe('help:clicked', relevant => this.showRelevant(relevant))
+    console.log('location', location.host, location)
   }
 
   setResources(stageResources: any) {
@@ -39,7 +41,6 @@ export class ResourcesComponent {
   }
 
   viewResource(index: number, showFormat?: string) {
-
     // select format and toggle expand/contract on question
     let q = this.questions[index]
     if (showFormat) {
@@ -50,12 +51,21 @@ export class ResourcesComponent {
       if (!q.showFormat) { q.showFormat = this.chooseDefaultFormat(q) }
       q.expanded = !q.expanded
     }
+    console.log('q', q)
   }
   chooseDefaultFormat(q) {
     let format
-    if (q.video) { return 'video' }
-    else if (q.audio) { return 'audio' }
-    else { return 'text' }
+    if (q.audio) {
+      q.audioUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.audio)
+      format= 'audio'
+    }
+    if (q.video) {
+      // set video url to play hosted video (note, will need diff method if on mobile device)
+      q.videoUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.video)
+      format= 'video'
+    }
+    else { format= 'text' }
+    return format
   }
 
   showRelevant(relevant) {

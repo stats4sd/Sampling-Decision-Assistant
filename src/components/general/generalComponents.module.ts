@@ -10,7 +10,6 @@ import { NoteComponent } from './note/note';
 import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
 import { ResourcesComponent } from './resources/resources';
 import { HelpIconComponent} from './help-icon/help-icon'
-import { ResourceDetailComponent } from './resources/resource-detail/resource-detail';
 
 // additional video player component used by resource (could split)
 import {VgCoreModule} from 'videogular2/core';
@@ -28,7 +27,6 @@ import {VgBufferingModule} from 'videogular2/buffering';
         NoteComponent,
         TreeDiagramComponent,
         ResourcesComponent,
-        ResourceDetailComponent,
         HelpIconComponent
     ],
     imports: [
@@ -47,7 +45,6 @@ import {VgBufferingModule} from 'videogular2/buffering';
         NoteComponent,
         TreeDiagramComponent,
         ResourcesComponent,
-        ResourceDetailComponent,
         HelpIconComponent
     ]
 })

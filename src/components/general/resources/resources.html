@@ -16,23 +16,33 @@
         <div style="flex:1" (click)="viewResource(i)"></div>
       </div>
       <div class="answer-text" *ngIf="question.expanded && question.showFormat=='text'" [@animationState]="'expandIn'" [innerHtml]="question.a"></div>
-      <div class="answer-audio" *ngIf="question.expanded && question.showFormat=='audio'" [@animationState]="'expandIn'">Audio here</div>
+      <div class="answer-audio" *ngIf="question.expanded && question.showFormat=='audio'" [@animationState]="'expandIn'">
+        <audio controls>
+          <source [src]="question.audioUrl" type="audio/mp3">
+          <p>Your browser doesn't support HTML5 audio. Here is a
+            <a [href]="audioUrl">link to the audio</a> instead.</p>
+        </audio>
+      </div>
       <div class="answer-video" *ngIf="question.expanded && question.showFormat=='video'" [@animationState]="'expandIn'">
-          <vg-player class="video-player">
-              <vg-controls>
-                  <vg-play-pause><ion-icon name="play"></ion-icon></vg-play-pause>
-                  <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-                  <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-                  <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-                  <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-                  <vg-mute></vg-mute>
-                  <vg-volume></vg-volume>
-                  <!-- <vg-fullscreen></vg-fullscreen> -->
-              </vg-controls>
-              <video [vgMedia]="media" #media id="singleVideo" preload="auto" >
-                  <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
-              </video>
-          </vg-player>
+        <vg-player class="video-player">
+          <vg-controls>
+            <vg-play-pause>
+              <ion-icon name="play"></ion-icon>
+            </vg-play-pause>
+            <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+            <vg-scrub-bar>
+              <vg-scrub-bar-current-time class="video-time-bar"></vg-scrub-bar-current-time>
+            </vg-scrub-bar>
+            <!-- <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display> -->
+            <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+            <vg-mute></vg-mute>
+            <vg-volume class="video-volume-control"></vg-volume>
+            <!-- <vg-fullscreen></vg-fullscreen> -->
+          </vg-controls>
+          <video [vgMedia]="media" #media id="singleVideo" preload="auto">
+            <source [src]="question.videoUrl" type="video/mp4">
+          </video>
+        </vg-player>
       </div>
     </ion-item>
   </ion-list>

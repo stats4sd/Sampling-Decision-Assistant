@@ -4,8 +4,8 @@ export default {
         Q1: {
             relevant: ['q1.1'],
             tags: ['estimation'],
-            video: "test",
-            audio: "test",
+            video: "Q1.mp4",
+            audio: "Q1.mp3",
             q: "Can you explain the difference between studies that deal with estimation of population characteristics and studies to compare interventions?",
             a: `<p>In studies that deal with estimation of population characteristics, we are interested in finding out something about the population as it is. We do not intervene to change the conditions of any of the members of the population for the purposes of the study.</p>
         <p>In these cases we need to decide how to take samples from the population, and the aim of the design (that is the set of decisions that are made) is to &nbsp;estimate the value and variability of indicators of interest. Typical examples of this are the profiling exercises that are carried out on refugee or internally displaced populations. In these cases the design principles that apply are those related to sampling methods.</p>
@@ -19,7 +19,7 @@ export default {
             relevant: ['q1.1'],
             tags: ['estimation'],
             video: null,
-            audio: null,
+            audio: "Q2.mp3",
             q: "Where are baseline versus end-line comparisons in this distinction?",
             a: `<p>Baselines and endlines require establishing the values of a set of indicators in a population at two particular points in time: baseline and endline. Often these characterisations require a process of sampling at each of those points. It makes sense to develop a good sampling design for a baseline so that efficient estimates are possible. Baseline and end-line designs should, whenever possible, have as similar sampling designs as possible so as to allow better comparisons.</p>
         <p>Sometimes endline and baseline comparisons also involve the study of intervention and control sites. In those cases, there are issues about how realistic the control or comparison sites may be, but if we can assume that the &ldquo;control subset&rdquo; of the population provides a good countrefactual, then a good sampling design would be of benefit to the characterisation of the intervened and control populations &ndash; both at baseline and endline. This tool is intended to help users design sampling processes that can be useful in those situations.</p>`
@@ -28,7 +28,7 @@ export default {
             relevant: ['q1.2'],
             tags: ['estimation'],
             video: null,
-            audio: null,
+            audio: "Q3.mp3",
             q: "What is a representative sample?",
             a: `<p>It is a sample that can be used to make reliable statements about the whole population. That means that the process of selecting the sample must have safeguards that ensure that we are able to:</p>
         <ul>
@@ -46,7 +46,7 @@ export default {
             relevant: ['q1.2'],
             tags: ['estimation'],
             video: null,
-            audio: null,
+            audio: "Q4.mp3",
             q: "When do I need to use weights: (video, not audio)",
             a: `<p>Inverse probability weighting</p>`
         },
@@ -54,7 +54,7 @@ export default {
             relevant: ['q1.2'],
             tags: ['estimation'],
             video: null,
-            audio: null,
+            audio: "Q5.mp3",
             q: "When do you need a representative sample?",
             a: `<p>A representative sample is needed when the results are going to be used to make statements about the overall population. In those cases, it is important to be able to say what is the value of estimate of interest and what is the margin of error in the estimation. Representative, probability based samples, allow the estimation of the characteristic of interest and to establish the margin of error.</p>
         <p>The contrast is with samples that cannot be said to be representative, and that provide information only about the elements that are included in the sample. In practice, the same arithmetic operations that are carried out on the data from a representative sample can be carried out using the data from a non-representative sample. The difference is in whether we can use the resulting estimate to make reliable inferences. The risk of making inferences from non-representative samples is that our estimates may be subject to unknown biases and we have no way to quatify the margins of error. The latter is due to the fact that statistical theory does not apply to non-representative samples. However, the use of non-representative samples is sometimes necessary when it is impossible to draw a representative sample. In those situations they are better than no information at all.</p>`
@@ -63,7 +63,7 @@ export default {
             relevant: ['q1.2'],
             tags: ['estimation'],
             video: null,
-            audio: null,
+            audio: "Q6.mp3",
             q: "Are there any cases when we don’t need a representative sample?",
             a: `<p>One obvious case is when the population of interest is small and we are able to get information from each element of the population. In these cases a census is possible and it would be better, and probably not much more difficult or expensive, than a representative sample.</p>
         <p>In general a representative sample would be more desirable than a non-representative sample when the objective is to make inferences about the population. However in some cases it is not possible to go through the process of getting a representative sample and we need to use non-representative samples.</p>
@@ -74,7 +74,7 @@ export default {
             relevant: ['q1.2'],
             tags: ['estimation'],
             video: null,
-            audio: null,
+            audio: "Q7.mp3",
             q: "What are the limitations of results that come from a non-representative sample?",
             a: `<p>The main limitations are that it is difficult to ensure and demonstrate that the results are not biased and that there is no reliable way to estimate the margin of error of the estimates. Often people ignore this, and take results from non-representative samples with the same level of trust as if they came from representative samples. The problem is that such information carries an unknown level of risk, and may lead to ill informed decisions.</p>`
         },
@@ -92,10 +92,6 @@ export default {
         <li>What else?</li>
         </ol>`
         },
-        Q9:{
-            q:"Demo Question"
-        }
-
     },
 
     QTemplate: {

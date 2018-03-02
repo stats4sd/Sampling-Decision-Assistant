@@ -60,6 +60,17 @@ resources {
         width:675px;
         height: 450px;
     }
+    .video-time-bar{
+        background-color: white;
+        .background{
+            // this is actually the bar
+            background-color: color($colors,primary);
+            border:1px solid color($colors,primary);
+        }
+    }
+    .video-volume-control{
+        margin-right: 10px;
+    }
 
 
 }
