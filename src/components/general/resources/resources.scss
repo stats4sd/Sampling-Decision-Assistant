@@ -8,12 +8,17 @@ resources {
         cursor: pointer;
     }
     .question-text{
-        margin-bottom: 1em;
-        white-space: normal;
+        padding-bottom: 1em;
+        white-space: pre-line;
+
     }
     .answer-text{
         padding: 5px;
-        font-size: small
+        white-space: pre-line;
+        cursor: text;
+    }
+    p{
+        user-select: text
     }
     .expanded{
         background-color: #FFEED1;
@@ -21,4 +26,40 @@ resources {
             font-weight:bold
         }
     }
+    .relevant-question{
+        position: absolute;
+        left:6px;
+        font-weight: bold;
+        margin-top:0px;
+    }
+    .answer-display-options{
+        display: flex;
+    }
+    ul{
+        margin:0;
+        color:#666;
+        // line-height: 1em;
+    }
+    .selected, .selected:hover{
+        background-color: color($colors,primary)!important;
+        color: white
+    }
+
+    // make all text consistent
+    .answer-text, p{
+        font-size: small!important;
+        line-height: 1.4em!important;
+    }
+    ul{
+        margin-top:-1.4em;
+        margin-bottom:-1.4em;
+    }
+
+    // temp - sizing for video, needs to be tweaked for mobile
+    .video-player, .answer-video, video{
+        width:675px;
+        height: 450px;
+    }
+
+
 }

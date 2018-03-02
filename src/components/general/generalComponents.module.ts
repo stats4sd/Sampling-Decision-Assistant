@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 // import ionic module if plan to use ionic components
 import { IonicModule } from 'ionic-angular';
 
-
 import { IntroductionComponent } from './introduction/introduction';
 import { GlossaryLinkComponent } from './glossary/glossary-link/glossary-link';
 import { GlossaryComponent } from './glossary/glossary';
@@ -11,7 +10,13 @@ import { NoteComponent } from './note/note';
 import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
 import { ResourcesComponent } from './resources/resources';
 import { HelpIconComponent} from './help-icon/help-icon'
+import { ResourceDetailComponent } from './resources/resource-detail/resource-detail';
 
+// additional video player component used by resource (could split)
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -23,10 +28,16 @@ import { HelpIconComponent} from './help-icon/help-icon'
         NoteComponent,
         TreeDiagramComponent,
         ResourcesComponent,
+        ResourceDetailComponent,
         HelpIconComponent
     ],
     imports: [
         IonicModule,
+        // additional video player component
+        VgCoreModule,
+        VgControlsModule,
+        VgOverlayPlayModule,
+        VgBufferingModule
     ],
     exports: [
         IntroductionComponent,
@@ -36,6 +47,7 @@ import { HelpIconComponent} from './help-icon/help-icon'
         NoteComponent,
         TreeDiagramComponent,
         ResourcesComponent,
+        ResourceDetailComponent,
         HelpIconComponent
     ]
 })

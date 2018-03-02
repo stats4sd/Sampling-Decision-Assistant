@@ -1,10 +1,39 @@
 <!-- Generated template for the ResourcesComponent component -->
-<div *ngIf="resources">
+<div>
   <h2>Key Questions</h2>
   <ion-list>
-    <ion-item *ngFor="let question of resources.questions; let i=index" (click)="expandToggle(i)" [ngClass]="expanded[i] ? 'expanded' : 'contracted'">
-      <div class="question-text" >{{question.q}}</div>
-      <div class="answer-text" *ngIf="expanded[i]" [@animationState]="'expandIn'">{{question.a}}</div>
+    <ion-item *ngFor="let question of questions; let i=index" [ngClass]="question.expanded ? 'expanded' : 'contracted'">
+      <!-- <div class="relevant-question" *ngIf="question.relevant && question.relevant.indexOf(relevant)>-1">*</div> -->
+      <div class="question-text" [innerHtml]="question.q" (click)="viewResource(i)"></div>
+      <div class="answer-display-options">
+        <button outline ion-button icon-left *ngIf="question.a" (click)="viewResource(i,'text')" [class.selected]="question.expanded && question.showFormat=='text'">
+          <ion-icon name="list"></ion-icon>Text</button>
+        <button outline ion-button icon-left *ngIf="question.audio" (click)="viewResource(i,'audio')" [class.selected]="question.expanded && question.showFormat=='audio'">
+          <ion-icon name="volume-up"></ion-icon>Audio</button>
+        <button outline ion-button icon-left *ngIf="question.video" (click)="viewResource(i,'video')" [class.selected]="question.expanded && question.showFormat=='video'">
+          <ion-icon name="logo-youtube"></ion-icon>Video</button>
+        <note type="dev" *ngIf="!question.a">Coming soon!</note>
+        <div style="flex:1" (click)="viewResource(i)"></div>
+      </div>
+      <div class="answer-text" *ngIf="question.expanded && question.showFormat=='text'" [@animationState]="'expandIn'" [innerHtml]="question.a"></div>
+      <div class="answer-audio" *ngIf="question.expanded && question.showFormat=='audio'" [@animationState]="'expandIn'">Audio here</div>
+      <div class="answer-video" *ngIf="question.expanded && question.showFormat=='video'" [@animationState]="'expandIn'">
+          <vg-player class="video-player">
+              <vg-controls>
+                  <vg-play-pause><ion-icon name="play"></ion-icon></vg-play-pause>
+                  <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+                  <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+                  <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                  <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+                  <vg-mute></vg-mute>
+                  <vg-volume></vg-volume>
+                  <!-- <vg-fullscreen></vg-fullscreen> -->
+              </vg-controls>
+              <video [vgMedia]="media" #media id="singleVideo" preload="auto" >
+                  <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
+              </video>
+          </vg-player>
+      </div>
     </ion-item>
   </ion-list>
   <h2>Example Cases</h2>
