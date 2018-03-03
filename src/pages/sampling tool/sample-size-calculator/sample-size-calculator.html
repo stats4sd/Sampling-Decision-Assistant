@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Sample Size Calculator</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>Close</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <note type='dev'>
+    <p>The tool currently functions seperately from the app and requires all necessary information to be manually input. In the
+    future they will be better integrated. for now here are the variables calculated:</p>
+
+    <table >
+        <tr>
+          <th>Variable</th>
+          <th>Value</th> 
+        </tr>
+        <tr *ngFor="let v of calculatorVariables">
+          <td>{{v.name}}</td>
+          <td>{{v.val}}</td> 
+        </tr>
+        
+      </table>
+
+    <div >
+
+    </div>
+  
+  </note>
+  <iframe class="calculator-iframe" src="https://shiny.stats4sd.org/UNHCR_Sample_Assistant"></iframe>
+
+</ion-content>

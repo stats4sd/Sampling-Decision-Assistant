@@ -43,7 +43,7 @@ export class TreeDiagramComponent {
       this.stages = {}
       this.nodes = []
       // dev
-      this.showInputNodes = true
+      //this.showInputNodes = true
 
       let tierIndex = 1
       formValue['q5.3'].forEach((stage, i) => {
@@ -56,11 +56,11 @@ export class TreeDiagramComponent {
         let stageNodes = []
 
         // case sample
-        if (stage['q5.3.3'] == 'Sample') {
-          this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
-        }
+        // if (stage['q5.3.3'] == 'Sample') {
+        //   this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
+        // }
         // case all units selected
-        else if (stage['q5.3.3'] == 'All') {
+        // else if (stage['q5.3.3'] == 'All') {
           // - no reporting level (size uncertain but should be specified)
           if (!stage['q5.3.4.2'] || stage['q5.3.4.2'] == '') {
             this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
@@ -82,10 +82,10 @@ export class TreeDiagramComponent {
             }
             this.stages[tierIndex] = stageNodes
           }
-        }
-        else {
-          console.log('no method available for stage', stage)
-        }
+        // }
+        // else {
+        //   console.log('no method available for stage', stage)
+        // }
         // add number node
         if (this.showInputNodes) { 
           tierIndex++
@@ -230,11 +230,18 @@ export class TreeDiagramComponent {
         improvedLayout: true,
         hierarchical: {
           enabled: true,
-          levelSeparation: 50,
+          levelSeparation: 75,
           sortMethod: 'directed',
           edgeMinimization: true,
         }
       },
+      nodes:{
+        widthConstraint:{
+          minimum:20,
+          maximum:150
+        },
+        heightConstraint:20
+      }
 
     };
 

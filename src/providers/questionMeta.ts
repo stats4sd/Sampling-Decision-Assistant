@@ -252,7 +252,7 @@ export default
             "selectOptions": "Sample, All",
             "label": "Are you planning to take a sample from the list or are you planning to use all units in this stage?",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.1, value:Yes",
+            "condition": "type:prerequisite, controlName:q5.3.1",
             "labelMultiple": null
         },
         // {
@@ -284,7 +284,7 @@ export default
             "selectOptions": "Yes, No",
             "label": "Can the stage be stratified by any of your reporting levels?",
             "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.3, value:All",
+            "condition": "type:prerequisite, controlName:q5.3.3",
             "labelMultiple": null
         },
         {
@@ -305,6 +305,15 @@ export default
             "label": "Specify the individual strata you will us",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.3.4.1, value:Yes",
+            "labelMultiple": null
+        },
+        {
+            "isQuestion": "TRUE",
+            "controlName": "q6.1",
+            "type": "number",
+            "label": "Input your required total sample size",
+            "section": "Allocating and deploying resources",
+            "condition": "",
             "labelMultiple": null
         },
         // {

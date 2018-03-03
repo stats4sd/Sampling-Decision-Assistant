@@ -21,7 +21,7 @@ resources {
         user-select: text
     }
     .expanded{
-        background-color: #FFEED1;
+        background-color: #E0E0E0        ;
         .question-text{
             font-weight:bold
         }
@@ -35,9 +35,9 @@ resources {
     .answer-display-options{
         display: flex;
     }
-    ul{
+    ul, p, ol{
         margin:0;
-        color:#666;
+        color:rgb(32, 32, 32)!important;
         // line-height: 1em;
     }
     .selected, .selected:hover{

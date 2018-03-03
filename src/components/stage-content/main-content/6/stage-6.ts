@@ -16,7 +16,9 @@ export class Stage6Component extends StagePage {
     if (this.stageSlides) {
       this.stageSlides.lockSwipes(true)
     }
-
+  }
+  launchSampleSizeCalculator(){
+    this.modalCtrl.create('SampleSizeCalculatorPage').present()
   }
   goBack() {
     this.navCtrl.pop()
