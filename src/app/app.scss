@@ -137,7 +137,8 @@ body{
 }
 .segment-container{
     position: fixed;
-    bottom:1rem;
+    bottom:0;
+    padding-bottom: 1rem;
     width:calc(100% - 55px);
     max-width: calc(100vw - 32px);
     z-index: 2;
@@ -168,9 +169,9 @@ body{
     width:100%;
 }
 .slide-scroll-content{
-    .scroll-content{
-        overflow-y: hidden
-    }
+    // .scroll-content{
+    //     overflow-y: hidden
+    // }
 }
 // fix to stop height filling largest slide even when inactive
 // combine with @Viewchild for slides after view init: `this.slides.autoHeight=true`;

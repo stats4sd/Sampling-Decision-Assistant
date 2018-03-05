@@ -1,8 +1,9 @@
 <div class="slide-content">
-
-    <ion-slides #frameBuilder class="stage-5-slides" (ionSlideDidChange)="builderSlideChange()">
+    <stage-breadcrumbs [stage]='5' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
+    <ion-slides #stageSlides class="stage-slides" (ionSlideDidChange)="stageSlideChange()" effect="fade">
         <!-- recap slide -->
         <ion-slide>
+            <stage-intro [stage]="5"></stage-intro>
             <stage-5-recap></stage-5-recap>
         </ion-slide>
         <!-- single vs multi stage slide -->
@@ -12,24 +13,20 @@
         <!-- multi-stage builder slide -->
         <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
             <stage-5-frame-builder-overview></stage-5-frame-builder-overview>
+            <stage-complete stageNumber=5 [complete]="dataPrvdr.activeSurvey.stagesComplete[5]"></stage-complete>
         </ion-slide>
-        <!-- define strata slide -->
-        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
-            <stage-5-define-strata></stage-5-define-strata>
-        </ion-slide>
+
     </ion-slides>
 
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px">
-        <button ion-button icon-left (click)="lastStep()" [disabled]="frameBuilderIndex==0" [style.opacity]="frameBuilderIndex==0 ? 0 : 1">
-            <ion-icon name="arrow-back"></ion-icon>
-            Back
-        </button>
-        <button ion-button icon-right (click)="nextStep()" *ngIf="frameBuilderActiveSlide < 3">Next
+
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex <2" clear block>Continue
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
-        <button ion-button icon-right (click)="nextStage()" *ngIf="frameBuilderActiveSlide >= 3 && dataPrvdr.activeSurvey.stagesComplete[5]">Next Stage
+
+        <!-- <button ion-button icon-right (click)="nextStage()" *ngIf="stageSlidesIndex >= 2 && dataPrvdr.activeSurvey.stagesComplete[5]">Next Stage
             <ion-icon name="arrow-forward"></ion-icon>
-        </button>
+        </button> -->
     </div>
 </div>

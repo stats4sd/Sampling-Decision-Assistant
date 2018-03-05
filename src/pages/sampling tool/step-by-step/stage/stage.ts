@@ -19,11 +19,13 @@ import animationStates from '../../../../providers/animationStates'
 })
 export class StagePage {
   stage: any;
-  stages:any;
-  @ViewChild('slides') slides;
+  stages: any;
+  // @ViewChild('slides') slides;
   @ViewChild('navbar') navbar: Navbar;
   @ViewChild('content') content: Content;
-  activeSlide: string = "Main";
+  @ViewChild('stageSlides') stageSlides: Slides;
+  activeSection: string = "Main";
+
   activeGlossaryTerm: string;
   glossaryTerms = [];
   glossarySlug: string;
@@ -31,10 +33,11 @@ export class StagePage {
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   refreshSlides: boolean;
-  relevant:string
+  relevant: string
   loaded: boolean
   stagesComplete = this.dataPrvdr.activeSurvey.stagesComplete;
-  slideOptions={}
+  slideOptions = {}
+  stageSlidesIndex: number = 0
 
   constructor(
     public navCtrl: NavController,
@@ -48,9 +51,10 @@ export class StagePage {
     this.stageInit(navParams)
     this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
     this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
+    this.events.subscribe('stageSlidesIndexChanged', index => this.stageSlidesIndex = index)
 
   }
-  stageInit(navParams){
+  stageInit(navParams) {
     let stageID = navParams.data.stageID
     this.modalMode = navParams.data.modalMode
     this.stages = {
@@ -68,8 +72,8 @@ export class StagePage {
 
   ionViewDidEnter() {
     //this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
-    this.slides.lockSwipes(true)
-    this.slides.autoHeight=true;
+    // this.slides.lockSwipes(true)
+    // this.slides.autoHeight = true;
     this.loaded = true
     this.navbar.backButtonClick = () => {
       let depth = location.hash.split('/').length
@@ -80,6 +84,7 @@ export class StagePage {
 
 
   goTo(section) {
+    //this.activeSection=section
     // update hash so that slides automatically go to correct section
     let hash = location.hash
     let arr = hash.split('/')
@@ -103,7 +108,8 @@ export class StagePage {
 
   showGlossary(term: string) {
     this.activeGlossaryTerm = term;
-    this.slides.slideTo(2)
+    this.activeSection="Glossary"
+    //this.slides.slideTo(2)
   }
   openModal(component, params?) {
     console.log('openining modal', component, params)
@@ -132,23 +138,66 @@ export class StagePage {
 
   _hashChanged(hash) {
     // update slide on hash change. no slide changed tracking needed as swipes disabled (all nav programmatic)
-    if (this.slides && this.loaded) {
-      this.slides.lockSwipes(false)
+    // if (this.slides && this.loaded) {
+    //   this.slides.lockSwipes(false)
       let arr = hash.split('/')
       // glossary tab
       if (arr.indexOf('glossary') > -1) {
-        this.slides.slideTo(2); this.activeSlide = "Glossary";
+        // this.slides.slideTo(2); 
+        this.activeSection = "Glossary";
         if (arr[arr.length - 1] != 'glossary') { this.glossarySlug = arr[arr.length - 1] }
         else { this.glossarySlug = "_" }
 
       }
       // resources tab
-      else if (arr.indexOf('resources') > -1) { this.slides.slideTo(1); this.activeSlide = "Resources" }
+      else if (arr.indexOf('resources') > -1) { 
+        // this.slides.slideTo(1); 
+        this.activeSection = "Resources" 
+      }
       // main tab
       else {
-        this.slides.slideTo(0); this.activeSlide = "Main"
+        //this.slides.slideTo(0); 
+        this.activeSection = "Main"
       }
-      this.slides.lockSwipes(true)
-    }
+    //   this.slides.lockSwipes(true)
+    // }
+  }
+
+  // stage slides
+  nextStep() {
+    this.stageSlides.lockSwipes(false)
+    this.stageSlidesIndex++
+    this.stageSlides.slideNext()
+    this.stageSlides.lockSwipes(true)
+    this.emitSlideIndex()
+  }
+  lastStep() {
+    this.stageSlides.lockSwipes(false)
+    this.stageSlidesIndex--
+    this.stageSlides.slidePrev()
+    this.stageSlides.lockSwipes(true)
+    this.emitSlideIndex()
+  }
+  stageSlideChange() {
+    this.dataPrvdr.saveSurvey(null, true)
+    this.stageSlidesIndex = this.stageSlides.getActiveIndex()
+    this.emitSlideIndex()
+  }
+  // used to update parent component
+  emitSlideIndex() {
+    this.events.publish('stageSlidesIndexChanged', this.stageSlidesIndex)
+  }
+  attachBreadcrumbSubscriber() {
+    this.events.subscribe('goToStageSlide', index => {
+      if (this.stageSlides) {
+        console.log('sliding to index', index)
+        this.stageSlides.lockSwipes(false)
+        this.stageSlidesIndex = index
+        this.stageSlides.slideTo(index)
+        this.stageSlides.lockSwipes(true)
+        this.emitSlideIndex()
+      }
+
+    })
   }
 }

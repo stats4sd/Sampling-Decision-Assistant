@@ -5,10 +5,17 @@ stage-intro {
         margin-bottom:20px
 
     }
-    h2{
-        padding:5px;
+    .intro-heading{
+        display: flex;
+        position: relative;
+        height: 26px;
+        align-items: center;
         background-color: color($colors,primary);
-        color:white
+        padding: 0 5px;
+        margin-bottom: 10px;
+        line-height: 1.2;
+        font-size: large;
+        color:white;
     }
     p{
         font-size: 14px;

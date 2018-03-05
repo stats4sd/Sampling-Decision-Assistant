@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { Stage5Component } from '../stage-5';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { Stage4Component } from '../stage-4';
 
 @Component({
-  selector: 'stage-5-define-strata',
-  templateUrl: 'stage-5-define-strata.html'
+  selector: 'stage-4-define-level-categories',
+  templateUrl: 'stage-4-define-level-categories.html'
 })
-export class Stage5_DefineStrataComponent extends Stage5Component {
+export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
 
   strata: any = {}
   strataList: string[]
 
   ngOnInit() {
     this.preloadStrata()
-    this.getListOfStrata(this.form.value['q5.3'])
+    this.getListOfStrata(this.form.value['q4.2'])
     this.form.controls['q5.3'].valueChanges.subscribe(v => this.getListOfStrata(v))
   }
 
@@ -51,15 +51,15 @@ export class Stage5_DefineStrataComponent extends Stage5Component {
     // build list of specified strata from all stages
     if (v) {
       let strataList = {}
-      for (let stage of v) {
-        let strata = stage['q5.3.4.2']
-        if (strata && strata != '') {
-          strataList[strata] = true
-          if (!this.strata[strata]) { this.strata[strata] = { names: [] } }
-        }
+      for (let strata of v) {
+        // let s = s['q5.3.4.2']
+        // if (strata && strata != '') {
+        strataList[strata] = true
+        if (!this.strata[strata]) { this.strata[strata] = { names: [] } }
+        // }
       }
       this.strataList = Object.keys(strataList)
-      console.log('strata list',this.strataList)
+      console.log('strata list', this.strataList)
     }
 
   }

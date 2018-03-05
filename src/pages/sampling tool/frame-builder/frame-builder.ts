@@ -23,6 +23,7 @@ export class FrameBuilderPage {
     this.stageName=this.stageFormGroup.value._parentID 
     this.stageRepeatIndex=navParams.data.stageIndex
     console.log('stage values',this.stageFormGroup.value)
+    console.log('stageName',this.stageName)
   }
 
   dismiss(){

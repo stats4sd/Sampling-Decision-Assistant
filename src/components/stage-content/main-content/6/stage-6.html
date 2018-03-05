@@ -1,7 +1,9 @@
 <div class="slide-content">
-    <ion-slides #stageSlides class="stage-6-slides" (ionSlideDidChange)="builderSlideChange()">
+    <stage-breadcrumbs [stage]='6' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
+    <ion-slides #stageSlides class="stage-6-slides" (ionSlideDidChange)="stageSlideChange()" effect="fade">
         <!-- recap slide -->
         <ion-slide>
+            <stage-intro [stage]="6"></stage-intro>
             <h4>Allocating resources</h4>
             <p>The final step in this process is to determine the number of units that should be sampled at every stage in the
                 process
@@ -9,11 +11,12 @@
             <p>The results will be based the hierarchy of sampling stages and reporting levels that you have specified, with
                 supporting calculations for margin of error and design effect</p>
             <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
-            <tree-diagram [showInputNodes]="false"></tree-diagram>
+            <div class="tree-container">
+                <tree-diagram [showInputNodes]="false" *ngIf="initComplete" class="fade-in"></tree-diagram>
+            </div>
             <p>Each shape represents a collection of units from which a sample will be selected</p>
             <note type="dev">Currently system assumes all nodes can be treated equally, however in the future the option will be provided
                 to further split a node into strata if desired</note>
-
         </ion-slide>
         <!--  -->
         <ion-slide>
@@ -29,26 +32,54 @@
 
         </ion-slide>
         <ion-slide>
-                <h4>Allocating resources</h4>
-                <p>...</p>
-                <tree-diagram [showInputNodes]="true"></tree-diagram>
-    
-            </ion-slide>
+            <h4>Allocating resources</h4>
+            <p>The next step is to allocate the sampling units throughout the diagram</p>
+            <div style="display: flex">
+                <div class="tree-container">
+                    <tree-diagram [showInputNodes]="false" *ngIf="stageSlidesIndex==2"></tree-diagram>
+                    <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
+                        <div class="node-editor-breadcrumbs"></div>
+                        <div class="node-editor-heading">Allocate</div>
+                        <ion-list>
+                            <ion-item>
+                                <ion-input (ionChange)="updateNode($event)" type="number" [placeholder]="'Number of '+selectedNode.label"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>
+                                    <p>Apply to all
+                                        <br>({{selectedNode.label}})</p>
+                                </ion-label>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>
+                                    <p>Apply to all
+                                        <br>(this stage)</p>
+                                </ion-label>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-item>
+                        </ion-list>
+
+
+                    </div>
+                </div>
+                <div class="touch-scroll-space"></div>
+            </div>
+
+
+
+
+        </ion-slide>
     </ion-slides>
 
 
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px">
-        <button ion-button icon-left (click)="lastStep()" [disabled]="stageSlidesIndex==0" [style.opacity]="stageSlidesIndex==0 ? 0 : 1">
-            <ion-icon name="arrow-back"></ion-icon>
-            Back
-        </button>
-        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex < 4">Next
+
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex <3" clear block>Continue
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
-        <button ion-button icon-right (click)="nextStage()" *ngIf="stageSlidesIndex >= 4 && dataPrvdr.activeSurvey.stagesComplete[6]">Next Stage
-            <ion-icon name="arrow-forward"></ion-icon>
-        </button>
+
     </div>
 
 </div>

@@ -2,6 +2,19 @@ page-stage {
     a{
         text-decoration: unset;
     }
+    .slide-content{
+        .item{
+            font-size: 14px!important;
+        }
+        
+    }
+
+    .stage-slides{
+        .slide-zoom, .swiper-slide{
+        font-size: 14px;
+        text-align: left;
+        }
+    }
     
 
 }

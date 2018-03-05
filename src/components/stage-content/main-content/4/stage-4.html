@@ -1,37 +1,61 @@
 <div class="slide-content">
-    <p>
-        Before you try to determine the individual sampling units, it is important to define the reporting requirements or goals.
-        Depending on how you intend to report results, you may or may not have to consider your total sample size and method
-        of selection differently.
-    </p>
-    <p>The first question is to decide if you need wish to divide your population to produce
-        <glossary-link slug="disaggregated-estimate">disaggregated estimates</glossary-link>
-    </p>
-    <help-icon resource="testResource"></help-icon>
-    <survey-question-group section="At what level do you need to report these results" [filter]="['q4.1']" [showLabel]=true></survey-question-group>
+    <stage-breadcrumbs [stage]='4' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
+    <ion-slides #stageSlides class="stage-slides" (ionSlideDidChange)="stageSlideChange()" effect="fade">
+        <!-- Intro slide -->
+        <ion-slide>
+                <stage-intro [stage]="4"></stage-intro>
+            <p>
+                Before you try to determine the individual sampling units, it is important to define the reporting requirements or goals.
+                Depending on how you intend to report results, you may or may not have to consider your total sample size
+                and method of selection differently.
+            </p>
+            <p>The first question is to decide if you need wish to divide your population to produce
+                <glossary-link slug="disaggregated-estimate">disaggregated estimates</glossary-link>
+            </p>
+            <help-icon relevant="q4.1"></help-icon>
+            <survey-question-group section="At what level do you need to report these results" [filter]="['q4.1']" [showLabel]=true></survey-question-group>
 
-    <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
-        <p>Specify the different levels that you wish to produce estimates for (e.g. if you wish to produce seperate estimates
-            for camps A and B, you will likely need to specify the level 'camp')</p>
-        <survey-question-group [showLabel]="false" section="At what level do you need to report these results" [filter]="['q4.2']"
-            [showLabel]=true></survey-question-group>
-        <p>Here is a list of your target population characteristics for reference. If any of these also form reporting levels make sure they are included in the list above (e.g. if you plan to compare time periods 2017 and 2018, you may wish to specify 'year' as a reporting level)</p>
-        <ul>
-            <li *ngIf="form.value['q3.2']">Geographic:
-                <survey-reference controlName="q3.2"></survey-reference>
-            </li>
-            <li *ngIf="form.value['q3.3']">Population Group:
-                <survey-reference controlName="q3.3"></survey-reference>
-            </li>
-            <li *ngIf="form.value['q3.4']">Time:
-                <survey-reference controlName="q3.4"></survey-reference>
-            </li>
-        </ul>
+            <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
+                <p>Specify the different levels that you wish to produce estimates for</p>
+                <help-icon relevant="q4.2"></help-icon>
+                <survey-question-group [showLabel]="false" section="At what level do you need to report these results" [filter]="['q4.2']"
+                    [showLabel]=true></survey-question-group>
+            </div>
+            <div *ngIf="form.value['q4.1']=='One estimate'">
+                <survey-question-group section="At what level do you need to report these results" [filter]="['q4.3']" [showLabel]=true></survey-question-group>
+                <stage-complete stageNumber=4 [complete]="dataPrvdr.activeSurvey.stagesComplete[4]"></stage-complete>
+            </div>
+        </ion-slide>
+
+        <!-- define strata slide -->
+        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
+            <stage-4-define-level-categories></stage-4-define-level-categories>
+            <stage-complete stageNumber=4 [complete]="dataPrvdr.activeSurvey.stagesComplete[4]"></stage-complete>
+        </ion-slide>
+
+    </ion-slides>
+
+    <!-- Next and back buttons -->
+    <div style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px">
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex ==0" clear block>Continue
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
     </div>
-    <div *ngIf="form.value['q4.1']=='One estimate'">
-        <survey-question-group section="At what level do you need to report these results" [filter]="['q4.3']" [showLabel]=true></survey-question-group>
-    </div>
-    <stage-complete stageNumber=4 [complete]="dataPrvdr.activeSurvey.stagesComplete[4]" *ngIf="form.value['q4.1'] || form.value['q4.2']"></stage-complete>
-
-
 </div>
+
+
+
+<!-- <p>Here is a list of your target population characteristics for reference. If any of these also form reporting
+                    levels make sure they are included in the list above (e.g. if you plan to compare time periods 2017 and
+                    2018, you may wish to specify 'year' as a reporting level)</p>
+                <ul>
+                    <li *ngIf="form.value['q3.2']">Geographic:
+                        <survey-reference controlName="q3.2"></survey-reference>
+                    </li>
+                    <li *ngIf="form.value['q3.3']">Population Group:
+                        <survey-reference controlName="q3.3"></survey-reference>
+                    </li>
+                    <li *ngIf="form.value['q3.4']">Time:
+                        <survey-reference controlName="q3.4"></survey-reference>
+                    </li>
+                </ul> -->

@@ -7,10 +7,10 @@
   <ion-row class="row-headers">
     <ion-col col-2>Stage</ion-col>
     <ion-col col-2>Sampling Unit</ion-col>
-    <ion-col col-2>Frame</ion-col>
+    <ion-col col-3>Frame</ion-col>
     <ion-col col-2>Units</ion-col>
-    <ion-col col-2>Reporting Level</ion-col>
-    <ion-col col-2>Stratification</ion-col>
+    <ion-col col-3>Reporting Level</ion-col>
+    <!-- <ion-col col-2>Stratification</ion-col> -->
   </ion-row>
   <ion-row *ngFor="let stageControl of form.controls['q5.3'].controls; let i=index; let last=last">
 
@@ -31,7 +31,7 @@
     <!-- Built frame info -->
 
     <!-- Frame -->
-    <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
+    <ion-col col-3 *ngIf="stageControl.value['q5.3.1']!=''">
       <div>{{stageControl.value['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</div>
     </ion-col>
 
@@ -45,7 +45,7 @@
     </ion-col>
 
     <!-- Reporting Levels -->
-    <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
+    <ion-col col-3 *ngIf="stageControl.value['q5.3.1']!=''">
       <div *ngIf="stageControl.value['q5.3.4.2']=='' || stageControl.value['q5.3.4.2']==null">
         <ion-note>None</ion-note>
       </div>
@@ -55,14 +55,14 @@
     </ion-col>
 
     <!-- Stratification -->
-    <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
+    <!-- <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
       <div *ngIf="stageControl.value['q5.3.4.2']=='' || stageControl.value['q5.3.4.2']==null">
         <ion-note>None</ion-note>
       </div>
       <div *ngIf="stageControl.value['q5.3.4.2']!=''">
         {{stageControl.value['q5.3.4.2']}}
       </div>
-    </ion-col>
+    </ion-col> -->
 
     <!-- Edit button -->
     <div class="edit-button-container" *ngIf="stageControl.value['q5.3.1']!=''">

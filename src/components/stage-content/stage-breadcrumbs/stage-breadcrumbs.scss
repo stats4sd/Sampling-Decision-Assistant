@@ -1,0 +1,30 @@
+stage-breadcrumbs {
+    .breadcrumbs-container{
+        display: flex;
+        position: relative;
+        height: 30px;
+        align-items: center;
+        background-color: color($colors,primary);
+        padding: 5px;
+        margin-bottom:10px;
+    }
+    .breadcrumb-name{
+        color:color($colors,primary);
+        cursor: pointer;
+        opacity: 0.5;
+        color: white;
+    }
+    [data='activeSlide']{
+        opacity:1;
+        //font-weight: bold;
+    }
+    .icon{
+        color:white;
+        cursor: pointer;
+        margin-right: 5px;
+        margin-left: 2px;
+        opacity: 0.5;
+    }
+
+
+}

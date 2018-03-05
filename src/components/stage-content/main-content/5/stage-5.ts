@@ -12,60 +12,54 @@ export class Stage5Component extends StagePage {
 
   builderStages: any = [];
   stageBuilt: any = {};
-  frameBuilderActiveSlide:number=0;
-  showStrataDefineSlide:boolean=false
+  showStrataDefineSlide: boolean = false
 
-  @ViewChild('frameBuilder') frameBuilder: Slides;
-  frameBuilderIndex: number = 0
+  // @ViewChild('stageSlides') stageSlides: Slides;
+
 
   ngAfterViewInit() {
-    if (this.frameBuilder) {
-      this.frameBuilder.lockSwipes(true)
+    if (this.stageSlides) {
+      this.stageSlides.lockSwipes(true)
     }
+    // breadcrumb listener
+    this.attachBreadcrumbSubscriber()
 
   }
   goBack() {
     this.navCtrl.pop()
   }
-  nextStage(){
-    this.navCtrl.push('StagePage', { stageID: 'stage-6'}).then(
+  nextStage() {
+    this.navCtrl.push('StagePage', { stageID: 'stage-6' }).then(
       _ => {
         this.navCtrl.remove(this.navCtrl.length() - 2)
       }
     )
   }
 
-  nextStep() {
-    this.frameBuilder.lockSwipes(false)
-    this.frameBuilderIndex++
-    this.frameBuilder.slideNext()
-    this.frameBuilder.lockSwipes(true)
-  }
-  lastStep() {
-    this.frameBuilder.lockSwipes(false)
-    this.frameBuilderIndex--
-    this.frameBuilder.slidePrev()
-    this.frameBuilder.lockSwipes(true)
-  }
   editStage(stage) {
     super.openModal('StagePage', { stageID: stage, modalMode: true })
   }
-  builderSlideChange() {
-    this.dataPrvdr.saveSurvey(null, true)
-    this.frameBuilderActiveSlide=this.frameBuilder.getActiveIndex()
-    this.showStrataDefineSlide = this._showStrataDefineSlide()
-  }
+
   buildStage(stageFormControl, stageIndex) {
     // get formgroup matching stage name to parentID
-    let params = { stageFormGroup: stageFormControl, stageIndex: stageIndex }
+    let params = { stageFormGroup: stageFormControl, stageIndex: stageIndex}
     super.openModal('FrameBuilderPage', params)
   }
 
-  _showStrataDefineSlide(){
-    for(let stage of this.form.value['q5.3']){
-      if(stage['q5.3.4.1']=='Yes'){return true}
-    }
-    return false
-  }
+  // _showStrataDefineSlide(){
+  //   for(let stage of this.form.value['q5.3']){
+  //     if(stage['q5.3.4.1']=='Yes'){return true}
+  //   }
+  //   return false
+  // }
+  // stageSlideChange() {
+  //   this.dataPrvdr.saveSurvey(null, true)
+  //   this.stageSlidesIndex = this.stageSlides.getActiveIndex()
+  //   this.showStrataDefineSlide = this._showStrataDefineSlide()
+  // }
+
+
+
+
 
 }

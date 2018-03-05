@@ -8,42 +8,30 @@ import { Slides } from 'ionic-angular';
   templateUrl: 'stage-6.html'
 })
 export class Stage6Component extends StagePage {
+  selectedNode: any = {}
+  initComplete: boolean
 
-  @ViewChild('stageSlides') stageSlides: Slides;
-  stageSlidesIndex: number = 0
+  ngOnInit() {
+    this.events.subscribe('nodeSelected', n => {
+      console.log('this.selectedNode', n)
+      this.selectedNode = n
+    })
+  }
 
   ngAfterViewInit() {
-    if (this.stageSlides) {
-      this.stageSlides.lockSwipes(true)
-    }
+    if (this.stageSlides) {this.stageSlides.lockSwipes(true)}
+    setTimeout(_ => this.initComplete = true, 200)
+    // breadcrumb listener
+    this.attachBreadcrumbSubscriber()
   }
-  launchSampleSizeCalculator(){
+  launchSampleSizeCalculator() {
     this.modalCtrl.create('SampleSizeCalculatorPage').present()
   }
   goBack() {
     this.navCtrl.pop()
   }
 
-  nextStage(){
+  nextStage() {
     this.navCtrl.pop()
   }
-
-  nextStep() {
-    this.stageSlides.lockSwipes(false)
-    this.stageSlidesIndex++
-    this.stageSlides.slideNext()
-    this.stageSlides.lockSwipes(true)
-  }
-  lastStep() {
-    this.stageSlides.lockSwipes(false)
-    this.stageSlidesIndex--
-    this.stageSlides.slidePrev()
-    this.stageSlides.lockSwipes(true)
-  }
-  
-  builderSlideChange() {
-    this.dataPrvdr.saveSurvey(null, true)
-    //this.stageSlidesActiveSlide=this.stageSlides.getActiveIndex()
-  }
-
 }

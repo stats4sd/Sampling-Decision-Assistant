@@ -27,6 +27,7 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     this.getReportingLevels()
     this.checkAlreadySelected()
     this._parentID = this.formGroup.value._parentID
+    this.checkIfFinalStage(this._parentID)
     console.log('parentID', this._parentID)
   }
   getReportingLevels() {
@@ -44,6 +45,14 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
       }
     }
     console.log('already selected', this.alreadySelected)
+  }
+  checkIfFinalStage(stageName){
+    let stages = this.formPrvdr.getSurveyValue('q5.2')
+    let finalStage = stages[stages.length-1]
+    console.log('stage name',stageName,'final stage',finalStage)
+    if(stageName==finalStage){
+      console.log(stageName +' is final stage')
+    }
   }
 
   selectLevel(level) {

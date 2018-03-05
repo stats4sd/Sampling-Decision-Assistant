@@ -20,17 +20,17 @@ export class TreeDiagramComponent {
   stages: any;
   form: FormGroup
   @Input('showInputNodes') showInputNodes: boolean
+  @ViewChild('treeContainer') treeContainer: ElementRef
 
-  constructor(formPrvdr: FormProvider, events: Events) {
+  constructor(formPrvdr: FormProvider, private events: Events) {
     this.form = formPrvdr.formGroup
-    events.unsubscribe('form:initComplete')
-    events.subscribe('form:initComplete', _ => this.prepareStages(this.form.value))
+    this.events.unsubscribe('form:initComplete')
+    this.events.subscribe('form:initComplete', _ => this.prepareStages(this.form.value))
   }
 
   ngOnInit() {
     this.prepareStages(this.form.value)
     console.log('show input nodes?', this.showInputNodes)
-
   }
 
 
@@ -61,35 +61,35 @@ export class TreeDiagramComponent {
         // }
         // case all units selected
         // else if (stage['q5.3.3'] == 'All') {
-          // - no reporting level (size uncertain but should be specified)
-          if (!stage['q5.3.4.2'] || stage['q5.3.4.2'] == '') {
-            this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
-          }
-          // - reporting level
-          else {
-            // title node
-            this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle, true)]
-            let allReportingLevels
-            tierIndex++
-            try {
-              let allReportingLevels = JSON.parse(this.form.value.strata)
-              let reportingLevelGroup = stage['q5.3.4.2']
-              for (let reportingLevel of allReportingLevels[reportingLevelGroup].names) {
-                stageNodes.push(this._createNode((tierIndex), reportingLevel.label, null, reportingLevelGroup, options.reportingLevel))
-              }
-            } catch (error) {
-              stageNodes.push(this._createNode((tierIndex), 'reporting level not defined'))
+        // - no reporting level (size uncertain but should be specified)
+        if (!stage['q5.3.4.2'] || stage['q5.3.4.2'] == '') {
+          this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
+        }
+        // - reporting level
+        else {
+          // title node
+          this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle, true)]
+          let allReportingLevels
+          tierIndex++
+          try {
+            let allReportingLevels = JSON.parse(this.form.value.strata)
+            let reportingLevelGroup = stage['q5.3.4.2']
+            for (let reportingLevel of allReportingLevels[reportingLevelGroup].names) {
+              stageNodes.push(this._createNode((tierIndex), reportingLevel.label, null, reportingLevelGroup, options.reportingLevel))
             }
-            this.stages[tierIndex] = stageNodes
+          } catch (error) {
+            stageNodes.push(this._createNode((tierIndex), 'reporting level not defined'))
           }
+          this.stages[tierIndex] = stageNodes
+        }
         // }
         // else {
         //   console.log('no method available for stage', stage)
         // }
         // add number node
-        if (this.showInputNodes) { 
+        if (this.showInputNodes) {
           tierIndex++
-          this.stages[tierIndex] = [this._createNode((tierIndex + 1), "n =__", null, null, options.sampleSize, true)] 
+          this.stages[tierIndex] = [this._createNode((tierIndex + 1), "n =__", null, null, options.sampleSize, true)]
         }
         tierIndex++
       })
@@ -195,6 +195,16 @@ export class TreeDiagramComponent {
     return node
   }
 
+  _getNode(id) {
+    let selected ={}
+    this.treeNodes.forEach(n => {
+      if (n.id == id) { 
+        selected=n
+      }
+    })
+    return selected
+  }
+
 
 
   ngAfterViewInit() {
@@ -209,7 +219,7 @@ export class TreeDiagramComponent {
     var edges = new vis.DataSet(treeEdges);
 
     // create a network
-    var container = document.getElementById('mynetwork');
+    var container = this.treeContainer.nativeElement
 
     // provide the data in the vis format
     var data = {
@@ -235,12 +245,12 @@ export class TreeDiagramComponent {
           edgeMinimization: true,
         }
       },
-      nodes:{
-        widthConstraint:{
-          minimum:20,
-          maximum:150
+      nodes: {
+        widthConstraint: {
+          minimum: 20,
+          maximum: 150
         },
-        heightConstraint:20
+        heightConstraint: 20
       }
 
     };
@@ -249,7 +259,18 @@ export class TreeDiagramComponent {
     setTimeout(_ => {
       // initialize your network!
       var network = new vis.Network(container, data, options);
-    }, 500)
+      // network.on('click', params => {
+      //   console.log('node clicked', params)
+      // })
+      network.on('selectNode', params => {
+        let selectedNode = this._getNode(params.nodes[0])
+        this.events.publish('nodeSelected', selectedNode)
+      })
+      network.on('deselectNode', params => {
+        this.events.publish('nodeSelected', {})
+      })
+        , 500
+    })
   }
 
 }
