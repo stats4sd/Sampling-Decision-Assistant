@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Slides } from 'ionic-angular'
-import { StagePage } from '../../../../pages/sampling tool/step-by-step/stage/stage';
+import { StagePage } from '../../../../pages/sampling tool/stage/stage';
 import { FormArray, FormGroup } from '@angular/forms';
 
 

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DataProvider } from '../../../providers/data/data';
 import { FormProvider } from '../../../providers/form/form';
 import { FormGroup } from '@angular/forms/src/model';
-import { StagePage } from '../../../pages/sampling tool/step-by-step/stage/stage';
+import { StagePage } from '../../../pages/sampling tool//stage/stage';
 
 @Component({
   selector: 'stage-complete',

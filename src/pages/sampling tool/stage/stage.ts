@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Events, Navbar, ModalController, ViewController, Content } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
-import { DataProvider } from '../../../../providers/data/data';
-import { FormProvider } from '../../../../providers/form/form'
+import { DataProvider } from '../../../providers/data/data';
+import { FormProvider } from '../../../providers/form/form'
 // import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
-import animationStates from '../../../../providers/animationStates'
+import animationStates from '../../../providers/animationStates'
 
 
 
@@ -92,7 +92,7 @@ export class StagePage {
       // in wrong section
       let depth = arr.length
       /* Depth varies between 3 and 4 if section selected
-              /#/step-by-step/stage-1/section
+              /#//stage-1/section
       */
       if (section == 'main') {
         location.hash = arr.slice(0, 3).join('/')

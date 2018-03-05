@@ -11,6 +11,9 @@ question-custom-strata-select {
 
     .item-md.item-checkbox-disabled ion-label{
         opacity: 0.9!important;
+        
+    }
+    .alreadySelected{
         text-decoration: line-through;
     }
     .checkbox-md.checkbox-disabled{

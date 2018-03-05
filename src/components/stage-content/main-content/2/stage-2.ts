@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Events } from 'ionic-angular';
-import { StagePage } from '../../../../pages/sampling tool/step-by-step/stage/stage';
+import { StagePage } from '../../../../pages/sampling tool/stage/stage';
 import { DecimalPipe } from '@angular/common';
 
 

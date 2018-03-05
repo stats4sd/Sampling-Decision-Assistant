@@ -54,14 +54,6 @@ export class TreeDiagramComponent {
         }
         this.nodeCount = 1
         let stageNodes = []
-
-        // case sample
-        // if (stage['q5.3.3'] == 'Sample') {
-        //   this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
-        // }
-        // case all units selected
-        // else if (stage['q5.3.3'] == 'All') {
-        // - no reporting level (size uncertain but should be specified)
         if (!stage['q5.3.4.2'] || stage['q5.3.4.2'] == '') {
           this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
         }
