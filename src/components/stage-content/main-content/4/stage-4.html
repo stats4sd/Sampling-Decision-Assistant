@@ -27,9 +27,12 @@
             </div>
         </ion-slide>
 
-        <!-- define strata slide -->
-        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
+        <!-- define levels slide -->
+        <ion-slide >
             <stage-4-define-level-categories></stage-4-define-level-categories>
+        </ion-slide>
+        <ion-slide *ngIf="form.value['q4.2'].length>0">
+            <stage-4-review-levels></stage-4-review-levels>
             <stage-complete stageNumber=4 [complete]="dataPrvdr.activeSurvey.stagesComplete[4]"></stage-complete>
         </ion-slide>
 
@@ -37,7 +40,7 @@
 
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px">
-        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex ==0" clear block>Continue
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex <2" clear block>Continue
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
     </div>

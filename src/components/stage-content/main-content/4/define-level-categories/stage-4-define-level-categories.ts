@@ -12,14 +12,15 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
   strataList: string[]
 
   ngOnInit() {
-    this.preloadStrata()
+    this.preloadStrata(this.form.value.strata)
     this.getListOfStrata(this.form.value['q4.2'])
-    this.form.controls['q5.3'].valueChanges.subscribe(v => this.getListOfStrata(v))
+    this.form.controls['q4.2'].valueChanges.subscribe(v => this.getListOfStrata(v))
+    this.form.controls['strata'].valueChanges.subscribe(s=>this.preloadStrata(s))
   }
 
-  preloadStrata() {
-    if (this.form.value.strata != "" && this.form.value.strata != undefined) {
-      this.strata = JSON.parse(this.form.value['strata'])
+  preloadStrata(strata) {
+    if (strata != "" && strata != undefined) {
+      this.strata = JSON.parse(strata)
     }
   }
 
@@ -52,12 +53,10 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
     if (v) {
       let strataList = {}
       for (let strata of v) {
-        // let s = s['q5.3.4.2']
-        // if (strata && strata != '') {
         strataList[strata] = true
         if (!this.strata[strata]) { this.strata[strata] = { names: [] } }
-        // }
       }
+      console.log('strataList',strataList)
       this.strataList = Object.keys(strataList)
       console.log('strata list', this.strataList)
     }

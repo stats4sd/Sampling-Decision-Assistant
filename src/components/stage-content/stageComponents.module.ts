@@ -12,6 +12,7 @@ import { Stage2Component } from './main-content/2/stage-2';
 import { Stage3Component } from './main-content/3/stage-3';
 import { Stage4Component } from './main-content/4/stage-4';
 import { Stage4_DefineLevelCategoriesComponent } from './main-content/4/define-level-categories/stage-4-define-level-categories'
+import { Stage4_ReviewLevelsComponent } from './main-content/4/review-levels/stage-4-review-levels'
 import { Stage5Component } from './main-content/5/stage-5';
 import { Stage5_FrameBuilderOverviewComponent } from './main-content/5/frame-builder-overview/stage-5-frame-builder-overview';
 import { Stage5_RecapComponent } from './main-content/5/recap/stage-5-recap';
@@ -26,6 +27,7 @@ import { Stage6Component } from './main-content/6/stage-6';
         Stage3Component,
         Stage4Component,
         Stage4_DefineLevelCategoriesComponent,
+        Stage4_ReviewLevelsComponent,
         Stage5Component,
         Stage5_FrameBuilderOverviewComponent,
         Stage5_RecapComponent,
@@ -46,6 +48,7 @@ import { Stage6Component } from './main-content/6/stage-6';
         Stage3Component,
         Stage4Component,
         Stage4_DefineLevelCategoriesComponent,
+        Stage4_ReviewLevelsComponent,
         Stage5Component,
         Stage5_FrameBuilderOverviewComponent,
         Stage5_RecapComponent,

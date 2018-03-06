@@ -42,18 +42,21 @@ export class TreeDiagramComponent {
       console.log('preparing stages', formValue['q5.3'])
       this.stages = {}
       this.nodes = []
-      // dev
-      //this.showInputNodes = true
-
+      let allocatedLevels = []
       let tierIndex = 1
       formValue['q5.3'].forEach((stage, i) => {
+        console.log('stage', i, stage)
         //let nodeIndex: number = i + 1
         // seperate cases depend on whether an additional input/meta node will be shown after each node
-        if (this.showInputNodes) {
-          //nodeIndex = 2 * i + 1
-        }
+        // if (this.showInputNodes) {
+        //   //nodeIndex = 2 * i + 1
+        // }
         this.nodeCount = 1
         let stageNodes = []
+        // add placeholder reporting levels to the final stage
+        let isFinalStage: boolean = (formValue['q5.3'].length - 1 == i)
+        if (isFinalStage) { stage['q5.3.4.2'] = '_final' }
+        // 
         if (!stage['q5.3.4.2'] || stage['q5.3.4.2'] == '') {
           this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
         }
@@ -61,34 +64,84 @@ export class TreeDiagramComponent {
         else {
           // title node
           this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle, true)]
-          let allReportingLevels
           tierIndex++
+          // track allocated stages and add final stage levels
           try {
             let allReportingLevels = JSON.parse(this.form.value.strata)
-            let reportingLevelGroup = stage['q5.3.4.2']
-            for (let reportingLevel of allReportingLevels[reportingLevelGroup].names) {
-              stageNodes.push(this._createNode((tierIndex), reportingLevel.label, null, reportingLevelGroup, options.reportingLevel))
-            }
+          if (stage['q5.3.4.2'] == "_final") { stage['q5.3.4.2'] = this._addFinalStageLevels(allReportingLevels, allocatedLevels) }
+          stage['q5.3.4.2'].forEach(level => allocatedLevels.push(level))
+          // build nodes (and combinations if multiple)            
+          let reportingLevelGroups = this._buildCombinations(allReportingLevels, stage['q5.3.4.2'])
+          console.log('reportingLevelGroup', reportingLevelGroups)
+          for (let reportingLevel of reportingLevelGroups) {
+            stageNodes.push(this._createNode((tierIndex), reportingLevel, null, null, options.reportingLevel))
+          }
           } catch (error) {
+            console.log('error',error)
             stageNodes.push(this._createNode((tierIndex), 'reporting level not defined'))
           }
+          
+          
           this.stages[tierIndex] = stageNodes
         }
-        // }
-        // else {
-        //   console.log('no method available for stage', stage)
-        // }
         // add number node
-        if (this.showInputNodes) {
-          tierIndex++
-          this.stages[tierIndex] = [this._createNode((tierIndex + 1), "n =__", null, null, options.sampleSize, true)]
-        }
+        // if (this.showInputNodes) {
+        //   tierIndex++
+        //   this.stages[tierIndex] = [this._createNode((tierIndex + 1), "n =__", null, null, options.sampleSize, true)]
+        // }
         tierIndex++
       })
       console.log('stage nodes', this.stages)
       this.addLabelNodes()
       this.buildNodeTree(this.nodes)
     }
+  }
+  _addFinalStageLevels(allReportingLevels, allocatedLevels) {
+    // add any unallocated reporting levels to final stage
+    console.log('adding finalStageLevels', allReportingLevels, allocatedLevels)
+    let levels = []
+    Object.keys(allReportingLevels).forEach(level => {
+      if (allocatedLevels.indexOf(level) == -1) { levels.push(level) }
+    })
+    console.log('final stage levels', levels)
+    return levels
+  }
+  _buildCombinations(allReportingLevels, groups, arrays?) {
+    // takes a list of group names and creates a list of all combinations on their category names
+    if (!arrays) {
+      // build list of category name arrays
+      let arrs = []
+      // reshape groups to correct format
+      groups.forEach((group, i) => {
+        arrs[i] = []
+        allReportingLevels[group].names.forEach(el => arrs[i].push(el.label))
+      })
+      return this._buildCombinations(allReportingLevels, groups, arrs)
+    }
+
+    else {
+      let combinations = []
+      if (arrays[1]) {
+        for (let el of arrays[0]) {
+          for (let el2 of arrays[1]) {
+            combinations.push(el + ' |∩| ' + el2)
+          }
+        }
+        arrays[1] = combinations
+        arrays.splice(0, 1)
+        return this._buildCombinations(allReportingLevels, groups, arrays)
+      }
+      else {
+        // final list
+        combinations = arrays[0]
+        //combinations = arrays[0].forEach(el => { combinations.push(el.split('||')) })
+        return combinations
+        //this.levelCombinations = combinations
+      }
+
+    }
+
+
   }
   addLabelNodes() {
     console.log('nodes', this.nodes)
@@ -188,10 +241,10 @@ export class TreeDiagramComponent {
   }
 
   _getNode(id) {
-    let selected ={}
+    let selected = {}
     this.treeNodes.forEach(n => {
-      if (n.id == id) { 
-        selected=n
+      if (n.id == id) {
+        selected = n
       }
     })
     return selected
@@ -240,7 +293,7 @@ export class TreeDiagramComponent {
       nodes: {
         widthConstraint: {
           minimum: 20,
-          maximum: 150
+          maximum: 80
         },
         heightConstraint: 20
       }

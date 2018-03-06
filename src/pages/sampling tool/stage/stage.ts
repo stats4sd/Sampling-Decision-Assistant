@@ -112,7 +112,6 @@ export class StagePage {
     //this.slides.slideTo(2)
   }
   openModal(component, params?) {
-    console.log('openining modal', component, params)
     this.modalCtrl.create(component, params).present()
   }
   closeModal() {
@@ -121,7 +120,6 @@ export class StagePage {
   }
   scrollDown() {
     setTimeout(() => {
-      console.log('scrolling down')
       try {
         this.content.scrollToBottom(1000)
       } catch (err) { console.log('err', err) }
@@ -190,7 +188,6 @@ export class StagePage {
   attachBreadcrumbSubscriber() {
     this.events.subscribe('goToStageSlide', index => {
       if (this.stageSlides) {
-        console.log('sliding to index', index)
         this.stageSlides.lockSwipes(false)
         this.stageSlidesIndex = index
         this.stageSlides.slideTo(index)

@@ -51,7 +51,6 @@ export class StepByStepPage {
   showMenu(e){
       let popover = this.popoverCtrl.create(DecisionToolMenuComponent);
       popover.onDidDismiss(params=>{
-        console.log('params',params)
         if(params=="save"){
           if(!this.dataPrvdr.activeSurvey){this.startNew()}
           else{this.save()}        
@@ -88,7 +87,6 @@ export class StepByStepPage {
     this.dataPrvdr.backgroundSave()
   }
   pushPage(page){
-    console.log('pushing page')
     this.navCtrl.push(page)
   }
   export(){
