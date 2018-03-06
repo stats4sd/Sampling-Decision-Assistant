@@ -1,6 +1,21 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+## 0.8.2 (6th March 2018)
+
+Stages with multiple steps now have breadcrumbs to help navigate where in the subprocess you are.
+
+Stage 4 - Reporting levels are now classified during this stage (previously stage 5) and lists of combination are presented for review. In the future there may be an option for users to specify which levels of combination they consider relevant, however for now it should help to advise against the use of too many complex levels where not necessary. 
+
+Tree diagram now supports multiple reporting levels in a single stage and automatically populates combinations of unallocated reporting levels within the final sampling unit (orange boxes at the bottom level). It's also had a number of iterations of styling and display logic. (Next step will be to allow user input for nodes, an early template has been started in the resources -> allocating section however it's not functional yet). 
+
+## 0.8.1 (3rd March 2018)
+
+Sample size calculator - A first pass have been given to write a calculator in R which is embedded into the app in stage 6. Currently the calculator requires the manual input of variables which are already present in the app, however in the future they will be better integrated.
+
+Audio and Visual Resources - A new template has been included to display combinations of text, audio and visual resources, with a sample of resources available for stage 1
+ 
+
 ## 0.8.0 (27th February 2018)
 
 Stage 5 - The logic for the most complex case scenarios (e.g. multiple stages with sampling and stratification at each stage) is up and ready for wider testing. This required a rewrite of how much of the data was handled to better track nested and linked variables, and provide easier creation of custom question interfaces. 

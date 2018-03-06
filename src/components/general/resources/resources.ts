@@ -9,6 +9,7 @@ import stage4Resources from './data/stage-4-resources'
 import stage5Resources from './data/stage-5-resources'
 import stage6Resources from './data/stage-6-resources'
 import { DomSanitizer } from '@angular/platform-browser';
+import demoResources from './data/demo-resources';
 
 @Component({
   selector: 'resources',
@@ -20,7 +21,7 @@ export class ResourcesComponent {
   @Input() set stage(stage: number) {
     this.setResources(this.allResources[stage])
   }
-  allResources = [null, stage1Resources, stage2Resources, stage3Resources, stage4Resources, stage5Resources, stage6Resources]
+  allResources = [demoResources, stage1Resources, stage2Resources, stage3Resources, stage4Resources, stage5Resources, stage6Resources]
   questions: any[] = []
   relevant: string = "N/A"
 

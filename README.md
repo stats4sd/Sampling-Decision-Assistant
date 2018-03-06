@@ -18,9 +18,9 @@ The project is linked to a remote firebase server for deployment. Memebers of SS
 
 ## Build notes
 ### Updating changelog
-`pages/_changelog/version.ts` -> version number and date
-`pages/_changelog/changelog.md` -> changelog markdown
-`pages/_changelog/changelog.html` -> rendered html of changelog (currently manually generated)
+`pages/changelog/version.ts` -> version number and date
+`pages/changelog/changelog.md` -> changelog markdown
+`pages/changelog/changelog.html` -> rendered html of changelog (currently manually generated)
 
 
 Standard build with one current exception:
