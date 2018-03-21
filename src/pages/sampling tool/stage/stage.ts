@@ -35,7 +35,6 @@ export class StagePage {
   refreshSlides: boolean;
   relevant: string
   loaded: boolean
-  stagesComplete = this.dataPrvdr.activeSurvey.stagesComplete;
   slideOptions = {}
   stageSlidesIndex: number = 0
 
@@ -71,7 +70,7 @@ export class StagePage {
 
 
   ionViewDidEnter() {
-    //this.surveyValues = this.dataPrvdr.activeSurvey ? this.dataPrvdr.activeSurvey.values : {}
+    //this.surveyValues = this.dataPrvdr.activeProject ? this.dataPrvdr.activeProject.values : {}
     // this.slides.lockSwipes(true)
     // this.slides.autoHeight = true;
     this.loaded = true

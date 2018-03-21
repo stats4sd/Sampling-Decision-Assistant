@@ -16,16 +16,16 @@
 
     <introduction *ngIf="showIntro"></introduction>
     <div [ngClass]="showIntro ? 'hidden':'not-hidden'">
-      <div style="font-size: medium" icon-left *ngIf="!activeSurvey">
+      <div style="font-size: medium" icon-left>
         <ion-icon name="bulb"></ion-icon>To start a new project from a template or to load a saved project click on the menu link above</div>
-        <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeSurvey">
-          <ion-icon name="clipboard"></ion-icon>{{activeSurvey.title}}</div>
+      <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeProject && activeProject.title">
+        <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}</div>
       <!-- step by step sections -->
       <div class="section-break">Step By Step Decisions</div>
       <div class="main-container">
         <p class="instruction" icon-left>
           <ion-icon name="information-circle"></ion-icon>Complete each section to build an overview of your sampling decisions</p>
-          <!-- section cards -->
+        <!-- section cards -->
         <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
@@ -33,9 +33,11 @@
               <img class="section-icon" [src]="section.icon">
             </div>
             <div class="section-title">{{section.stage}}: {{section.name}}</div>
-            <div class="section-status" >
-              <button ion-button icon-only clear [disabled]="!dataPrvdr.activeSurvey.stagesComplete[section.stage]"><ion-icon name="checkmark-circle"></ion-icon></button>
-              
+            <div class="section-status">
+              <button ion-button icon-only clear [disabled]="!stagesComplete[section.stage]">
+                <ion-icon name="checkmark-circle"></ion-icon>
+              </button>
+
             </div>
           </div>
         </ion-card>

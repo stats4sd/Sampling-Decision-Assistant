@@ -6,13 +6,16 @@ import { Project, SavedProjects } from '../models/models';
 export type ProjectSaveAction = FluxStandardAction<Project, null>;
 export type ProjectLoadAction = FluxStandardAction<Project, null>;
 export type ProjectsListAction = FluxStandardAction<Project[], null>;
+export type UpdateProjectAction = FluxStandardAction<any, string>;
 
 
 @Injectable()
 export class ProjectActions {
     static readonly SAVE_PROJECT = 'SAVE_PROJECT';
     static readonly LOAD_PROJECT = 'LOAD_PROJECT';
+    static readonly NEW_PROJECT = 'NEW_PROJECT';
     static readonly LIST_PROJECTS = 'LIST_PROJECTS';
+    static readonly UPDATE_PROJECT_VALUES = 'UPDATE_PROJECT_VALUES';
 
 
     @dispatch()
@@ -30,10 +33,31 @@ export class ProjectActions {
     });
 
     @dispatch()
+    setNewProject = (project: Project): ProjectLoadAction => ({
+        type: ProjectActions.NEW_PROJECT,
+        meta: null,
+        payload: project
+    });
+
+    @dispatch()
     listProjects = (savedProjects): ProjectsListAction => ({
         type: ProjectActions.LIST_PROJECTS,
         meta: null,
         payload: savedProjects
+    });
+
+    @dispatch()
+    updateProjectValues = (values): UpdateProjectAction => ({
+        type: ProjectActions.UPDATE_PROJECT_VALUES,
+        meta: 'values',
+        payload: values
+    });
+
+    @dispatch()
+    updateProjectCompletion = (arr): UpdateProjectAction => ({
+        type: ProjectActions.UPDATE_PROJECT_VALUES,
+        meta: 'stagesComplete',
+        payload: arr
     });
 
 }

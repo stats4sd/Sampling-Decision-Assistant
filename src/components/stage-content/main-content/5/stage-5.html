@@ -13,7 +13,7 @@
         <!-- multi-stage builder slide -->
         <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
             <stage-5-frame-builder-overview></stage-5-frame-builder-overview>
-            <stage-complete stageNumber=5 [complete]="dataPrvdr.activeSurvey.stagesComplete[5]"></stage-complete>
+            <stage-complete stageNumber=5 ></stage-complete>
         </ion-slide>
 
     </ion-slides>
@@ -24,9 +24,5 @@
         <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex <2" clear block>Continue
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
-
-        <!-- <button ion-button icon-right (click)="nextStage()" *ngIf="stageSlidesIndex >= 2 && dataPrvdr.activeSurvey.stagesComplete[5]">Next Stage
-            <ion-icon name="arrow-forward"></ion-icon>
-        </button> -->
     </div>
 </div>

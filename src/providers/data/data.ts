@@ -7,105 +7,60 @@ import questionMeta from '../questionMeta';
 import { utils, write, WorkBook, read } from 'xlsx';
 import { saveAs } from 'file-saver';
 import { FormProvider } from '../form/form'
+import { ProjectActions } from '../../actions/actions';
+import { SavedProjects, Project, AppState } from '../../models/models';
+import { select, NgRedux } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+
 // import * as dojox from 'dojo'
 
 @Injectable()
 export class DataProvider {
-  public savedSurveys: any;
-  public activeSurvey: any;
   public questionMeta = questionMeta;
   private _dbVersion = 1;
-  private isSaving:boolean=false
+  private isSaving: boolean = false;
+  private savedProjectsJson: any = {}
+  //public activeProject: Project;
+  @select(['activeProject', 'values']) readonly projectValues$: Observable<Project>;
+  @select('activeProject') readonly activeProject$: Observable<Project>;
+
 
   constructor(
     public storage: Storage,
     private events: Events,
     public toastCtrl: ToastController,
     private formPrvdr: FormProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private projectActions: ProjectActions,
+    private ngRedux: NgRedux<AppState>
   ) {
-    this.activeSurvey = {
-      stagesComplete: [null, false, false, false, false, false, false],
-      title:'(unsaved project)'
-    }
-    this.loadSavedSurveys()
-    // save survey whenever value changes, includes throttle to prevent multiple
-    this.formPrvdr.formGroup.valueChanges.subscribe(_=>{
-      this.backgroundSave()
+    // bind local activeProject to update from redux, save survey whenever value changes, includes throttle to prevent multiple
+    // this.activeProject$.subscribe(p => { if (p) { this.activeProject = p } })
+    this.projectValues$.subscribe(v => {
+      setTimeout(() => {
+        if (this.formPrvdr.formGroup.touched) {
+          if (v) {
+            let project = this.ngRedux.getState().activeProject
+            this.backgroundSave(project)
+          }
+        }
+      }, 1000);
     })
-  }
-  backgroundSave(){
-    // throttled save of survey, pulling values from master formgroup
-    if(!this.isSaving){
-      this.isSaving=true
-      setTimeout(_=>{
-        this.activeSurvey.values=this.formPrvdr.formGroup.value
-        this.saveSurvey(this.activeSurvey,true).then(res=>{
-          console.log('saved')
-          this.isSaving=false
-        })
-      },500)
-    }
-    
+    // load saved projects
+    this.loadSavedProjects()
   }
 
-  createNewSurvey(title: string, backgroundMode?: boolean) {
-    this.activeSurvey = {
-      title: title,
-      created: new Date(),
-      values: {},
+
+  createNewProject() {
+    let date: number = Date.now()
+    let project: Project = {
+      title: null,
+      created: date,
+      edited: date,
+      values: this.formPrvdr.formGroup.value,
       stagesComplete: [null, false, false, false, false, false, false]
     }
-    this.savedSurveys[title] = this.activeSurvey
-    this.saveSurvey(null, backgroundMode);
-  }
-
-  deleteSurvey(title) {
-    if (this.activeSurvey && this.activeSurvey.title == title) {
-      this.activeSurvey = null
-    }
-    delete this.savedSurveys[title]
-    if (!this.savedSurveys) { this.savedSurveys = {} }
-    return this.saveToStorage('savedSurveys', this.savedSurveys)
-  }
-
-  loadSurvey(survey) {
-    this.activeSurvey = survey
-    this.formPrvdr.initFormValues(survey.values)
-  }
-
-  saveSurvey(survey?, backgroundMode?) {
-    // save entire survey to local storage. provide survey param to specify exact (e.g. in import), otherwise will pull from form provider
-    return new Promise((resolve, reject) => {
-      if (survey) {
-        this.savedSurveys[survey.title] = survey
-        this.saveToStorage('savedSurveys', this.savedSurveys).then(
-          _ => {
-            if (!backgroundMode) {
-              this.showNotification('Imported Successfully')
-            }
-            resolve('saved')
-
-          })
-      }
-      else if (this.activeSurvey.title) {
-        let title = this.activeSurvey.title
-        this.savedSurveys[title] = this.activeSurvey
-        this.activeSurvey.values = this.formPrvdr.formGroup.value
-        this.activeSurvey._dbVersion = this._dbVersion
-        this.saveToStorage('savedSurveys', this.savedSurveys).then(
-          _ => {
-            if (!backgroundMode) {
-              this.showNotification('Progress Saved')
-            }
-            resolve('saved')
-          }
-        )
-      }
-      else {
-        resolve('saved')
-      }
-    })
+    this.projectActions.setNewProject(project)
   }
 
   showNotification(message, duration?, position?) {
@@ -116,51 +71,127 @@ export class DataProvider {
     })
     toast.present()
   }
-  loadSavedSurveys() {
+  loadSavedProjects() {
+    let saved: SavedProjects = []
     this.getFromStorage('savedSurveys').then(
       res => {
-        this.savedSurveys = res ? res : {}
-        // remove old format
-        Object.keys(this.savedSurveys).forEach(k => {
-          let survey = res[k]
-          if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { delete this.savedSurveys[k] }
-        })
-        // load testing survey by default if created for faster dev workflow //
-        if (this.savedSurveys._testing) { this.loadSurvey(this.savedSurveys._testing) }
-        else if (this.savedSurveys['(unsaved project)']) {
-          // prompt resume of previous survey if available
-          this.promptSurveyResume(this.savedSurveys['(unsaved project)'])
+        if (res) {
+          // deprecate old format
+          Object.keys(res).forEach(k => {
+            let survey = res[k]
+            if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { res[k].incompatible = true }
+            saved.push(res[k])
+          })
+          this.savedProjectsJson = res
+          saved.sort((a, b) => {
+            return a.edited < b.edited ? 1 : -1
+          })
+          this.projectActions.listProjects(saved)
+          if (saved.length > 0) {
+            this.promptProjectResume([...saved][0])
+          }
         }
         else {
-          // else save new to '(unsaved project)'
-          let d = new Date
-          this.createNewSurvey('(unsaved project)', true)
+          this.projectActions.listProjects([])
+          this.createNewProject()
         }
+
       }
     )
   }
-  promptSurveyResume(survey) {
+  promptProjectResume(project: Project) {
     // give option to resume previous survey
+    let title = project.title? project.title : 'Unsaved Project - '+new Date(project.created).toLocaleString()
     this.alertCtrl.create({
       title: 'Resume project?',
-      message: 'An unsaved project was found, do you wish to resume it?',
+      message: `
+      <div>Do you wish to continue with your last project</div>
+      <div class='project-title'>`+ title + `</div>
+      `,
       buttons: [
         {
-          text: 'Discard',
+          text: 'No thanks',
           handler: () => {
-            this.createNewSurvey('(unsaved project)', true)
+            this.createNewProject()
           }
         },
         {
-          text: 'Resume',
+          text: 'Yes, resume',
           handler: () => {
-            this.loadSurvey(survey)
+            this.loadProject(project)
           }
         }
       ],
       enableBackdropDismiss: false
     }).present()
   }
+
+  loadProject(project: Project) {
+    this.projectActions.setActiveProject(project)
+    this.formPrvdr.initFormValues(project.values)
+  }
+
+  backgroundSave(activeProject: Project) {
+    // throttled save of survey, pulling values from master formgroup
+    if (!this.isSaving) {
+      this.isSaving = true
+      setTimeout(_ => {
+       
+        // this.activeProject.values = this.formPrvdr.formGroup.value
+        this.savedProjectsJson[activeProject.created] = activeProject
+        this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
+          res => this.isSaving = false
+        )
+      }, 500)
+    }
+  }
+
+  // }
+
+  // deleteSurvey(title) {
+  //   if (this.activeProject && this.activeProject.title == title) {
+  //     this.activeProject = null
+  //   }
+  //   delete this.savedSurveys[title]
+  //   if (!this.savedSurveys) { this.savedSurveys = {} }
+  //   return this.saveToStorage('savedSurveys', this.savedSurveys)
+  // }
+
+
+
+  // saveSurvey(survey?, backgroundMode?) {
+  //   // save entire survey to local storage. provide survey param to specify exact (e.g. in import), otherwise will pull from form provider
+  //   return new Promise((resolve, reject) => {
+  //     if (survey) {
+  //       this.savedSurveys[survey.title] = survey
+  //       this.saveToStorage('savedSurveys', this.savedSurveys).then(
+  //         _ => {
+  //           if (!backgroundMode) {
+  //             this.showNotification('Imported Successfully')
+  //           }
+  //           resolve('saved')
+
+  //         })
+  //     }
+  //     else if (this.activeProject.title) {
+  //       let title = this.activeProject.title
+  //       this.savedSurveys[title] = this.activeProject
+  //       this.activeProject.values = this.formPrvdr.formGroup.value
+  //       this.activeProject._dbVersion = this._dbVersion
+  //       this.saveToStorage('savedSurveys', this.savedSurveys).then(
+  //         _ => {
+  //           if (!backgroundMode) {
+  //             this.showNotification('Progress Saved')
+  //           }
+  //           resolve('saved')
+  //         }
+  //       )
+  //     }
+  //     else {
+  //       resolve('saved')
+  //     }
+  //   })
+  // }
 
   // ***** general storage functions ***** //
 
@@ -170,7 +201,7 @@ export class DataProvider {
       this.storage.get(key)
         .then(
           res => {
-            // if (res != null) { this.activeSurvey = res }
+            // if (res != null) { this.activeProject = res }
             resolve(res)
           }
         )
@@ -184,7 +215,7 @@ export class DataProvider {
   export() {
     // export as xlsx
     let rows = this.prepareExport()
-    const ws_name = this.activeSurvey.title;
+    const ws_name = this.activeProject.title;
     const wb: WorkBook = { SheetNames: [], Sheets: {} };
     const ws: any = utils.json_to_sheet(rows);
     wb.SheetNames.push(ws_name);
@@ -200,7 +231,7 @@ export class DataProvider {
       return buf;
     }
 
-    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'Sampling Decisions - ' + this.activeSurvey.title + '.xlsx');
+    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'Sampling Decisions - ' + this.activeProject.title + '.xlsx');
   }
   import(files) {
     // support processing of drag and drop files using filereader api
@@ -234,21 +265,21 @@ export class DataProvider {
       created: new Date(),
       imported: true
     }
-    this.activeSurvey = survey
-    // create new project entry, prompting rename where appropriate
-    if (this.savedSurveys[survey.title]) {
-      this.events.subscribe('project:rename', title => {
-        survey.title = title
-        this.saveSurvey(survey).then(_ => {
-          this.events.unsubscribe('project:rename')
-          this.events.publish('import:complete')
-        })
-      })
-      this.events.publish('import:duplicate', survey)
-    }
-    else {
-      this.saveSurvey(survey).then(_ => this.events.publish('import:complete'))
-    }
+    // this.activeProject = survey
+    // // create new project entry, prompting rename where appropriate
+    // if (this.savedSurveys[survey.title]) {
+    //   this.events.subscribe('project:rename', title => {
+    //     survey.title = title
+    //     this.saveSurvey(survey).then(_ => {
+    //       this.events.unsubscribe('project:rename')
+    //       this.events.publish('import:complete')
+    //     })
+    //   })
+    //   this.events.publish('import:duplicate', survey)
+    // }
+    // else {
+    //   this.saveSurvey(survey).then(_ => this.events.publish('import:complete'))
+    // }
   }
 
   prepareExport() {

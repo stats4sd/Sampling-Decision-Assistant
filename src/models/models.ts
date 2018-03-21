@@ -1,18 +1,35 @@
 // models for how variables should be stored
 
 export interface Project {
-    title: string,
-    created: string,
+    title?: string,
+    created: number,
+    edited: number,
     values: any,
-    stagesComplete:boolean[],
-    draft:boolean
+    stagesComplete: boolean[],
+    incompatible?: boolean,
+    draft?: boolean
 }
 
 export type SavedProjects = Project[]
 
 export interface AppState {
-    activeProject? : Project,
-    lastProject? : Project,
+    activeProject?: Project,
     databaseVersion?: string,
-    savedProjects? : Project[],
+    savedProjects?: Project[],
+}
+
+export interface Question {
+    isQuestion: string,
+    controlName: string,
+    repeatGroup?: string,
+    type: string,
+    selectOptions?: string,
+    label: string,
+    section: string,
+    condition?: string,
+    labelMultiple?: string,
+    options?:any,
+    triggers?:any,
+    conditionJson?:any
+    
 }

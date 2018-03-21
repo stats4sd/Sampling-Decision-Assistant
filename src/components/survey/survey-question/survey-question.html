@@ -1,11 +1,11 @@
-<div *ngIf="showQuestion">
+<div *ngIf="showQuestion" [@animationState]="'fadein'">
   <!-- repeat group questions -->
   <div *ngIf="question.type=='repeat'">
     <survey-repeat-group [question]="question"></survey-repeat-group>
   </div>
 
   <!-- non-repeat group questions -->
-  <div *ngIf="question.type!='repeat'">
+  <div *ngIf="question.type!='repeat'" [formGroup]="formGroup">
     <!-- general section for all questions -->
     <div class="container">
       <div style="flex:1">
@@ -17,11 +17,12 @@
         </div>
 
         <!-- individual question types -->
+        <!-- simple changes can be bound direct to formControlName -->
         <div [ngSwitch]="question.type">
           <!-- select -->
           <div *ngSwitchCase="'select'">
             <ion-item *ngIf="!showSelectOther">
-              <ion-select (ionChange)="selectUpdated($event)" interface="action-sheet" [(ngModel)]="value">
+              <ion-select (ionChange)="selectUpdated($event)" interface="action-sheet" [formControlName]="question.controlName">
                 <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
                 <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
               </ion-select>
@@ -36,7 +37,7 @@
           <!-- text area input -->
           <div *ngSwitchCase="'text'">
             <ion-item>
-              <textarea id="textAreaInput" #textAreaInput [(ngModel)]="value" (focusout)="valueUpdated()" (keyup)="resize()"></textarea>
+              <textarea id="textAreaInput" #textAreaInput [(ngModel)]="value" [ngModelOptions]="{standalone: true}" (focusout)="valueUpdated()" (keyup)="resize()"></textarea>
             </ion-item>
           </div>
 
@@ -49,7 +50,7 @@
               </div>
               <ion-item>
                 <ion-input type="number" [max]="question.options && question.options.max ? question.options.max : null" [min]="question.options && question.options.min ? question.options.min : null"
-                  [(ngModel)]="value" (focusout)="valueUpdated()"></ion-input>
+                  [(ngModel)]="value" [ngModelOptions]="{standalone: true}" (focusout)="valueUpdated()"></ion-input>
               </ion-item>
             </div>
           </div>
@@ -80,7 +81,7 @@
           </div>
 
           <!-- custom types -->
-          <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [formGroup]="formGroup" [repeatFormGroup]="repeatFormGroup" [preloadValue]="value" (onValueChange)="valueUpdated($event)"></question-custom-strata-select>
+          <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [formGroup]="formGroup"  [preloadValue]="value" (onValueChange)="valueUpdated($event)"></question-custom-strata-select>
           <question-custom-stages-define *ngSwitchCase="'custom-stages-define'" (onValueChange)="valueUpdated($event)"></question-custom-stages-define>
           <!-- <question-base [question]="question" (onUpdate)="valueUpdated($event)"></question-base> -->
         </div>

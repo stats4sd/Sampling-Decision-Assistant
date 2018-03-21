@@ -4,9 +4,10 @@
     <ion-buttons end>
       <button ion-button icon-left (click)="closeModal()" *ngIf="modalMode">
         <ion-icon name="checkmark"></ion-icon>Close</button>
-      <button ion-button icon-left color="primary" style="background-color: white" *ngIf="dataPrvdr.activeSurvey.stagesComplete[stage.number]"
+        <!-- *** PUT BACK IN *** -->
+      <!-- <button ion-button icon-left color="primary" style="background-color: white" *ngIf="stagesComplete[stage.number]"
         [@animationState]="'flyIn'">
-        <ion-icon name="checkmark-circle"></ion-icon>Section Complete</button>
+        <ion-icon name="checkmark-circle"></ion-icon>Section Complete</button> -->
     </ion-buttons>
   </ion-navbar>
 
@@ -14,8 +15,6 @@
 
 <ion-content padding class="slide-scroll-content" #content id="content">
   <div class="central-content">
-    <!-- <ion-slides #slides id="slides" >
-      <ion-slide> -->
     <!-- Main Content -->
     <div class="slide-content" *ngIf="activeSection=='Main'">
       <stage-1 *ngIf="stage.number==1"></stage-1>
@@ -25,23 +24,15 @@
       <stage-5 *ngIf="stage.number==5"></stage-5>
       <stage-6 *ngIf="stage.number==6"></stage-6>
     </div>
-    <!-- </ion-slide>
-
-      <ion-slide> -->
     <!-- Resources -->
     <div class="slide-content" *ngIf="activeSection=='Resources'">
       <resources [stage]="stage.number"></resources>
     </div>
-    <!-- </ion-slide>
-
-      <ion-slide> -->
+   
     <!-- Glossary -->
     <div class="slide-content" *ngIf="activeSection=='Glossary'">
       <glossary [section]="stage.number" [slug]="glossarySlug"></glossary>
-      <!-- <glossary [terms]="glossaryTerms" [term]="activeGlossaryTerm"></glossary> -->
     </div>
-    <!-- </ion-slide>
-    </ion-slides> -->
 
     <div class="segment-container">
       <ion-segment [(ngModel)]="activeSection">

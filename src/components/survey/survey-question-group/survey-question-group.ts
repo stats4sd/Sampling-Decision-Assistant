@@ -37,6 +37,7 @@ export class SurveyQuestionGroupComponent {
   constructor(private formPrvdr: FormProvider) {
     // bind to master formgroup and questions
     this.formGroup = this.formPrvdr.formGroup
+    console.log('formgroup',this.formGroup)
   }
   ngOnInit(){
     // initialise questions from list provided (or load all) and filter

@@ -3,6 +3,8 @@ import { Events } from 'ionic-angular'
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import questionMeta from '../questionMeta';
+import { ProjectActions } from '../../actions/actions';
+import { Question } from '../../models/models';
 
 @Injectable()
 export class FormProvider {
@@ -13,7 +15,7 @@ export class FormProvider {
   // track questions to omit from main lists
   repeatChildren: any = []
 
-  constructor(private fb: FormBuilder, private events: Events) {
+  constructor(private fb: FormBuilder, private events: Events, private projectActions:ProjectActions) {
     this.events.subscribe('valueUpdate', update => {
       this._customUpdateTriggers(update)
     })
@@ -22,9 +24,15 @@ export class FormProvider {
 
   _init() {
     let questions = questionMeta
-    console.log('all questions', questions)
-    this.formGroup = this._generateQuestionForm(questions)
-    console.log('master formgroup', this.formGroup)
+    //this.formGroup = this._generateQuestionForm(questions)
+    this.formGroup=this.fb.group({})
+    console.log('formgroup',this.formGroup)
+    // reflect form value changes to redux
+    this.formGroup.valueChanges.subscribe(
+      v=>{
+        this.projectActions.updateProjectValues(v)
+      }
+    )
   }
 
   getSurveyValue(key) {
@@ -37,41 +45,57 @@ export class FormProvider {
   }
   initFormValues(values, formGroup?: FormGroup) {
     console.log('init form values',values)
-    if (!formGroup) { formGroup = this.formGroup }
+    
+    //if (!formGroup) { formGroup = this.formGroup }
     // set values, building controls as required ( in simple mode, currently skipping any validators)
+    let patch={}
     Object.keys(values).forEach(key => {
       let val = values[key]
       // load string and number values
-      let patch = {}
-      patch[key] = val
-      if (typeof (val) == "string") { formGroup.patchValue(patch) }
-      if (typeof (val) == "number") { formGroup.patchValue(patch) }
-      // handle arrays
-      else if (val instanceof Array) {
-        // handle array values stored as strings (e.g. lists)
-        if (typeof val[0] == "string") {
-          patch[key] = val
-          formGroup.patchValue(patch)
+      if(val!=""){
+        // add controls on the fly if they don't exist
+        if(!this.formGroup.controls['key']){
+          this.formGroup.addControl(key,this.fb.control(val))
         }
-        else {
-          // handle values stores as objects (e.g. repeat groups)
-          // iterate over each value array (repeatGroup)
-          let arrayControl: FormArray = formGroup.controls[key] as FormArray
-          val.forEach((repeatGroup,i) => {
-            // initialise without values and then patch to ensure correct representation of arrays
-            let repeatFormGroup = this.fb.group({})
-            Object.keys(repeatGroup).forEach(repeatKey=>{
-              let repeatVal = repeatGroup[repeatKey]
-              repeatFormGroup.addControl(repeatKey,this.fb.control(repeatVal))
-            })
-             arrayControl.push(repeatFormGroup)
-          })
-        }
+        patch[key] = val
       }
+      
+      //  if (typeof (val) == "string" || typeof(val)=="number") { 
+      //    patch[key] = val 
+      //   }
+      // handle arrays
+      //else 
+      // if (val instanceof Array) {
+      //   // handle array values stored as strings (e.g. lists)
+      //   if (typeof val[0] == "string") {
+      //     patch[key] = val
+      //     //formGroup.patchValue(patch)
+      //   }
+      //   else {
+      //     // handle values stores as objects (e.g. repeat groups)
+      //     // iterate over each value array (repeatGroup)
+      //     // let arrayControl: FormArray = formGroup.controls[key] as FormArray
+      //     // val.forEach((repeatGroup,i) => {
+      //     //   // initialise without values and then patch to ensure correct representation of arrays
+      //     //   let repeatFormGroup = this.fb.group({})
+      //     //   Object.keys(repeatGroup).forEach(repeatKey=>{
+      //     //     let repeatVal = repeatGroup[repeatKey]
+      //     //     repeatFormGroup.addControl(repeatKey,this.fb.control(repeatVal))
+      //     //   })
+      //     //    arrayControl.push(repeatFormGroup)
+      //     // })
+      //   }
+      // }
     })
-    console.log('formgroup', this.formGroup)
+    // patch all values
+    this.formGroup.setValue(patch)
+    console.log('formgroup',this.formGroup)
+   
     this.events.publish('form:initComplete')
     return formGroup
+  }
+  createFormControl(question:Question ){
+
   }
 
   _customUpdateTriggers(update) {
@@ -187,10 +211,10 @@ export class FormProvider {
     return this.fb.group(template)
   }
 
-  _generateConditionOptions(question) {
+  _generateConditionOptions(condition) {
     // take text condition string and turn into json element for use in show logic function
-    let json = {}
-    let propertiesString = question.condition
+    let json:any = {}
+    let propertiesString = condition
     let propertiesArray = propertiesString.split(',')
     propertiesArray.forEach(el => {
       let a = el.split(':');
@@ -198,7 +222,6 @@ export class FormProvider {
       let val = a[1].trim();
       json[key] = val
     });
-    question.conditionJson = json
-    return question
+    return json
   }
 }

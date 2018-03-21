@@ -28,7 +28,7 @@
     <ion-list>
       <ion-item *ngFor="let survey of savedArray">
         <div style="display: flex">
-          <div style="flex:1; cursor:pointer" (click)="loadSurvey(survey)">
+          <div style="flex:1; cursor:pointer" (click)="loadProject(survey)">
             <div class="survey-title">{{survey.title}}</div>
             <div class="survey-date">{{survey.created | date}}</div>
           </div>

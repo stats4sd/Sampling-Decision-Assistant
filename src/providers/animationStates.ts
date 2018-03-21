@@ -18,6 +18,8 @@ export default
         state('flyIn',
             style({ transform: 'translateX(0)' }),
         ),
+        state('fadein', style({ opacity: '1' })),
+        state('fadeout', style({ opacity: '0' })),
         transition('void => flyIn', [
             style({ transform: 'translateX(100%)' }),
             animate(150),
@@ -37,6 +39,12 @@ export default
         // expand out animation
         transition('expandIn => void', [
             animate(150, style({ height: 0 })),
+        ]),
+        transition('void => fadein', [
+            style({ opacity: '0' }), animate('200ms ease-in')
+        ]),
+        transition('fadein <=> fadeout', [
+            animate(200)
         ]),
 
 

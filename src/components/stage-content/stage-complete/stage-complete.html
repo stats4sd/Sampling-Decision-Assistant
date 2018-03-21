@@ -2,9 +2,9 @@
   <ion-item *ngIf="form" style="max-width:400px">
     <ion-label *ngIf="!text">Mark Section as Complete</ion-label>
     <ion-label *ngIf="text">{{text}}</ion-label>
-    <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="dataPrvdr.activeSurvey.stagesComplete[stage.number]" (ionChange)="toggleCheckbox()"></ion-checkbox>
+    <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="stagesComplete[stage.number]" (ionChange)="toggleCheckbox()"></ion-checkbox>
   </ion-item>
-  <button ion-button icon-right *ngIf="dataPrvdr.activeSurvey.stagesComplete[stageNumber] && !hideButton" (click)="nextStage()">
+  <button ion-button icon-right *ngIf="stagesComplete[stageNumber] && !hideButton" (click)="nextStage()">
     Next Stage
     <ion-icon name="arrow-forward"></ion-icon>
   </button>

@@ -2,21 +2,26 @@ import { Component, Input } from '@angular/core';
 import { DataProvider } from '../../../providers/data/data';
 import { FormProvider } from '../../../providers/form/form';
 import { FormGroup } from '@angular/forms/src/model';
-import { StagePage } from '../../../pages/sampling tool//stage/stage';
+import { StagePage } from '../../../pages/sampling tool/stage/stage';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { Project } from '../../../models/models';
+import { ProjectActions } from '../../../actions/actions';
 
 @Component({
   selector: 'stage-complete',
   templateUrl: 'stage-complete.html'
 })
 export class StageCompleteComponent extends StagePage {
-
-  @Input('complete') complete: boolean
+  @select(['activeProject','stagesComplete']) readonly stagesComplete$: Observable<boolean[]>;
   @Input('disabled') disabled: boolean
   @Input('stageNumber') stageNumber: number
   @Input('text') text: string;
   @Input('hideButton') hideButton:boolean;
   lastCall: number = 0
   sectionValid: boolean = false
+  stagesComplete:boolean[]=[]
+  projectActions:ProjectActions
 
   ngOnInit(){
     // subscribe to form value changes to mark when section complete
@@ -24,6 +29,12 @@ export class StageCompleteComponent extends StagePage {
     this.formPrvdr.formGroup.valueChanges.subscribe(
       v=>{this.checkSectionValid(v)}
     )
+    this.stagesComplete$.subscribe(s=>{
+      if(s){
+        this.stagesComplete=s
+
+      }
+    })
   }
 
 
@@ -37,14 +48,17 @@ export class StageCompleteComponent extends StagePage {
         if (v['q1.2'] == 'Non-representative') { return true }
         if (v['q1.1'] == 'A comparison that needs a quasi-experimental or an experimental approach') { return true }
         else {
-          this.dataPrvdr.activeSurvey.stagesComplete[1] = false
+          // *** add back in ***
+          // this.dataPrvdr.activeProject.stagesComplete[1] = false
+          this.stagesComplete[1]=false
+          // this.projectActions.updateProjectCompletion(this.stagesComplete)
           return false
         }
       }
       case s == 2: {
         if (v['q2.4']) { return true }
         else {
-          this.dataPrvdr.activeSurvey.stagesComplete[2] = false
+          // this.dataPrvdr.activeProject.stagesComplete[2] = false
           return false
         }
 
@@ -94,7 +108,7 @@ export class StageCompleteComponent extends StagePage {
     )
   }
   toggleCheckbox() {
-    console.log('toggling checkbox', this.dataPrvdr.activeSurvey.stagesComplete[this.stage.number])
+    console.log('toggling checkbox', this.dataPrvdr.activeProject.stagesComplete[this.stage.number])
     //if(this.stage.number==3){this._patchSection3()}
     this.dataPrvdr.backgroundSave()
   }

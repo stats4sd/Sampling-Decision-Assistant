@@ -24,7 +24,7 @@ export class SavedInfoPage {
     public alertCtrl:AlertController
   ) {
     this.view = this.navParams.data.view;
-    this.loadSavedSurveys()
+    this.loadSavedProjects()
   }
 
   ionViewDidLoad() {
@@ -34,7 +34,7 @@ export class SavedInfoPage {
       this.errorMsg = "A project with that name already exists"
     }
     else {
-      this.dataPrvdr.createNewSurvey(this.saveName)
+      this.dataPrvdr.createNewProject(this.saveName)
       this.viewCtrl.dismiss({ title: this.saveName })
     }
 
@@ -43,17 +43,17 @@ export class SavedInfoPage {
   dismiss() {
     this.viewCtrl.dismiss()
   }
-  loadSurvey(survey) {
-    this.dataPrvdr.loadSurvey(survey);
+  loadProject(survey) {
+    this.dataPrvdr.loadProject(survey);
     this.viewCtrl.dismiss(survey);
   }
   deleteSurvey(survey) {
     this.dataPrvdr.deleteSurvey(survey.title).then(
-      _ => this.loadSavedSurveys()
+      _ => this.loadSavedProjects()
     )
 
   }
-  loadSavedSurveys() {
+  loadSavedProjects() {
     this.savedSurveys = this.dataPrvdr.savedSurveys;
     if (this.savedSurveys) {
       let arr = []
@@ -73,7 +73,7 @@ export class SavedInfoPage {
       this.promptRename(project)
     })
     this.events.subscribe('import:complete',_=>{
-      this.loadSavedSurveys()
+      this.loadSavedProjects()
     })
     this.dataPrvdr.import(files)
   }

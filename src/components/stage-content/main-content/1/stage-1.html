@@ -30,7 +30,8 @@
     a quasi-experimental study. If you are not sure which is the correct answer for you, have a look at the examples provided.
   </p>
   <help-icon relevant="q1.1"></help-icon>
-  <survey-question-group [filter]="['q1.1']"></survey-question-group>
+  <!-- <survey-question-group [filter]="['q1.1']"></survey-question-group> -->
+  <survey-question controlName="q1.1"></survey-question>
   <div *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
     <note type="dev">
       Information will go here explaining main uses of tool directed towards measuring characteristics, but elements that may still
@@ -45,14 +46,16 @@
       If you are not sure of your requirements then click on the help icon to see some common examples.
     </p>
     <help-icon relevant="q1.2"></help-icon>
-    <survey-question-group [section]="section" [filter]="['q1.2']"></survey-question-group>
+    <!-- <survey-question-group [section]="section" [filter]="['q1.2']"></survey-question-group> -->
   </div>
+  <survey-question controlName="q1.2"></survey-question>
   <!-- q1.3 -->
   <div *ngIf="form.value['q1.2']=='Representative'">
     <p>With your target population in mind, try to answer the following questions:</p>
     <help-icon relevant="q1.3"></help-icon>
-    <survey-question-group [section]="section" [filter]="['q1.3']"></survey-question-group>
+    <!-- <survey-question-group [section]="section" [filter]="['q1.3']"></survey-question-group> -->
   </div>
+  <survey-question controlName="q1.3"></survey-question>
 
   <!-- not relevant responses from 1.1 or 1.2 -->
   <!-- <p *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
@@ -65,6 +68,6 @@
     <!-- <span class="incomplete">Text to go here responding to measure impact</span> -->
   </p>
 
-  <stage-complete stageNumber=1 [complete]="dataPrvdr.activeSurvey.stagesComplete[1]"></stage-complete>
+  <stage-complete stageNumber=1></stage-complete>
 
 </div>
