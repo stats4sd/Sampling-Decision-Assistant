@@ -68,20 +68,22 @@ export class TreeDiagramComponent {
           // track allocated stages and add final stage levels
           try {
             let allReportingLevels = JSON.parse(this.form.value.strata)
-          if (stage['q5.3.4.2'] == "_final") { stage['q5.3.4.2'] = this._addFinalStageLevels(allReportingLevels, allocatedLevels) }
-          stage['q5.3.4.2'].forEach(level => allocatedLevels.push(level))
-          // build nodes (and combinations if multiple)            
-          let reportingLevelGroups = this._buildCombinations(allReportingLevels, stage['q5.3.4.2'])
-          console.log('reportingLevelGroup', reportingLevelGroups)
-          for (let reportingLevel of reportingLevelGroups) {
-            stageNodes.push(this._createNode((tierIndex), reportingLevel, null, null, options.reportingLevel))
-          }
+            if (stage['q5.3.4.2'] == "_final") { stage['q5.3.4.2'] = this._addFinalStageLevels(allReportingLevels, allocatedLevels) }
+            stage['q5.3.4.2'].forEach(level => allocatedLevels.push(level))
+            // build nodes (and combinations if multiple)            
+            let reportingLevelGroups = this._buildCombinations(allReportingLevels, stage['q5.3.4.2'])
+            console.log('reportingLevelGroup', reportingLevelGroups)
+            if(reportingLevelGroups){
+              for (let reportingLevel of reportingLevelGroups) {
+                stageNodes.push(this._createNode((tierIndex), reportingLevel, null, null, options.reportingLevel))
+              }
+            }
           } catch (error) {
-            console.log('error',error)
+            console.log('error', error)
             stageNodes.push(this._createNode((tierIndex), 'reporting level not defined'))
           }
-          
-          
+
+
           this.stages[tierIndex] = stageNodes
         }
         // add number node

@@ -70,6 +70,7 @@ export class ResourcesComponent {
   }
 
   showRelevant(relevant) {
+    console.log('showing relevant',relevant)
     // automatically expand relevant questions on click
     this.relevant = relevant
     this.questions.forEach((q, i) => {

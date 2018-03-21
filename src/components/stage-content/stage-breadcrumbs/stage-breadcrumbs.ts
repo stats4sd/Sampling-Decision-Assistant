@@ -17,7 +17,7 @@ export class StageBreadcrumbsComponent {
   stageBreadcrumbs = {
     4: ['Intro', 'Level Classifications','Review'],
     5: ['Intro', 'Sampling Stages', 'Building Frames'],
-    6: ['Intro', 'Sample Sizes', 'Resource Allocation']
+    6: ['Intro', 'Stratification','Sample Sizes', 'Resource Allocation']
   }
 
   constructor(private events:Events){
@@ -28,4 +28,4 @@ export class StageBreadcrumbsComponent {
   goTo(index){
     this.events.publish('goToStageSlide',index)
   }
-}
+} 

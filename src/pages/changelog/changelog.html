@@ -11,22 +11,24 @@ properly saved
 <ion-content padding>
   <div>
     <p>In this document find recorded the main changes that have been implemented.</p>
-    
+
     <!-- 0.8.2 -->
     <h2>0.8.2 (6th March 2018)</h2>
     <p>
-        Stages with multiple steps now have breadcrumbs to help navigate where in the subprocess you are.
+      <strong>Navigation</strong> - Stages with multiple steps now have an additional bar at the top 
+      to help navigate where in the process you the user is. The usual sliding style interaction between sections has also been replaced with a more subtle transition
+    </p>
+    <stage-breadcrumbs [stage]='5' [stageSlidesIndex]="1"></stage-breadcrumbs>
+    <p>
+      <strong>Stage 4</strong> - Reporting levels are now classified during this stage (previously stage 5) and lists of combination
+      are presented for review. In the future there may be an option for users to specify which levels of combination they
+      consider relevant, however for now it should help to advise against the use of too many complex levels where not necessary.
     </p>
     <p>
-        <strong>Stage 4</strong> - Reporting levels are now classified during this stage (previously stage 5) and lists of combination are presented
-        for review. In the future there may be an option for users to specify which levels of combination they consider relevant,
-        however for now it should help to advise against the use of too many complex levels where not necessary.
-    </p>
-    <p>
-        <strong>Tree diagram</strong> - now supports multiple reporting levels in a single stage and automatically populates combinations of unallocated reporting
-        levels within the final sampling unit (orange boxes at the bottom level). It's also had a number of iterations of styling
-        and display logic. (Next step will be to allow user input for nodes, an early template has been started in the resources
-        -> allocating section however it's not functional yet)
+      <strong>Tree diagram</strong> - now supports multiple reporting levels in a single stage and automatically populates combinations
+      of unallocated reporting levels within the final sampling unit (orange boxes at the bottom level). It's also had a
+      number of iterations of styling and display logic. (Next step will be to allow user input for nodes, an early template
+      has been started in the resources -> allocating section however it's not functional yet)
     </p>
 
     <!-- 0.8.1 -->
@@ -39,22 +41,23 @@ properly saved
     <button ion-button icon-left (click)="launchSampleSizeCalculator()">
       <ion-icon name="calculator"></ion-icon>Sample Size Calculator</button>
     <p>
-      <strong>Audio and Visual Resources</strong> - A new template has been included to display combinations of text, audio and visual resources,
-      with a sample of resources available for stage 1, e.g.:
+      <strong>Audio and Visual Resources</strong> - A new template has been included to display combinations of text, audio and visual
+      resources, with a sample of resources available for stage 1, e.g.:
     </p>
     <div class="resources-demo">
       <resources [stage]="0"></resources>
     </div>
     <!-- 0.8.0 -->
     <h2>0.8.0 (27th February 2018)</h2>
-    <p><strong>Stage 5</strong> - The logic for the most complex case scenarios (e.g. multiple stages with sampling and stratification at each
-      stage) is up and ready for wider testing. This required a rewrite of how much of the data was handled to better track
-      nested and linked variables, and provide easier creation of custom question interfaces.
+    <p>
+      <strong>Stage 5</strong> - The logic for the most complex case scenarios (e.g. multiple stages with sampling and stratification
+      at each stage) is up and ready for wider testing. This required a rewrite of how much of the data was handled to better
+      track nested and linked variables, and provide easier creation of custom question interfaces.
     </p>
     <ngx-image-viewer [src]="['assets/img/changelog/0.8.0-update-1.png']"></ngx-image-viewer>
     <p>
-      <strong>Stage 6</strong> - First draft of a sampling tree diagram is now available, linking to the data from stage 5. This will be built on
-      in the upcoming updates to allow for allocation of sample sizes throughout all stages.
+      <strong>Stage 6</strong> - First draft of a sampling tree diagram is now available, linking to the data from stage 5. This
+      will be built on in the upcoming updates to allow for allocation of sample sizes throughout all stages.
     </p>
     <p>
       Lots of bug fixes and minor improvements (e.g. stage completion notifications for all stages, automatic saving after every

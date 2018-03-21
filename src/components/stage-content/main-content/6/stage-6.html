@@ -15,10 +15,15 @@
                 <tree-diagram [showInputNodes]="false" *ngIf="initComplete" class="fade-in"></tree-diagram>
             </div>
             <p>Each shape represents a collection of units from which a sample will be selected</p>
-            <note type="dev">Currently system assumes all nodes can be treated equally, however in the future the option will be provided
-                to further split a node into strata if desired</note>
+            <!-- <note type="dev">Currently system assumes all nodes can be treated equally, however in the future the option will be provided
+                to further split a node into strata if desired</note> -->
         </ion-slide>
-        <!--  -->
+        <!-- Stratification slide -->
+        <ion-slide>
+            <h4>Stratification</h4>
+            <note type="dev">In this section there will be options to apply additional stratification to the tree diagram beyond what has been classified in the reporting requirements</note>
+        </ion-slide>
+        <!-- Sample sizes slide -->
         <ion-slide>
             <h4>Determining an overall sample size</h4>
             <p>We now wish to decide on the total number of final sampling units that data will be recorded for.</p>

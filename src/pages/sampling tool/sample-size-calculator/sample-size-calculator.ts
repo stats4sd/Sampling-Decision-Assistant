@@ -10,37 +10,44 @@ import { FormGroup } from '@angular/forms';
 })
 export class SampleSizeCalculatorPage {
 
-  calculatorVariables:any[]=[]
-  form:FormGroup
+  calculatorVariables: any[] = []
+  form: FormGroup
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController, private formPrvdr:FormProvider) {
-    this.form=this.formPrvdr.formGroup
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private formPrvdr: FormProvider) {
+    this.form = this.formPrvdr.formGroup
     this.calculateVariables()
   }
 
-  calculateVariables(){
-    let v ={}
+  calculateVariables() {
+    let v = {}
     let val = this.form.value
-    v["Type of Variable"]=val['q2.1.2'].indexOf("average")>-1 ? "Number" : "Percentage";
-    v["Standard Deviation"] = val["q2.3.1"]
-    //v["Expected %"]=val[''];
-    //v["Desired Margin of Error"]=val[''];
+
+    if (val['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
+      v["Type of Variable"]="Percentage"
+      v["Expected %"] = val['q2.3.1'];
+    }
+    if (val['q2.1.2'] == "Average or total value of indicator in the population") {
+      v["Type of Variable"]="Number"
+      v["Standard Deviation"] = val["q2.2.2"]      
+    }
+    v["Desired Margin of Error"] = val['q2.4'];
     //v["Desired Confidence Level"]=val[''];
     //v["Clustering Level"]=val[''];
     //v["Number of Samples per PSU"]=val[''];
-    v["Number of Sampling Stages"]=val['q5.2'].length;
+    v["Number of Sampling Stages"] = val['q5.2'].length;
+    //v["Expected Population Size"]=val[''];
     //v["Expected Population Size"]=val[''];
 
-    Object.keys(v).forEach(key=>{
+    Object.keys(v).forEach(key => {
       this.calculatorVariables.push({
-        name:key,
-        val:v[key]
+        name: key,
+        val: v[key]
       })
     })
 
   }
 
-  dismiss(){
+  dismiss() {
     this.viewCtrl.dismiss()
   }
 

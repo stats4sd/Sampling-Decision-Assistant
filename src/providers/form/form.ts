@@ -36,14 +36,16 @@ export class FormProvider {
     }
   }
   initFormValues(values, formGroup?: FormGroup) {
+    console.log('init form values',values)
     if (!formGroup) { formGroup = this.formGroup }
     // set values, building controls as required ( in simple mode, currently skipping any validators)
     Object.keys(values).forEach(key => {
       let val = values[key]
-      // load string values
+      // load string and number values
       let patch = {}
       patch[key] = val
       if (typeof (val) == "string") { formGroup.patchValue(patch) }
+      if (typeof (val) == "number") { formGroup.patchValue(patch) }
       // handle arrays
       else if (val instanceof Array) {
         // handle array values stored as strings (e.g. lists)
