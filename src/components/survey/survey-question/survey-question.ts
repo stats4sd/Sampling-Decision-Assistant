@@ -329,7 +329,8 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     }
     else {
       if (!this.formGroup.controls[this.question.controlName]) {
-        this.formGroup.addControl(this.question.controlName, new FormControl())
+        // add back in removed formgruops, populating with last known value
+        this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
         console.log('control added', this.question.controlName)
       }
     }
@@ -357,7 +358,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
           console.log('control removed', this.question.controlName)
           this.formGroup.updateValueAndValidity()
         }
-      }, 200);
+      }, 100);
 
 
     }
@@ -367,12 +368,12 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
         console.log('applicable', applicable)
         // add back in controls and show
         if (!this.formGroup.controls[this.question.controlName]) {
-          this.formGroup.addControl(this.question.controlName, new FormControl())
+          this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
           this.formGroup.updateValueAndValidity()
           console.log('control added', this.question.controlName)
         }
         this.showQuestion = true
-      }, 200);
+      }, 100);
 
 
     }

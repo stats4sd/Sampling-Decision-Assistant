@@ -14,6 +14,7 @@ export class FormProvider {
   section: any;
   // track questions to omit from main lists
   repeatChildren: any = []
+  historicValues:any={}
 
   constructor(private fb: FormBuilder, private events: Events, private projectActions:ProjectActions) {
     this.events.subscribe('valueUpdate', update => {
@@ -26,11 +27,11 @@ export class FormProvider {
     let questions = questionMeta
     //this.formGroup = this._generateQuestionForm(questions)
     this.formGroup=this.fb.group({})
-    console.log('formgroup',this.formGroup)
     // reflect form value changes to redux
     this.formGroup.valueChanges.subscribe(
       v=>{
         this.projectActions.updateProjectValues(v)
+        this.historicValues = Object.assign({},this.historicValues,v)
       }
     )
   }
