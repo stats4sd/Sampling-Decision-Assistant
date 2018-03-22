@@ -28,7 +28,7 @@ export class FrameBuilderPage {
 
   dismiss(){
     console.log('dismissing')
-    this.dataPrvdr.saveSurvey()
+    this.dataPrvdr.backgroundSave()
     this.viewCtrl.dismiss()
   }
 

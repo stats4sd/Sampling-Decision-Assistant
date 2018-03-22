@@ -49,6 +49,11 @@ survey-question {
         border-radius: 10px;
         padding: 5px;
     } // input colors
+    ion-input[type="number"]{
+        border:unset;
+        border-radius: unset;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3)
+    }
     .select-text,
     textarea,
     .text-input {

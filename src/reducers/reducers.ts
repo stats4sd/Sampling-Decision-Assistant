@@ -27,13 +27,21 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
             return Object.assign({}, state, { savedProjects: list.payload })
 
         case Actions.ProjectActions.UPDATE_PROJECT_VALUES:
-            const values = action as Actions.ProjectSaveAction
+            const values = action as Actions.UpdateProjectAction
             // merge values
-            let newState = Object.assign({}, state)
-            if (newState.activeProject) {
-                newState.activeProject.values = values.payload
+            let valuesState = Object.assign({}, state)
+            if (valuesState.activeProject) {
+                valuesState.activeProject.values = values.payload
             }
-            return newState
+            return valuesState
+
+        case Actions.ProjectActions.UPDATE_STAGES_COMPLETE:
+            const stages = action as Actions.UpdateProjectAction
+            let stagesState = Object.assign({}, state)
+            if (stagesState.activeProject) {
+                stagesState.activeProject.stagesComplete = stages.payload
+            }
+            return stagesState
 
 
 

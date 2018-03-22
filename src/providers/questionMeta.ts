@@ -97,54 +97,49 @@ export default
             "condition": "type:value, controlName:q2.2.1, value:No",
             "labelMultiple": null
         },
-
-
-
-
         // case proportions
-       
         {
 
             "isQuestion": "TRUE",
             "controlName": "q2.3.1",
-            "type": "number",
+            "type": "range",
             "selectOptions": "",
             "label": "Roughly what value for this proportion do you expect to find with this survey? If you have no idea whatsoever set it as 0.5, otherwise provide your best estimate between 0 and 1.",
             "section": "Indicators",
             "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
             "labelMultiple": null,
             options:{
-                max:1,
-                min:0
+                max:95,
+                min:5
             }
         },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.4",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
+        //     "section": "Indicators",
+        //     options:{
+        //         prefix:'+/-',
+        //     },
+        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.4",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
+        //     "section": "Indicators",
+        //     options:{
+        //         prefix:'+/-',
+        //     },
+        //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
+        //     "labelMultiple": null
+        // },
 
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q2.4",
-            "type": "number",
-            "selectOptions": "",
-            "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
-            "section": "Indicators",
-            options:{
-                prefix:'+/-',
-            },
-            "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
-            "labelMultiple": null
-        },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q2.4",
-            "type": "number",
-            "selectOptions": "",
-            "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
-            "section": "Indicators",
-            options:{
-                prefix:'+/-',
-            },
-            "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
-            "labelMultiple": null
-        },
         // section 3
         {
             "isQuestion": "TRUE", "controlName": "q3.1", "type": "select", "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)", "label": "Who are you interested in? In other words, who should the data come from to be able to calculate the indicator of interest? We will refer to this as the sampling units. In particular, think about what unit the measurements refer to. Is it a household? Or a person? Or a community?", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null

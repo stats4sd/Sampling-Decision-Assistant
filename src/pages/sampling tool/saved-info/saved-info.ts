@@ -24,7 +24,8 @@ export class SavedInfoPage {
     public alertCtrl:AlertController
   ) {
     this.view = this.navParams.data.view;
-    this.loadSavedProjects()
+    // this.loadSavedProjects()
+    alert('page temporarily disabled')
   }
 
   ionViewDidLoad() {
@@ -47,23 +48,23 @@ export class SavedInfoPage {
     this.dataPrvdr.loadProject(survey);
     this.viewCtrl.dismiss(survey);
   }
-  deleteSurvey(survey) {
-    this.dataPrvdr.deleteSurvey(survey.title).then(
-      _ => this.loadSavedProjects()
-    )
+  // deleteSurvey(survey) {
+  //   this.dataPrvdr.deleteSurvey(survey.title).then(
+  //     _ => this.loadSavedProjects()
+  //   )
 
-  }
-  loadSavedProjects() {
-    this.savedSurveys = this.dataPrvdr.savedSurveys;
-    if (this.savedSurveys) {
-      let arr = []
-      Object.keys(this.savedSurveys).forEach(key => {
-        arr.push(this.savedSurveys[key])
-      })
-      this.savedArray = arr.reverse();
-    }
-    else { this.savedArray = [] }
-  }
+  // }
+  // loadSavedProjects() {
+  //   this.savedSurveys = this.dataPrvdr.savedSurveys;
+  //   if (this.savedSurveys) {
+  //     let arr = []
+  //     Object.keys(this.savedSurveys).forEach(key => {
+  //       arr.push(this.savedSurveys[key])
+  //     })
+  //     this.savedArray = arr.reverse();
+  //   }
+  //   else { this.savedArray = [] }
+  // }
   // file drop
   dropped(e:UploadEvent) {
     // handle file drop

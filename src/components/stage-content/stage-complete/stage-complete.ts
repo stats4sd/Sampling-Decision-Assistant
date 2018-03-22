@@ -3,38 +3,59 @@ import { DataProvider } from '../../../providers/data/data';
 import { FormProvider } from '../../../providers/form/form';
 import { FormGroup } from '@angular/forms/src/model';
 import { StagePage } from '../../../pages/sampling tool/stage/stage';
+
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { Project } from '../../../models/models';
-import { ProjectActions } from '../../../actions/actions';
 
 @Component({
   selector: 'stage-complete',
   templateUrl: 'stage-complete.html'
 })
 export class StageCompleteComponent extends StagePage {
-  @select(['activeProject','stagesComplete']) readonly stagesComplete$: Observable<boolean[]>;
+  @select(['activeProject', 'stagesComplete']) readonly stagesComplete$: Observable<boolean[]>;
   @Input('disabled') disabled: boolean
   @Input('stageNumber') stageNumber: number
   @Input('text') text: string;
-  @Input('hideButton') hideButton:boolean;
+  @Input('hideButton') hideButton: boolean;
+
   lastCall: number = 0
   sectionValid: boolean = false
-  stagesComplete:boolean[]=[]
-  projectActions:ProjectActions
+  stagesComplete: boolean[] = []
 
-  ngOnInit(){
+  ngOnInit() {
     // subscribe to form value changes to mark when section complete
     this.checkSectionValid()
-    this.formPrvdr.formGroup.valueChanges.subscribe(
-      v=>{this.checkSectionValid(v)}
+    this.formValues$.subscribe(
+      v => {
+        if (v) {
+          this.checkSectionValid(v)
+        }
+      }
     )
-    this.stagesComplete$.subscribe(s=>{
-      if(s){
-        this.stagesComplete=s
-
+    this.stagesComplete$.subscribe(s => {
+      if (s) {
+        this.stagesComplete = s
       }
     })
+  }
+
+  checkSectionValid(v?) {
+    // initial function to throttle verification call to only run max once per 200ms to avoid multiple change detection calls
+    if (!v) {
+      try {
+        v = this.ngRedux.getState().activeProject.values
+      } catch (error) {
+        v = {}
+      }
+    }
+    const now = (new Date).getTime()
+    if (now - this.lastCall > 300) {
+      this.lastCall = now
+      setTimeout(() => {
+        this.sectionValid = this.verify(this.stage.number, v)
+        console.log('section valid',this.stageNumber,this.sectionValid)
+      }, 200);
+    }
   }
 
 
@@ -50,13 +71,13 @@ export class StageCompleteComponent extends StagePage {
         else {
           // *** add back in ***
           // this.dataPrvdr.activeProject.stagesComplete[1] = false
-          this.stagesComplete[1]=false
+          this.stagesComplete[1] = false
           // this.projectActions.updateProjectCompletion(this.stagesComplete)
           return false
         }
       }
       case s == 2: {
-        if (v['q2.4']) { return true }
+        if (v['q2.3.1'] || v['q2.2.2']) { return true }
         else {
           // this.dataPrvdr.activeProject.stagesComplete[2] = false
           return false
@@ -86,17 +107,6 @@ export class StageCompleteComponent extends StagePage {
     }
   }
 
-  checkSectionValid(v?) {
-    // initial function to throttle verification call to only run max once per 200ms to avoid multiple change detection calls
-    const now = (new Date).getTime()
-    if (now - this.lastCall > 300) {
-      this.lastCall = now
-      setTimeout(() => {
-        this.sectionValid = this.verify(this.stage.number, this.formPrvdr.formGroup.value)
-      }, 100);
-    }
-  }
-
   nextStage() {
     // push next stage page and remove currnet page from nav stack to allow direct nav back to home. Could also be done with slugs, will need
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history
@@ -107,10 +117,10 @@ export class StageCompleteComponent extends StagePage {
       }
     )
   }
+
   toggleCheckbox() {
-    console.log('toggling checkbox', this.dataPrvdr.activeProject.stagesComplete[this.stage.number])
-    //if(this.stage.number==3){this._patchSection3()}
+    this.projectActions.updateStagesComplete(this.stagesComplete)
     this.dataPrvdr.backgroundSave()
   }
-  
+
 }

@@ -1,4 +1,4 @@
-<ion-card *ngIf="formGroup">
+<div *ngIf="formGroup">
   <div *ngFor="let question of groupQuestions">
     <!-- display list of questions -->
     <div *ngIf="question.type!='repeat'">
@@ -8,7 +8,7 @@
          [formGroup]="formGroup"></survey-question>
       </div>
       <!-- all other regular questions -->
-      <div *ngIf="!formArrayName || !formGroupName">
+      <div *ngIf="!formArrayName || !formGroupName" style="margin-bottom:15px">
         <survey-question [question]="question" [showLabel]="showLabel" [formGroup]="formGroup"></survey-question>
       </div>
     </div>
@@ -55,4 +55,4 @@
         </div>
         -->
   </div>
-</ion-card>
+</div>

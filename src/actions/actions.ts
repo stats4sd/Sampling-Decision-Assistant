@@ -16,6 +16,7 @@ export class ProjectActions {
     static readonly NEW_PROJECT = 'NEW_PROJECT';
     static readonly LIST_PROJECTS = 'LIST_PROJECTS';
     static readonly UPDATE_PROJECT_VALUES = 'UPDATE_PROJECT_VALUES';
+    static readonly UPDATE_STAGES_COMPLETE = 'UPDATE_STAGES_COMPLETE';
 
 
     @dispatch()
@@ -47,15 +48,15 @@ export class ProjectActions {
     });
 
     @dispatch()
-    updateProjectValues = (values): UpdateProjectAction => ({
+    updateProjectValues = (values:any): UpdateProjectAction => ({
         type: ProjectActions.UPDATE_PROJECT_VALUES,
         meta: 'values',
         payload: values
     });
 
     @dispatch()
-    updateProjectCompletion = (arr): UpdateProjectAction => ({
-        type: ProjectActions.UPDATE_PROJECT_VALUES,
+    updateStagesComplete = (arr:boolean[]): UpdateProjectAction => ({
+        type: ProjectActions.UPDATE_STAGES_COMPLETE,
         meta: 'stagesComplete',
         payload: arr
     });

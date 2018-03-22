@@ -89,10 +89,9 @@ export class FormProvider {
       // }
     })
     // patch all values
-    this.formGroup.setValue(patch)
+    this.formGroup.patchValue(patch)
     console.log('formgroup',this.formGroup)
-   
-    this.events.publish('form:initComplete')
+    // this.events.publish('form:initComplete')
     return formGroup
   }
   createFormControl(question:Question ){

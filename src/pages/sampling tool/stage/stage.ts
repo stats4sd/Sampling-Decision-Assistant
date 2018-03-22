@@ -5,6 +5,10 @@ import { DataProvider } from '../../../providers/data/data';
 import { FormProvider } from '../../../providers/form/form'
 // import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
 import animationStates from '../../../providers/animationStates'
+import { ProjectActions } from '../../../actions/actions';
+import { Project, AppState } from '../../../models/models';
+import { select, NgRedux } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -24,6 +28,7 @@ export class StagePage {
   @ViewChild('navbar') navbar: Navbar;
   @ViewChild('content') content: Content;
   @ViewChild('stageSlides') stageSlides: Slides;
+  @select(['activeProject','values']) readonly formValues$: Observable<any>;
   activeSection: string = "Main";
 
   activeGlossaryTerm: string;
@@ -45,7 +50,9 @@ export class StagePage {
     public events: Events,
     public formPrvdr: FormProvider,
     public modalCtrl: ModalController,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public projectActions:ProjectActions,
+    public ngRedux: NgRedux<AppState>
   ) {
     this.stageInit(navParams)
     this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
@@ -176,7 +183,6 @@ export class StagePage {
     this.emitSlideIndex()
   }
   stageSlideChange() {
-    this.dataPrvdr.saveSurvey(null, true)
     this.stageSlidesIndex = this.stageSlides.getActiveIndex()
     this.emitSlideIndex()
   }

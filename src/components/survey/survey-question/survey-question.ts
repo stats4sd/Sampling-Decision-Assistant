@@ -26,7 +26,7 @@ export const VALUE_ACCESSOR: any = {
   selector: 'survey-question',
   templateUrl: 'survey-question.html',
   providers: [VALUE_ACCESSOR],
-  animations:[animationStates]
+  animations: [animationStates]
 })
 export class SurveyQuestionComponent implements ControlValueAccessor {
   @Input('question') question: Question;
@@ -41,7 +41,9 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   value: any;
   propagateChange: any = () => { };
+  savePending: boolean
   showQuestion: boolean = true
+  initComplete: boolean = false
   questionKey: string
   selectOtherValue: any = "";
   selectOptionsArray: string[];
@@ -78,10 +80,11 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (!value) { value = this.value }
     if (e) { value = e.target.value }
     // patch formgroup
+    console.log('value updated')
     let patch = {}
     patch[this.question.controlName] = value
     this.formGroup.patchValue(patch)
-
+    console.log('formgroup', this.formGroup)
     // propagate value update for use in ngModel or form binding
     this.propagateChange(value);
     // notify change through emitter also for tracking in repeat group questions
@@ -104,33 +107,61 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   ngOnInit() {
     // initialise master formgroup if a subformgroup not specified
     if (!this.formGroup) { this.formGroup = this.formPrvdr.formGroup }
-    // check formcontrol exists
-    this.attachConditionTriggers()
 
-    this.questionKey = this.question.controlName
+
+    // attach additional condition triggers
+
+    this.checkFormControl()
     this._prepareDynamicText()
-    // // run any custom onInit triggers
     if (this.question.triggers && this.question.triggers.trigger == "onInit") { this._runCustomTriggers() }
-    this.cdr.detectChanges()
+
     // apply specific init for question types
     if (this.question.type == "select") { this.generateSelectOptions() }
     if (this.question.type == "textMultiple") {
       this._generateMultipleValues()
     }
+
+    // track value changes for any manual bindings and control add/remove
+    if (this.formGroup.value[this.question.controlName]) { this.value = this.formGroup.value[this.question.controlName] }
+    this.formGroup.valueChanges.subscribe(v => {
+      if (v) {
+
+        if (this.question.conditionJson && v[this.question.conditionJson.controlName]) {
+          this.checkFormControl()
+        }
+        if (v[this.question.controlName]) {
+          this.value = v[this.question.controlName]
+          this.dataPrvdr.backgroundSave()
+        }
+      }
+    })
+    console.log('init complete', this.question.controlName)
+    // finish any other queued functions before init complete
+    this.initComplete = true
   }
 
+  ngOnDestroy() {
+    // detach change detector to prevent trying to detect destroyed question error
+    this.cdr.detach();
+  }
 
-  // setFormGroup() {
-  //   // automatically load repeat/specified/default formgroup in case not passed into question
-  //   if (this.repeatFormGroup) { this.formGroup = this.repeatFormGroup }
-  //   else {
-  //     if (!this.formGroup) { this.formGroup = this.formPrvdr.formGroup }
-  //   }
-  //   // check control and create new if doesn't exist
-  //   if (!this.formGroup.controls[this.question.controlName]) {
-  //     this.formGroup.addControl(this.question.controlName, new FormControl(''))
-  //   }
-  // }
+  checkFormControl() {
+    // checks form control exists (in case removed or new question) and adds appropriately
+    let applicable = this.checkQuestionConditions()
+    if (applicable) {
+      if (!this.formGroup.controls[this.question.controlName]) {
+        this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
+        this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: false })
+      }
+    }
+    else {
+      if (this.formGroup.controls[this.question.controlName]) {
+        this.formGroup.removeControl(this.question.controlName)
+        this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: true })
+      }
+    }
+    this.showQuestion=applicable
+  }
 
   // ************** select **************************************************
   selectUpdated(value) {
@@ -167,8 +198,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   // ************** text multiple*********************************************
 
   _generateMultipleValues() {
-    let value = this.formPrvdr.getSurveyValue(this.questionKey)
-    console.log('value', value)
+    let value = this.formPrvdr.getSurveyValue(this.question.controlName)
     if (value == undefined || value == "" || value == null) {
       value = []
     }
@@ -180,11 +210,11 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     this.multipleTextValues.unshift(this.multipleTextInput)
     this.multipleTextInput = "";
     let patch = {}
-    patch[this.questionKey] = this.multipleTextValues
+    patch[this.question.controlName] = this.multipleTextValues
     this.formPrvdr.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.questionKey, {
-      controlName: this.questionKey,
+    this.events.publish('arrayChange:' + this.question.controlName, {
+      controlName: this.question.controlName,
       type: 'push',
       value: this.multipleTextValues,
       pushValue: pushValue
@@ -194,10 +224,10 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     let removeValue = this.multipleTextValues[index]
     this.multipleTextValues.splice(index, 1)
     let patch = {}
-    patch[this.questionKey] = this.multipleTextValues
+    patch[this.question.controlName] = this.multipleTextValues
     this.formPrvdr.formGroup.patchValue(patch)
     // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.questionKey, { controlName: this.questionKey, type: 'splice', index: index, value: this.multipleTextValues, removeValue: removeValue })
+    this.events.publish('arrayChange:' + this.question.controlName, { controlName: this.question.controlName, type: 'splice', index: index, value: this.multipleTextValues, removeValue: removeValue })
   }
 
 
@@ -236,7 +266,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
         }
       }
     }
-    console.log('label updated')
   }
 
 
@@ -284,7 +313,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
         // apply css
         let el = document.getElementById(this.question.type + 'LabelText')
         // use split/join to target all instances of text, apply name attribute for tracking later
-        console.log('test')
         try {
           el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
         } catch (error) { }
@@ -304,82 +332,39 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     let scrollHeight = this.textAreaInput.nativeElement.scrollHeight
     if (!this.initialScrollHeight) { this.initialScrollHeight = scrollHeight }
     if (scrollHeight > this.initialScrollHeight) {
-      console.log('resizing')
       this.textAreaInput.nativeElement.style.height = 'auto'
       this.textAreaInput.nativeElement.style.height = this.textAreaInput.nativeElement.scrollHeight + 10 + 'px';
     }
-
-  }
-  attachListeners() {
-    // 
-
   }
 
   // slightly messy set of bindings to essentially track a formgroup as it changes and add/remove relevant controls
-  attachConditionTriggers() {
-    if (this.question.hasOwnProperty('condition') && this.question.condition != "") {
-      let conditionJson = this.formPrvdr._generateConditionOptions(this.question.condition)
-      let dependent = conditionJson.controlName
-      this.formGroup.valueChanges.subscribe(
-        v => {
-          this.checkQuestionConditions(v[dependent], conditionJson)
-        }
-      )
-      this.checkQuestionConditions(this.formGroup.value[dependent], conditionJson)
-    }
-    else {
-      if (!this.formGroup.controls[this.question.controlName]) {
-        // add back in removed formgruops, populating with last known value
-        this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
-        console.log('control added', this.question.controlName)
-      }
-    }
-  }
-
-  checkQuestionConditions(dependentValue, conditionJson) {
+  checkQuestionConditions(values?) {
     // test logic from condition property against form, and setup listener to monitor changes
-    let applicable: boolean
-    let condition = conditionJson
-    let control = condition.controlName
-    if (condition.type == "prerequisite") {
-      applicable = (dependentValue && dependentValue != '')
+    // uses timeout to add/remove controls
+    if (this.question.hasOwnProperty('condition') && this.question.condition != "") {
+      if (!this.question.conditionJson) { this.question.conditionJson = this.formPrvdr._generateConditionOptions(this.question.condition) }
+      if (!values) {
+        try {
+          values = this.formGroup.value
+        } catch (error) { return }
+      }
+      let conditionJson = this.question.conditionJson
+      let dependentValue = values[conditionJson.controlName]
+      let applicable: boolean
+      let condition = conditionJson
+      let control = condition.controlName
+      if (condition.type == "prerequisite") {
+        applicable = (dependentValue && dependentValue != '')
+      }
+      else if (condition.type == "value") {
+        applicable = (dependentValue == condition.value)
+      }
+      else { applicable = true }
+      return applicable
     }
-    else if (condition.type == "value") {
-      applicable = (dependentValue == condition.value)
-    }
-    else { applicable = true }
-
-    if (applicable === false) {
-      this.showQuestion = false
-      setTimeout(() => {
-        
-        if (this.formGroup.controls[this.question.controlName]) {
-          this.formGroup.removeControl(this.question.controlName)
-          console.log('control removed', this.question.controlName)
-          this.formGroup.updateValueAndValidity()
-        }
-      }, 100);
-
-
-    }
-    if (applicable === true) {
-
-      setTimeout(() => {
-        console.log('applicable', applicable)
-        // add back in controls and show
-        if (!this.formGroup.controls[this.question.controlName]) {
-          this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
-          this.formGroup.updateValueAndValidity()
-          console.log('control added', this.question.controlName)
-        }
-        this.showQuestion = true
-      }, 100);
-
-
-    }
-
-
+    else { return true }
   }
+
 
   // _trackValueChanges(controlName: string, formGroup: FormGroup) {
   //   // subscribe to value changes on form control to recheck show question condition

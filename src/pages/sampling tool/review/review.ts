@@ -60,7 +60,7 @@ export class ReviewPage {
   }
   slideChanged(){
     this.viewSection=this.slides.getActiveIndex();
-    this.dataPrvdr.saveSurvey();
+    this.dataPrvdr.backgroundSave();
   }
 }
 
