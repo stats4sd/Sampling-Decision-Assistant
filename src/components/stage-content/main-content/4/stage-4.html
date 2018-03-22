@@ -12,12 +12,10 @@
             <p>The first question is to decide if you need wish to divide your population to produce
                 <glossary-link slug="disaggregated-estimate">disaggregated estimates</glossary-link>
             </p>
-            <help-icon relevant="q4.1"></help-icon>
             <survey-question-group section="At what level do you need to report these results" [filter]="['q4.1']" [showLabel]=true></survey-question-group>
 
             <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
                 <p>Specify the different levels that you wish to produce estimates for</p>
-                <help-icon relevant="q4.2"></help-icon>
                 <survey-question-group [showLabel]="false" section="At what level do you need to report these results" [filter]="['q4.2']"
                     [showLabel]=true></survey-question-group>
             </div>
@@ -31,7 +29,7 @@
         <ion-slide >
             <stage-4-define-level-categories></stage-4-define-level-categories>
         </ion-slide>
-        <ion-slide *ngIf="form.value['q4.2'].length>0">
+        <ion-slide *ngIf="form.value['q4.2'] && form.value['q4.2'].length>0">
             <stage-4-review-levels></stage-4-review-levels>
             <stage-complete stageNumber=4></stage-complete>
         </ion-slide>

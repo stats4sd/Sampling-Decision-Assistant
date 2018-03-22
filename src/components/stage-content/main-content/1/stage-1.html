@@ -29,7 +29,6 @@
     the comparative benefits of a set of options while controlling external factors, that is, setting an experimental or
     a quasi-experimental study. If you are not sure which is the correct answer for you, have a look at the examples provided.
   </p>
-  <help-icon relevant="q1.1"></help-icon>
   <!-- <survey-question-group [filter]="['q1.1']"></survey-question-group> -->
   <survey-question controlName="q1.1"></survey-question>
   <div *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
@@ -45,14 +44,12 @@
       <glossary-link slug="non-representative-sample">non-representative</glossary-link> samples. If you are not familiar with these terms then follow links to the glossary.
       If you are not sure of your requirements then click on the help icon to see some common examples.
     </p>
-    <help-icon relevant="q1.2"></help-icon>
     <!-- <survey-question-group [section]="section" [filter]="['q1.2']"></survey-question-group> -->
   </div>
   <survey-question controlName="q1.2"></survey-question>
   <!-- q1.3 -->
   <div *ngIf="form.value['q1.2']=='Representative'">
     <p>With your target population in mind, try to answer the following questions:</p>
-    <help-icon relevant="q1.3"></help-icon>
     <!-- <survey-question-group [section]="section" [filter]="['q1.3']"></survey-question-group> -->
   </div>
   <survey-question controlName="q1.3"></survey-question>

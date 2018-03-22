@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {DragulaModule} from 'ng2-dragula'
 // import custom pipes
 import {PipesModule} from '../../pipes/pipes.module'
+// import general components
+import {GeneralComponentsModule} from '../general/generalComponents.module'
 
 import { SurveyQuestionComponent } from './survey-question/survey-question';
 import { SurveyQuestionGroupComponent } from './survey-question-group/survey-question-group';
@@ -33,7 +35,8 @@ import { QuestionCustomStagesDefineComponent} from './question-types/question-cu
         IonicModule,
         ReactiveFormsModule,
         DragulaModule,
-        PipesModule
+        PipesModule,
+        GeneralComponentsModule
     ],
     exports: [
         SurveyQuestionComponent,

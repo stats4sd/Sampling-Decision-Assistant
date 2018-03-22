@@ -80,11 +80,9 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (!value) { value = this.value }
     if (e) { value = e.target.value }
     // patch formgroup
-    console.log('value updated')
     let patch = {}
     patch[this.question.controlName] = value
     this.formGroup.patchValue(patch)
-    console.log('formgroup', this.formGroup)
     // propagate value update for use in ngModel or form binding
     this.propagateChange(value);
     // notify change through emitter also for tracking in repeat group questions
@@ -107,36 +105,31 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   ngOnInit() {
     // initialise master formgroup if a subformgroup not specified
     if (!this.formGroup) { this.formGroup = this.formPrvdr.formGroup }
-
-
     // attach additional condition triggers
-
     this.checkFormControl()
+    this.checkQuestionConditions()
     this._prepareDynamicText()
     if (this.question.triggers && this.question.triggers.trigger == "onInit") { this._runCustomTriggers() }
-
     // apply specific init for question types
     if (this.question.type == "select") { this.generateSelectOptions() }
-    if (this.question.type == "textMultiple") {
-      this._generateMultipleValues()
-    }
-
+    if (this.question.type == "textMultiple") {this._generateMultipleValues()}
     // track value changes for any manual bindings and control add/remove
     if (this.formGroup.value[this.question.controlName]) { this.value = this.formGroup.value[this.question.controlName] }
+    // subscribe to changes
     this.formGroup.valueChanges.subscribe(v => {
       if (v) {
-
-        if (this.question.conditionJson && v[this.question.conditionJson.controlName]) {
-          this.checkFormControl()
+        // re-evaluate question condition if has condition and condition value changed
+        if (this.question.conditionJson) {
+          this.checkQuestionConditions()
         }
-        if (v[this.question.controlName]) {
+        // update manual value bindings and save if this is updated
+        if (v[this.question.controlName] && v[this.question.controlName]!="N/A") {
           this.value = v[this.question.controlName]
           this.dataPrvdr.backgroundSave()
         }
       }
     })
     console.log('init complete', this.question.controlName)
-    // finish any other queued functions before init complete
     this.initComplete = true
   }
 
@@ -147,20 +140,10 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   checkFormControl() {
     // checks form control exists (in case removed or new question) and adds appropriately
-    let applicable = this.checkQuestionConditions()
-    if (applicable) {
-      if (!this.formGroup.controls[this.question.controlName]) {
-        this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
-        this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: false })
-      }
+    if (!this.formGroup.controls[this.question.controlName]) {
+      this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
+      this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: false })
     }
-    else {
-      if (this.formGroup.controls[this.question.controlName]) {
-        this.formGroup.removeControl(this.question.controlName)
-        this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: true })
-      }
-    }
-    this.showQuestion=applicable
   }
 
   // ************** select **************************************************
@@ -322,11 +305,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   }
 
-
-
-
-
-
   resize() {
     // increase height on text area automatically except when first entry row (looks jumpy otherwise as 10px increase on first char)
     let scrollHeight = this.textAreaInput.nativeElement.scrollHeight
@@ -339,30 +317,44 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   // slightly messy set of bindings to essentially track a formgroup as it changes and add/remove relevant controls
   checkQuestionConditions(values?) {
-    // test logic from condition property against form, and setup listener to monitor changes
-    // uses timeout to add/remove controls
+    // test logic from condition property against form
+    let applicable: boolean = true
+
     if (this.question.hasOwnProperty('condition') && this.question.condition != "") {
+      // convert condition string to json (could be done in form builder)
       if (!this.question.conditionJson) { this.question.conditionJson = this.formPrvdr._generateConditionOptions(this.question.condition) }
-      if (!values) {
-        try {
-          values = this.formGroup.value
-        } catch (error) { return }
+      // if values not given load master formgroup value
+      if (!values) {values = this.formGroup.value}
+      let dependentValue = values[this.question.conditionJson.controlName]
+      // test applicability conditions
+      if (this.question.conditionJson.type == "prerequisite") {
+        applicable = (dependentValue && dependentValue != "")
       }
-      let conditionJson = this.question.conditionJson
-      let dependentValue = values[conditionJson.controlName]
-      let applicable: boolean
-      let condition = conditionJson
-      let control = condition.controlName
-      if (condition.type == "prerequisite") {
-        applicable = (dependentValue && dependentValue != '')
+      else if (this.question.conditionJson.type == "value") {
+        applicable = (dependentValue == this.question.conditionJson.value)
       }
-      else if (condition.type == "value") {
-        applicable = (dependentValue == condition.value)
+      // case not applicable
+      if (applicable == false) {
+        // assign N/A value to non-applicable question
+        if (values[this.question.controlName] != null) {
+          let patch = {}
+          patch[this.question.controlName] = null
+          this.formGroup.patchValue(patch)
+        }
       }
-      else { applicable = true }
-      return applicable
+      // case applicable
+      else{
+        // assign historic if it differs from current null/reassigned value
+        if(values[this.question.controlName]==null){
+          let patch = {}
+          let patchValue = this.formPrvdr.historicValues[this.question.controlName] ? this.formPrvdr.historicValues[this.question.controlName] : ""
+          patch[this.question.controlName] = patchValue
+          this.value=patchValue
+          this.formGroup.patchValue(patch)
+        }
+      }
     }
-    else { return true }
+    this.showQuestion = applicable
   }
 
 

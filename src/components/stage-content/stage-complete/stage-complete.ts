@@ -28,7 +28,7 @@ export class StageCompleteComponent extends StagePage {
     this.formValues$.subscribe(
       v => {
         if (v) {
-          this.checkSectionValid(v)
+          this.checkSectionValid()
         }
       }
     )
@@ -39,21 +39,17 @@ export class StageCompleteComponent extends StagePage {
     })
   }
 
-  checkSectionValid(v?) {
+  checkSectionValid() {
     // initial function to throttle verification call to only run max once per 200ms to avoid multiple change detection calls
-    if (!v) {
-      try {
-        v = this.ngRedux.getState().activeProject.values
-      } catch (error) {
-        v = {}
-      }
-    }
     const now = (new Date).getTime()
     if (now - this.lastCall > 300) {
       this.lastCall = now
       setTimeout(() => {
+        let v={}
+        try {
+          v = this.ngRedux.getState().activeProject.values
+        } catch (error) {}
         this.sectionValid = this.verify(this.stage.number, v)
-        console.log('section valid',this.stageNumber,this.sectionValid)
       }, 200);
     }
   }

@@ -8,8 +8,16 @@ survey-question {
         font-size: 1.6rem;
         padding: 5px;
         display: flex;
+        align-items: center;
         background-color: #ececec;
         border-bottom: 1px solid #d2d2d2ec;
+    }
+    .question-label-text{
+        flex:1
+    }
+    .question-number {
+        margin-right: 10px;
+        font-size: x-small;
     }
     .item-inner{
         border-bottom: unset!important
@@ -59,10 +67,7 @@ survey-question {
     .text-input {
         color: color($colors, primary);
     }
-    .question-number {
-        margin-right: 5px;
-        font-size: x-small
-    }
+    
     .dynamic-text {
         // color:#b75d1b;
         font-weight: 700;

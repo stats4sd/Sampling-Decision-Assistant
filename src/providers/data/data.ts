@@ -122,10 +122,9 @@ export class DataProvider {
   backgroundSave() {
     // throttled save of survey, pulling values from master formgroup
     let activeProject=this.ngRedux.getState().activeProject
-    if (!this.isSaving) {
+    if (activeProject && !this.isSaving) {
       this.isSaving = true
       setTimeout(_ => {
-       
         // this.activeProject.values = this.formPrvdr.formGroup.value
         this.savedProjectsJson[activeProject.created] = activeProject
         this.saveToStorage('savedSurveys', this.savedProjectsJson).then(

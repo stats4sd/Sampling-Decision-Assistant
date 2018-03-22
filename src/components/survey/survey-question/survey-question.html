@@ -11,10 +11,9 @@
   <ion-card class="container">
     <div style="flex:1">
       <div *ngIf="question.type!='label' && showLabel!=false" class="question-label">
-        <div class="question-number dark">{{question.controlName}}</div>
-        <div>
-          <span id="questionLabelText" #questionLabelText *ngIf="question.label" [innerHtml]="question.label"></span>
-        </div>
+        <div class="question-number dark">{{question.controlName}}.</div>
+        <div class="question-label-text" id="questionLabelText" #questionLabelText *ngIf="question.label" [innerHtml]="question.label"></div>
+        <help-icon [relevant]="question.controlName"></help-icon>
       </div>
 
       <!-- individual question types -->

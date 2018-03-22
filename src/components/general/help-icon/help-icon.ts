@@ -12,6 +12,7 @@ export class HelpIconComponent {
   constructor(public events:Events) {}
 
   helpClicked(){
+    console.log('clicked',this.relevant)
     this.events.publish('help:clicked',this.relevant)
   }
 
