@@ -73,7 +73,8 @@ export class StageCompleteComponent extends StagePage {
         }
       }
       case s == 2: {
-        if (v['q2.3.1'] || v['q2.2.2']) { return true }
+        if (v['q2.3.1']) { return true }
+        else if (v['q2.2.3'] && v['q2.2.4']) { return true }
         else {
           // this.dataPrvdr.activeProject.stagesComplete[2] = false
           return false

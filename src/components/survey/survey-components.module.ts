@@ -4,11 +4,11 @@ import { IonicModule } from 'ionic-angular';
 //  import reactive forms module
 import { ReactiveFormsModule } from '@angular/forms';
 // import drag/drop package
-import {DragulaModule} from 'ng2-dragula'
+import { DragulaModule } from 'ng2-dragula'
 // import custom pipes
-import {PipesModule} from '../../pipes/pipes.module'
+import { PipesModule } from '../../pipes/pipes.module'
 // import general components
-import {GeneralComponentsModule} from '../general/generalComponents.module'
+import { GeneralComponentsModule } from '../general/generalComponents.module'
 
 import { SurveyQuestionComponent } from './survey-question/survey-question';
 import { SurveyQuestionGroupComponent } from './survey-question-group/survey-question-group';
@@ -17,7 +17,8 @@ import { SurveyRepeatGroupComponent } from './survey-repeat-group/survey-repeat-
 import { SurveyLabelComponent } from './survey-label/survey-label';
 // additional custom question types
 import { QuestionCustomStrataSelectComponent } from './question-types/question-custom-strata-select/question-custom-strata-select';
-import { QuestionCustomStagesDefineComponent} from './question-types/question-custom-stages-define/question-custom-stages-define'
+import { QuestionCustomStagesDefineComponent } from './question-types/question-custom-stages-define/question-custom-stages-define'
+import { QuestionTextMultipleComponent } from './question-types/text-multiple/question-text-multiple'
 
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
@@ -29,7 +30,8 @@ import { QuestionCustomStagesDefineComponent} from './question-types/question-cu
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
         QuestionCustomStrataSelectComponent,
-        QuestionCustomStagesDefineComponent
+        QuestionCustomStagesDefineComponent,
+        QuestionTextMultipleComponent
     ],
     imports: [
         IonicModule,
@@ -45,7 +47,8 @@ import { QuestionCustomStagesDefineComponent} from './question-types/question-cu
         SurveyRepeatGroupComponent,
         SurveyLabelComponent,
         QuestionCustomStrataSelectComponent,
-        QuestionCustomStagesDefineComponent
+        QuestionCustomStagesDefineComponent,
+        QuestionTextMultipleComponent
     ]
 })
 export class SurveyComponentsModule { }

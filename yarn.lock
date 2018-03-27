@@ -3835,13 +3835,25 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.4.tgz#3d38321828231e434f287514959c37a82b629f42"
+typescript-lit-html-plugin@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/typescript-lit-html-plugin/-/typescript-lit-html-plugin-0.2.0.tgz#94a96082cca7cb24188a170ca1f65d006ce671a3"
+  dependencies:
+    typescript-template-language-service-decorator "^1.1.0"
+    vscode-html-languageservice "^2.0.10"
+    vscode-languageserver-types "^3.4.0"
+
+typescript-template-language-service-decorator@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-1.2.0.tgz#6d5b20b2b0f394a055390d901a4c5f273e3754ab"
 
 typescript@^2.3.3:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
+
+typescript@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.1.tgz#6160e4f8f195d5ba81d4876f9c0cc1fbc0820624"
 
 uglify-es@^3.1.0:
   version "3.2.1"
@@ -3974,6 +3986,26 @@ vm-browserify@0.0.4:
 voc@, voc@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/voc/-/voc-1.0.0.tgz#5465c0ce11d0881f7d8e36d8ca587043f33a25ae"
+
+vscode-html-languageservice@^2.0.10:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/vscode-html-languageservice/-/vscode-html-languageservice-2.1.2.tgz#a492d4d3baaa88ce015179f1e985d91eddba9904"
+  dependencies:
+    vscode-languageserver-types "^3.6.1"
+    vscode-nls "^3.2.1"
+    vscode-uri "^1.0.3"
+
+vscode-languageserver-types@^3.4.0, vscode-languageserver-types@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/vscode-languageserver-types/-/vscode-languageserver-types-3.6.1.tgz#4bc06a48dff653495f12f94b8b1e228988a1748d"
+
+vscode-nls@^3.2.1:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/vscode-nls/-/vscode-nls-3.2.2.tgz#3817eca5b985c2393de325197cf4e15eb2aa5350"
+
+vscode-uri@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-1.0.3.tgz#631bdbf716dccab0e65291a8dc25c23232085a52"
 
 watchpack@^1.4.0:
   version "1.4.0"

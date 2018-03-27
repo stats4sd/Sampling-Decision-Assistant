@@ -81,20 +81,7 @@ survey-question {
         margin-right: 4px;
         border-radius: 50%;
     }
-    .multiple-list {
-        max-width: 600px;
-        display: flex;
-        align-items: center;
-        margin: 5px 75px 5px 20px;
-        font-size: medium;
-        color: rgba(0, 0, 0, 0.9);
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        padding: 5px;
-    }
-    .multiple-list-value{
-        flex-basis: 100%;
-        margin-left:10px;
-    }
+
    
     .prefix {
         display: flex;

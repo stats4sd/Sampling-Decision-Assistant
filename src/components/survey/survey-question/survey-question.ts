@@ -52,12 +52,11 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   originalLabel: string;
   dynamicText: any = {};
   trackingChanges: boolean = false;
-  multipleTextInput: any = ""
-  multipleTextValues: any = [];
+
   valueSaved: boolean = false;
 
 
-  constructor(private cdr: ChangeDetectorRef, private events: Events, public formPrvdr: FormProvider, public dataPrvdr: DataProvider,
+  constructor(private cdr: ChangeDetectorRef, public events: Events, public formPrvdr: FormProvider, public dataPrvdr: DataProvider,
   ) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 
@@ -112,7 +111,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (this.question.triggers && this.question.triggers.trigger == "onInit") { this._runCustomTriggers() }
     // apply specific init for question types
     if (this.question.type == "select") { this.generateSelectOptions() }
-    if (this.question.type == "textMultiple") {this._generateMultipleValues()}
+    
     // track value changes for any manual bindings and control add/remove
     if (this.formGroup.value[this.question.controlName]) { this.value = this.formGroup.value[this.question.controlName] }
     // subscribe to changes
@@ -178,40 +177,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     }
   }
 
-  // ************** text multiple*********************************************
-
-  _generateMultipleValues() {
-    let value = this.formPrvdr.getSurveyValue(this.question.controlName)
-    if (value == undefined || value == "" || value == null) {
-      value = []
-    }
-    this.multipleTextValues = value
-  }
-  addTextMultiple() {
-    // push response to array
-    let pushValue = this.multipleTextInput
-    this.multipleTextValues.unshift(this.multipleTextInput)
-    this.multipleTextInput = "";
-    let patch = {}
-    patch[this.question.controlName] = this.multipleTextValues
-    this.formPrvdr.formGroup.patchValue(patch)
-    // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.question.controlName, {
-      controlName: this.question.controlName,
-      type: 'push',
-      value: this.multipleTextValues,
-      pushValue: pushValue
-    })
-  }
-  removeTextMultiple(index) {
-    let removeValue = this.multipleTextValues[index]
-    this.multipleTextValues.splice(index, 1)
-    let patch = {}
-    patch[this.question.controlName] = this.multipleTextValues
-    this.formPrvdr.formGroup.patchValue(patch)
-    // notify for anything trying to monitor changes to array (e.g. repeat groups)
-    this.events.publish('arrayChange:' + this.question.controlName, { controlName: this.question.controlName, type: 'splice', index: index, value: this.multipleTextValues, removeValue: removeValue })
-  }
+  
 
 
   updateSelectOther(e) {

@@ -55,6 +55,7 @@
     "redux": "^3.7.2",
     "rxjs": "^5.5.6",
     "sw-toolbox": "3.6.0",
+    "typescript": "^2.8.1",
     "videogular2": "^6.0.6",
     "vis": "^4.21.0",
     "web-animations-js": "^2.3.1",
@@ -66,7 +67,8 @@
     "@types/html2canvas": "^0.5.35",
     "@types/jspdf": "^1.1.31",
     "@types/vis": "^4.21.0",
-    "typescript": "2.3.4"
+    "typescript": "2.8.1",
+    "typescript-lit-html-plugin": "^0.2.0"
   },
   "description": "Sampling decision assistant",
   "cordova": {

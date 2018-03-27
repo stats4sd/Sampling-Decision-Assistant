@@ -165,7 +165,7 @@ export default
             "controlName": "q4.2", 
             "type": "textMultiple", 
             "selectOptions": "", 
-            "label": "Please specify the levels of disaggregation, be specific in your replies", 
+            "label": "Specify the different levels that you wish to produce estimates for", 
             "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
         },
         {

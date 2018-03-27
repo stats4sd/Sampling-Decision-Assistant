@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Stage4Component } from '../stage-4';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'stage-4-define-level-categories',
@@ -10,16 +12,24 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
 
   strata: any = {}
   strataList: string[]
+ 
+  @select(['activeProject','strata']) readonly strata$: Observable<any[]>;
 
   ngOnInit() {
     this.preloadStrata(this.form.value.strata)
     this.getListOfStrata(this.form.value['q4.2'])
     // change to redux binding to allow for when values don't exist
-    this.form.valueChanges.subscribe(v=>{
-      if(v && v['q4.2']){this.getListOfStrata(v)}
-      if(v[''])
-    })
-    this.form.controls['strata'].valueChanges.subscribe(s=>this.preloadStrata(s))
+    // this.reportingLevels$.subscribe(
+    //   levels=>{if(levels){
+        
+    //   }}
+    // )
+
+    // this.form.valueChanges.subscribe(v=>{
+    //   if(v && v['q4.2']){this.getListOfStrata(v)}
+    //   // if(v[''])
+    // })
+    // this.form.controls['strata'].valueChanges.subscribe(s=>this.preloadStrata(s))
   }
 
   preloadStrata(strata) {

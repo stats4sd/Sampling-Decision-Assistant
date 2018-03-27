@@ -74,7 +74,7 @@ export class SavedInfoPage {
       this.promptRename(project)
     })
     this.events.subscribe('import:complete',_=>{
-      this.loadSavedProjects()
+      // this.loadSavedProjects()
     })
     this.dataPrvdr.import(files)
   }

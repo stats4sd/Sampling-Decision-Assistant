@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
-import { Stage4Component } from '../stage-4';
+import { Stage4Component } from '../stage-4'; 
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'stage-4-review-levels',
   templateUrl: 'stage-4-review-levels.html'
 })
 export class Stage4_ReviewLevelsComponent extends Stage4Component {
-  levelCombinations:any[]=[]
-  levels:any[]=[]
+  levelCombinations: any[] = []
+  levels: any[] = []
+  @select(['activeProject', 'strata']) readonly strata$: Observable<any[]>;
 
   ngOnInit() {
     this._init(this.form.value.strata)
-    this.form.controls['strata'].valueChanges.subscribe(levels => this._init(levels))
-    console.log('levels',this.levels)
+    this.strata$.subscribe(levels => this._init(levels))
+    console.log('levels', this.levels)
+
   }
   _init(levels) {
     if (levels && levels != "") {
@@ -47,7 +51,7 @@ export class Stage4_ReviewLevelsComponent extends Stage4Component {
     }
     else {
       // final list
-      combinations = arrays[0].map(el=>{return el.split('||')})
+      combinations = arrays[0].map(el => { return el.split('||') })
       this.levelCombinations = combinations
     }
 

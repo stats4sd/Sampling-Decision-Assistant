@@ -67,7 +67,7 @@
         </div>
 
         <!-- text multiple   -->
-        <div *ngSwitchCase="'textMultiple'">
+        <!-- <div *ngSwitchCase="'textMultiple'">
           <form style="display: flex; padding:5px">
             <ion-item>
               <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
@@ -84,7 +84,8 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> -->
+        <question-text-multiple *ngSwitchCase="'textMultiple'" [question]="question" ></question-text-multiple>
 
         <!-- label -->
         <div *ngSwitchCase="'label'" class="question-label" style="margin:10px 0">
