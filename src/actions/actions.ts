@@ -17,6 +17,8 @@ export class ProjectActions {
     static readonly LIST_PROJECTS = 'LIST_PROJECTS';
     static readonly UPDATE_PROJECT_VALUES = 'UPDATE_PROJECT_VALUES';
     static readonly UPDATE_STAGES_COMPLETE = 'UPDATE_STAGES_COMPLETE';
+    // dev
+    static readonly EDIT_TOGGLE = 'EDIT_TOGGLE';
 
 
     @dispatch()
@@ -59,6 +61,14 @@ export class ProjectActions {
         type: ProjectActions.UPDATE_STAGES_COMPLETE,
         meta: 'stagesComplete',
         payload: arr
+    });
+
+    // dev
+    @dispatch()
+    toggleEditMode = (editMode:boolean) => ({
+        type: ProjectActions.EDIT_TOGGLE,
+        meta: null,
+        payload: editMode
     });
 
 }

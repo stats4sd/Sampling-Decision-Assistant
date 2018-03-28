@@ -5,6 +5,8 @@
 // Additionally, this file can be also used as an entry point
 // to import other Sass files to be included in the output CSS.
 @import './scrollbars.scss';
+// dev
+@import "https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css";
 // --------------------------------------------------
 $max-app-width:768px;
 // also applied direct to body so adjust accordingly

@@ -4,6 +4,7 @@ import { StagePage } from './stage';
 import { StageComponentsModule } from '../../../components/stage-content/stageComponents.module'
 import { SurveyComponentsModule } from '../../../components/survey/survey-components.module'
 import { GeneralComponentsModule } from '../../../components/general/generalComponents.module'
+import { DevComponentsModule } from '../../../components/_dev/dev.components.module'
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { GeneralComponentsModule } from '../../../components/general/generalComp
     IonicPageModule.forChild(StagePage),
     StageComponentsModule,
     SurveyComponentsModule,
-    GeneralComponentsModule
+    GeneralComponentsModule,
+    DevComponentsModule
   ],
 })
 export class StagePageModule { }

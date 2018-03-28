@@ -5,7 +5,8 @@ import { Action } from 'redux';
 export const INITIAL_STATE: Models.AppState = {
     activeProject: null,
     databaseVersion: null,
-    savedProjects: null
+    savedProjects: null,
+    editMode: false
 };
 
 export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Action) {
@@ -42,6 +43,10 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
                 stagesState.activeProject.stagesComplete = stages.payload
             }
             return stagesState
+
+        case Actions.ProjectActions.EDIT_TOGGLE:
+            const edit = action as Actions.ProjectSaveAction
+            return Object.assign({}, state, { editMode: edit.payload })
 
 
 

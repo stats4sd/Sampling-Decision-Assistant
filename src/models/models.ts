@@ -16,6 +16,7 @@ export interface AppState {
     activeProject?: Project,
     databaseVersion?: string,
     savedProjects?: Project[],
+    editMode?:boolean
 }
 
 export interface Question {

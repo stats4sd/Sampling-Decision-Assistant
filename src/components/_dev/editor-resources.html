@@ -1,0 +1,12 @@
+<div>
+    <strong>For internal use only</strong>
+    <button style="float:right" ion-button (click)="save()">Save Changes</button>
+</div>
+
+
+<div *ngFor="let question of liveQuestions">
+    <div>{{question.$key}}</div>
+    <textarea style="width:100%; padding:5px" [(ngModel)]="question.q"></textarea>
+    <ngx-wig [(ngModel)]="question.a"></ngx-wig>
+   
+</div>

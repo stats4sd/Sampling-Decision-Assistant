@@ -29,6 +29,10 @@ export class StagePage {
   @ViewChild('content') content: Content;
   @ViewChild('stageSlides') stageSlides: Slides;
   @select(['activeProject','values']) readonly formValues$: Observable<any>;
+  // dev
+  @select('editMode') editMode$:Observable<boolean>
+  editMode:boolean
+
   activeSection: string = "Main";
 
   activeGlossaryTerm: string;
@@ -54,6 +58,7 @@ export class StagePage {
     public projectActions:ProjectActions,
     public ngRedux: NgRedux<AppState>
   ) {
+    this.editMode$.subscribe(mode=>this.editMode=mode)
     this.stageInit(navParams)
     this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
     this.events.subscribe('help:clicked', relevant => this._showResource(relevant))

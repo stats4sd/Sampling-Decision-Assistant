@@ -4,6 +4,8 @@
     <ion-buttons end>
       <button ion-button icon-left (click)="closeModal()" *ngIf="modalMode">
         <ion-icon name="checkmark"></ion-icon>Close</button>
+
+        <dev-editor-toggle *ngIf="activeSection=='Resources'"></dev-editor-toggle>
         <!-- *** PUT BACK IN *** -->
       <!-- <button ion-button icon-left color="primary" style="background-color: white" *ngIf="stagesComplete[stage.number]"
         [@animationState]="'flyIn'">
@@ -26,7 +28,8 @@
     </div>
     <!-- Resources -->
     <div class="slide-content" [style.display]="activeSection=='Resources'? 'block' : 'none'">
-      <resources [stage]="stage.number"></resources>
+      <resources *ngIf="!editMode" [stage]="stage.number"></resources>
+      <dev-editor-resources *ngIf="editMode" [stage]="stage.number"></dev-editor-resources>
     </div>
    
     <!-- Glossary -->
