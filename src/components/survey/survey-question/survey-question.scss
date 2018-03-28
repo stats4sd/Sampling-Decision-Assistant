@@ -62,6 +62,13 @@ survey-question {
         border-radius: unset;
         border-bottom: 1px solid rgba(0, 0, 0, 0.3)
     }
+    ion-input.range-input{
+        margin:13px 30px 13px;
+        padding:2px;
+        min-width:50px;
+        display: flex;
+        align-content: center;
+    }
     .select-text,
     textarea,
     .text-input {

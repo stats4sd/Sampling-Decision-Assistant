@@ -28,18 +28,18 @@
                 <div *ngIf="form.value['q2.1.2']=='Average or total value of indicator in the population'">
                         <span style="padding-left:5px">&sigma; = </span>
                         <survey-reference controlName="q2.2.2"></survey-reference>
-                        <div>Error: +/- <survey-reference controlName="q2.4"></survey-reference></div>
+                        <!-- <div>Error: +/- <survey-reference controlName="q2.4"></survey-reference></div> -->
                     </div>
                 <!-- case proportions -->
                 <div *ngIf="form.value['q2.1.2']=='Proportion of elements in the population with the characteristics of the indicator'">
                     <span style="padding-left:5px">Estimated Proportion: </span>
                     <survey-reference controlName="q2.3.1"></survey-reference>
-                    <div style="padding-left:5px">Error: +/- <survey-reference controlName="q2.4"></survey-reference></div>
+                    <!-- <div style="padding-left:5px">Error: +/- <survey-reference controlName="q2.4"></survey-reference></div> -->
                 </div>
 
             </div>
             <div *ngIf="info.stage=='stage-3'">
-                <survey-reference [controlName]="info.formControl"></survey-reference>
+                <p>{{samplingUnit}}</p>
             </div>
             <div *ngIf="info.stage=='stage-4'">
                 <div *ngIf="form.value['q4.1']=='One estimate'">
@@ -47,8 +47,8 @@
                 </div>
                 <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
                     <div>Disaggregated by:</div>
-                    <ul *ngIf="form.value['q4.2']!=''">
-                        <li *ngFor="let estimate of form.value['q4.2']">{{estimate}}</li>
+                    <ul *ngIf="form.value['reportingLevels']!=''">
+                        <li *ngFor="let estimate of form.value['reportingLevels']">{{estimate.name}}</li>
                     </ul>
                 </div>
                 <div *ngIf="form.value['q4.1']==''">

@@ -4,7 +4,7 @@
 
 <table>
     <tr>
-        <th *ngFor="let level of levels">{{level}}</th>
+        <th *ngFor="let level of levels">{{level.name}}</th>
     </tr>
     <tr *ngFor="let combination of levelCombinations">
         <td *ngFor="let val of combination">{{val}}</td>

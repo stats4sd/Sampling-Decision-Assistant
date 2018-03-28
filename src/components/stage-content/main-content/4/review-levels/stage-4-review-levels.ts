@@ -11,26 +11,25 @@ import { Observable } from 'rxjs/Observable';
 export class Stage4_ReviewLevelsComponent extends Stage4Component {
   levelCombinations: any[] = []
   levels: any[] = []
-  @select(['activeProject', 'strata']) readonly strata$: Observable<any[]>;
+  @select(['activeProject', 'value','reportingLevels']) readonly reportingLevels$: Observable<any[]>;
 
   ngOnInit() {
-    this._init(this.form.value.strata)
-    this.strata$.subscribe(levels => this._init(levels))
-    console.log('levels', this.levels)
-
+    this._init(this.form.value.reportingLevels)
+    this.reportingLevels$.subscribe(levels => this._init(levels))
   }
   _init(levels) {
     if (levels && levels != "") {
-      // reshape strata object to array lists to build combinations
-      levels = JSON.parse(levels)
-      this.levels = Object.keys(levels)
+      // reshape levels array lists to build combinations (want array of name arrays)
+      this.levels = levels
       let categoryLabels = []
-      Object.keys(levels).forEach(k => { categoryLabels.push(levels[k].names) })
+      levels.forEach(level => { 
+        categoryLabels.push(level.classifications.names) 
+      })
       let categoryLists = []
       categoryLabels.forEach((labelArray, i) => {
         labelArray.forEach(item => {
           if (!categoryLists[i]) { categoryLists[i] = [] }
-          categoryLists[i].push(item.label)
+          categoryLists[i].push(item)
         })
       })
       this._buildCombinations(categoryLists)
@@ -54,9 +53,5 @@ export class Stage4_ReviewLevelsComponent extends Stage4Component {
       combinations = arrays[0].map(el => { return el.split('||') })
       this.levelCombinations = combinations
     }
-
-
-
-
   }
 }

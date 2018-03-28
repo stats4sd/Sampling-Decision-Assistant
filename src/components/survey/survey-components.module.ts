@@ -16,8 +16,9 @@ import { SurveyReferenceComponent } from './survey-reference/survey-reference';
 import { SurveyRepeatGroupComponent } from './survey-repeat-group/survey-repeat-group';
 import { SurveyLabelComponent } from './survey-label/survey-label';
 // additional custom question types
-import { QuestionCustomStrataSelectComponent } from './question-types/question-custom-strata-select/question-custom-strata-select';
-import { QuestionCustomStagesDefineComponent } from './question-types/question-custom-stages-define/question-custom-stages-define'
+import { QuestionCustomStrataSelectComponent } from './question-types/custom-strata-select/question-custom-strata-select';
+import { QuestionCustomStagesDefineComponent } from './question-types/custom-stages-define/question-custom-stages-define';
+import { QuestionCustomReportingLevelsComponent } from './question-types/custom-reporting-levels/question-custom-reporting-levels';
 import { QuestionTextMultipleComponent } from './question-types/text-multiple/question-text-multiple'
 
 
@@ -31,6 +32,7 @@ import { QuestionTextMultipleComponent } from './question-types/text-multiple/qu
         SurveyLabelComponent,
         QuestionCustomStrataSelectComponent,
         QuestionCustomStagesDefineComponent,
+        QuestionCustomReportingLevelsComponent,
         QuestionTextMultipleComponent
     ],
     imports: [
@@ -38,7 +40,8 @@ import { QuestionTextMultipleComponent } from './question-types/text-multiple/qu
         ReactiveFormsModule,
         DragulaModule,
         PipesModule,
-        GeneralComponentsModule
+        GeneralComponentsModule,
+        
     ],
     exports: [
         SurveyQuestionComponent,
@@ -48,6 +51,7 @@ import { QuestionTextMultipleComponent } from './question-types/text-multiple/qu
         SurveyLabelComponent,
         QuestionCustomStrataSelectComponent,
         QuestionCustomStagesDefineComponent,
+        QuestionCustomReportingLevelsComponent,
         QuestionTextMultipleComponent
     ]
 })

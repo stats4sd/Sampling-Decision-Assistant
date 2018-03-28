@@ -47,7 +47,8 @@ export class FormProvider {
   }
   getQuestion(controlName) {
     for (let question of this.allQuestions) {
-      if (question.controlName == controlName) { return question }
+      if (question.controlName == controlName) { 
+        return question }
     }
   }
   initFormValues(values, formGroup?: FormGroup) {

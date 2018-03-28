@@ -15,6 +15,7 @@ Custom component to add multiple stages, populate repeat formgroup and give opti
   templateUrl: 'question-custom-stages-define.html'
 })
 export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent {
+  multipleTextInput:string
 
   @Input() set preloadValue(v: any[]) {
     if (v) { this.setSavedValue(v) }
@@ -44,11 +45,11 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
   ngOnInit() {
     // preload additional data before component rendered. hooks after input() sets so 
     // all need to call after initial set value input
-    this.finalSamplingUnit = this.formPrvdr.formGroup.value['q3.1'] == '' ? 'Final Sampling Unit' : this.formPrvdr.formGroup.value['q3.1']
-    this.preloadValues()
+    // this.finalSamplingUnit = this.formPrvdr.formGroup.value['q3.1'] == '' ? 'Final Sampling Unit' : this.formPrvdr.formGroup.value['q3.1']
+    // this.preloadValues()
   }
   ngAfterViewInit() {
-    this._addDragDropSubscriber()
+    // this._addDragDropSubscriber()
   }
 
   preloadValues(){

@@ -1,27 +1,50 @@
 <h4>Define Reporting Level Classifications</h4>
 
-<p>The final step in this stage is to specify the number and names of classifications used in each of your reporting levels.
+<p>The next step in this stage is to specify the number and names of classifications used in each of your reporting levels.
     <br>For example, if you wish to report on seperate geographical regions you should specify the number of regions and your
     preferred way to denote them.</p>
 
-<ion-grid class="builder-container">
+<ion-grid class="builder-container" *ngIf="reportingLevels">
     <ion-row class="row-headers">
         <ion-col col-2>Reporting Level</ion-col>
         <ion-col col-2>Number of Classifications</ion-col>
         <ion-col col class="left">Names of Classifications</ion-col>
     </ion-row>
-    <ion-row *ngFor="let strataGroup of strataList">
-        <ion-col col-2>{{strataGroup}}</ion-col>
+    <ion-row *ngFor="let level of reportingLevels; let i=index; let last=last">
+        <ion-col col-2>{{level.name}}</ion-col>
         <ion-col col-2 class="center" class="required">
-            <ion-input type="number" (ionChange)="setStrataNumber($event,strataGroup)" [(ngModel)]="strata[strataGroup].number"></ion-input>
+            <ion-input type="number" (ionChange)="setClassifications(i)" [(ngModel)]="level.classifications.total"></ion-input>
         </ion-col>
         <ion-col col>
-            <div *ngFor="let strataName of strata[strataGroup].names; let i=index">
-                <ion-item>
-                    <ion-input [placeholder]="'group '+(i+1)" [(ngModel)]="strata[strataGroup].names[i].label" (focusout)="saveStrata()"></ion-input>
-                </ion-item>
-            </div>
+            <form>
+                <div *ngFor="let name of level.classifications.names; let j=index">
+                    <ion-item>
+                        <!-- <ion-input 
+                        [placeholder]="'group '+(j+1)" 
+                        [(ngModel)]="classificationsInput[level.name][j]" 
+                        [ngModelOptions]="{standalone: true}"
+                        (focusout)="updateNames()">
+                        </ion-input> -->
+                        <ion-input 
+                                [placeholder]="'group '+(j+1)" 
+                                [(ngModel)]="classificationsInput[level.name][j]" 
+                                [ngModelOptions]="{standalone: true}"
+                                (focusout)="showSaveMessage()">
+                                
+                                </ion-input>
+                    </ion-item>
+                </div>
+            </form>
+
+
+
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col col-2></ion-col>
+        <ion-col col-2></ion-col>
+        <ion-col>
+            <button ion-button (click)="updateNames()" block outline>{{saveMessage}}</button>
         </ion-col>
     </ion-row>
 </ion-grid>
-

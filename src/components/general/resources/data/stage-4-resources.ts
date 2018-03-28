@@ -15,7 +15,7 @@ export default {
             <br>Similarly, if within your report you intended to provide a comparison of results by gender then you should include <strong>'Gender'</strong> as a reporting level and suitable classifications such as <i>'Male, Female'</i>.
             `,
             video: '',
-            relevant: ['q4.2'],
+            relevant: ['reportingLevels'],
         },
     ],
     examples: [

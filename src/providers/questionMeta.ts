@@ -108,37 +108,12 @@ export default
             "section": "Indicators",
             "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
             "labelMultiple": null,
-            options:{
-                max:95,
-                min:5
+            options: {
+                max: 95,
+                min: 5
             }
         },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.4",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
-        //     "section": "Indicators",
-        //     options:{
-        //         prefix:'+/-',
-        //     },
-        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.4",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
-        //     "section": "Indicators",
-        //     options:{
-        //         prefix:'+/-',
-        //     },
-        //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
-        //     "labelMultiple": null
-        // },
+        
 
         // section 3
         {
@@ -161,11 +136,11 @@ export default
             "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", 
-            "controlName": "q4.2", 
-            "type": "textMultiple", 
-            "selectOptions": "", 
-            "label": "Specify the different levels that you wish to produce estimates for", 
+            "isQuestion": "TRUE",
+            "controlName": "reportingLevels",
+            "type": "custom-reporting-levels",
+            "selectOptions": "",
+            "label": "Specify the different levels that you wish to produce estimates for",
             "section": "At what level do you need to report these results", "condition": "type:value, controlName:q4.1, value:Disaggregated estimates", "labelMultiple": "Name of level"
         },
         {
@@ -202,7 +177,7 @@ export default
             "condition": "",
             options: {
                 format: 'arrow',
-                dragDrop:true
+                dragDrop: true
             }
 
         },
@@ -220,7 +195,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.1",
-            "repeatGroup":"q5.3",
+            "repeatGroup": "q5.3",
             "type": "select",
             "selectOptions": "Yes, No",
             "label": "Do you have a list of all sampling units in this stage?",
@@ -231,7 +206,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.2",
-            "repeatGroup":"q5.3",
+            "repeatGroup": "q5.3",
             "type": "select",
             "selectOptions": "Yes - proceed, No - highlight the disadvantages and suggest ways of updating it",
             "label": "Is the list as complete and up-to-date as possible?",
@@ -242,7 +217,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.3",
-            "repeatGroup":"q5.3",
+            "repeatGroup": "q5.3",
             "type": "select",
             "selectOptions": "Sample, All",
             "label": "Are you planning to take a sample from the list or are you planning to use all units in this stage?",
@@ -274,7 +249,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.2",
-            "repeatGroup":"q5.3",
+            "repeatGroup": "q5.3",
             "type": "custom-strata-select",
             "selectOptions": "Yes, No",
             "label": "Can the stage be stratified by any of your reporting levels?",
@@ -285,7 +260,7 @@ export default
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.3",
-            "repeatGroup":"q5.3",
+            "repeatGroup": "q5.3",
             "type": "select",
             "selectOptions": "Simple random sampling, Probability proportional to size",
             "label": "<p>Are you planning to select the sampling units using<br><br>a. Simple Random Sampling, that is equal probability of selection for all the units. <br>b. Probability Proportional to Size, unequal probability of selection for different units ",
@@ -311,6 +286,34 @@ export default
             "condition": "",
             "labelMultiple": null
         },
+
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.4",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
+        //     "section": "Indicators",
+        //     options:{
+        //         prefix:'+/-',
+        //     },
+        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
+        //     "labelMultiple": null
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.4",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
+        //     "section": "Indicators",
+        //     options:{
+        //         prefix:'+/-',
+        //     },
+        //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
+        //     "labelMultiple": null
+        // },
+        
         // {
         //     "isQuestion": "TRUE",
         //     "controlName": "q5.3.2",
@@ -367,7 +370,7 @@ export default
         //     "controlName": "l5.4",
         //     "type": "label",
         //     "selectOptions": "",
-        //     "label": "You said that the information needs to be disaggregated by {{q4.2}}. Consider whether the sampling units at this stage need to be separated into strata according to the reporting criteria",
+        //     "label": "You said that the information needs to be disaggregated by {{reportingLevels}}. Consider whether the sampling units at this stage need to be separated into strata according to the reporting criteria",
         //     "section": "Selecting the sampling units",
         //     "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
         //     "labelMultiple": null

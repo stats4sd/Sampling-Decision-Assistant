@@ -61,41 +61,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 
   }
-  // *****************************************************
-  // functions required to allow model binding 
-  //******************************************************
-
-  writeValue(value: any) {
-    // method auto bound for ng-model write
-    if (value) { this.value = value }
-  }
-  registerOnChange(fn: any) {
-    this.propagateChange = fn;
-  }
-  registerOnTouched(fn: () => void): void { }
-
-  // generic change function, sometimes uses value from bound ngmodel, sometimes from change function calls
-  valueUpdated(value?, e?) {
-    if (!value) { value = this.value }
-    if (e) { value = e.target.value }
-    // patch formgroup
-    let patch = {}
-    patch[this.question.controlName] = value
-    this.formGroup.patchValue(patch)
-    // propagate value update for use in ngModel or form binding
-    this.propagateChange(value);
-    // notify change through emitter also for tracking in repeat group questions
-    this.onValueChange.emit(value)
-    //console.log('formgroup', this.formPrvdr.formGroup)
-    // this.dataPrvdr.backgroundSave()
-    //***note - should add form value change subscribers */
-    // e.g. this.formGroup.get(controlName).valueChanges.subscribe( x => console.log(x));
-    // publish key-value pair in event picked up by data provider to update
-    // let update = { controlName: this.question.controlName, value: value, section: this.question.section }
-    // this.events.publish('valueUpdate', update)
-    // this.events.publish('valueUpdated:' + update.controlName, update)
-    // console.log('values',this.formPrvdr.formGroup.value)
-  }
 
   // **********************************************************************************************
   // specific functions for question types which could be later moved to individual components
@@ -130,6 +95,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     })
     console.log('init complete', this.question.controlName)
     this.initComplete = true
+    
   }
 
   ngOnDestroy() {
@@ -139,6 +105,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   checkFormControl() {
     // checks form control exists (in case removed or new question) and adds appropriately
+    console.log('checking form control',this.question)
     if (!this.formGroup.controls[this.question.controlName]) {
       this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
       this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: false })
@@ -189,6 +156,33 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
     if (value == "") {
       this.showSelectOther = false
     }
+  }
+
+    // *****************************************************
+  // functions required to allow model binding 
+  //******************************************************
+
+  writeValue(value: any) {
+    // method auto bound for ng-model write
+    if (value) { this.value = value }
+  }
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn: () => void): void { }
+
+  // generic change function, sometimes uses value from bound ngmodel, sometimes from change function calls
+  valueUpdated(value?, e?) {
+    if (!value) { value = this.value }
+    if (e) { value = e.target.value }
+    // patch formgroup
+    let patch = {}
+    patch[this.question.controlName] = value
+    this.formGroup.patchValue(patch)
+    // propagate value update for use in ngModel or form binding
+    this.propagateChange(value);
+    // notify change through emitter also for tracking in repeat group questions
+    this.onValueChange.emit(value)
   }
 
 

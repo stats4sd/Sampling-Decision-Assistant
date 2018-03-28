@@ -14,7 +14,7 @@
             </p>
             <survey-question controlName="q4.1"></survey-question>
 
-            <survey-question controlName='q4.2'></survey-question>
+            <survey-question controlName='reportingLevels'></survey-question>
 
 
             <div *ngIf="form.value['q4.1']=='One estimate'">
@@ -27,7 +27,7 @@
         <ion-slide>
             <stage-4-define-level-categories></stage-4-define-level-categories>
         </ion-slide>
-        <ion-slide *ngIf="form.value['q4.2'] && form.value['q4.2'].length>0">
+        <ion-slide *ngIf="form.value['reportingLevels'] && form.value['reportingLevels'].length>0">
             <stage-4-review-levels></stage-4-review-levels>
             <stage-complete stageNumber=4></stage-complete>
         </ion-slide>

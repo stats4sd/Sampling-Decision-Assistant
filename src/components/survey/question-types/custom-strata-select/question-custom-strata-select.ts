@@ -34,7 +34,7 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     
   }
   getReportingLevels() {
-    let levels = this.formPrvdr.getSurveyValue('q4.2')
+    let levels = this.formPrvdr.getSurveyValue('reportingLevels')
     console.log('levels', levels)
     if (levels == "") { levels = [] }
     this.reportingLevels = levels

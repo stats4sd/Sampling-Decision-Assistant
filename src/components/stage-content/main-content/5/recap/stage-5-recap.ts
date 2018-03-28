@@ -6,6 +6,7 @@ import { Stage5Component } from '../stage-5';
   templateUrl: 'stage-5-recap.html'
 })
 export class Stage5_RecapComponent extends Stage5Component {
+  samplingUnit:string
 
   infoProvided = [
     { heading: 'Main Objective', image: '', formControl: 'q1.3', stage: 'stage-1' },
@@ -15,11 +16,13 @@ export class Stage5_RecapComponent extends Stage5Component {
   ]
 
   ngOnInit() {
-    this._patchSection3(this.form.value)
-    this.form.valueChanges.subscribe(v => this._patchSection3(v))
+    // this._patchSection3(this.form.value)
+    // this.form.valueChanges.subscribe(v => this._patchSection3(v))
+    //this._patchSection3()
+    this.samplingUnit = this._generateSamplingUnit()
   }
 
-  _patchSection3(values) {
+  _generateSamplingUnit() {
     let text = this.form.value['q3.1']
     if (this.form.value['q3.2']) {
       text = text + " located in " + this.form.value['q3.2']
@@ -30,13 +33,7 @@ export class Stage5_RecapComponent extends Stage5Component {
     if (this.form.value['q3.4']) {
       text = text + " and " + this.form.value['q3.4']
     }
-    else { text = "" }
-    if (values['q3.5'] != text) {
-      let patch = {}
-      patch['q3.5'] = text
-      this.form.patchValue(patch)
-    }
-
+    return text
   }
 
 }

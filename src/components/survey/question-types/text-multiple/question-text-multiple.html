@@ -9,7 +9,7 @@
 <div *ngFor="let value of multipleTextValues, index as i">
     <div style="display: flex">
         <div class="multiple-list">
-                <span>{{value}}</span>
+                <span style="flex:1">{{value}}</span>
                 <ion-icon name="create" class="edit-button" (click)="enableEdit(i)" *ngIf="!editMode"></ion-icon>
         </div>
         <button ion-button clear (click)="removeTextMultiple(i)" icon-only>

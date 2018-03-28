@@ -83,10 +83,12 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 3: {
         // add patch for 3.5 value
+        // this._patchSection3(v)
+
         return true
       }
       case s == 4: {
-        if (v['q4.2']) { return true }
+        if (v['reportingLevels']) { return true }
         if (v['q4.3']) { return true }
       }
       case s == 5: {
@@ -119,5 +121,26 @@ export class StageCompleteComponent extends StagePage {
     this.projectActions.updateStagesComplete(this.stagesComplete)
     this.dataPrvdr.backgroundSave()
   }
+
+  //   _patchSection3(values) {
+  //     console.log('patching section 3')
+  //     // quick patch to merge section 3 values into one 
+  //   let text = values['q3.1']
+  //   if (values['q3.2']) {
+  //     text = text + " located in " + values['q3.2']
+  //   }
+  //   if (values['q3.3']) {
+  //     text = text + " during " + values['q3.3']
+  //   }
+  //   if (values['q3.4']) {
+  //     text = text + " and " + values['q3.4']
+  //   }
+  //   else { text = "" }
+  //   if (values['q3.5'] != text) {
+  //     let patch = {}
+  //     patch['q3.5'] = text
+  //     this.form.patchValue(patch)
+  //   }
+  // }
 
 }
