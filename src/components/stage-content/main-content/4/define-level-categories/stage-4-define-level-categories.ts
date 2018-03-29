@@ -17,26 +17,26 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
   saveMessage:string="save names"
   // use all classifications as temp binding due to input jump
 
-  @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<any[]>;
+  @select(['slideSection']) readonly slideSection$: Observable<number>;
 
   ngOnInit() {
-    this.reportingLevels$.subscribe(
-      levels => {
-        console.log('levels', levels)
-        if (levels instanceof Array) {
-          levels.forEach(level => {
-            this.classificationsInput[level.name] = level.classifications.names.slice(0)
-          })
-          this.reportingLevels = levels.slice(0)
-        }
+     // bind to slide section to call init every time slide focused
+    this.slideSection$.subscribe(section=>{if(section==1){this._init(this.form.value.reportingLevels.slice(0))}})
+    // this._init(this.form.value.reportingLevels)
+  }
+  _init(levels){
+    if (levels instanceof Array) {
+      levels.forEach(level => {
+        this.classificationsInput[level.name] = level.classifications.names.slice(0)
       })
+      this.reportingLevels = levels.slice(0)
+    }
   }
   showSaveMessage(){
     this.saveMessage='save names'
   }
 
   setClassifications(i) {
-    console.log('setting classifications', i)
     let total = this.reportingLevels[i].classifications.total
     let names = this.reportingLevels[i].classifications.names
     // add empty on increase
@@ -50,15 +50,12 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
     let target = total
     let removeCount = current - target
     names.splice(target, removeCount)
-    console.log('reporting levels', this.reportingLevels)
     this.save()
   }
 
   updateNames() {
-    console.log('updating names', this.classificationsInput)
     let newLevels = []
     newLevels = this.reportingLevels.slice(0)
-    console.log('new levels', newLevels)
     newLevels.map(level => {
       level.classifications.names = this.classificationsInput[level.name]
     })
@@ -67,23 +64,7 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
     patch.reportingLevels = newLevels
     this.form.patchValue(patch)
     this.saveMessage='saved'
-
-    // this.save()
-    // }
-
   }
-  _getIndex(levelName) {
-    this.reportingLevels.forEach((level, i) => {
-      if (level.name == levelName) { return i }
-    })
-  }
-
-
-  // preloadStrata(strata) {
-  //   if (strata != "" && strata != undefined) {
-  //     this.strata = JSON.parse(strata)
-  //   }
-  // }
 
   save() {
     // stringify result and save as 'strata' on formgroup (not using standard question interaction for simplicity)

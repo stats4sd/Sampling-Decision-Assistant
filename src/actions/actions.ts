@@ -17,6 +17,7 @@ export class ProjectActions {
     static readonly LIST_PROJECTS = 'LIST_PROJECTS';
     static readonly UPDATE_PROJECT_VALUES = 'UPDATE_PROJECT_VALUES';
     static readonly UPDATE_STAGES_COMPLETE = 'UPDATE_STAGES_COMPLETE';
+    static readonly SET_SLIDE_SECTION = 'SET_SLIDE_SECTION';
     // dev
     static readonly EDIT_TOGGLE = 'EDIT_TOGGLE';
 
@@ -62,6 +63,13 @@ export class ProjectActions {
         meta: 'stagesComplete',
         payload: arr
     });
+
+    @dispatch()
+    setSlideSection = (index:number) => ({
+        type: ProjectActions.SET_SLIDE_SECTION,
+        meta: null,
+        payload: index
+    })
 
     // dev
     @dispatch()

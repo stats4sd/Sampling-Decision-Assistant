@@ -6,7 +6,7 @@ import { Stage5Component } from '../stage-5';
   templateUrl: 'stage-5-recap.html'
 })
 export class Stage5_RecapComponent extends Stage5Component {
-  samplingUnit:string
+  // samplingUnit:string
 
   infoProvided = [
     { heading: 'Main Objective', image: '', formControl: 'q1.3', stage: 'stage-1' },
@@ -19,21 +19,9 @@ export class Stage5_RecapComponent extends Stage5Component {
     // this._patchSection3(this.form.value)
     // this.form.valueChanges.subscribe(v => this._patchSection3(v))
     //this._patchSection3()
-    this.samplingUnit = this._generateSamplingUnit()
+    // this.samplingUnit = this._generateSamplingUnit()
   }
 
-  _generateSamplingUnit() {
-    let text = this.form.value['q3.1']
-    if (this.form.value['q3.2']) {
-      text = text + " located in " + this.form.value['q3.2']
-    }
-    if (this.form.value['q3.3']) {
-      text = text + " during " + this.form.value['q3.3']
-    }
-    if (this.form.value['q3.4']) {
-      text = text + " and " + this.form.value['q3.4']
-    }
-    return text
-  }
+  
 
 }

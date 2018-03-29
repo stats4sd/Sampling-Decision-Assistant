@@ -52,7 +52,6 @@ export class FormProvider {
     }
   }
   initFormValues(values, formGroup?: FormGroup) {
-    console.log('init form values',values)
     
     //if (!formGroup) { formGroup = this.formGroup }
     // set values, building controls as required ( in simple mode, currently skipping any validators)
@@ -97,7 +96,6 @@ export class FormProvider {
     })
     // patch all values
     this.formGroup.patchValue(patch)
-    console.log('formgroup',this.formGroup)
     // this.events.publish('form:initComplete')
     return formGroup
   }
@@ -171,7 +169,6 @@ export class FormProvider {
     // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
     this.events.unsubscribe('arrayChange:' + question.selectOptions)
     this.events.subscribe('arrayChange:' + question.selectOptions, update => {
-      console.log('array changed', update)
       const control = <FormArray>this.formGroup.controls[groupPrefix]
       if (update.type == "push") {
         control.push(this._buildRepeatGroup(repeatQs, update.pushValue))

@@ -92,7 +92,7 @@ export class StageCompleteComponent extends StagePage {
         if (v['q4.3']) { return true }
       }
       case s == 5: {
-        console.log('evaluating section valid 5')
+        //console.log('evaluating section valid 5')
         return true
       }
       case s == 6: {

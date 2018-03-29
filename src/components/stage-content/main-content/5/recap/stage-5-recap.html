@@ -39,7 +39,7 @@
 
             </div>
             <div *ngIf="info.stage=='stage-3'">
-                <p>{{samplingUnit}}</p>
+                <survey-reference controlName="q3.5"></survey-reference>
             </div>
             <div *ngIf="info.stage=='stage-4'">
                 <div *ngIf="form.value['q4.1']=='One estimate'">

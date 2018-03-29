@@ -37,7 +37,8 @@ export class Stage5Component extends StagePage {
   }
 
   editStage(stage) {
-    super.openModal('StagePage', { stageID: stage, modalMode: true })
+    // super.openModal('StagePage', { stageID: stage, modalMode: true })
+    super.pushPage('StagePage', { stageID: stage })
   }
 
   buildStage(stageFormControl, stageIndex) {

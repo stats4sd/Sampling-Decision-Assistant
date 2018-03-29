@@ -30,4 +30,7 @@ question-custom-reporting-levels{
     .multiple-remove-button{
         color:rgba(0, 0, 0, 0.3);
     }
+    .multiple-list[data-editing="editing"]{
+        background-color: wheat
+    }
 }

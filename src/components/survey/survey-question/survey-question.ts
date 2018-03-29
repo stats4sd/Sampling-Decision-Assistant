@@ -105,7 +105,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
 
   checkFormControl() {
     // checks form control exists (in case removed or new question) and adds appropriately
-    console.log('checking form control',this.question)
+    // console.log('checking form control',this.question)
     if (!this.formGroup.controls[this.question.controlName]) {
       this.formGroup.addControl(this.question.controlName, new FormControl(this.formPrvdr.historicValues[this.question.controlName]))
       this.formGroup.updateValueAndValidity({ onlySelf: true, emitEvent: false })

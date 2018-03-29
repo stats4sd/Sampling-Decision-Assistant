@@ -174,7 +174,7 @@ export default
             "selectOptions": "",
             "label": "What are the sampling stages that will allow you to reach the final sampling unit?",
             "section": "Selecting the sampling units",
-            "condition": "",
+            "condition": "type:prerequisite, controlName:q5.1",
             options: {
                 format: 'arrow',
                 dragDrop: true

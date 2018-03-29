@@ -73,6 +73,7 @@ export class QuestionTextMultipleComponent extends SurveyQuestionComponent {
       this.multipleTextValues[this.editIndex]=this.multipleTextInput
       this.multipleTextInput=""
       this.editMode=false
+      this.editIndex=-1
       this.saveValue()
   }
 

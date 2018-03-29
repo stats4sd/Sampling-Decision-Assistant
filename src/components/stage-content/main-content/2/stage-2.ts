@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { StagePage } from '../../../../pages/sampling tool/stage/stage';
 import { DecimalPipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import {select} from '@angular-redux/store'
 
 
 @Component({
@@ -9,27 +12,33 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: 'stage-2.html'
 })
 export class Stage2Component extends StagePage {
+  @select(['activeProject','values','q2.2.3']) readonly sdLower$: Observable<number>;
+  @select(['activeProject','values','q2.2.4']) readonly sdUpper$: Observable<number>;
+
   sd: number;
 
   ngOnInit() {
+    this.sdLower$.subscribe(v=>{this._calculateSD()})
+    this.sdUpper$.subscribe(v=>{this._calculateSD()})
     // listen for updates on min/max values to automatically calculate s.d
     // note subscribing on redux as overrids over subscribers
-    this.form.valueChanges.subscribe(v => {
-      if (v && v['q2.2.3'] && v['q2.2.4']) { this._calculateSD(v['q2.2.3'], v['q2.2.4'], this.sd) }
-    })
+    // this.form.valueChanges.subscribe(v => {
+    //   if (v && v['q2.2.3'] && v['q2.2.4']) { this._calculateSD(v['q2.2.3'], v['q2.2.4'], this.sd) }
+    // })
     // calculate now also
     try {
       let v = this.ngRedux.getState().activeProject.values
-      if (v['q2.2.3'] && v['q2.2.4']) { this._calculateSD(v['q2.2.3'], v['q2.2.4'], this.sd) }
+      if (v['q2.2.3'] && v['q2.2.4']) { this._calculateSD(v['q2.2.3'], v['q2.2.4']) }
     } catch (error) {
-
     }
 
 
 
 
   }
-  _calculateSD(lower, upper, current?) {
+  _calculateSD(lower?, upper?) {
+    if(!lower){lower=this.form.value['q2.2.3']}
+    if(!upper){upper=this.form.value['q2.2.4']}
     // calculate sd, only update form value if different to previous
     console.log('calculating sd')
     if (lower && upper) {
@@ -40,7 +49,11 @@ export class Stage2Component extends StagePage {
         this.sd = sd
         let patch = {}
         patch['q2.2.2'] = sd
-        this.form.patchValue(patch)
+        // patch only works if exists so also provide option to add control
+        if(!this.form.value['q2.2.2']){
+          this.form.addControl('q2.2.2',new FormControl(sd))
+        }
+        else{this.form.patchValue(patch)}
       }
 
     }

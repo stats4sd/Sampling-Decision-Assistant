@@ -129,6 +129,9 @@ export class StagePage {
     this.dataPrvdr.backgroundSave()
     this.viewCtrl.dismiss()
   }
+  pushPage(component,params){
+    this.navCtrl.push(component,params)
+  }
   scrollDown() {
     setTimeout(() => {
       try {
@@ -190,6 +193,7 @@ export class StagePage {
   stageSlideChange() {
     this.stageSlidesIndex = this.stageSlides.getActiveIndex()
     this.emitSlideIndex()
+    this.projectActions.setSlideSection(this.stageSlidesIndex)
   }
   // used to update parent component
   emitSlideIndex() {

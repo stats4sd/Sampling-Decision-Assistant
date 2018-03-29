@@ -39,4 +39,8 @@ question-custom-stages-define {
     .multiple-arrow-down {
         font-size: 28px;
     }
+    button[data-editing="editing"]{
+        //opacity: 0.2;
+        background-color: gray!important;
+    }
 }
