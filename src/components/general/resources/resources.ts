@@ -1,15 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
 import animationStates from '../../../providers/animationStates'
+import { select } from '@angular-redux/store'
+import { Observable } from 'rxjs/Observable'
 
-import stage1Resources from './data/stage-1-resources'
-import stage2Resources from './data/stage-2-resources'
-import stage3Resources from './data/stage-3-resources'
-import stage4Resources from './data/stage-4-resources'
-import stage5Resources from './data/stage-5-resources'
-import stage6Resources from './data/stage-6-resources'
+// import demoResources from './data/demo-resources';
+// import stage1Resources from './data/stage-1-resources'
+// import stage2Resources from './data/stage-2-resources'
+// import stage3Resources from './data/stage-3-resources'
+// import stage4Resources from './data/stage-4-resources'
+// import stage5Resources from './data/stage-5-resources'
+// import stage6Resources from './data/stage-6-resources'
 import { DomSanitizer } from '@angular/platform-browser';
-import demoResources from './data/demo-resources';
+// dev
+import { AngularFirestore } from 'angularfire2/firestore';
+
 
 @Component({
   selector: 'resources',
@@ -18,27 +23,48 @@ import demoResources from './data/demo-resources';
 })
 export class ResourcesComponent {
 
+  @select('relevantResources') readonly relevant$: Observable<string>
+  // @select('allResources') readonly allReasources$: Observable<any[]>
+  // dev resources observable
+  
+
   @Input() set stage(stage: number) {
     this.setResources(this.allResources[stage])
+    this._stage=stage
   }
-  allResources = [demoResources, stage1Resources, stage2Resources, stage3Resources, stage4Resources, stage5Resources, stage6Resources]
+  _stage:number
+  allResources=[]
+  // allResources = [demoResources, stage1Resources, stage2Resources, stage3Resources, stage4Resources, stage5Resources, stage6Resources]
   questions: any[] = []
   relevant: string = "N/A"
 
-  constructor(private events: Events, private sanitizer: DomSanitizer) {
-    this.events.unsubscribe('help:clicked')
-    this.events.subscribe('help:clicked', relevant => this.showRelevant(relevant))
-    console.log('location', location.host, location)
+  constructor(private events: Events, private sanitizer: DomSanitizer, private db:AngularFirestore) {
+    this.relevant$.subscribe(
+      r=>{if(r){this.showRelevant(r)}}
+    )
+    this.db.collection('resources').valueChanges().subscribe(
+      res=>{
+        this.allResources=res
+        this.setResources(this.allResources[this._stage])
+
+      }
+    )
+    // this.events.unsubscribe('help:clicked')
+    // this.events.subscribe('help:clicked', relevant => this.showRelevant(relevant))
+    // console.log('location', location.host, location)
   }
 
   setResources(stageResources: any) {
     // convert json objecto to array
-    let questions = []
+    if(stageResources){
+      let questions = []
     Object.keys(stageResources.questions).forEach(k => {
       questions.push(stageResources.questions[k])
     })
     console.log('resource questions', questions)
     this.questions = questions
+    }
+    
   }
 
   viewResource(index: number, showFormat?: string) {
@@ -58,19 +84,19 @@ export class ResourcesComponent {
     let format
     if (q.audio) {
       q.audioUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.audio)
-      format= 'audio'
+      format = 'audio'
     }
     if (q.video) {
       // set video url to play hosted video (note, will need diff method if on mobile device)
       q.videoUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.video)
-      format= 'video'
+      format = 'video'
     }
-    else { format= 'text' }
+    else { format = 'text' }
     return format
   }
 
-  showRelevant(relevant) {
-    console.log('showing relevant',relevant)
+  showRelevant(relevant:string) {
+    console.log('showing relevant', relevant)
     // automatically expand relevant questions on click
     this.relevant = relevant
     this.questions.forEach((q, i) => {

@@ -7,7 +7,8 @@ export const INITIAL_STATE: Models.AppState = {
     databaseVersion: null,
     savedProjects: null,
     editMode: false,
-    slideSection: -1
+    slideSection: -1,
+    relevantResources: null
 };
 
 export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Action) {
@@ -48,6 +49,10 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
         case Actions.ProjectActions.SET_SLIDE_SECTION:
             const section = action as Actions.UpdateProjectAction
             return Object.assign({}, state, { slideSection: section.payload })
+
+        case Actions.ProjectActions.SET_RELEVANT_RESOURCES:
+            const relevant = action as Actions.UpdateProjectAction
+            return Object.assign({}, state, { relevantResources: relevant.payload })
 
         case Actions.ProjectActions.EDIT_TOGGLE:
             const edit = action as Actions.UpdateProjectAction

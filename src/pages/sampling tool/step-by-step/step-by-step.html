@@ -29,6 +29,7 @@
         <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
+            <div *ngIf="section.class=='disabled'" class="section-disabled">This section is not currently available for preview</div>
             <div class="section-icon-container">
               <img class="section-icon" [src]="section.icon">
             </div>
@@ -46,8 +47,9 @@
       <div class="section-break">Review and Export</div>
       <p class="instruction" icon-left>
         <ion-icon name="information-circle"></ion-icon>Review the decisions you have made and make revisions before final export</p>
-      <div class="review-box" (click)="pushPage('ReviewPage')">
-        <div style="max-width:600px; display:flex">
+      <div class="review-box" (click)="pushPage('ReviewPage')" style="position: relative; pointer-events:none; opacity:0.6">
+        <div class="section-disabled"><p style="width:100%; font-weight:bold">This section is not currently available for preview</p></div>
+        <div style="max-width:600px; display:flex; ">
           <ion-card class="review-card">
             <span>Review</span>
           </ion-card>

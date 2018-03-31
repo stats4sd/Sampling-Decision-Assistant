@@ -8,7 +8,7 @@ import { NavController, ModalController } from 'ionic-angular';
   selector: 'dev-editor-toggle',
   template: `
   <button ion-button icon-left (click)="enableEdit()" *ngIf="!editMode"><ion-icon name="bug"></ion-icon>Edit</button>
-  <button ion-button icon-left (click)="disableEdit()" *ngIf="editMode"><ion-icon name="arrow-backward"></ion-icon>Return</button>
+  <button ion-button icon-left (click)="disableEdit()" *ngIf="editMode"><ion-icon name="arrow-backward"></ion-icon>Close Editor (make sure you save first!)</button>
   `
 })
 export class DevEditorToggleComponent {

@@ -17,7 +17,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DataProvider {
   public questionMeta = questionMeta;
-  private _dbVersion = 1;
+  private _dbVersion = 2;
   private isSaving: boolean = false;
   private savedProjectsJson: any = {}
   public activeProject: Project;

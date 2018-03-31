@@ -18,6 +18,8 @@ export class ProjectActions {
     static readonly UPDATE_PROJECT_VALUES = 'UPDATE_PROJECT_VALUES';
     static readonly UPDATE_STAGES_COMPLETE = 'UPDATE_STAGES_COMPLETE';
     static readonly SET_SLIDE_SECTION = 'SET_SLIDE_SECTION';
+    static readonly SET_RELEVANT_RESOURCES = 'SET_RELEVANT_RESOURCES';
+    
     // dev
     static readonly EDIT_TOGGLE = 'EDIT_TOGGLE';
 
@@ -69,6 +71,12 @@ export class ProjectActions {
         type: ProjectActions.SET_SLIDE_SECTION,
         meta: null,
         payload: index
+    })
+    @dispatch()
+    setRelevantResources = (relevant:string) => ({
+        type: ProjectActions.SET_RELEVANT_RESOURCES,
+        meta: null,
+        payload: relevant
     })
 
     // dev

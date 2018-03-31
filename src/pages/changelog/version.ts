@@ -1,4 +1,4 @@
 export default {
-    number: "0.8.2",
-    date: "6th March"
+    number: "0.9.0",
+    date: "29th March"
 }
