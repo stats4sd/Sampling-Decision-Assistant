@@ -19,7 +19,10 @@ import { NgRedux, DevToolsExtension, NgReduxModule } from '@angular-redux/store'
 import { AppState } from '../models/models';
 import { rootReducer, INITIAL_STATE } from '../reducers/reducers';
 import { ProjectActions } from '../actions/actions';
-
+// dev db
+import { AngularFireModule } from 'angularfire2';
+import { firebaseConfig } from '../components/_dev/config';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { ProjectActions } from '../actions/actions';
     }),
     AnimatorModule,
     BrowserAnimationsModule,
-    NgReduxModule
+    NgReduxModule,
+    AngularFireModule.initializeApp(firebaseConfig.firebase),
+    AngularFirestoreModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

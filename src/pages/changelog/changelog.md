@@ -1,6 +1,22 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+## 0.9.0 (29th March 2018)
+
+Various user interface and experience improvements including ability to automatically resume last project, background saving on every change so work shouldn't be lost, clearer question boxes, and optional range-slider style question (currently bugged in chrome). Option to rename reporting levels and sampling stages, and better managing of other data associated with them. A number of other minor bug fixes. 
+
+A backend development live database link to allow content editors to directly make changes to the app (such as writing glossary definitions of Q&As). Once live this will most likely be removed. 
+
+A large rewrite of lots of the backend logic to better manage state changes. What this means in practice is:
+a)  The survey is now smart enough to not only manage what questions have/haven't been answered, but what is applicable/not.
+    This should come in useful for the final export so there are not lots of unnecessary n/a values.
+b)  It's easier to understand exactly where in the app the user is - the url currently shows the general section, but not
+    if the user is in the glossary, resources, or a subsection. Now it's easier to update selected portions of content based
+    on this distinction, as well as do things like open a given set of resources after the help button has been clicked.
+c)  Finding and fixing bugs is easier as a timeline of all changes is generated and can be carefully observed.
+d)  Much improved efficiency on dynamic questions - e.g. automatically calculating standard deviation. Before we had to watch
+    for changes to all question variables in the project as the specific min/max didn't yet exist. Now we can monitor the creation of new variables min/max and then attach an observer to respond when value changes.    
+
 ## 0.8.2 (6th March 2018)
 
 Stages with multiple steps now have breadcrumbs to help navigate where in the subprocess you are.
