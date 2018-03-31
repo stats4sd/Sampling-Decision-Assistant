@@ -16,7 +16,7 @@
         <!-- non-final stage -->
         <div *ngIf="!isFinalStage">
           <ion-item *ngFor="let level of reportingLevels" [class.alreadySelected]="alreadySelected[level]">
-            <ion-label>{{level.name}}</ion-label>
+            <ion-label>{{level}}</ion-label>
             <ion-checkbox (ionChange)="selectedChanged()" [(ngModel)]="selected[level]" [disabled]="alreadySelected[level]"></ion-checkbox>
           </ion-item>
         </div>
@@ -24,7 +24,7 @@
         <!-- final stage -->
         <div *ngIf="isFinalStage">
           <ion-item *ngFor="let level of reportingLevels" [class.alreadySelected]="alreadySelected[level]">
-            <ion-label>{{level.name}}</ion-label>
+            <ion-label>{{level}}</ion-label>
             <ion-checkbox disabled [checked]="finalChecked[level]"></ion-checkbox>
           </ion-item>
         </div>

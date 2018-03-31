@@ -2,7 +2,6 @@
 <p>We now must determine the strategy to select the individual sampling units for each of your sampling stages
 </p>
 <p>Click on each sampling stage below and answer the questions that follow</p>
-<!-- <tree-diagram [nodes]="form.value['q5.2']" style="width:300px; min-height:250px"></tree-diagram> -->
 <ion-grid class="builder-container">
   <ion-row class="row-headers">
     <ion-col col-2>Stage</ion-col>
@@ -30,7 +29,6 @@
       </ion-col>
 
       <!-- Built frame info -->
-
       <!-- Frame -->
       <ion-col col-3 *ngIf="stage._built">
         <div>{{stage.frame=='Yes' ? 'Available' : 'To be built'}}</div>
@@ -47,23 +45,13 @@
 
       <!-- Reporting Levels -->
       <ion-col col-3 *ngIf="stage._built">
-        <div *ngIf="!stage['q5.3.4.2']">
+        <div *ngIf="!stage['q5.3.4.2'] || stage['q5.3.4.2']==''">
           <ion-note>None</ion-note>
         </div>
-        <div *ngIf="stage.reportingLevles">
-          {{stage['q5.3.4.2']}}
+        <div *ngIf="stage['q5.3.4.2']">
+          <div *ngFor="let level of stage['q5.3.4.2']">{{level}}</div>
         </div>
       </ion-col>
-
-      <!-- Stratification -->
-      <!-- <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
-      <div *ngIf="stageControl.value['q5.3.4.2']=='' || stageControl.value['q5.3.4.2']==null">
-        <ion-note>None</ion-note>
-      </div>
-      <div *ngIf="stageControl.value['q5.3.4.2']!=''">
-        {{stageControl.value['q5.3.4.2']}}
-      </div>
-    </ion-col> -->
 
       <!-- Edit button -->
       <div class="edit-button-container" *ngIf="stage._built">
@@ -74,9 +62,6 @@
         </div>
         <div class="edit-button-overlay"></div>
       </div>
-
-
-
     </ion-row>
   </div>
 </ion-grid>

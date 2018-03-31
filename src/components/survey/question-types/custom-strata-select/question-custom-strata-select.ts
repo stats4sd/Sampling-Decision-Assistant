@@ -15,73 +15,78 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
   // customStrata: string[] = []
   // strataInput: string;
   reportingLevels: any[] = []
-  @Input() set preloadValue(v: any[]) {
-    if (v) { this.setSavedValue(v) }
-  }
-  _parentID: string;
-  finalStage: string;
+  // @Input() set preloadValue(v: any[]) {
+  //   if (v) { this.setSavedValue(v) }
+  // }
+  @Input('preloadValue') preloadValue: any[]
+  // _parentID: string;
+  finalSamplingUnit:string;
   isFinalStage: boolean;
-  finalChecked:any={}
-
+  finalChecked: any = {}
 
   ngOnInit() {
     // preload additional data before component rendered. hooks after input() sets so 
     // all need to call after initial set value input
     this.getReportingLevels()
-    this._parentID = this.formGroup.value._parentID
+    this.setSavedValue(this.preloadValue)
+    // this._parentID = this.formGroup.value._parentID
+    this.checkIfFinalStage(this.formGroup.value.name)
     this.checkAlreadySelected()
-    this.checkIfFinalStage(this._parentID)
-    
+    if(this.isFinalStage){this.setFinalStageLevels()}  
   }
+
   getReportingLevels() {
+    // get reporting levels from stage 4, push names into array fo data binding
     let levels = this.formPrvdr.getSurveyValue('reportingLevels')
-    console.log('levels', levels)
     if (levels == "") { levels = [] }
-    this.reportingLevels = levels
+    levels.forEach(level => this.reportingLevels.push(level.name))
+    console.log('reporting levels', this.reportingLevels)
   }
+
   checkAlreadySelected() {
-    // 
+    // iterates over other sampling stages disabling choices that have already been selected (not including fsu)
     let stages: any[] = this.formPrvdr.getSurveyValue('samplingStages')
     for (let stage of stages) {
-      // if (stage._parentID != this._parentID) {
+      if (stage.name != this.formGroup.value.name && stage.name!=this.finalSamplingUnit) {
         let selected = stage['q5.3.4.2']
         if (selected && selected != "") {
-          console.log('selected',selected)
           selected.forEach(val => {
-            this.alreadySelected[val] = true 
+            this.alreadySelected[val] = true
           })
         }
-      // }
-    }
-    console.log('already selected', this.alreadySelected)
-  }
-  checkIfFinalStage(stageName) {
-    // if final stage note and preselect values to be all remaining levels
-    let stages = this.formPrvdr.getSurveyValue('samplingStages')
-    this.finalStage = stages[stages.length - 1]
-    console.log('stage name', stageName, 'final stage', this.finalStage)
-    if (stageName == this.finalStage) {
-      this.isFinalStage = true
-      // automatically indicate any outstanding levels will be selected
-      this.reportingLevels.forEach(level=>{
-        if(!this.alreadySelected[level]){this.finalChecked[level]=true}
-      })
-      console.log('final levels',this.finalChecked)
+      }
     }
   }
 
-  selectedChanged(e, v) {
-    console.log('strata changed', this.selected)
+  checkIfFinalStage(stageName) {
+    // if final stage note and preselect values to be all remaining levels
+    let stages = this.formPrvdr.getSurveyValue('samplingStages')
+    this.finalSamplingUnit = stages[stages.length - 1].name
+    if (stageName == this.finalSamplingUnit) {
+      this.isFinalStage = true
+    }
+  }
+
+  setFinalStageLevels(){
+    // automatically indicate any outstanding levels will be selected and attach to final sampling unit
+    this.selected={}
+    this.reportingLevels.forEach(level => {
+      if (!this.alreadySelected[level]) { 
+        this.finalChecked[level] = true 
+        this.selected[level]=true
+      }
+    })
+    this.selectedChanged()
+  }
+
+  selectedChanged() {
     let selectedArray = []
     for (let key of Object.keys(this.selected)) {
       if (this.selected[key]) { selectedArray.push(key) }
     }
-    console.log('selectedArray', selectedArray)
     // send output emitter to update value
     this.onValueChange.emit(selectedArray)
   }
-
-
 
   saveValue(value) {
     // directly patching to form as emitters not working properly
@@ -92,29 +97,29 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     console.log('formGroup', this.formGroup)
   }
 
-
-  setSavedValue(values: any[]) {
+  setSavedValue(values: any[] = []) {
     // set saved value templates for when loading value from saved
-    console.log('preloading values', values)
+    // sometimes initialised as empty string, ignore
+    if (typeof values == "string") { return }
+    console.log('setting saved values', values)
     values.forEach(value => {
       if (this.reportingLevels.indexOf(value) > -1) {
         this.selected[value] = true
       }
     })
-    if (this.reportingLevels.length == 0) { this.getReportingLevels }
-    // this.selected[value] = true
-    // this.alreadySelected[value] = false
     console.log('selected', this.selected)
-
-    // values.forEach(v => {
-    //   console.log('v', v)
-    //   if (this.reportingLevels.indexOf(v) == -1) {
-    //     this.customStrata.push(v)
-    //   }
-    //   this.selected[v] = true
-    // })
-    // console.log('custom strata', this.customStrata)
   }
+
+  // this.selected[value] = true
+  // this.alreadySelected[value] = false
+  // values.forEach(v => {
+  //   console.log('v', v)
+  //   if (this.reportingLevels.indexOf(v) == -1) {
+  //     this.customStrata.push(v)
+  //   }
+  //   this.selected[v] = true
+  // })
+  // console.log('custom strata', this.customStrata)
 
 
   // addStrata() {
