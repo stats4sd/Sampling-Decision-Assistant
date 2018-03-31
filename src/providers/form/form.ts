@@ -14,9 +14,9 @@ export class FormProvider {
   section: any;
   // track questions to omit from main lists
   repeatChildren: any = []
-  historicValues:any={}
+  historicValues: any = {}
 
-  constructor(private fb: FormBuilder, private events: Events, private projectActions:ProjectActions) {
+  constructor(private fb: FormBuilder, private events: Events, private projectActions: ProjectActions) {
     this.events.subscribe('valueUpdate', update => {
       this._customUpdateTriggers(update)
     })
@@ -26,18 +26,18 @@ export class FormProvider {
   _init() {
     let questions = questionMeta
     //this.formGroup = this._generateQuestionForm(questions)
-    this.formGroup=this.fb.group({})
+    this.formGroup = this.fb.group({})
     // reflect form value changes to redux
     this.formGroup.valueChanges.subscribe(
-      v=>{
+      v => {
         this.projectActions.updateProjectValues(v)
-        if(v){
-          Object.keys(v).forEach(k=>{
+        if (v) {
+          Object.keys(v).forEach(k => {
             let val = v[k]
-            if(val && val!="N/A"){this.historicValues[k]=val}
+            if (val && val != "N/A") { this.historicValues[k] = val }
           })
         }
-        
+
       }
     )
   }
@@ -47,26 +47,27 @@ export class FormProvider {
   }
   getQuestion(controlName) {
     for (let question of this.allQuestions) {
-      if (question.controlName == controlName) { 
-        return question }
+      if (question.controlName == controlName) {
+        return question
+      }
     }
   }
   initFormValues(values, formGroup?: FormGroup) {
-    
+
     //if (!formGroup) { formGroup = this.formGroup }
     // set values, building controls as required ( in simple mode, currently skipping any validators)
-    let patch={}
+    let patch = {}
     Object.keys(values).forEach(key => {
       let val = values[key]
       // load string and number values
-      if(val!=""){
+      if (val != "") {
         // add controls on the fly if they don't exist
-        if(!this.formGroup.controls['key']){
-          this.formGroup.addControl(key,this.fb.control(val))
+        if (!this.formGroup.controls['key']) {
+          this.formGroup.addControl(key, this.fb.control(val))
         }
         patch[key] = val
       }
-      
+
       //  if (typeof (val) == "string" || typeof(val)=="number") { 
       //    patch[key] = val 
       //   }
@@ -99,9 +100,6 @@ export class FormProvider {
     // this.events.publish('form:initComplete')
     return formGroup
   }
-  createFormControl(question:Question ){
-
-  }
 
   _customUpdateTriggers(update) {
     // things that don't fall naturally into template
@@ -130,25 +128,27 @@ export class FormProvider {
     })
     // generate conditions
     questions = questions.map(q => {
-      if (q.condition != "") { return this._generateConditionOptions(q) }
-      else { return q }
+      if (q.condition != "") { q.conditionJson = this._generateConditionOptions(q.condition) }
+      return q
     })
+    console.log('questions', questions)
     questions.forEach(q => {
-      // build templates for any repeat groups
-      if (q.type == "repeat") {
-        // build formgroup sections appropriately
-        let repeatQs = this._generateRepeatQuestions(q)
-        q.repeatQuestions = repeatQs
-        questionGroup[q.controlName] = this.fb.array([])
-      }
-      else {
-        if (!q.value) { q.value = "" }
-        // omit non questions and repeat questions (unless building repeat group)
-        if (q.isQuestion == "TRUE") {
-          if (!q.hasOwnProperty('repeatGroup')) { questionGroup[q.controlName] = q.value }
-          else if (repeatGroup) { questionGroup[q.controlName] = q.value }
-        }
-      }
+      questionGroup[q.controlName] = q.value
+      // build templates for any repeat groups - currently avoiding through custom form builder calls in repeat groups
+      // if (q.type == "repeat") {
+      //   // build formgroup sections appropriately
+      //   let repeatQs = this._generateRepeatQuestions(q)
+      //   q.repeatQuestions = repeatQs
+      //   questionGroup[q.controlName] = this.fb.array([])
+      // }
+      // else {
+        // if (!q.value) { q.value = "" }
+        // // omit non questions and repeat questions (unless building repeat group)
+        // if (q.isQuestion == "TRUE") {
+        //   if (!q.hasOwnProperty('repeatGroup')) { questionGroup[q.controlName] = q.value }
+        //   else if (repeatGroup) { questionGroup[q.controlName] = q.value }
+        // }
+      // }
     });
     return this.fb.group(questionGroup)
   }
@@ -202,11 +202,11 @@ export class FormProvider {
     if (parentID) { repeatGroup.addControl('_parentID', this.fb.control(parentID)) }
     return repeatGroup
   }
-  generateRepeatFormGroup(repeatControlName,parentID?){
+  generateRepeatFormGroup(repeatControlName, parentID?) {
     // method called from outside to generate a repeat formgroup based on control
     let repeatBase = this.getQuestion(repeatControlName)
     let repeatQs = this._generateRepeatQuestions(repeatBase)
-    let repeatFormGroup = this._buildRepeatGroup(repeatQs,parentID)
+    let repeatFormGroup = this._buildRepeatGroup(repeatQs, parentID)
     return repeatFormGroup
   }
 
@@ -215,11 +215,10 @@ export class FormProvider {
     return this.fb.group(template)
   }
 
-  _generateConditionOptions(condition) {
+  _generateConditionOptions(condition: string) {
     // take text condition string and turn into json element for use in show logic function
-    let json:any = {}
-    let propertiesString = condition
-    let propertiesArray = propertiesString.split(',')
+    let json: any = {}
+    let propertiesArray = condition.split(',')
     propertiesArray.forEach(el => {
       let a = el.split(':');
       let key = a[0].trim();

@@ -40,22 +40,24 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     this.reportingLevels = levels
   }
   checkAlreadySelected() {
-    let stages: any[] = this.formPrvdr.getSurveyValue('q5.3')
+    // 
+    let stages: any[] = this.formPrvdr.getSurveyValue('samplingStages')
     for (let stage of stages) {
-      if (stage._parentID != this._parentID) {
+      // if (stage._parentID != this._parentID) {
         let selected = stage['q5.3.4.2']
-        if (selected != "") {
+        if (selected && selected != "") {
+          console.log('selected',selected)
           selected.forEach(val => {
             this.alreadySelected[val] = true 
           })
         }
-      }
+      // }
     }
     console.log('already selected', this.alreadySelected)
   }
   checkIfFinalStage(stageName) {
     // if final stage note and preselect values to be all remaining levels
-    let stages = this.formPrvdr.getSurveyValue('q5.2')
+    let stages = this.formPrvdr.getSurveyValue('samplingStages')
     this.finalStage = stages[stages.length - 1]
     console.log('stage name', stageName, 'final stage', this.finalStage)
     if (stageName == this.finalStage) {

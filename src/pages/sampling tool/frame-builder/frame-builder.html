@@ -11,23 +11,19 @@
 <ion-content padding>
   <p>You said you need a stage where you sample
     <strong>{{stageName}}</strong>. This section will help you to make decisions about how to select the sampling units</p>
-  <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.1']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+  <survey-question controlName="q5.3.1" [formGroup]="stageFormGroup"></survey-question>
   <div>Note: this list will be the sampling frame for this stage</div>
-  <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.2']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+  <survey-question controlName="q5.3.2" [formGroup]="stageFormGroup"></survey-question>
 
   <note type="dev" *ngIf="stageFormGroup.value['q5.3.2']=='No - highlight the disadvantages and suggest ways of updating it'"><strong>Incomplete list</strong> - 
   Here will include some information and advice on how to handle incomplete or outdated lists</note>
 
-  <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.3']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
+  <survey-question controlName="q5.3.3" [formGroup]="stageFormGroup"></survey-question>
 
   <note type="dev" *ngIf="stageFormGroup.value['q5.3.1']=='No'"><strong>Building a list</strong> - More questions will follow here to help users determine a strategy for the building a suitable sampling
     frame, such as through the use of key informants or area-based sampling</note>
 
-    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.3']" [repeatIndex]="stageRepeatIndex"></survey-question-group>
-
-  <!-- <note type="dev" *ngIf="stageFormGroup.value['q5.3.3']=='Sample'"><strong>Stratification</strong> - Some explanation will be written about what it is with pointers to resources and the reasons why stratification
-    is used (reporting and efficiency) create some space for the explanation. Remember that when using stratification the
-    process of sampling is repeated independently within each stratum</note> -->
+    <survey-question controlName="q5.3.4.3" [formGroup]="stageFormGroup"></survey-question> 
 
   <div *ngIf="stageFormGroup.value['q5.3.3']=='All'">
     <p>
@@ -36,12 +32,18 @@
       scheme. </p>
     
   </div>
+ 
 
   <!-- Reporting domains select (question-custom-strata-select)  -->
   <div *ngIf="stageFormGroup.value['q5.3.3']!='' || stageFormGroup.value['q5.3.1']=='No'">
-    <survey-question-group [filter]="['q5.3']" [repeatFilter]="['q5.3.4.2']" [repeatIndex]="stageRepeatIndex" [showLabel]="false"></survey-question-group>
+    <survey-question controlName="q5.3.4.2" [formGroup]="stageFormGroup" [showLabel]="false"></survey-question>  
 
   </div>
 
 
 </ion-content>
+
+
+  <!-- <note type="dev" *ngIf="stageFormGroup.value['q5.3.3']=='Sample'"><strong>Stratification</strong> - Some explanation will be written about what it is with pointers to resources and the reasons why stratification
+    is used (reporting and efficiency) create some space for the explanation. Remember that when using stratification the
+    process of sampling is repeated independently within each stratum</note> -->

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage,  NavParams, ViewController } from 'ionic-angular';
 import { DataProvider} from '../../../providers/data/data'
 import { FormProvider} from '../../../providers/form/form'
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @IonicPage({
   segment: 'builder',
@@ -16,18 +16,75 @@ export class FrameBuilderPage {
   stageName:string;
   stageRepeatIndex:number;
 
+  /*
+  this page handles the view of the repeat stage form builder and bindings to the correct element in the master form group.
+  note, this binding could be handled in more generic way through repeat arrays and the repeat-group element (like how question
+  creates dynamic controls on request) however it doesn't seem too necessary at this stage to generalise.
+  */
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataPrvdr:DataProvider, private formPrvdr:FormProvider) {
-    console.log('framebuilder params',navParams)
-    this.stageFormGroup=navParams.data.stageFormGroup
-    this.stageName=this.stageFormGroup.value._parentID 
+    console.log('framebuilder params',navParams.data)
+    // this.stageFormGroup=navParams.data.stageFormGroup
+    // this.stageName=this.stageFormGroup.value._parentID 
     this.stageRepeatIndex=navParams.data.stageIndex
-    console.log('stage values',this.stageFormGroup.value)
-    console.log('stageName',this.stageName)
+    // console.log('stage values',this.stageFormGroup.value)
+    // console.log('stageName',this.stageName)
+    this._buildFormGroup()
+  }
+
+  ngOnInit(){
+    this._preloadValues()
+    this._addValueSubscribers()
+  }
+
+  _buildFormGroup(){
+    // generate a new formgroup which will be used to hold information saved in these questions
+    let builderQuestions = this.formPrvdr.allQuestions.filter(q=>{
+      return q.repeatGroup=="q5.3"
+    })
+    let builderForm = this.formPrvdr._generateQuestionForm(builderQuestions)
+    this.stageFormGroup = builderForm
+    console.log('builder form',builderForm)
+  }
+
+  _preloadValues(){
+    let currentValue = this.formPrvdr.formGroup.value.samplingStages[this.stageRepeatIndex]
+    console.log('current value',currentValue)
+    Object.keys(currentValue).forEach(k=>{
+      // build additional controls for thing like name and built status which aren't included in questions
+      if(!this.stageFormGroup.controls[k]){
+        this.stageFormGroup.addControl(k,new FormControl())
+      }
+    })
+    this.stageFormGroup.patchValue(currentValue)
+    console.log('stage form group',this.stageFormGroup)
+  }
+
+  _addValueSubscribers(){
+    // listen to changes on this formgroup and reflect on master
+    console.log('master form',this.formPrvdr.formGroup)
+    this.stageFormGroup.valueChanges.subscribe(
+      v=>{if(v){this._patchValue(v)}}
+    )
+  }
+
+  _patchValue(update:any){
+    // update value on master group
+    console.log('patching value',update)
+    let currentValue = this.formPrvdr.formGroup.value.samplingStages
+    Object.keys(update).forEach(k => {
+      currentValue[this.stageRepeatIndex][k]=update[k]
+    });
+    console.log('value',currentValue)
+    this.formPrvdr.formGroup.patchValue({samplingStages:currentValue})
   }
 
   dismiss(){
     console.log('dismissing')
+    if(this.stageFormGroup.value['q5.3.1']){
+      this._patchValue({_built:true})
+    }
+    
     this.dataPrvdr.backgroundSave()
     this.viewCtrl.dismiss()
   }

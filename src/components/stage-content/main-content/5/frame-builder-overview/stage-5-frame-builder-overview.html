@@ -12,17 +12,17 @@
     <ion-col col-3>Reporting Level</ion-col>
     <!-- <ion-col col-2>Stratification</ion-col> -->
   </ion-row>
-  <div *ngIf="form.controls['q5.3']">
-    <ion-row *ngFor="let stageControl of form.controls['q5.3'].controls; let i=index; let last=last">
+  <div *ngIf="form.value.samplingStages">
+    <ion-row *ngFor="let stage of form.value.samplingStages; let i=index; let last=last">
 
       <ion-col col-2>{{i+1}}</ion-col>
 
       <ion-col col-2 class="stage-name">
-        <div>{{stageControl.value._parentID}}</div>
+        <div>{{stage.name}}</div>
       </ion-col>
 
       <!-- build frame button -->
-      <ion-col class="cell build-stage hover" (click)="buildStage(stageControl,i)" *ngIf="stageControl.value['q5.3.1']==''">
+      <ion-col class="cell build-stage hover" (click)="buildStage(stage,i)" *ngIf="!stage._built">
         <div icon-right>
           Make sampling decisions for stage
           <ion-icon name="arrow-forward"></ion-icon>
@@ -32,26 +32,26 @@
       <!-- Built frame info -->
 
       <!-- Frame -->
-      <ion-col col-3 *ngIf="stageControl.value['q5.3.1']!=''">
-        <div>{{stageControl.value['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</div>
+      <ion-col col-3 *ngIf="stage._built">
+        <div>{{stage.frame=='Yes' ? 'Available' : 'To be built'}}</div>
       </ion-col>
 
       <!-- Units -->
-      <ion-col col-2 *ngIf="stageControl.value['q5.3.1']!=''">
-        <div *ngIf="stageControl.value['q5.3.3']=='All'">
+      <ion-col col-2 *ngIf="stage._built">
+        <div *ngIf="stage['q5.3.3']=='All'">
           <div>All Units</div>
           <!-- <div class="sample-size">(n={{stageControl.value['q5.3.3.1']}})</div> -->
         </div>
-        <div *ngIf="stageControl.value['q5.3.3']=='Sample'">Sample</div>
+        <div *ngIf="stage['q5.3.3']=='Sample'">Sample</div>
       </ion-col>
 
       <!-- Reporting Levels -->
-      <ion-col col-3 *ngIf="stageControl.value['q5.3.1']!=''">
-        <div *ngIf="stageControl.value['q5.3.4.2']=='' || stageControl.value['q5.3.4.2']==null">
+      <ion-col col-3 *ngIf="stage._built">
+        <div *ngIf="!stage['q5.3.4.2']">
           <ion-note>None</ion-note>
         </div>
-        <div *ngIf="stageControl.value['q5.3.4.2']!=''">
-          {{stageControl.value['q5.3.4.2']}}
+        <div *ngIf="stage.reportingLevles">
+          {{stage['q5.3.4.2']}}
         </div>
       </ion-col>
 
@@ -66,8 +66,8 @@
     </ion-col> -->
 
       <!-- Edit button -->
-      <div class="edit-button-container" *ngIf="stageControl.value['q5.3.1']!=''">
-        <div class="edit-button" *ngIf="stageControl.value['q5.3.1']!=''" (click)="buildStage(stageControl,i)">
+      <div class="edit-button-container" *ngIf="stage._built">
+        <div class="edit-button" (click)="buildStage(stageControl,i)">
           <button ion-button icon-left clear>
             <ion-icon name="create"></ion-icon>Edit
           </button>
