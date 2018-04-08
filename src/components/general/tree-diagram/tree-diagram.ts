@@ -3,6 +3,7 @@ import options from './options'
 import { FormProvider } from '../../../providers/form/form';
 import { FormGroup } from '@angular/forms';
 import { Events } from 'ionic-angular';
+import { reportingLevel } from '../../../models/models';
 
 declare let vis: any
 // import * as vis from 'vis'
@@ -22,29 +23,29 @@ export class TreeDiagramComponent {
   @Input('showInputNodes') showInputNodes: boolean
   @ViewChild('treeContainer') treeContainer: ElementRef
 
-  constructor(formPrvdr: FormProvider, private events: Events) {
-    this.form = formPrvdr.formGroup
+  constructor(private formPrvdr: FormProvider, private events: Events) {
+    
     this.events.unsubscribe('form:initComplete')
     this.events.subscribe('form:initComplete', _ => this.prepareStages(this.form.value))
   }
 
   ngOnInit() {
+    this.form = this.formPrvdr.formGroup
     this.prepareStages(this.form.value)
-    console.log('show input nodes?', this.showInputNodes)
   }
 
 
 
-  prepareStages(formValue) {
+  prepareStages(formValue:any={}) {
     // iterate through multi stage list and build nodes for diagram as appropriate
     // uses first and second number to add additional meta node for each stage
-    if (this.form && this.form.value['q5.3'] && this.form.value['q5.3'].length > 0) {
-      console.log('preparing stages', formValue['q5.3'])
+    if (formValue.samplingStages && formValue.samplingStages.length > 0) {
+      console.log('preparing stages', formValue.samplingStages)
       this.stages = {}
       this.nodes = []
       let allocatedLevels = []
       let tierIndex = 1
-      formValue['q5.3'].forEach((stage, i) => {
+      formValue.samplingStages.forEach((stage, i) => {
         console.log('stage', i, stage)
         //let nodeIndex: number = i + 1
         // seperate cases depend on whether an additional input/meta node will be shown after each node
@@ -54,20 +55,20 @@ export class TreeDiagramComponent {
         this.nodeCount = 1
         let stageNodes = []
         // add placeholder reporting levels to the final stage
-        let isFinalStage: boolean = (formValue['q5.3'].length - 1 == i)
+        let isFinalStage: boolean = (formValue.samplingStages.length - 1 == i)
         if (isFinalStage) { stage['q5.3.4.2'] = '_final' }
-        // 
-        if (!stage['q5.3.4.2'] || stage['q5.3.4.2'] == '') {
-          this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle)]
+        // no reporting levels
+        if (!stage['q5.3.4.2'] || stage['q5.3.4.2'].length==0) {
+          this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, null, null, options.stageTitle)]
         }
         // - reporting level
         else {
           // title node
-          this.stages[tierIndex] = [this._createNode(tierIndex, stage._parentID, null, null, options.stageTitle, true)]
+          this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, null, null, options.stageTitle, true)]
           tierIndex++
           // track allocated stages and add final stage levels
           try {
-            let allReportingLevels = JSON.parse(this.form.value.strata)
+            let allReportingLevels = formValue.reportingLevels
             if (stage['q5.3.4.2'] == "_final") { stage['q5.3.4.2'] = this._addFinalStageLevels(allReportingLevels, allocatedLevels) }
             stage['q5.3.4.2'].forEach(level => allocatedLevels.push(level))
             // build nodes (and combinations if multiple)            
@@ -79,7 +80,6 @@ export class TreeDiagramComponent {
               }
             }
           } catch (error) {
-            console.log('error', error)
             stageNodes.push(this._createNode((tierIndex), 'reporting level not defined'))
           }
 
@@ -98,29 +98,39 @@ export class TreeDiagramComponent {
       this.buildNodeTree(this.nodes)
     }
   }
-  _addFinalStageLevels(allReportingLevels, allocatedLevels) {
+  _addFinalStageLevels(allReportingLevels:reportingLevel[], allocatedLevels:string[]) {
     // add any unallocated reporting levels to final stage
-    console.log('adding finalStageLevels', allReportingLevels, allocatedLevels)
     let levels = []
-    Object.keys(allReportingLevels).forEach(level => {
-      if (allocatedLevels.indexOf(level) == -1) { levels.push(level) }
+    allReportingLevels.forEach(level => {
+      if (allocatedLevels.indexOf(level.name) == -1) { levels.push(level.name) }
     })
-    console.log('final stage levels', levels)
     return levels
   }
-  _buildCombinations(allReportingLevels, groups, arrays?) {
+
+  _buildCombinations(allReportingLevels:reportingLevel[], groups:string[], arrays?) {
     // takes a list of group names and creates a list of all combinations on their category names
+    // e.g if group 1 (gender) has male/female, and group 2 (age) has old/young, want 4 combinations
+    // [[male,old], [male,young], [female,old], [female,young]]
     if (!arrays) {
+      // first step is to simply build a list of all the category names that will be used
+      // e.g. [male,female],[old,young]
       // build list of category name arrays
       let arrs = []
-      // reshape groups to correct format
-      groups.forEach((group, i) => {
-        arrs[i] = []
-        allReportingLevels[group].names.forEach(el => arrs[i].push(el.label))
+      // reshape groups to correct form array of arrays
+      let i = 0
+      allReportingLevels.forEach((level)=>{
+        if(groups.indexOf(level.name)>-1){
+          arrs[i]=[]
+          level.classifications.names.forEach(name=>{
+            arrs[i].push(name)
+          })
+          i++
+        }
       })
+      // once complete pass back into function to run again
       return this._buildCombinations(allReportingLevels, groups, arrs)
     }
-
+    // on subsequent passes we combine all combinations of the first 2 arrays, remove the first and repeat until only one set remains
     else {
       let combinations = []
       if (arrays[1]) {
@@ -136,15 +146,11 @@ export class TreeDiagramComponent {
       else {
         // final list
         combinations = arrays[0]
-        //combinations = arrays[0].forEach(el => { combinations.push(el.split('||')) })
         return combinations
-        //this.levelCombinations = combinations
       }
-
     }
-
-
   }
+
   addLabelNodes() {
     console.log('nodes', this.nodes)
     // need to add extra nodes so before start of district there's a stage 'district' which will be simple text node
@@ -227,6 +233,7 @@ export class TreeDiagramComponent {
   }
 
   _createNode(stage: number, label: string, n?: number, reportingLevelGroup?: string, nodeOptions?: any, titleNode?: boolean) {
+    console.log('creating node',stage,label)
     const node = {
       id: stage + '_' + this.nodeCount,
       index: this.nodeCount,

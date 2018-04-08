@@ -30,11 +30,11 @@ export class SampleSizeCalculatorPage {
       v["Type of Variable"]="Number"
       v["Standard Deviation"] = val["q2.2.2"]      
     }
-    v["Desired Margin of Error"] = val['q2.4'];
+    // v["Desired Margin of Error"] = val['q2.4'];
     //v["Desired Confidence Level"]=val[''];
     //v["Clustering Level"]=val[''];
     //v["Number of Samples per PSU"]=val[''];
-    v["Number of Sampling Stages"] = val['q5.2'].length;
+    v["Number of Sampling Stages"] = val.samplingStages.length;
     //v["Expected Population Size"]=val[''];
     //v["Expected Population Size"]=val[''];
 

@@ -97,7 +97,8 @@ export class FormProvider {
     })
     // patch all values
     this.formGroup.patchValue(patch)
-    // this.events.publish('form:initComplete')
+    // publish event for listener in tree diagram component
+    this.events.publish('form:initComplete')
     return formGroup
   }
 

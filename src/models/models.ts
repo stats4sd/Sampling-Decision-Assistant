@@ -36,3 +36,13 @@ export interface Question {
     conditionJson?:any
     
 }
+
+export interface reportingLevel{
+    name:string,
+    classifications:reportingLevelClassification
+}
+
+export interface reportingLevelClassification{
+    names:string[],
+    total:string
+}

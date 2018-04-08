@@ -47,8 +47,9 @@
       <div class="section-break">Review and Export</div>
       <p class="instruction" icon-left>
         <ion-icon name="information-circle"></ion-icon>Review the decisions you have made and make revisions before final export</p>
-      <div class="review-box" (click)="pushPage('ReviewPage')" style="position: relative; pointer-events:none; opacity:0.6">
-        <div class="section-disabled"><p style="width:100%; font-weight:bold">This section is not currently available for preview</p></div>
+      <!-- <div class="review-box" (click)="pushPage('ReviewPage')" style="position: relative; pointer-events:none; opacity:0.6">
+        <div class="section-disabled"><p style="width:100%; font-weight:bold">This section is not currently available for preview</p></div> -->
+      <div class="review-box" (click)="pushPage('ReviewPage')">
         <div style="max-width:600px; display:flex; ">
           <ion-card class="review-card">
             <span>Review</span>
@@ -64,17 +65,7 @@
             <span>Export</span>
           </ion-card>
         </div>
-
-
-
       </div>
-
     </div>
-
-
-
-
   </div>
-
-
 </ion-content>
