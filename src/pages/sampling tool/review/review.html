@@ -22,9 +22,10 @@
           <div>
             <div *ngFor="let group of questionGroups">
               <div class="heading">
-                {{group}}
+                {{group.section}}
               </div>
-              <survey-question-group [section]="group" [showLabel]=true></survey-question-group>
+              <survey-question *ngFor="let question of group.questions" [question]="question"></survey-question>
+              <!-- <survey-question-group [section]="group" [showLabel]=true></survey-question-group> -->
             </div>
           </div>
         </div>

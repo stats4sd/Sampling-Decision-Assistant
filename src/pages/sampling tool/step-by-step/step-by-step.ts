@@ -31,6 +31,7 @@ export class StepByStepPage {
   ) {
 
     this.sections = [
+      // add class:disabled to disable a button
       { name: "General objectives", icon: "assets/img/icons/objectives.svg", stage: 1 },
       { name: "Indicators", icon: "assets/img/icons/indicators.svg", stage: 2 },
       { name: "Definition of the target population and units of study", icon: "assets/img/icons/population.svg", stage: 3 },

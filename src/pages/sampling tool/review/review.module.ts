@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ReviewPage } from './review';
 import {GeneralComponentsModule} from '../../../components/general/generalComponents.module'
+import { SurveyComponentsModule } from '../../../components/survey/survey-components.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import {GeneralComponentsModule} from '../../../components/general/generalCompon
   ],
   imports: [
     IonicPageModule.forChild(ReviewPage),
-    GeneralComponentsModule
+    GeneralComponentsModule,
+    SurveyComponentsModule
   ],
 })
 export class ReviewPageModule {}

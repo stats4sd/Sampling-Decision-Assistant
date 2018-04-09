@@ -18,6 +18,7 @@ export class ReviewPage {
 
   constructor(private modalCtrl: ModalController, private dataPrvdr:DataProvider) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
+    console.log('generating question groups')
     this._generateQuestionGroups()
   }
   
@@ -26,10 +27,16 @@ export class ReviewPage {
     let groups = {}
     this.dataPrvdr.questionMeta.forEach(q=>{
       if(!groups[q.section]){groups[q.section]={
-        section:q.section
+        section:q.section,
+        questions:[]
       }}
+      groups[q.section].questions.push(q)
     })
-    this.questionGroups= Object.keys(groups)
+    console.log('groups',groups)
+    Object.keys(groups).forEach(k=>{
+      const val = groups[k]
+      this.questionGroups.push(val)
+    })
     console.log('question groups',this.questionGroups)
   }
 

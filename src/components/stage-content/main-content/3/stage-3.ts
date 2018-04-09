@@ -56,4 +56,29 @@ export class Stage3Component extends StagePage {
 
   }
 
+  // _generateSamplingUnit() {
+  //   let v = this.form.value
+  //   let text = v['q3.1']
+  //   if (v['q3.2']) {
+  //     text = text + " located in " + v['q3.2']
+  //   }
+  //   if (this.form.value['q3.3']) {
+  //     text = text + " during " + v['q3.3']
+  //   }
+  //   if (this.form.value['q3.4']) {
+  //     text = text + " and " + v['q3.4']
+  //   }
+  //   if (text != this.form.value['q3.5']) {
+  //     let patch = {}
+  //     patch['q3.5'] = text
+  //     console.log('patching', patch)
+  //     // patch only works if exists so also provide option to add control
+  //     if (!this.form.value['q3.5']) {
+  //       this.form.addControl('q3.5', new FormControl())
+  //       this.form.patchValue(patch)
+  //       console.log('form', this.form)
+  //       this.dataPrvdr.backgroundSave()
+  //     }
+  //   }
+  // }
 }
