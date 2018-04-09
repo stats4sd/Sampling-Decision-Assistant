@@ -1,6 +1,6 @@
 <div class="slide-content">
-   <!-- intro -->
-   <stage-intro [stage]="1"></stage-intro>
+  <!-- intro -->
+  <stage-intro [stage]="1"></stage-intro>
   <h2>Introduction</h2>
   <p>To design a sampling process, you should first have a clear idea of your main objective. This is, your overall aim for
     the activity that you are doing sampling for.</p>
@@ -57,11 +57,12 @@
   <!-- not relevant responses from 1.1 or 1.2 -->
   <!-- <p *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
   </p> -->
-  <p *ngIf="form.value['q1.2']=='Non-representative'">
-    <note type="dev">
-      Information will go here explaining main uses of tool directed towards representative samples, but elements that may still
-      be relevant and links to more information
-    </note>
+  <p *ngIf="form.value['q1.2']=='Non-representative'" class="warning-box">
+    This tool does not provide support for sampling designs for non-representative samples. You should be aware about the issues
+    of biases and the difficulties for making inferences from the sample to the general population, that emerge from studies
+    that are based on non-representative samples. <br>
+    A good introduction to when non-representative samples may be useful can
+    be found in <br><i>“Research Methods in Anthropology: Qualitative and Quantitative Approaches” </i>  by Harvey Russell Bernard.
     <!-- <span class="incomplete">Text to go here responding to measure impact</span> -->
   </p>
 

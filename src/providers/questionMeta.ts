@@ -113,11 +113,16 @@ export default
                 min: 5
             }
         },
-        
+
 
         // section 3
         {
-            "isQuestion": "TRUE", "controlName": "q3.1", "type": "select", "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)", "label": "Who are you interested in? In other words, who should the data come from to be able to calculate the indicator of interest? We will refer to this as the sampling units. In particular, think about what unit the measurements refer to. Is it a household? Or a person? Or a community?", "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null
+            "isQuestion": "TRUE",
+            "controlName": "q3.1",
+            "type": "select",
+            "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)",
+            "label": "Who are you interested in? In other words, who or where should the data come from to be able to calculate the indicator of interest? We will refer to this as the final sampling units. Are they households? Or an individual person?  A community? This definition is important because the sampling is going to have to eventually reach them.",
+            "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null
         },
         {
             "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Geographical characteristics (e.g. area, setting, distance, composite)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
@@ -313,7 +318,7 @@ export default
         //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
         //     "labelMultiple": null
         // },
-        
+
         // {
         //     "isQuestion": "TRUE",
         //     "controlName": "q5.3.2",
