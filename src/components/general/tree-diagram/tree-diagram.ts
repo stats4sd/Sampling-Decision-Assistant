@@ -30,7 +30,6 @@ export class TreeDiagramComponent {
 
   ngOnInit() {
     this.prepareStages(this.form.value)
-    console.log('show input nodes?', this.showInputNodes)
   }
 
 

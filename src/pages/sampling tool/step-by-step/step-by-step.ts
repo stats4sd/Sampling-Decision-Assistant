@@ -36,8 +36,9 @@ export class StepByStepPage {
       { name: "Definition of the target population and units of study", icon: "assets/img/icons/population.svg", stage: 3 },
       { name: "At what level do you need to report these results", icon: "assets/img/icons/reporting.svg", stage: 4 },
       { name: "Selecting the sampling units", icon: "assets/img/icons/outreach.svg", stage: 5 },
-      { name: "Allocating and deploying resources", icon: "assets/img/icons/allocate.svg", stage: 6, class:"disabled" },
+      { name: "Allocating and deploying resources", icon: "assets/img/icons/allocate.svg", stage: 6 },
     ]
+    //       { name: "Allocating and deploying resources", icon: "assets/img/icons/allocate.svg", stage: 6, class:"disabled" },
     // this.events.subscribe('project:loaded', data => this.showIntro = false)
     if (this.navParams.data == "tutorialMode") { this.showIntro = true }
     this.activeProject$.subscribe(p => {

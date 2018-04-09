@@ -26,11 +26,11 @@
   <div *ngIf="view=='load'">
     <h3>Load saved project</h3>
     <ion-list>
-      <ion-item *ngFor="let survey of savedArray">
+      <ion-item *ngFor="let project of savedProjects$ | async">
         <div style="display: flex">
-          <div style="flex:1; cursor:pointer" (click)="loadProject(survey)">
-            <div class="survey-title">{{survey.title}}</div>
-            <div class="survey-date">{{survey.created | date}}</div>
+          <div style="flex:1; cursor:pointer" (click)="loadProject(project)">
+            <div class="survey-title">{{project.title? project.title : 'untitiled'}}</div>
+            <div class="survey-date">{{project.created | date}}</div>
           </div>
           <div style="margin:5px">
             <button ion-button icon-only clear (click)="deleteSurvey(survey)">

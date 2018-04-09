@@ -1,12 +1,22 @@
 <div>
     <strong>For internal use only</strong>
-    <button style="float:right" ion-button (click)="save()">Save Changes</button>
+    <button style="float:right" ion-button (click)="save()" [disabled]="status=='pending'">Save and Close</button>
 </div>
 
 
-<div *ngFor="let question of liveQuestions">
-    <div>{{question.$key}}</div>
-    <textarea style="width:100%; padding:5px" [(ngModel)]="question.q"></textarea>
+<div *ngFor="let question of liveQuestions; let i=index" style="margin-top:30px">
+    <div style="display: flex; align-items:center">
+        <div style="margin-right:5px">{{question._key}}</div>
+        <textarea style="width:100%; padding:5px" [(ngModel)]="question.q"></textarea>
+    </div>
     <ngx-wig [(ngModel)]="question.a"></ngx-wig>
-   
+    <button ion-button (click)="deleteQuestion(i)" icon-left color="delete" outline>
+        <ion-icon name="trash"></ion-icon>Delete
+    </button>
+
+
 </div>
+<button ion-button style="margin:20px 0 10px 0" block icon-left (click)="addQuestion()">
+    <ion-icon name="add"></ion-icon>Add Question</button>
+<button style="float:right" ion-button (click)="save()" [disabled]="status=='pending'">Save and Close</button>
+<div style="margin-bottom:100px"></div>

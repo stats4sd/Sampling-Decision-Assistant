@@ -31,14 +31,14 @@ export class StagePage {
   @select(['activeProject','values']) readonly formValues$: Observable<any>;
   // dev
   @select('editMode') editMode$:Observable<boolean>
+  // editMode tracks whether content editor open, review mode tracks nav from stage 5 overview page
+  // and replaces next stage link with return
   editMode:boolean
-
   activeSection: string = "Main";
 
   activeGlossaryTerm: string;
   glossaryTerms = [];
   glossarySlug: string;
-  modalMode: Boolean;
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   refreshSlides: boolean;
@@ -67,7 +67,6 @@ export class StagePage {
   }
   stageInit(navParams) {
     let stageID = navParams.data.stageID
-    this.modalMode = navParams.data.modalMode
     this.stages = {
       "stage-1": { name: "General objectives", title: "General Objectives", icon: "assets/img/icons/objectives.svg", number: 1 },
       "stage-2": { name: "Indicators", title: "Indicators", icon: "assets/img/icons/indicators.svg", number: 2 },

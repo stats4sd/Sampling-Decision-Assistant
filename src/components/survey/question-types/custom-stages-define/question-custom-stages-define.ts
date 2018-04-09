@@ -68,6 +68,7 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
 
   _init(fsu?) {
     let values = this.formPrvdr.formGroup.value
+    console.log('values',values)
     if (!fsu) { fsu = 'Final Sampling Unit' }
     let stages = values.samplingStages.slice(0)
     // build group template if doesn't exist

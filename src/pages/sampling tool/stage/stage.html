@@ -2,8 +2,8 @@
   <ion-navbar #navbar color="primary">
     <ion-title>{{stage.title}}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-left (click)="closeModal()" *ngIf="modalMode">
-        <ion-icon name="checkmark"></ion-icon>Close</button>
+      <!-- <button ion-button icon-left (click)="goBack()" *ngIf="reviewMode">
+        <ion-icon name="checkmark"></ion-icon>Close</button> -->
 
         <dev-editor-toggle *ngIf="activeSection=='Resources'"></dev-editor-toggle>
         <!-- *** PUT BACK IN *** -->

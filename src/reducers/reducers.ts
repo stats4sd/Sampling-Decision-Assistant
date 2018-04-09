@@ -8,7 +8,8 @@ export const INITIAL_STATE: Models.AppState = {
     savedProjects: null,
     editMode: false,
     slideSection: -1,
-    relevantResources: null
+    relevantResources: null,
+    // reviewMode:false
 };
 
 export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Action) {
@@ -53,6 +54,10 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
         case Actions.ProjectActions.SET_RELEVANT_RESOURCES:
             const relevant = action as Actions.UpdateProjectAction
             return Object.assign({}, state, { relevantResources: relevant.payload })
+
+        // case Actions.ProjectActions.REVIEW_TOGGLE:
+        //     const review = action as Actions.UpdateProjectAction
+        //     return Object.assign({}, state, { reviewMode: review.payload })
 
         case Actions.ProjectActions.EDIT_TOGGLE:
             const edit = action as Actions.UpdateProjectAction

@@ -3,6 +3,9 @@ import { IonicPage, ViewController, NavParams, Events, AlertController } from 'i
 import { DataProvider } from '../../../providers/data/data';
 import { FileDropModule, UploadFile, UploadEvent } from 'ngx-file-drop';
 import { read } from 'xlsx/types';
+import {select} from '@angular-redux/store'
+import {Observable} from 'rxjs/Observable'
+import { Project } from '../../../models/models';
 
 @IonicPage()
 @Component({
@@ -10,6 +13,7 @@ import { read } from 'xlsx/types';
   templateUrl: 'saved-info.html',
 })
 export class SavedInfoPage {
+  @select('savedProjects') savedProjects$:Observable<Project[]>
   saveName: string;
   view: string;
   savedSurveys: any;
@@ -24,8 +28,8 @@ export class SavedInfoPage {
     public alertCtrl:AlertController
   ) {
     this.view = this.navParams.data.view;
-    // this.loadSavedProjects()
-    alert('page temporarily disabled')
+    //this.loadSavedProjects()
+    //alert('page temporarily disabled')
   }
 
   ionViewDidLoad() {
@@ -44,9 +48,10 @@ export class SavedInfoPage {
   dismiss() {
     this.viewCtrl.dismiss()
   }
-  loadProject(survey) {
-    this.dataPrvdr.loadProject(survey);
-    this.viewCtrl.dismiss(survey);
+  loadProject(project:Project) {
+    console.log('loading project',project)
+    this.dataPrvdr.loadProject(project);
+    this.viewCtrl.dismiss();
   }
   // deleteSurvey(survey) {
   //   this.dataPrvdr.deleteSurvey(survey.title).then(
