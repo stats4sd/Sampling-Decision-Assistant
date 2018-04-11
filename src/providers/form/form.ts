@@ -30,8 +30,8 @@ export class FormProvider {
     // reflect form value changes to redux
     this.formGroup.valueChanges.subscribe(
       v => {
-        this.projectActions.updateProjectValues(v)
         if (v) {
+          this.projectActions.updateProjectValues(v)
           Object.keys(v).forEach(k => {
             let val = v[k]
             if (val && val != "N/A") { this.historicValues[k] = val }

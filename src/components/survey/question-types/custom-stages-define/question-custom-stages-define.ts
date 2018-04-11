@@ -67,21 +67,30 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
   }
 
   _init(fsu?) {
+
     let values = this.formPrvdr.formGroup.value
-    console.log('values',values)
     if (!fsu) { fsu = 'Final Sampling Unit' }
-    let stages = values.samplingStages.slice(0)
-    // build group template if doesn't exist
-    if (!stages) {
+    let stages
+    // build group template if doesn't exist or undefined
+    if (!values.samplingStages) {
+      console.log('adding custom stages form control')
       this.formPrvdr.formGroup.addControl('samplingStages', new FormControl([{ name: fsu }]))
       stages = [{ name: fsu }]
     }
-    // otherwise ensure final sampling unit named correctly
+
     else {
+      console.log('copying sampling stages', values.samplingStages)
+      // otherwise ensure final sampling unit named correctly
+      try {
+        stages = values.samplingStages.slice(0)
+      } catch (error) {
+        console.error('error', error)
+      }
       if (stages.length > 0) {
         stages[stages.length - 1].name = fsu
       }
       else { stages = [{ name: fsu }] }
+      console.log('stages', stages)
     }
     this.stages = stages
     this.finalSamplingUnit = fsu
@@ -97,10 +106,14 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
     let patch: any = {}
     patch.samplingStages = this.stages
     // patch only works if exists so also provide option to add control
+    console.log('patching form', patch)
+    console.log('sampling stages',form.value.samplingStages)
     if (!form.value.samplingStages) {
-      form.addControl('samplingStages', new FormControl(this.stages))
+      console.log('adding sampling stages form control')
+      form.addControl('samplingStages', new FormControl())
     }
-    else { form.patchValue(patch) }
+    form.patchValue(patch)
+    console.log('form',form)
   }
 
   addSamplingStage(name?) {

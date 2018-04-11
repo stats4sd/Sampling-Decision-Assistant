@@ -1,6 +1,14 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+## 0.9.2 (9th April 2018)
+Stage 6 rebuild and fixes
+Save/Load fixes
+
+## 0.9.1 (5th April 2018)
+Stage 5 rebuild and fixes
+More editor features
+
 ## 0.9.0 (29th March 2018)
 
 Various user interface and experience improvements including ability to automatically resume last project, background saving on every change so work shouldn't be lost, clearer question boxes, and optional range-slider style question (currently bugged in chrome). Option to rename reporting levels and sampling stages, and better managing of other data associated with them. A number of other minor bug fixes. 
