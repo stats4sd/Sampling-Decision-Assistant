@@ -30,10 +30,10 @@ export class StagePage {
   @ViewChild('stageSlides') stageSlides: Slides;
   @select(['activeProject','values']) readonly formValues$: Observable<any>;
   // dev
-  @select('editMode') editMode$:Observable<boolean>
+  // @select('editMode') editMode$:Observable<boolean>
   // editMode tracks whether content editor open, review mode tracks nav from stage 5 overview page
   // and replaces next stage link with return
-  editMode:boolean
+  // editMode:boolean
   activeSection: string = "Main";
 
   activeGlossaryTerm: string;
@@ -58,7 +58,7 @@ export class StagePage {
     public projectActions:ProjectActions,
     public ngRedux: NgRedux<AppState>
   ) {
-    this.editMode$.subscribe(mode=>this.editMode=mode)
+    // this.editMode$.subscribe(mode=>this.editMode=mode)
     this.stageInit(navParams)
     this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
     this.events.subscribe('help:clicked', relevant => this._showResource(relevant))

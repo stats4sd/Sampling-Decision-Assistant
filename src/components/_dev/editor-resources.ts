@@ -28,7 +28,6 @@ export class DevEditorResourcesComponent {
   status: string = 'Ready'
 
   constructor(private db: AngularFirestore, private actions: ProjectActions, private toast: ToastController) {
-    //this.firstInit()
     this.db.collection('resources').valueChanges().subscribe(
       res => {
         this.allResources = res;
@@ -50,7 +49,8 @@ export class DevEditorResourcesComponent {
         this.status = 'ready'
         this.actions.toggleEditMode(false)
         this.toast.create({
-          message: 'Changes saved successfully'
+          message: 'Changes saved successfully',
+          duration:2000
         }).present()
         let timestamp = Date.now()
         this.db.collection('backups').doc<any>('stage' + this.stageNumber + 'Resources'+timestamp).set(patch)

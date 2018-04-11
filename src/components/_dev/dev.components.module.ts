@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { DevEditorToggleComponent } from './editor-toggle';
 import { DevEditorResourcesComponent } from './editor-resources';
+import { DevEditorGlossaryComponent } from './editor-glossary';
 
 import {NgxWigModule} from 'ngx-wig';
 
@@ -9,7 +10,8 @@ import {NgxWigModule} from 'ngx-wig';
 @NgModule({
     declarations: [
         DevEditorToggleComponent,
-        DevEditorResourcesComponent
+        DevEditorResourcesComponent,
+        DevEditorGlossaryComponent
     ],
     imports: [
         IonicModule,
@@ -18,7 +20,8 @@ import {NgxWigModule} from 'ngx-wig';
     ],
     exports: [
         DevEditorToggleComponent,
-        DevEditorResourcesComponent
+        DevEditorResourcesComponent,
+        DevEditorGlossaryComponent
     ],
 })
 export class DevComponentsModule { }

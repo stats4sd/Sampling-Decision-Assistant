@@ -52,10 +52,14 @@ export class HomePage {
     if (section.class != "disabled") {
       this.navCtrl.push(section.page, section.params)
     }
-
   }
+
   showChangelog() {
     this.navCtrl.push('ChangelogPage')
+  }
+
+  goToAdmin(){
+    this.navCtrl.push('AdminPage')
   }
 
 }
