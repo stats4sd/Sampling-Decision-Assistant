@@ -42,7 +42,7 @@ export class GlossaryDetailPage implements OnChanges {
 
   _renderHtml(definition) {
     let content = document.getElementById('definition')
-    content.innerHTML=this.activeTerm.Definition
+    content.innerHTML=this.activeTerm.definition
     let links = Array.prototype.slice.call(content.querySelectorAll('a'));
     for (let link of links) {
       link.onclick = function (e) {

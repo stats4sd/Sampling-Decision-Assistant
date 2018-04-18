@@ -29,7 +29,7 @@ export class GlossaryPage {
 
   setActiveTerm(term) {
     console.log('page setting active term', term)
-    if (!term.Definition) { term.Definition = "This is just a placeholder definition for " + term.Term + ". More content will be added later" }
+    if (!term.definition) { term.definition = "This is just a placeholder definition for " + term.term + ". More content will be added later" }
     this.activeTerm = term
     this.navCtrl.push('GlossaryDetailPage', {
       slug: this.activeTerm.slug,

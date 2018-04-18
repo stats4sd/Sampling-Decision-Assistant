@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
 import glossaryMaster from './glossaryTerms'
+import { AngularFirestore } from 'angularfire2/firestore';
+// import {select} from '@angular-redux/store'
+// import {Observable} from 'rxjs/Observable'
 
 
 @Component({
@@ -8,18 +11,23 @@ import glossaryMaster from './glossaryTerms'
   templateUrl: 'glossary.html'
 })
 export class GlossaryComponent {
-  allGlossaryTerms: any = glossaryMaster;
+  // allGlossaryTerms: any = glossaryMaster;
+  allGlossaryTerms: any = [];
   filteredGlossaryTerms: any;
   allSectionTerms: any;
   modalMode: boolean;
   activeTerm: any;
+  _sectionTerms:string[]
+  _section:number
+
 
   @Input() set sectionTerms(sectionTerms: string[]) {
     this._filterGlossary(sectionTerms)
+    this._sectionTerms=sectionTerms
   }
   @Input() set section(sectionNumber: number) {
-    let terms = this.allSectionTerms[sectionNumber]
-    this._filterGlossary(terms)
+    // let terms = this.allSectionTerms[sectionNumber]
+    // this._filterGlossary(terms)
   }
   @Input('displayMode') displayMode: string;
   @Input() set slug(slug: string) {
@@ -29,7 +37,7 @@ export class GlossaryComponent {
     }
   }
 
-  constructor(private events: Events) {
+  constructor(private events: Events, private db:AngularFirestore) {
     this.allSectionTerms = {
       1: ['baseline', 'endline', 'experiments', 'external-validity', 'hypothesis-testing', 'indicator', 'inference', 'internal validity', 'quasi-experiments',
       'representative-sample', 'non-representative-sample'],
@@ -39,6 +47,14 @@ export class GlossaryComponent {
       5: [],
       6: []
     }
+    this.db.collection('glossary').valueChanges().subscribe(
+      res=>{
+        if(res){
+          this.allGlossaryTerms=res
+          if(this._sectionTerms){this._filterGlossary(this._sectionTerms)}
+        }
+      }
+    )
   }
 
   setActiveTerm(term) {
@@ -69,7 +85,7 @@ export class GlossaryComponent {
   }
   _renderHtml(definition) {
     let content = document.getElementById('definition')
-    content.innerHTML = this.activeTerm.Definition
+    content.innerHTML = this.activeTerm.definition
     let links = Array.prototype.slice.call(content.querySelectorAll('a'));
     for (let link of links) {
       link.onclick = function (e) {

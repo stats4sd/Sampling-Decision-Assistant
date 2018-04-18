@@ -8,7 +8,7 @@ import {GlossaryComponent} from '../glossary'
 export class GlossaryDetailComponent extends GlossaryComponent{
   @Input() set term(term:any){
     console.log('detail setting term',term)
-    if(term && term.Term){
+    if(term && term.term){
         this._term=term}
   }
   _term:any;

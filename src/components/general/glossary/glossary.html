@@ -5,8 +5,8 @@
     <span *ngFor="let term of filteredGlossaryTerms">
       <span (click)="setActiveTerm(term)" class="glossary-term" [ngClass]="{
         'term-selected':activeTerm && term.slug==activeTerm.slug,
-        'term-incomplete':term.Definition==''
-      }">{{term.Term}}</span>
+        'term-incomplete':term.definition==''
+      }">{{term.term}}</span>
     </span>
     <button ion-button clear (click)="viewAllTerms()">View all terms</button>
     <div class="glossary-detail-container" *ngIf="activeTerm">
@@ -20,8 +20,8 @@
     <span *ngFor="let term of allGlossaryTerms">
       <span (click)="setActiveTerm(term)" class="glossary-term" [ngClass]="{
         'term-selected':activeTerm && term.slug==activeTerm.slug,
-        'term-incomplete':term.Definition==''
-      }">{{term.Term}}</span>
+        'term-incomplete':term.definition==''
+      }">{{term.term}}</span>
     </span>
     <div class="glossary-detail-container" *ngIf="activeTerm">
       <glossary-detail *ngIf="activeTerm" [term]="activeTerm"></glossary-detail>
@@ -30,9 +30,9 @@
     <!-- <h3>More terms to be included</h3>
     <ul>
       <div *ngFor="let term of allGlossaryTerms">
-        <li *ngIf="term.Definition==''">
+        <li *ngIf="term.definition==''">
           <div>
-            <div>{{term.Term}}</div>
+            <div>{{term.term}}</div>
             <div style="font-size: x-small">{{term.slug}}</div>
           </div>
         </li>

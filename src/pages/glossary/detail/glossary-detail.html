@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>{{activeTerm.Term}}</ion-title>
+    <ion-title>{{activeTerm.term}}</ion-title>
     <ion-buttons end *ngIf="modalMode">
       <button ion-button icon-right (click)="dismiss()">
         Close
@@ -16,5 +16,5 @@
 
 
 <ion-content padding>
-    <div id="definition" #definition class="glossary-definition" [innerHtml]="_renderHtml(activeTerm.Definition)"></div>
+    <div id="definition" #definition class="glossary-definition" [innerHtml]="_renderHtml(activeTerm.definition)"></div>
 </ion-content>

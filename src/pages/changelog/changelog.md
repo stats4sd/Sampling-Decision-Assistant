@@ -1,5 +1,7 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
+## 0.9.3 (11th April 2018)
+Admin page (internal use) and glossary editor
 
 ## 0.9.2 (9th April 2018)
 Stage 6 rebuild and fixes

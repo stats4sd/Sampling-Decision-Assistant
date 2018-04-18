@@ -39,7 +39,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     BrowserAnimationsModule,
     NgReduxModule,
     AngularFireModule.initializeApp(firebaseConfig.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

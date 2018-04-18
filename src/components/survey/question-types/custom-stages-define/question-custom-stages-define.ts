@@ -82,7 +82,11 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
       console.log('copying sampling stages', values.samplingStages)
       // otherwise ensure final sampling unit named correctly
       try {
-        stages = values.samplingStages.slice(0)
+        /// *** to check with/without timeout
+        setTimeout(() => {
+          stages = values.samplingStages.slice(0)
+        }, 500);
+        
       } catch (error) {
         console.error('error', error)
       }
