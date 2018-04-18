@@ -17,4 +17,7 @@ page-saved-info {
     h3{
         margin-top:2em;
     }
+    [data-deprecated=true]{
+        display: none;
+    }
 }

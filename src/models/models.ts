@@ -6,6 +6,7 @@ export interface Project {
     edited: number,
     values: any,
     stagesComplete: boolean[],
+    dbVersion:number,
     incompatible?: boolean,
     draft?: boolean
 }
@@ -14,12 +15,12 @@ export type SavedProjects = Project[]
 
 export interface AppState {
     activeProject?: Project,
-    databaseVersion?: string,
     savedProjects?: Project[],
     editMode?:boolean,
     reviewMode?:boolean,
     slideSection?:number,
-    relevantResources:string
+    relevantResources:string,
+    _dbVersion?: number,
 }
 
 export interface Question {

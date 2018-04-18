@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnChanges } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ModalController, ToastController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import version from '../../pages/changelog/version'
 
@@ -11,7 +11,7 @@ import version from '../../pages/changelog/version'
 export class HomePage {
   sections: any = []
   altSections: any = [];
-  version: any=version;
+  version: any = version;
 
   imageSrc = "assets/img/feature-image-1.jpg"
   // no longer using slides
@@ -22,6 +22,7 @@ export class HomePage {
     public navParams: NavParams,
     private dataPrvdr: DataProvider,
     public modalCtrl: ModalController,
+    private toastCtrl: ToastController
 
   ) {
 
@@ -47,6 +48,9 @@ export class HomePage {
     //this.slides.lockSwipes(true)
 
   }
+  ngOnInit() {
+    this.checkForUdates()
+  }
   // 
   goToSection(section) {
     if (section.class != "disabled") {
@@ -58,10 +62,32 @@ export class HomePage {
     this.navCtrl.push('ChangelogPage')
   }
 
-  goToAdmin(){
+  goToAdmin() {
     this.navCtrl.push('AdminPage')
   }
 
+  checkForUdates() {
+    // https://medium.com/progressive-web-apps/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
+    //   window['isUpdateAvailable']()
+    //     .then(isAvailable => {
+    //       console.log('update available?', isAvailable)
+    //       if (isAvailable) {
+    //         const toast = this.toastCtrl.create({
+    //           message: 'New Update available! Reload the webapp to see the latest juicy changes.',
+    //           position: 'bottom',
+    //           showCloseButton: true,
+    //         });
+    //         toast.present();
+    //       }
+    //     },
+    //       notAvailable => { console.log('no update available') }
+    //     ).catch(
+
+    //       err => console.error(err)
+    //     )
+    // }
+
+  }
 }
 
 //nextSlide(){

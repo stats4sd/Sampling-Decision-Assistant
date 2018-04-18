@@ -19,6 +19,7 @@ export class ProjectActions {
     static readonly UPDATE_STAGES_COMPLETE = 'UPDATE_STAGES_COMPLETE';
     static readonly SET_SLIDE_SECTION = 'SET_SLIDE_SECTION';
     static readonly SET_RELEVANT_RESOURCES = 'SET_RELEVANT_RESOURCES';
+    static readonly SET_META = 'SET_META';
     // static readonly REVIEW_TOGGLE = 'REVIEW_TOGGLE';
     
     // dev
@@ -79,6 +80,14 @@ export class ProjectActions {
         meta: null,
         payload: relevant
     })
+    // generic method to set any top level meta data
+    @dispatch()
+    setMeta = (meta:any) => ({
+        type: ProjectActions.SET_META,
+        meta: null,
+        payload: meta
+    });
+
     // toggleReviewMode = (reviewMode:boolean) => ({
     //     type: ProjectActions.REVIEW_TOGGLE,
     //     meta: null,

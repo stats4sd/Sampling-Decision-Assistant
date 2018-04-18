@@ -4,11 +4,11 @@ import { Action } from 'redux';
 
 export const INITIAL_STATE: Models.AppState = {
     activeProject: null,
-    databaseVersion: null,
     savedProjects: null,
     editMode: false,
     slideSection: -1,
     relevantResources: null,
+    _dbVersion:null
     // reviewMode:false
 };
 
@@ -62,6 +62,10 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
         case Actions.ProjectActions.EDIT_TOGGLE:
             const edit = action as Actions.UpdateProjectAction
             return Object.assign({}, state, { editMode: edit.payload })
+
+        case Actions.ProjectActions.SET_META:
+            const meta = action as Actions.UpdateProjectAction
+            return Object.assign({}, state, meta.payload)
 
 
 

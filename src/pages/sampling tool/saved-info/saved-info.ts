@@ -3,8 +3,8 @@ import { IonicPage, ViewController, NavParams, Events, AlertController } from 'i
 import { DataProvider } from '../../../providers/data/data';
 import { FileDropModule, UploadFile, UploadEvent } from 'ngx-file-drop';
 import { read } from 'xlsx/types';
-import {select} from '@angular-redux/store'
-import {Observable} from 'rxjs/Observable'
+import { select } from '@angular-redux/store'
+import { Observable } from 'rxjs/Observable'
 import { Project } from '../../../models/models';
 
 @IonicPage()
@@ -13,27 +13,30 @@ import { Project } from '../../../models/models';
   templateUrl: 'saved-info.html',
 })
 export class SavedInfoPage {
-  @select('savedProjects') savedProjects$:Observable<Project[]>
+  @select('savedProjects') savedProjects$: Observable<Project[]>
+  savedProjects = [];
   saveName: string;
   view: string;
   savedSurveys: any;
   errorMsg: string;
-  savedArray = [];
+  _dbVersion: number
 
   constructor(
-    public viewCtrl: ViewController, 
-    public navParams: NavParams, 
-    private dataPrvdr: DataProvider, 
-    public events:Events,
-    public alertCtrl:AlertController
+    public viewCtrl: ViewController,
+    public navParams: NavParams,
+    private dataPrvdr: DataProvider,
+    public events: Events,
+    public alertCtrl: AlertController,
   ) {
     this.view = this.navParams.data.view;
-    //this.loadSavedProjects()
-    //alert('page temporarily disabled')
+    this._dbVersion = this.dataPrvdr._dbVersion
+    this.savedProjects$.subscribe(
+      projects => {
+        if (projects) { this.savedProjects = projects.filter(p=> p.dbVersion==this._dbVersion )}
+      }
+    )
   }
 
-  ionViewDidLoad() {
-  }
   createNew() {
     if (this.savedSurveys[this.saveName]) {
       this.errorMsg = "A project with that name already exists"
@@ -48,68 +51,53 @@ export class SavedInfoPage {
   dismiss() {
     this.viewCtrl.dismiss()
   }
-  loadProject(project:Project) {
-    console.log('loading project',project)
+  loadProject(project: Project) {
+    console.log('loading project', project)
     this.dataPrvdr.loadProject(project);
     this.viewCtrl.dismiss();
   }
-  // deleteSurvey(survey) {
-  //   this.dataPrvdr.deleteSurvey(survey.title).then(
-  //     _ => this.loadSavedProjects()
-  //   )
 
-  // }
-  // loadSavedProjects() {
-  //   this.savedSurveys = this.dataPrvdr.savedSurveys;
-  //   if (this.savedSurveys) {
-  //     let arr = []
-  //     Object.keys(this.savedSurveys).forEach(key => {
-  //       arr.push(this.savedSurveys[key])
-  //     })
-  //     this.savedArray = arr.reverse();
-  //   }
-  //   else { this.savedArray = [] }
-  // }
   // file drop
-  dropped(e:UploadEvent) {
+  dropped(e: UploadEvent) {
     // handle file drop
     let files = e.files;
-    this.events.subscribe('import:duplicate',project=>{
-      console.log('duplicate file',project)
+    this.events.subscribe('import:duplicate', project => {
+      console.log('duplicate file', project)
       this.promptRename(project)
     })
-    this.events.subscribe('import:complete',_=>{
+    this.events.subscribe('import:complete', _ => {
       // this.loadSavedProjects()
     })
     this.dataPrvdr.import(files)
   }
-  fileOver(e) {  }
+  
+  fileOver(e) { }
   fileLeave(e) { }
 
-  promptRename(project){
+  promptRename(project) {
     let prompt = this.alertCtrl.create({
-      title:'Notification',
-      message:'A project with this name already exists. Please rename.',
-      enableBackdropDismiss:false,
-      inputs:[{
-        name:'title',
-        placeholder:'title',
-        value:project.title
+      title: 'Notification',
+      message: 'A project with this name already exists. Please rename.',
+      enableBackdropDismiss: false,
+      inputs: [{
+        name: 'title',
+        placeholder: 'title',
+        value: project.title
       }],
       buttons: [
         {
           text: 'Save',
           handler: data => {
-            console.log('Saved clicked',data.title);
-            if(data.title!=project.title){return true}
-            else{return false}
+            console.log('Saved clicked', data.title);
+            if (data.title != project.title) { return true }
+            else { return false }
           }
         }
       ]
     })
-    prompt.onDidDismiss(data=>{
-      console.log('prompt dismissed',data)
-      this.events.publish('project:rename',data.title)
+    prompt.onDidDismiss(data => {
+      console.log('prompt dismissed', data)
+      this.events.publish('project:rename', data.title)
       //this.events.unsubscribe('import:duplicate')
     })
     prompt.present()

@@ -10,11 +10,11 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = 'HomePage';
-  hash:string;
+  hash: string;
 
   pages: Array<{ title: string, component: any, disabled?: boolean }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events:Events) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
     this.initializeApp();
 
 
@@ -39,9 +39,9 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       // monitor window hash changes and publish corresponding event
-      window.addEventListener('hashchange', ()=> {
-          this.events.publish('hash:changed',location.hash);
-      })
+      window.addEventListener('hashchange', () => {
+        this.events.publish('hash:changed', location.hash);
+      })    
     });
   }
 
@@ -50,4 +50,6 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+
 }

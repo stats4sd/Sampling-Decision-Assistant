@@ -17,7 +17,9 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DataProvider {
   public questionMeta = questionMeta;
-  private _dbVersion = 2;
+  public _dbVersion = 3;
+  // db versions
+  // 3 - v0.9.5 April 2018
   private isSaving: boolean = false;
   private savedProjectsJson: any = {}
   public activeProject: Project;
@@ -36,6 +38,7 @@ export class DataProvider {
     // bind local activeProject to update from redux, save survey whenever value changese
     this.activeProject$.subscribe(p => { if (p) { this.activeProject = p } })
     this.loadSavedProjects()
+    this.projectActions.setMeta({ _dbVersion: this._dbVersion })
   }
 
 
@@ -45,6 +48,7 @@ export class DataProvider {
       title: title,
       created: date,
       edited: date,
+      dbVersion: this._dbVersion,
       values: this.formPrvdr.formGroup.value,
       stagesComplete: [null, false, false, false, false, false, false]
     }
@@ -88,8 +92,13 @@ export class DataProvider {
     )
   }
   promptProjectResume(project: Project) {
-    // give option to resume previous survey
-    let title = project.title? project.title : 'Unsaved Project - '+new Date(project.created).toLocaleString()
+    // don't resume if using outdated db version
+    if (project.dbVersion != this._dbVersion) {
+      this.createNewProject()
+      return
+    }
+
+    let title = project.title ? project.title : 'Unsaved Project - ' + new Date(project.created).toLocaleString()
     this.alertCtrl.create({
       title: 'Resume project?',
       message: `
@@ -121,14 +130,14 @@ export class DataProvider {
 
   backgroundSave() {
     // throttled save of survey, pulling values from master formgroup
-    let activeProject=this.ngRedux.getState().activeProject
+    let activeProject = this.ngRedux.getState().activeProject
     if (activeProject && !this.isSaving) {
       this.isSaving = true
       setTimeout(_ => {
         // this.activeProject.values = this.formPrvdr.formGroup.value
         this.savedProjectsJson[activeProject.created] = activeProject
         this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
-          res => {this.isSaving = false;console.log('saved')}
+          res => { this.isSaving = false; console.log('saved') }
         )
       }, 500)
     }

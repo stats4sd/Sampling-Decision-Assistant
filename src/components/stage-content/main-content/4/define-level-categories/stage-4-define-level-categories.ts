@@ -21,7 +21,10 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
 
   ngOnInit() {
      // bind to slide section to call init every time slide focused
-    this.slideSection$.subscribe(section=>{if(section==1){this._init(this.form.value.reportingLevels.slice(0))}})
+    this.slideSection$.subscribe(section=>{
+      if(section==1 && this.form.value.reportingLevels){
+        this._init(this.form.value.reportingLevels.slice(0))}
+      })
     // this._init(this.form.value.reportingLevels)
   }
   _init(levels){
