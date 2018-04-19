@@ -18,7 +18,6 @@ export interface AppState {
     editMode?:boolean,
     reviewMode?:boolean,
     slideSection?:number,
-    relevantResources:string,
     view:ViewState
     _dbVersion?: number,
     _platforms?:string[],
@@ -33,7 +32,8 @@ export interface ViewState{
 export interface ViewStateParams{
     stagePart?:number,
     activeGlossaryTerm?:string,
-    tabSection?:string
+    tabSection?:'resources' | 'glossary',
+    relevant?:string
 }
 
 export interface Question {

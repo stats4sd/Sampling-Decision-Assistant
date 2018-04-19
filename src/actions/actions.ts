@@ -18,7 +18,6 @@ export class ProjectActions {
     static readonly UPDATE_PROJECT_VALUES = 'UPDATE_PROJECT_VALUES';
     static readonly UPDATE_STAGES_COMPLETE = 'UPDATE_STAGES_COMPLETE';
     static readonly SET_SLIDE_SECTION = 'SET_SLIDE_SECTION';
-    static readonly SET_RELEVANT_RESOURCES = 'SET_RELEVANT_RESOURCES';
     static readonly SET_META = 'SET_META';
 
 
@@ -70,12 +69,6 @@ export class ProjectActions {
         meta: null,
         payload: index
     })
-    @dispatch()
-    setRelevantResources = (relevant: string) => ({
-        type: ProjectActions.SET_RELEVANT_RESOURCES,
-        meta: null,
-        payload: relevant
-    })
     // generic method to set any top level meta data
     @dispatch()
     setMeta = (meta: any) => ({
@@ -105,14 +98,6 @@ export class ViewActions {
         meta: meta,
         payload: update
     });
-
-    // @dispatch()
-    // // set portion of view PARAMS
-    // updateViewParams = (params: ViewStateParams) => ({
-    //     type: ViewActions.UPDATE_VIEW_PARAMS,
-    //     meta: null,
-    //     payload: params
-    // });
 }
 
 export class DevActions {

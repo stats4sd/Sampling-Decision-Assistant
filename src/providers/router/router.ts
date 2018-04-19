@@ -58,7 +58,7 @@ export class CustomRouterProvider {
   }
 
   // set current hash with given query parameters
-  setHashParams(params: any) {
+  setHashParams(params: ViewStateParams) {
     let view = { ...this.ngRedux.getState().view }
     view.params = params
     this.buildHash(view)

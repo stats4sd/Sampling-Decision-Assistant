@@ -12,10 +12,12 @@ import { ResourcesComponent } from './resources/resources';
 import { HelpIconComponent} from './help-icon/help-icon'
 
 // additional video player component used by resource (could split)
-import {VgCoreModule} from 'videogular2/core';
-import {VgControlsModule} from 'videogular2/controls';
-import {VgOverlayPlayModule} from 'videogular2/overlay-play';
-import {VgBufferingModule} from 'videogular2/buffering';
+// import {VgCoreModule} from 'videogular2/core';
+// import {VgControlsModule} from 'videogular2/controls';
+// import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+// import {VgBufferingModule} from 'videogular2/buffering';
+// youtube video player
+import { YoutubePlayerModule } from 'ngx-youtube-player';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -32,10 +34,11 @@ import {VgBufferingModule} from 'videogular2/buffering';
     imports: [
         IonicModule,
         // additional video player component
-        VgCoreModule,
-        VgControlsModule,
-        VgOverlayPlayModule,
-        VgBufferingModule
+        // VgCoreModule,
+        // VgControlsModule,
+        // VgOverlayPlayModule,
+        // VgBufferingModule,
+        YoutubePlayerModule
     ],
     exports: [
         IntroductionComponent,

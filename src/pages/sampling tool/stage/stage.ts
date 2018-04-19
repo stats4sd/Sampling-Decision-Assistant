@@ -59,7 +59,7 @@ export class StagePage {
     private customRouter:CustomRouterProvider
   ) {
     this.stageInit(navParams)
-    this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
+    // this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
     this._subscribeToViewChanges()
   }
     
@@ -86,7 +86,7 @@ export class StagePage {
   }
 
   // handle routing between main/resource/glossary sections using hash query params (changes subscribed to in _subscribeToViewChanges)
-  goTo(section:string) {
+  goTo(section:'resources' | 'glossary') {
     if(section){
       this.customRouter.updateHashParams({
         tabSection:section
@@ -109,7 +109,7 @@ export class StagePage {
   _addBackButtonFunction(){
     // if in main section pop, otherwise go to main
     this.navbar.backButtonClick = () => {
-      let section = location.hash.split('section=')[1]
+      let section = location.hash.split('tabSection=')[1]
       if(section){
         window.history.back()
       }
@@ -117,11 +117,6 @@ export class StagePage {
         this.navCtrl.pop()
       }
     }
-  }
-
-  showGlossary(term: string) {
-    this.activeGlossaryTerm = term;
-    this.activeSection = "Glossary"
   }
 
   openModal(component, params?) {
@@ -137,19 +132,19 @@ export class StagePage {
     this.navCtrl.push(component, params)
   }
 
-  scrollDown() {
-    setTimeout(() => {
-      try {
-        this.content.scrollToBottom(1000)
-      } catch (err) { console.log('err', err) }
-    }, 500);
-  }
+  // scrollDown() {
+  //   setTimeout(() => {
+  //     try {
+  //       this.content.scrollToBottom(1000)
+  //     } catch (err) { console.log('err', err) }
+  //   }, 500);
+  // }
 
-  _showResource(relevant) {
-    this.relevant = relevant;
-    let arr = location.hash.split('/')
-    if (arr.indexOf('resources') == -1) {
-      location.hash = location.hash + '/resources'
-    }
-  }
+  // _showResource(relevant) {
+  //   this.relevant = relevant;
+  //   let arr = location.hash.split('/')
+  //   if (arr.indexOf('resources') == -1) {
+  //     location.hash = location.hash + '/resources'
+  //   }
+  // }
 }

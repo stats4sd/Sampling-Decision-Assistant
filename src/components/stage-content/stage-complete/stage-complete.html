@@ -9,3 +9,17 @@
     <ion-icon name="arrow-forward"></ion-icon>
   </button>
 </div>
+
+<!-- project title input prompt -->
+<div *ngIf="!projectTitle && sectionValid" class="warning input-title-warning" icon-left [@animationState]="'flyIn'">
+  <div>
+    <ion-icon name="alert"></ion-icon>
+  </div>
+  <div>
+    <div>Your project doesn't have a title yet. Please provide one in the space below</div>
+    <form style="display: flex">
+      <ion-input type="text" class="project-title-input" [(ngModel)]="projectTitleInput" [ngModelOptions]="{standalone: true}"></ion-input>
+      <button ion-button clear color="primary-inverted" (click)="saveProjectTitle()" [disabled]="!projectTitleInput">Save</button>
+    </form>
+  </div>
+</div>

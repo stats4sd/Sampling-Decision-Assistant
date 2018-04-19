@@ -6,11 +6,9 @@ export const INITIAL_STATE: Models.AppState = {
     activeProject: null,
     savedProjects: null,
     editMode: false,
-    relevantResources: null,
     view: null,
     _dbVersion: null,
     _platforms: null,
-    // reviewMode:false
 };
 
 export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Action) {
@@ -33,7 +31,6 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
 
         case Actions.ProjectActions.UPDATE_PROJECT_VALUES:
             const values = action as Actions.UpdateProjectAction
-            // merge values
             let valuesState = Object.assign({}, state)
             if (valuesState.activeProject) {
                 valuesState.activeProject.values = values.payload
@@ -52,11 +49,6 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
             const section = action as Actions.UpdateProjectAction
             return Object.assign({}, state, { slideSection: section.payload })
 
-        case Actions.ProjectActions.SET_RELEVANT_RESOURCES:
-            const relevant = action as Actions.UpdateProjectAction
-            return Object.assign({}, state, { relevantResources: relevant.payload })
-
-
         case Actions.ProjectActions.SET_META:
             const meta = action as Actions.UpdateProjectAction
             return Object.assign({}, state, meta.payload)
@@ -74,7 +66,6 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
 
         case Actions.ViewActions.UPDATE_VIEW_PARAMS:
             const updateViewParamsAction = action as Actions.UpdateProjectAction
-            console.log('updating view params',updateViewParamsAction.payload)
             const oldParams = state.view ? state.view.params : {}
             const newParams = Object.assign({}, oldParams, updateViewParamsAction.payload)
             let newParamsView =  Object.assign({},state.view)

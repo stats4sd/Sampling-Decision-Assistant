@@ -16,8 +16,10 @@
 
     <introduction *ngIf="showIntro"></introduction>
     <div [ngClass]="showIntro ? 'hidden':'not-hidden'">
-      <div style="font-size: medium" icon-left>
-        <ion-icon name="bulb"></ion-icon>To start a new project from a template or to load a saved project click on the menu link above</div>
+      <div style="font-size: medium" icon-left *ngIf="activeProject && !activeProject.title">
+        <ion-icon name="bulb"></ion-icon>
+        <span>You are working on a new project. Any changes will be saved automatically to this device</span>
+      </div>
       <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeProject && activeProject.title">
         <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}</div>
       <!-- step by step sections -->

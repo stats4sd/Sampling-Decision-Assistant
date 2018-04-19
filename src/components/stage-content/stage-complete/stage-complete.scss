@@ -3,7 +3,18 @@ stage-complete {
         display:flex; 
         flex-wrap:wrap; 
         justify-content:space-between; 
-        margin:30px 0 50px 0;
+        margin:30px 0 30px 0;
+    }
+
+    .input-title-warning{
+        padding:5px 5px 15px 5px;
+        background: color($colors,primary);
+        color: white;
+        display:flex;
+    }
+
+    .project-title-input{
+        border-bottom: 1px solid white;
     }
 
     // .complete-container{

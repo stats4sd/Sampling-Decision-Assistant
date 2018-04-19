@@ -24,7 +24,8 @@
         </audio>
       </div>
       <div class="answer-video" *ngIf="question.expanded && question.showFormat=='video'" [@animationState]="'expandIn'">
-        <vg-player class="video-player">
+        <youtube-player [videoId]="question.youtubeID" [width]="videoPlayerWidth" [height]="videoPlayerHeight"></youtube-player>
+        <!-- <vg-player class="video-player">
           <vg-controls>
             <vg-play-pause>
               <ion-icon name="play"></ion-icon>
@@ -33,21 +34,19 @@
             <vg-scrub-bar>
               <vg-scrub-bar-current-time class="video-time-bar"></vg-scrub-bar-current-time>
             </vg-scrub-bar>
-            <!-- <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display> -->
             <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
             <vg-mute></vg-mute>
             <vg-volume class="video-volume-control"></vg-volume>
-            <!-- <vg-fullscreen></vg-fullscreen> -->
           </vg-controls>
           <video [vgMedia]="media" #media id="singleVideo" preload="auto">
             <source [src]="question.videoUrl" type="video/mp4">
           </video>
-        </vg-player>
+        </vg-player> -->
       </div>
     </ion-item>
   </ion-list>
   <h2>Example Cases</h2>
-  <note type="dev" >Here we plan to have a selection of common examples to illustrate typical answers for this section</note>
+  <note type="dev">Here we plan to have a selection of common examples to illustrate typical answers for this section</note>
   <h2>More Information</h2>
-  <note type="dev" >In this space you will be able to find additional links and resources to support the section content</note>
+  <note type="dev">In this space you will be able to find additional links and resources to support the section content</note>
 </div>

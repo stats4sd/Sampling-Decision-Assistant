@@ -23,20 +23,20 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class ResourcesComponent {
 
-  @select('relevantResources') readonly relevant$: Observable<string>
-  // @select('allResources') readonly allReasources$: Observable<any[]>
-  // dev resources observable
-  
+  @select(['view','params','relevant']) readonly relevant$: Observable<string> 
 
   @Input() set stage(stage: number) {
     this.setResources(this.allResources[stage])
     this._stage=stage
   }
+
   _stage:number
   allResources=[]
   // allResources = [demoResources, stage1Resources, stage2Resources, stage3Resources, stage4Resources, stage5Resources, stage6Resources]
   questions: any[] = []
   relevant: string = "N/A"
+  videoPlayerWidth:number=675
+  videoPlayerHeight:number=450
 
   constructor(private events: Events, private sanitizer: DomSanitizer, private db:AngularFirestore) {
     this.relevant$.subscribe(
@@ -49,9 +49,10 @@ export class ResourcesComponent {
 
       }
     )
-    // this.events.unsubscribe('help:clicked')
-    // this.events.subscribe('help:clicked', relevant => this.showRelevant(relevant))
-    // console.log('location', location.host, location)
+  }
+
+  ngAfterViewInit(){
+    // set video player width
   }
 
   setResources(stageResources: any) {
@@ -85,9 +86,9 @@ export class ResourcesComponent {
       q.audioUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.audio)
       format = 'audio'
     }
-    if (q.video) {
+    if (q.youtubeID) {
       // set video url to play hosted video (note, will need diff method if on mobile device)
-      q.videoUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.video)
+      // q.videoUrl = this.sanitizer.bypassSecurityTrustUrl(location.origin + '/assets/resources/' + q.video)
       format = 'video'
     }
     else { format = 'text' }

@@ -6,13 +6,16 @@ import { StagePage } from '../../../pages/sampling tool/stage/stage';
 
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import animationStates from '../../../providers/animationStates';
 
 @Component({
   selector: 'stage-complete',
-  templateUrl: 'stage-complete.html'
+  templateUrl: 'stage-complete.html',
+  animations: [animationStates]
 })
 export class StageCompleteComponent extends StagePage {
   @select(['activeProject', 'stagesComplete']) readonly stagesComplete$: Observable<boolean[]>;
+  @select(['activeProject', 'title']) readonly projectTitle$: Observable<string>;
   @Input('disabled') disabled: boolean
   @Input('stageNumber') stageNumber: number
   @Input('text') text: string;
@@ -21,6 +24,8 @@ export class StageCompleteComponent extends StagePage {
   lastCall: number = 0
   sectionValid: boolean = false
   stagesComplete: boolean[] = []
+  projectTitle:string;
+  projectTitleInput:string;
 
   ngOnInit() {
     // subscribe to form value changes to mark when section complete
@@ -37,6 +42,15 @@ export class StageCompleteComponent extends StagePage {
         this.stagesComplete = s
       }
     })
+    this.projectTitle$.subscribe(
+      t=>this.projectTitle=t
+    )
+  }
+
+  saveProjectTitle(){
+    this.dataPrvdr.activeProject.title=this.projectTitleInput
+    this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
+    this.dataPrvdr.backgroundSave()    
   }
 
   checkSectionValid() {
