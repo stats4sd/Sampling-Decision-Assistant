@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { dispatch } from '@angular-redux/store';
 import { FluxStandardAction } from 'flux-standard-action';
-import { Project, SavedProjects, ViewState } from '../models/models';
+import { Project, SavedProjects, ViewState, ViewStateParams } from '../models/models';
 
 export type ProjectSaveAction = FluxStandardAction<Project, null>;
 export type ProjectLoadAction = FluxStandardAction<Project, null>;
@@ -87,13 +87,32 @@ export class ProjectActions {
 
 export class ViewActions {
     static readonly SET_VIEW = 'SET_VIEW';
+    static readonly UPDATE_VIEW = 'UPDATE_VIEW';
+    static readonly UPDATE_VIEW_PARAMS = 'UPDATE_VIEW_PARAMS';
 
     @dispatch()
+    // set entire view
     setView = (view: ViewState) => ({
         type: ViewActions.SET_VIEW,
         meta: null,
         payload: view
     });
+
+    @dispatch()
+    // set portion of view
+    updateView = (update: ViewState, meta?:string) => ({
+        type: ViewActions.UPDATE_VIEW,
+        meta: meta,
+        payload: update
+    });
+
+    // @dispatch()
+    // // set portion of view PARAMS
+    // updateViewParams = (params: ViewStateParams) => ({
+    //     type: ViewActions.UPDATE_VIEW_PARAMS,
+    //     meta: null,
+    //     payload: params
+    // });
 }
 
 export class DevActions {

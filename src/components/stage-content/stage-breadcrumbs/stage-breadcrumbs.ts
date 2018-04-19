@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Events } from 'ionic-angular';
+import { CustomRouterProvider } from '../../../providers/router/router';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable'
 
 @Component({
   selector: 'stage-breadcrumbs',
@@ -9,33 +11,27 @@ export class StageBreadcrumbsComponent {
   @Input() set stage(stage: number) {
     this.breadcrumbs = this.stageBreadcrumbs[stage]
   }
-  @Input('stageSlidesIndex') stageSlidesIndex:number
-
+  @Input('stageSlidesIndex') stageSlidesIndex: number;
+  @select(['view', 'params', 'stagePart']) part$: Observable<number>
+  activePart: number;
   breadcrumbs: any = []
   stageBreadcrumbs = {
-    4: ['Intro', 'Level Classifications','Review'],
+    4: ['Intro', 'Level Classifications', 'Review'],
     5: ['Intro', 'Sampling Stages', 'Building Frames'],
-    6: ['Intro', 'Stratification','Sample Sizes', 'Resource Allocation']
+    6: ['Intro', 'Stratification', 'Sample Sizes', 'Resource Allocation']
   }
 
-  constructor(private events:Events){
-
+  constructor(private customRouter: CustomRouterProvider) {
+    this.part$.subscribe(p => this.activePart = p)
   }
 
-
-  goTo(index){
+  goToPart(index) {
+    if(index==0){
+      this.customRouter.removeHashParam('stagePart')
+    }
+    else{
+      this.customRouter.updateHashParams({ stagePart: index })
+    }
     
-    this.setHash(index)
-    // this.events.publish('goToStageSlide',index)
-  }
-
-  // update the hash to have query-parameter style suffix to track breadcrumb sub-section 
-  setHash(index){
-    let hashArray = location.hash.split('/')
-    const last = hashArray.pop()
-    let newLast = last.split('?')[0]
-    if(index!=0){newLast = newLast +'?part='+index}
-    const newHash = hashArray.join('/')+'/'+newLast 
-    location.hash=newHash
   }
 } 

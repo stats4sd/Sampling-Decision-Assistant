@@ -93,7 +93,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
         }
       }
     })
-    console.log('init complete', this.question.controlName)
     this.initComplete = true
     
   }

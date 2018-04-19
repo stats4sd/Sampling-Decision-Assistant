@@ -21,8 +21,7 @@ export class Stage6Component extends StagePage {
   ngAfterViewInit() {
     if (this.stageSlides) {this.stageSlides.lockSwipes(true)}
     setTimeout(_ => this.initComplete = true, 200)
-    // breadcrumb listener
-    this.attachBreadcrumbSubscriber()
+
   }
   launchSampleSizeCalculator() {
     this.modalCtrl.create('SampleSizeCalculatorPage').present()

@@ -1,22 +1,25 @@
 <div class="slide-content">
     <stage-breadcrumbs [stage]='5' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
-    <ion-slides #stageSlides class="stage-slides" (ionSlideDidChange)="stageSlideChange()" effect="fade">
+    <div [ngSwitch]="stagePart">
         <!-- recap slide -->
-        <ion-slide>
+        <div *ngSwitchDefault>
             <stage-intro [stage]="5"></stage-intro>
             <stage-5-recap></stage-5-recap>
-        </ion-slide>
+        </div>
         <!-- single vs multi stage slide -->
-        <ion-slide>
+        <div *ngSwitchCase="1">
             <stage-5-define-stages></stage-5-define-stages>
-        </ion-slide>
+        </div>
         <!-- multi-stage builder slide -->
-        <ion-slide *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
-            <stage-5-frame-builder-overview></stage-5-frame-builder-overview>
-            <stage-complete stageNumber=5 ></stage-complete>
-        </ion-slide>
+        <div *ngSwitchCase="2">
+            <div *ngIf="form.value['q5.1.1']=='Multi-stage' || form.value['q5.1']=='No'">
+                <stage-5-frame-builder-overview></stage-5-frame-builder-overview>
+                <stage-complete stageNumber=5></stage-complete>
+            </div>
+        </div>
 
-    </ion-slides>
+
+    </div>
 
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px">

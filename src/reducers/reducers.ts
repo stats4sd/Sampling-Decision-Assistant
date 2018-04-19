@@ -7,9 +7,9 @@ export const INITIAL_STATE: Models.AppState = {
     savedProjects: null,
     editMode: false,
     relevantResources: null,
-    view:null,
+    view: null,
     _dbVersion: null,
-    _platforms:null
+    _platforms: null,
     // reviewMode:false
 };
 
@@ -64,8 +64,22 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
         // view actions -  *** should be split to seperate reducer ***
         case Actions.ViewActions.SET_VIEW:
             const viewAction = action as Actions.UpdateProjectAction
-            return Object.assign({}, state, {view:viewAction.payload})
+            return Object.assign({}, state, { view: viewAction.payload })
 
+        case Actions.ViewActions.UPDATE_VIEW:
+            const updateViewAction = action as Actions.UpdateProjectAction
+            const oldView = state.view
+            const newView = Object.assign({}, state.view, updateViewAction.payload)
+            return Object.assign({}, state, { view: newView })
+
+        case Actions.ViewActions.UPDATE_VIEW_PARAMS:
+            const updateViewParamsAction = action as Actions.UpdateProjectAction
+            console.log('updating view params',updateViewParamsAction.payload)
+            const oldParams = state.view ? state.view.params : {}
+            const newParams = Object.assign({}, oldParams, updateViewParamsAction.payload)
+            let newParamsView =  Object.assign({},state.view)
+            newParamsView.params = newParams
+            return Object.assign({}, state, { view: newParamsView })
 
         // dev actions -  *** should be split to seperate reducer ***
         case Actions.DevActions.EDIT_TOGGLE:

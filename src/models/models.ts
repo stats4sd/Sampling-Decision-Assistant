@@ -21,17 +21,19 @@ export interface AppState {
     relevantResources:string,
     view:ViewState
     _dbVersion?: number,
-    _platforms?:string[]
+    _platforms?:string[],
 }
 
 export interface ViewState{
     params?:ViewStateParams,
-    hash?:string
+    hash?:string,
+    activeStageID?:string
 }
 
 export interface ViewStateParams{
-    part?:string,
-    section?:string
+    stagePart?:number,
+    activeGlossaryTerm?:string,
+    tabSection?:string
 }
 
 export interface Question {
@@ -58,4 +60,10 @@ export interface reportingLevel{
 export interface reportingLevelClassification{
     names:string[],
     total:string
+}
+
+export interface glossaryTerm{
+    slug:string,
+    definition:string,
+    term:string
 }

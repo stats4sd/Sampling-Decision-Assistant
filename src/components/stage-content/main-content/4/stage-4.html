@@ -27,10 +27,14 @@
         <div *ngSwitchCase="1">
             <stage-4-define-level-categories></stage-4-define-level-categories>
         </div>
-        <div *ngIf="form.value['reportingLevels'] && form.value['reportingLevels'].length>0">
-            <stage-4-review-levels></stage-4-review-levels>
-            <stage-complete stageNumber=4></stage-complete>
+
+        <div *ngSwitchCase="2">
+            <div *ngIf="form.value['reportingLevels'] && form.value['reportingLevels'].length>0">
+                <stage-4-review-levels></stage-4-review-levels>
+                <stage-complete stageNumber=4></stage-complete>
+            </div>
         </div>
+
 
     </div>
 

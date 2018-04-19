@@ -2,8 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
 import glossaryMaster from './glossaryTerms'
 import { AngularFirestore } from 'angularfire2/firestore';
-// import {select} from '@angular-redux/store'
-// import {Observable} from 'rxjs/Observable'
+import { ViewActions, ProjectActions } from '../../../actions/actions';
+import { glossaryTerm } from '../../_dev/editor-glossary';
+import { CustomRouterProvider } from '../../../providers/router/router';
+import { select } from '@angular-redux/store'
+import { Observable } from 'rxjs/Observable'
 
 
 @Component({
@@ -11,59 +14,71 @@ import { AngularFirestore } from 'angularfire2/firestore';
   templateUrl: 'glossary.html'
 })
 export class GlossaryComponent {
+  @select(['view', 'params', 'activeGlossaryTerm']) activeGlossarySlug$: Observable<string>
+
   // allGlossaryTerms: any = glossaryMaster;
-  allGlossaryTerms: any = [];
-  filteredGlossaryTerms: any;
+  allGlossaryTerms: glossaryTerm[] = [];
+  allGlossaryJson: any = {};
+  filteredGlossaryTerms: glossaryTerm[];
   allSectionTerms: any;
-  modalMode: boolean;
-  activeTerm: any;
-  _sectionTerms:string[]
-  _section:number
+  // modalMode: boolean;
+  activeTerm: glossaryTerm;
+  _sectionTerms: string[]
+  // _section:number
 
-
-  @Input() set sectionTerms(sectionTerms: string[]) {
-    this._filterGlossary(sectionTerms)
-    this._sectionTerms=sectionTerms
-  }
-  @Input() set section(sectionNumber: number) {
-    // let terms = this.allSectionTerms[sectionNumber]
-    // this._filterGlossary(terms)
-  }
-  @Input('displayMode') displayMode: string;
-  @Input() set slug(slug: string) {
-    if (slug) {
-      if (slug == "_") { this.activeTerm = null }
-      else { this.activeTerm = this._getTermObject(slug) }
-    }
-  }
-
-  constructor(private events: Events, private db:AngularFirestore) {
+  constructor(private events: Events, private db: AngularFirestore, private customRouter: CustomRouterProvider, private projectActions: ProjectActions) {
     this.allSectionTerms = {
       1: ['baseline', 'endline', 'experiments', 'external-validity', 'hypothesis-testing', 'indicator', 'inference', 'internal validity', 'quasi-experiments',
-      'representative-sample', 'non-representative-sample'],
+        'representative-sample', 'non-representative-sample'],
       2: [],
       3: [],
       4: ['disaggregate-estimates'],
       5: [],
       6: []
     }
-    this.db.collection('glossary').valueChanges().subscribe(
-      res=>{
-        if(res){
-          this.allGlossaryTerms=res
-          if(this._sectionTerms){this._filterGlossary(this._sectionTerms)}
+    this.activeGlossarySlug$.subscribe(
+      slug => {
+        if (slug) {
+          let term = this.allGlossaryJson[slug]
+          if (term) { this.activeTerm = term }
+          else {
+            this.activeTerm = {
+              term: slug.split('-').join(' '),
+              slug: slug,
+              definition: 'DEFINITION MISSING - ' + slug
+            }
+          }
+
+        }
+        console.log('active term', this.activeTerm)
+      }
+    )
+
+    const ref = this.db.collection('glossary').valueChanges() as Observable<glossaryTerm[]>
+    ref.subscribe(
+      res => {
+        if (res) {
+          this.allGlossaryTerms = res
+          let allGlossaryJson = {}
+          this.allGlossaryTerms.forEach(el => {
+            allGlossaryJson[el.slug] = el
+          })
+          this.allGlossaryJson = allGlossaryJson
+          // this.projectActions.setMeta({
+          //   _allGlossaryTerms:this.allGlossaryTerms
+          // })
+          if (this._sectionTerms) { this._filterGlossary(this._sectionTerms) }
         }
       }
     )
   }
 
-  setActiveTerm(term) {
-    //  if page mode use hash navigation, otherwise embedded component mode
-    this.activeTerm = term
-    if (this.displayMode == "page") {
-      this.events.publish('glossaryTerm:set', this.activeTerm)
-    }
+  setActiveTerm(term: glossaryTerm) {
+    this.customRouter.updateHashParams({
+      activeGlossaryTerm: term.slug
+    })
   }
+
   viewAllTerms() {
     this.filteredGlossaryTerms = null;
     this.activeTerm = null;

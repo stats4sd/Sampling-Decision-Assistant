@@ -1,8 +1,8 @@
 <div class="slide-content">
     <stage-breadcrumbs [stage]='6' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
-    <ion-slides #stageSlides class="stage-6-slides" (ionSlideDidChange)="stageSlideChange()" effect="fade">
+    <div [ngSwitch]="stagePart">
         <!-- recap slide -->
-        <ion-slide>
+        <div *ngSwitchDefault>
             <stage-intro [stage]="6"></stage-intro>
             <h4>Allocating resources</h4>
             <p>The final step in this process is to determine the number of units that should be sampled at every stage in the
@@ -17,14 +17,14 @@
             <p>Each shape represents a collection of units from which a sample will be selected</p>
             <!-- <note type="dev">Currently system assumes all nodes can be treated equally, however in the future the option will be provided
                 to further split a node into strata if desired</note> -->
-        </ion-slide>
+            </div>
         <!-- Stratification slide -->
-        <ion-slide>
+        <div  *ngSwitchCase="1">
             <h4>Stratification</h4>
             <note type="dev">In this section there will be options to apply additional stratification to the tree diagram beyond what has been classified in the reporting requirements</note>
-        </ion-slide>
+        </div>
         <!-- Sample sizes slide -->
-        <ion-slide>
+        <div  *ngSwitchCase="2">
             <h4>Determining an overall sample size</h4>
             <p>We now wish to decide on the total number of final sampling units that data will be recorded for.</p>
             <p>If the number of units you wish to use is already known then please input the answer in the box below. Otherwise
@@ -35,8 +35,8 @@
             <survey-question-group [filter]="['q6.1']"></survey-question-group>
             <!-- <ion-input type="number" placeholder="Sample size required" [(ngModel)]="sampleSize" class="sample-size-input"></ion-input> -->
 
-        </ion-slide>
-        <ion-slide>
+        </div>
+        <div  *ngSwitchCase="3">
             <h4>Allocating resources</h4>
             <p>The next step is to allocate the sampling units throughout the diagram</p>
             <div style="display: flex">
@@ -74,8 +74,8 @@
 
 
 
-        </ion-slide>
-    </ion-slides>
+        </div>
+    </div>
 
 
     <!-- Next and back buttons -->

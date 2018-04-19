@@ -17,14 +17,6 @@ export class Stage5Component extends StagePage {
   // @ViewChild('stageSlides') stageSlides: Slides;
 
 
-  ngAfterViewInit() {
-    if (this.stageSlides) {
-      this.stageSlides.lockSwipes(true)
-    }
-    // breadcrumb listener
-    this.attachBreadcrumbSubscriber()
-
-  }
   goBack() {
     this.navCtrl.pop()
   }

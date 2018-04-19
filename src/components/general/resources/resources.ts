@@ -61,7 +61,6 @@ export class ResourcesComponent {
     Object.keys(stageResources.questions).forEach(k => {
       questions.push(stageResources.questions[k])
     })
-    console.log('resource questions', questions)
     this.questions = questions
     }
     

@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import {GlossaryComponent} from '../glossary'
+import { glossaryTerm } from '../../../../models/models';
 
 @Component({
   selector: 'glossary-detail',
   templateUrl: 'glossary-detail.html'
 })
 export class GlossaryDetailComponent extends GlossaryComponent{
-  @Input() set term(term:any){
+  @Input() set term(term:glossaryTerm){
     if(term && term.term){
         this._term=term}
   }
@@ -25,21 +26,10 @@ export class GlossaryDetailComponent extends GlossaryComponent{
   }
 
   _linkClick(href){
-    if(href.indexOf('#/glossary/')>-1){
-      // internal links
-      let arr = href.split('/')
-      this.activeTerm=this._getTerm(arr[arr.length-1])
-    }
+    // if(href.indexOf('#/glossary/')>-1){
+    //   // internal links
+    //   let arr = href.split('/')
+    //   this.activeTerm=this._getTerm(arr[arr.length-1])
+    // }
   }
-
-  _getTerm(slug) {
-    // return term with given slug
-    for (let term of this.allGlossaryTerms) {
-      if (term.slug.toLowerCase() == slug.toLowerCase()) {
-        this.activeTerm = term
-        return term
-      }
-    }
-  }
-
 }

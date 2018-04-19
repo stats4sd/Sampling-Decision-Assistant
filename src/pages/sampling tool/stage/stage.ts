@@ -5,7 +5,7 @@ import { DataProvider } from '../../../providers/data/data';
 import { FormProvider } from '../../../providers/form/form'
 // import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
 import animationStates from '../../../providers/animationStates'
-import { ProjectActions } from '../../../actions/actions';
+import { ProjectActions, ViewActions } from '../../../actions/actions';
 import { Project, AppState } from '../../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -29,8 +29,8 @@ export class StagePage {
   @ViewChild('content') content: Content;
   @ViewChild('stageSlides') stageSlides: Slides;
   @select(['activeProject', 'values']) readonly formValues$: Observable<any>;
-  @select(['view', 'params']) readonly viewParams$: Observable<any>;
-  @select(['view', 'params', 'part']) readonly stagePart$: Observable<any>;
+  @select(['view', 'params','tabSection']) readonly tabSection$: Observable<any>;
+  @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<any>;
   stagePart: string;
   activeSection: string = "main";
 
@@ -54,6 +54,7 @@ export class StagePage {
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public projectActions: ProjectActions,
+    public viewActions:ViewActions,
     public ngRedux: NgRedux<AppState>,
     private customRouter:CustomRouterProvider
   ) {
@@ -75,6 +76,7 @@ export class StagePage {
     }
     this.stage = this.stages[stageID]
     this.section = this.stage.name
+    this.viewActions.updateView({activeStageID:stageID})
   }
 
 
@@ -87,17 +89,17 @@ export class StagePage {
   goTo(section:string) {
     if(section){
       this.customRouter.updateHashParams({
-        section:section
+        tabSection:section
       })
     }
     else{
-      this.customRouter.removeHashParam('section')
+      this.customRouter.removeHashParam('tabSection')
     }
   }
 
   _subscribeToViewChanges(){
-    this.viewParams$.subscribe(
-      v => {if(v){this.activeSection = v.section ? v.section : 'main'}}
+    this.tabSection$.subscribe(
+      section => this.activeSection = section ? section : 'main'
     )
     this.stagePart$.subscribe(
       p => {this.stagePart = p})
