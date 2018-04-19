@@ -1,20 +1,27 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, Events, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ViewActions, ProjectActions } from '../actions/actions';
+import { CustomRouterProvider } from '../providers/router/router';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
   rootPage: any = 'HomePage';
   hash: string;
-
   pages: Array<{ title: string, component: any, disabled?: boolean }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    private customRouter: CustomRouterProvider,
+    private projectActions:ProjectActions
+
+  ) {
     this.initializeApp();
 
 
@@ -34,14 +41,12 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      // monitor window hash changes and publish corresponding event
-      window.addEventListener('hashchange', () => {
-        this.events.publish('hash:changed', location.hash);
-      })    
+      // handle cordova functions
+      this.projectActions.setMeta({_platforms:this.platform.platforms()})
+      if (this.platform.is('cordova')) {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      }
     });
   }
 
@@ -50,6 +55,8 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+
 
 
 }

@@ -6,9 +6,10 @@ export const INITIAL_STATE: Models.AppState = {
     activeProject: null,
     savedProjects: null,
     editMode: false,
-    slideSection: -1,
     relevantResources: null,
-    _dbVersion:null
+    view:null,
+    _dbVersion: null,
+    _platforms:null
     // reviewMode:false
 };
 
@@ -55,17 +56,22 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
             const relevant = action as Actions.UpdateProjectAction
             return Object.assign({}, state, { relevantResources: relevant.payload })
 
-        // case Actions.ProjectActions.REVIEW_TOGGLE:
-        //     const review = action as Actions.UpdateProjectAction
-        //     return Object.assign({}, state, { reviewMode: review.payload })
-
-        case Actions.ProjectActions.EDIT_TOGGLE:
-            const edit = action as Actions.UpdateProjectAction
-            return Object.assign({}, state, { editMode: edit.payload })
 
         case Actions.ProjectActions.SET_META:
             const meta = action as Actions.UpdateProjectAction
             return Object.assign({}, state, meta.payload)
+
+        // view actions -  *** should be split to seperate reducer ***
+        case Actions.ViewActions.SET_VIEW:
+            const viewAction = action as Actions.UpdateProjectAction
+            return Object.assign({}, state, {view:viewAction.payload})
+
+
+        // dev actions -  *** should be split to seperate reducer ***
+        case Actions.DevActions.EDIT_TOGGLE:
+            const edit = action as Actions.UpdateProjectAction
+            return Object.assign({}, state, { editMode: edit.payload })
+
 
 
 

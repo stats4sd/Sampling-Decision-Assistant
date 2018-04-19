@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { dispatch } from '@angular-redux/store';
 import { FluxStandardAction } from 'flux-standard-action';
-import { Project, SavedProjects } from '../models/models';
+import { Project, SavedProjects, ViewState } from '../models/models';
 
 export type ProjectSaveAction = FluxStandardAction<Project, null>;
 export type ProjectLoadAction = FluxStandardAction<Project, null>;
@@ -20,10 +20,6 @@ export class ProjectActions {
     static readonly SET_SLIDE_SECTION = 'SET_SLIDE_SECTION';
     static readonly SET_RELEVANT_RESOURCES = 'SET_RELEVANT_RESOURCES';
     static readonly SET_META = 'SET_META';
-    // static readonly REVIEW_TOGGLE = 'REVIEW_TOGGLE';
-    
-    // dev
-    static readonly EDIT_TOGGLE = 'EDIT_TOGGLE';
 
 
     @dispatch()
@@ -55,51 +51,58 @@ export class ProjectActions {
     });
 
     @dispatch()
-    updateProjectValues = (values:any): UpdateProjectAction => ({
+    updateProjectValues = (values: any): UpdateProjectAction => ({
         type: ProjectActions.UPDATE_PROJECT_VALUES,
         meta: 'values',
         payload: values
     });
 
     @dispatch()
-    updateStagesComplete = (arr:boolean[]): UpdateProjectAction => ({
+    updateStagesComplete = (arr: boolean[]): UpdateProjectAction => ({
         type: ProjectActions.UPDATE_STAGES_COMPLETE,
         meta: 'stagesComplete',
         payload: arr
     });
 
     @dispatch()
-    setSlideSection = (index:number) => ({
+    setSlideSection = (index: number) => ({
         type: ProjectActions.SET_SLIDE_SECTION,
         meta: null,
         payload: index
     })
     @dispatch()
-    setRelevantResources = (relevant:string) => ({
+    setRelevantResources = (relevant: string) => ({
         type: ProjectActions.SET_RELEVANT_RESOURCES,
         meta: null,
         payload: relevant
     })
     // generic method to set any top level meta data
     @dispatch()
-    setMeta = (meta:any) => ({
+    setMeta = (meta: any) => ({
         type: ProjectActions.SET_META,
         meta: null,
         payload: meta
     });
+}
 
-    // toggleReviewMode = (reviewMode:boolean) => ({
-    //     type: ProjectActions.REVIEW_TOGGLE,
-    //     meta: null,
-    //     payload: reviewMode
-    // });
+export class ViewActions {
+    static readonly SET_VIEW = 'SET_VIEW';
 
-    // dev
     @dispatch()
-    toggleEditMode = (editMode:boolean) => ({
-        type: ProjectActions.EDIT_TOGGLE,
+    setView = (view: ViewState) => ({
+        type: ViewActions.SET_VIEW,
+        meta: null,
+        payload: view
+    });
+}
+
+export class DevActions {
+    static readonly EDIT_TOGGLE = 'EDIT_TOGGLE';
+
+    @dispatch()
+    toggleEditMode = (editMode: boolean) => ({
+        type: DevActions.EDIT_TOGGLE,
         meta: null,
         payload: editMode
     });
-
 }

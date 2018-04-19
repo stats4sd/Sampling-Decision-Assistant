@@ -9,6 +9,7 @@ import { ProjectActions } from '../../../actions/actions';
 import { Project, AppState } from '../../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { CustomRouterProvider } from '../../../providers/router/router';
 
 
 
@@ -24,28 +25,25 @@ import { Observable } from 'rxjs/Observable';
 export class StagePage {
   stage: any;
   stages: any;
-  // @ViewChild('slides') slides;
   @ViewChild('navbar') navbar: Navbar;
   @ViewChild('content') content: Content;
   @ViewChild('stageSlides') stageSlides: Slides;
-  @select(['activeProject','values']) readonly formValues$: Observable<any>;
-  // dev
-  // @select('editMode') editMode$:Observable<boolean>
-  // editMode tracks whether content editor open, review mode tracks nav from stage 5 overview page
-  // and replaces next stage link with return
-  // editMode:boolean
-  activeSection: string = "Main";
+  @select(['activeProject', 'values']) readonly formValues$: Observable<any>;
+  @select(['view', 'params']) readonly viewParams$: Observable<any>;
+  @select(['view', 'params', 'part']) readonly stagePart$: Observable<any>;
+  stagePart: string;
+  activeSection: string = "main";
 
   activeGlossaryTerm: string;
-  glossaryTerms = [];
-  glossarySlug: string;
+  // glossaryTerms = [];
+  // glossarySlug: string;
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
-  refreshSlides: boolean;
+  // refreshSlides: boolean;
   relevant: string
   loaded: boolean
-  slideOptions = {}
-  stageSlidesIndex: number = 0
+  // slideOptions = {}
+  // stageSlidesIndex: number = 0
 
   constructor(
     public navCtrl: NavController,
@@ -55,16 +53,16 @@ export class StagePage {
     public formPrvdr: FormProvider,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
-    public projectActions:ProjectActions,
-    public ngRedux: NgRedux<AppState>
+    public projectActions: ProjectActions,
+    public ngRedux: NgRedux<AppState>,
+    private customRouter:CustomRouterProvider
   ) {
-    // this.editMode$.subscribe(mode=>this.editMode=mode)
     this.stageInit(navParams)
-    this.events.subscribe('hash:changed', hash => this._hashChanged(hash))
     this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
-    this.events.subscribe('stageSlidesIndexChanged', index => this.stageSlidesIndex = index)
-
+    this._subscribeToViewChanges()
   }
+    
+
   stageInit(navParams) {
     let stageID = navParams.data.stageID
     this.stages = {
@@ -81,56 +79,62 @@ export class StagePage {
 
 
   ionViewDidEnter() {
-    //this.surveyValues = this.dataPrvdr.activeProject ? this.dataPrvdr.activeProject.values : {}
-    // this.slides.lockSwipes(true)
-    // this.slides.autoHeight = true;
     this.loaded = true
-    this.navbar.backButtonClick = () => {
-      let depth = location.hash.split('/').length
-      if (depth > 3) { window.history.back() }
-      else { this.navCtrl.pop() }
+    this._addBackButtonFunction()
+  }
+
+  // handle routing between main/resource/glossary sections using hash query params (changes subscribed to in _subscribeToViewChanges)
+  goTo(section:string) {
+    if(section){
+      this.customRouter.updateHashParams({
+        section:section
+      })
+    }
+    else{
+      this.customRouter.removeHashParam('section')
     }
   }
 
+  _subscribeToViewChanges(){
+    this.viewParams$.subscribe(
+      v => {if(v){this.activeSection = v.section ? v.section : 'main'}}
+    )
+    this.stagePart$.subscribe(
+      p => {this.stagePart = p})
+  }
 
-  goTo(section) {
-    //this.activeSection=section
-    // update hash so that slides automatically go to correct section
-    let hash = location.hash
-    let arr = hash.split('/')
-    if (arr.indexOf('section') == -1) {
-      // in wrong section
-      let depth = arr.length
-      /* Depth varies between 3 and 4 if section selected
-              /#//stage-1/section
-      */
-      if (section == 'main') {
-        location.hash = arr.slice(0, 3).join('/')
+  // custom intercept for back button to handle going back in sections vs nav pop
+  _addBackButtonFunction(){
+    // if in main section pop, otherwise go to main
+    this.navbar.backButtonClick = () => {
+      let section = location.hash.split('section=')[1]
+      if(section){
+        window.history.back()
       }
-      else {
-        // append to main
-        if (depth < 4) { location.hash = location.hash + '/' + section }
-        // replace
-        else { location.hash = arr.slice(0, 3).join('/') + '/' + section }
+      else{
+        this.navCtrl.pop()
       }
     }
   }
 
   showGlossary(term: string) {
     this.activeGlossaryTerm = term;
-    this.activeSection="Glossary"
-    //this.slides.slideTo(2)
+    this.activeSection = "Glossary"
   }
+
   openModal(component, params?) {
     this.modalCtrl.create(component, params).present()
   }
+
   closeModal() {
     this.dataPrvdr.backgroundSave()
     this.viewCtrl.dismiss()
   }
-  pushPage(component,params){
-    this.navCtrl.push(component,params)
+
+  pushPage(component, params) {
+    this.navCtrl.push(component, params)
   }
+
   scrollDown() {
     setTimeout(() => {
       try {
@@ -145,69 +149,5 @@ export class StagePage {
     if (arr.indexOf('resources') == -1) {
       location.hash = location.hash + '/resources'
     }
-  }
-
-  _hashChanged(hash) {
-    // update slide on hash change. no slide changed tracking needed as swipes disabled (all nav programmatic)
-    // if (this.slides && this.loaded) {
-    //   this.slides.lockSwipes(false)
-      let arr = hash.split('/')
-      // glossary tab
-      if (arr.indexOf('glossary') > -1) {
-        // this.slides.slideTo(2); 
-        this.activeSection = "Glossary";
-        if (arr[arr.length - 1] != 'glossary') { this.glossarySlug = arr[arr.length - 1] }
-        else { this.glossarySlug = "_" }
-
-      }
-      // resources tab
-      else if (arr.indexOf('resources') > -1) { 
-        // this.slides.slideTo(1); 
-        this.activeSection = "Resources" 
-      }
-      // main tab
-      else {
-        //this.slides.slideTo(0); 
-        this.activeSection = "Main"
-      }
-    //   this.slides.lockSwipes(true)
-    // }
-  }
-
-  // stage slides
-  nextStep() {
-    this.stageSlides.lockSwipes(false)
-    this.stageSlidesIndex++
-    this.stageSlides.slideNext()
-    this.stageSlides.lockSwipes(true)
-    this.emitSlideIndex()
-  }
-  lastStep() {
-    this.stageSlides.lockSwipes(false)
-    this.stageSlidesIndex--
-    this.stageSlides.slidePrev()
-    this.stageSlides.lockSwipes(true)
-    this.emitSlideIndex()
-  }
-  stageSlideChange() {
-    this.stageSlidesIndex = this.stageSlides.getActiveIndex()
-    this.emitSlideIndex()
-    this.projectActions.setSlideSection(this.stageSlidesIndex)
-  }
-  // used to update parent component
-  emitSlideIndex() {
-    this.events.publish('stageSlidesIndexChanged', this.stageSlidesIndex)
-  }
-  attachBreadcrumbSubscriber() {
-    this.events.subscribe('goToStageSlide', index => {
-      if (this.stageSlides) {
-        this.stageSlides.lockSwipes(false)
-        this.stageSlidesIndex = index
-        this.stageSlides.slideTo(index)
-        this.stageSlides.lockSwipes(true)
-        this.emitSlideIndex()
-      }
-
-    })
   }
 }

@@ -71,7 +71,6 @@ export class DataProvider {
           // deprecate old format
           Object.keys(res).forEach(k => {
             let survey = res[k]
-            if (!survey._dbVersion || survey._dbVersion < this._dbVersion) { res[k].incompatible = true }
             saved.push(res[k])
           })
           this.savedProjectsJson = res

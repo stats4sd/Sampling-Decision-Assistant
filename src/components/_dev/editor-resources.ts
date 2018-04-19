@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import { ProjectActions } from '../../actions/actions';
+import { DevActions } from '../../actions/actions';
 
 import demoResources from '../general/resources/data/demo-resources'
 import stage1Resources from '../general/resources/data/stage-1-resources'
@@ -27,7 +27,7 @@ export class DevEditorResourcesComponent {
   stageNumber: number;
   status: string = 'Ready'
 
-  constructor(private db: AngularFirestore, private actions: ProjectActions, private toast: ToastController) {
+  constructor(private db: AngularFirestore, private devActions: DevActions, private toast: ToastController) {
     this.db.collection('resources').valueChanges().subscribe(
       res => {
         this.allResources = res;
@@ -47,7 +47,7 @@ export class DevEditorResourcesComponent {
       res => {
         console.log('res', res)
         this.status = 'ready'
-        this.actions.toggleEditMode(false)
+        this.devActions.toggleEditMode(false)
         this.toast.create({
           message: 'Changes saved successfully',
           duration:2000

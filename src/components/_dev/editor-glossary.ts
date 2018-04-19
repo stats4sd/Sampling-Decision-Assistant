@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { ProjectActions } from '../../actions/actions';
+import { DevActions } from '../../actions/actions';
 import { ToastController } from 'ionic-angular';
 
 export interface glossaryTerm {
@@ -18,7 +18,7 @@ export class DevEditorGlossaryComponent {
   allGlossaryTerms: any = []
   status: string = 'Ready'
 
-  constructor(private db: AngularFirestore, private actions: ProjectActions, private toast: ToastController) {
+  constructor(private db: AngularFirestore, private devActions: DevActions, private toast: ToastController) {
     this.db.collection('glossary').valueChanges().subscribe(
       res => {
         this.allGlossaryTerms = res;
@@ -42,7 +42,7 @@ export class DevEditorGlossaryComponent {
       res => {
         console.log('promise res', res)
         this.status = 'ready'
-            this.actions.toggleEditMode(false)
+            this.devActions.toggleEditMode(false)
             this.toast.create({
               message: 'Changes saved successfully',
               duration:2000

@@ -7,9 +7,4 @@ import { StagePage } from '../../../../pages/sampling tool/stage/stage';
 })
 export class Stage4Component extends StagePage {
 
-  ngAfterViewInit() {
-    // breadcrumb listener
-    this.attachBreadcrumbSubscriber()
-  }
-
 }

@@ -18,11 +18,12 @@ import { DecisionToolMenuComponent } from '../components/general/decision-tool-m
 import { NgRedux, DevToolsExtension, NgReduxModule } from '@angular-redux/store';
 import { AppState } from '../models/models';
 import { rootReducer, INITIAL_STATE } from '../reducers/reducers';
-import { ProjectActions } from '../actions/actions';
+import { ProjectActions, DevActions, ViewActions } from '../actions/actions';
 // dev db
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from '../components/_dev/config';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { CustomRouterProvider } from '../providers/router/router';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     DataProvider,
     FormProvider,
     ProjectActions,
-    DevToolsExtension
+    DevActions,
+    ViewActions,
+    DevToolsExtension,
+    CustomRouterProvider
   ]
 })
 export class AppModule { 

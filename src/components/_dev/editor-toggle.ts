@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import { ProjectActions } from '../../actions/actions';
+import { DevActions } from '../../actions/actions';
 import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { select } from '@angular-redux/store'
 
@@ -17,21 +17,21 @@ export class DevEditorToggleComponent {
   @select('editMode') editMode$
   constructor(
     private db: AngularFirestore,
-    private actions: ProjectActions,
+    private devActions: DevActions,
     private modal: ModalController) {
     console.log('db', db)
   }
 
 
   enableEdit() {
-    this.actions.toggleEditMode(true)
+    this.devActions.toggleEditMode(true)
     //this.editMode = true
     // this.modal.create('EditorPage').present()
 
   }
 
   disableEdit() {
-    this.actions.toggleEditMode(false)
+    this.devActions.toggleEditMode(false)
     //this.editMode = false
   }
 

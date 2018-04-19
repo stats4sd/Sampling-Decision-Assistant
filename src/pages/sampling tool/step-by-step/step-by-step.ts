@@ -8,7 +8,9 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Project } from '../../../models/models';
 
-@IonicPage()
+@IonicPage({
+  defaultHistory:['HomePage']
+})
 @Component({
   selector: 'page-step-by-step',
   templateUrl: 'step-by-step.html',

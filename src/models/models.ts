@@ -7,7 +7,6 @@ export interface Project {
     values: any,
     stagesComplete: boolean[],
     dbVersion:number,
-    incompatible?: boolean,
     draft?: boolean
 }
 
@@ -20,7 +19,19 @@ export interface AppState {
     reviewMode?:boolean,
     slideSection?:number,
     relevantResources:string,
+    view:ViewState
     _dbVersion?: number,
+    _platforms?:string[]
+}
+
+export interface ViewState{
+    params?:ViewStateParams,
+    hash?:string
+}
+
+export interface ViewStateParams{
+    part?:string,
+    section?:string
 }
 
 export interface Question {

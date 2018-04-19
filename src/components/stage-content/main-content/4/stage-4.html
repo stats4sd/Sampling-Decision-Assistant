@@ -1,8 +1,8 @@
 <div class="slide-content">
     <stage-breadcrumbs [stage]='4' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
-    <ion-slides #stageSlides class="stage-slides" (ionSlideDidChange)="stageSlideChange()" effect="fade">
+    <div [ngSwitch]="stagePart">
         <!-- Intro slide -->
-        <ion-slide>
+        <div *ngSwitchDefault>
             <stage-intro [stage]="4"></stage-intro>
             <p>
                 Before you try to determine the individual sampling units, it is important to define the reporting requirements or goals.
@@ -21,18 +21,18 @@
                 <survey-question controlName='q4.3'></survey-question>
                 <stage-complete stageNumber=4></stage-complete>
             </div>
-        </ion-slide>
+        </div>
 
         <!-- define levels slide -->
-        <ion-slide>
+        <div *ngSwitchCase="1">
             <stage-4-define-level-categories></stage-4-define-level-categories>
-        </ion-slide>
-        <ion-slide *ngIf="form.value['reportingLevels'] && form.value['reportingLevels'].length>0">
+        </div>
+        <div *ngIf="form.value['reportingLevels'] && form.value['reportingLevels'].length>0">
             <stage-4-review-levels></stage-4-review-levels>
             <stage-complete stageNumber=4></stage-complete>
-        </ion-slide>
+        </div>
 
-    </ion-slides>
+    </div>
 
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px">
