@@ -3,6 +3,17 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Stage4Component } from '../stage-4';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { reportingLevel } from '../../../../../models/models';
+
+export interface ReportingLevel {
+  name: string,
+  classifications: LevelClassification
+}
+
+export interface LevelClassification {
+  names: string[],
+  total: string
+}
 
 @Component({
   selector: 'stage-4-define-level-categories',
@@ -10,68 +21,43 @@ import { Observable } from 'rxjs/Observable';
 })
 export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
 
-  // strata: any = {}
-  reportingLevels: any[] = []
-  classificationsInput: any = {}
-  initialInitComplete: boolean = false
-  saveMessage:string="save names"
-  // use all classifications as temp binding due to input jump
+  reportingLevels: reportingLevel[] = []
 
-  @select(['slideSection']) readonly slideSection$: Observable<number>;
+  @select(['view', 'params', 'stagePart']) readonly slideSection$: Observable<string>;
+  @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<ReportingLevel[]>;
 
   ngOnInit() {
-     // bind to slide section to call init every time slide focused
-    this.slideSection$.subscribe(section=>{
-      if(section==1 && this.form.value.reportingLevels){
-        this._init(this.form.value.reportingLevels.slice(0))}
-      })
-    // this._init(this.form.value.reportingLevels)
-  }
-  _init(levels){
-    if (levels instanceof Array) {
-      levels.forEach(level => {
-        this.classificationsInput[level.name] = level.classifications.names.slice(0)
-      })
-      this.reportingLevels = levels.slice(0)
-    }
-  }
-  showSaveMessage(){
-    this.saveMessage='save names'
+    // bind to reporting level changes to recalculate classification fields 
+    this.reportingLevels$.subscribe(
+      l => {
+        if(l && l instanceof Array){this.reportingLevels=l}}
+    )
   }
 
-  setClassifications(i) {
-    let total = this.reportingLevels[i].classifications.total
-    let names = this.reportingLevels[i].classifications.names
-    // add empty on increase
-    for (let i = 0; i < total; i++) {
-      if (!names[i]) {
+  // change the current array of level classification data on change, adding placeholder on increase and removing existing on decrease
+  setClassificationsNumber(level: ReportingLevel, levelIndex:number) {
+    const total: number = parseInt(level.classifications.total)
+    let names: string[] = level.classifications.names.slice()
+    // case number increased - new names to be added
+    if (names.length < total) {
+      for (let i = names.length; i < total; i++) {
         names.push('')
       }
     }
-    // remove last on decrease (check lengths)
-    let current = names.length
-    let target = total
-    let removeCount = current - target
-    names.splice(target, removeCount)
+    // case number decreased - names to be removed
+    if (names.length > total) {
+      names = names.slice(0,total)
+    }
+    this.reportingLevels[levelIndex].classifications.names=names
     this.save()
   }
 
-  updateNames() {
-    let newLevels = []
-    newLevels = this.reportingLevels.slice(0)
-    newLevels.map(level => {
-      level.classifications.names = this.classificationsInput[level.name]
-    })
-    // this.reportingLevels=newLevels
-    let patch: any = {}
-    patch.reportingLevels = newLevels
-    this.form.patchValue(patch)
-    this.saveMessage='saved'
+  setClassificationName(levelIndex:number,nameIndex:number,e){
+    this.reportingLevels[levelIndex].classifications.names[nameIndex]=e.target.value
+    this.save()
   }
 
   save() {
-    // stringify result and save as 'strata' on formgroup (not using standard question interaction for simplicity)
-    // if (!this.form.value.strata) { this.form.addControl('strata', new FormControl('')) }
     let patch: any = {}
     patch.reportingLevels = this.reportingLevels
     this.form.patchValue(patch)

@@ -124,6 +124,9 @@ export class StageCompleteComponent extends StagePage {
     // push next stage page and remove currnet page from nav stack to allow direct nav back to home. Could also be done with slugs, will need
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history
     let next: number = this.stage.number + 1
+    // remove any existing stagePart hash params
+    this.customRouter.removeHashParam('stagePart')
+    // push new page and remove duplicate stack
     this.navCtrl.push('StagePage', { stageID: 'stage-' + next }).then(
       _ => {
         this.navCtrl.remove(this.navCtrl.length() - 2)

@@ -28,19 +28,15 @@
             <stage-4-define-level-categories></stage-4-define-level-categories>
         </div>
 
-        <div *ngSwitchCase="2">
-            <div *ngIf="form.value['reportingLevels'] && form.value['reportingLevels'].length>0">
+        <div *ngSwitchCase="2">  
                 <stage-4-review-levels></stage-4-review-levels>
                 <stage-complete stageNumber=4></stage-complete>
-            </div>
         </div>
-
-
     </div>
 
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px">
-        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex <2" clear block>Continue
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='2'" clear block>Continue
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
     </div>

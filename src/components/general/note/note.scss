@@ -9,4 +9,10 @@ note {
     .warning, .alert{
         background-color: rgba(250, 78, 78, 0.541)
     }
+
+    .note.info{
+        background-color: white;
+        color:color($colors,primary);
+        // border:1px solid color($colors,primary)
+    }
 }

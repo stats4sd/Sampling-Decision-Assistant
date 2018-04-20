@@ -4,7 +4,7 @@
     <br>For example, if you wish to report on seperate geographical regions you should specify the number of regions and your
     preferred way to denote them.</p>
 
-<ion-grid class="builder-container" *ngIf="reportingLevels">
+<ion-grid class="builder-container" *ngIf="reportingLevels && reportingLevels.length>0">
     <ion-row class="row-headers">
         <ion-col col-2>Reporting Level</ion-col>
         <ion-col col-2>Number of Classifications</ion-col>
@@ -13,25 +13,13 @@
     <ion-row *ngFor="let level of reportingLevels; let i=index; let last=last">
         <ion-col col-2>{{level.name}}</ion-col>
         <ion-col col-2 class="center" class="required">
-            <ion-input type="number" (ionChange)="setClassifications(i)" [(ngModel)]="level.classifications.total"></ion-input>
+            <ion-input type="number" (ionChange)="setClassificationsNumber(level,i)" [(ngModel)]="level.classifications.total"></ion-input>
         </ion-col>
         <ion-col col>
             <form>
-                <div *ngFor="let name of level.classifications.names; let j=index">
+                <div *ngFor="let input of level.classifications.names; let j=index">
                     <ion-item>
-                        <!-- <ion-input 
-                        [placeholder]="'group '+(j+1)" 
-                        [(ngModel)]="classificationsInput[level.name][j]" 
-                        [ngModelOptions]="{standalone: true}"
-                        (focusout)="updateNames()">
-                        </ion-input> -->
-                        <ion-input 
-                                [placeholder]="'group '+(j+1)" 
-                                [(ngModel)]="classificationsInput[level.name][j]" 
-                                [ngModelOptions]="{standalone: true}"
-                                (focusout)="showSaveMessage()">
-                                
-                                </ion-input>
+                        <ion-input [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="level.classifications.names[j]"></ion-input>
                     </ion-item>
                 </div>
             </form>
@@ -40,11 +28,8 @@
 
         </ion-col>
     </ion-row>
-    <ion-row>
-        <ion-col col-2></ion-col>
-        <ion-col col-2></ion-col>
-        <ion-col>
-            <button ion-button (click)="updateNames()" block outline>{{saveMessage}}</button>
-        </ion-col>
-    </ion-row>
 </ion-grid>
+
+<note type="info" *ngIf="!reportingLevels || reportingLevels.length==0">
+    You have not specified any disaggregate estimate reporting levels so you may skip this step
+</note>

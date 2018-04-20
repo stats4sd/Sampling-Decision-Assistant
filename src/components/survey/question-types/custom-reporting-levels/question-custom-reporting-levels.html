@@ -3,7 +3,7 @@
             <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
                 type="text" [placeholder]="question.labelMultiple"></ion-input>
         </ion-item>
-        <button ion-button (click)="addTextMultiple()" type="submit" *ngIf="!editMode">Add</button>
+        <button ion-button (click)="addTextMultiple()" type="submit" *ngIf="!editMode" [disabled]="!multipleTextInput">Add</button>
         <button ion-button (click)="saveEdits()" type="submit" *ngIf="editMode">Save</button>
     </form>
     <div *ngFor="let value of multipleTextValues, index as i">

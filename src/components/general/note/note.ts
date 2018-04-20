@@ -24,7 +24,8 @@ export class NoteComponent {
  _type:string="";
  icons:any={
   warning:'alert',
-  dev:'construct'
+  dev:'construct',
+  info:'information-circle'
  }
 
   constructor() {

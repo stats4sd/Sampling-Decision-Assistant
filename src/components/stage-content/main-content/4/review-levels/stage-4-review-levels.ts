@@ -10,20 +10,23 @@ import { Observable } from 'rxjs/Observable';
 })
 export class Stage4_ReviewLevelsComponent extends Stage4Component {
   levelCombinations: any[] = []
-  levels: any[] = []
+  reportingLevels: any[] = []
 
-  @select(['slideSection']) readonly slideSection$: Observable<number>;
+  @select(['view','params','stagePart']) readonly slideSection$: Observable<string>;
 
   ngOnInit() {
     // bind to slide section to call init every time slide focused. use slice to avoid additional unwanted bindings
-    this.slideSection$.subscribe(section=>{if(section==2){this._init(this.form.value.reportingLevels.slice(0))}})
-    // this._init(this.form.value.reportingLevels.slice(0))
-
+    this.slideSection$.subscribe(section=>{
+      if(section=='2' && this.form.value && this.form.value.reportingLevels){
+        this._init(this.form.value.reportingLevels.slice(0))}
+      })
   }
   _init(levels) {
+    console.log('level review init')
     if (levels && levels != "") {
       // reshape levels array lists to build combinations (want array of name arrays)
-      this.levels = levels
+      this.reportingLevels = levels
+      console.log('reporting levels',this.reportingLevels)
       let categoryLabels = []
       levels.forEach(level => {
         // manage empty arrays (just push not blank)
@@ -37,10 +40,13 @@ export class Stage4_ReviewLevelsComponent extends Stage4Component {
           categoryLists[i].push(name)
         })
       })
+      console.log('category lists',categoryLists)
       this._buildCombinations(categoryLists)
     }
 
   }
+  // recursive function to build all combinations of variables across an array list
+  // e.g    [a,b],[1,2,3]  ->  [a,1],[a,2],[a,3],[b,1],[b,2],[b,3],[c,1],[c,2],[c,3] 
   _buildCombinations(arrays: any[]) {
     let combinations = []
     if (arrays[1]) {
@@ -59,6 +65,7 @@ export class Stage4_ReviewLevelsComponent extends Stage4Component {
         combinations = arrays[0].map(el => { return el.split('||') })
         this.levelCombinations = combinations
       }
+      console.log('level combinations',this.levelCombinations)
 
     }
   }

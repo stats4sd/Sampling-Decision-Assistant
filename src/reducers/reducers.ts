@@ -45,10 +45,6 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
             }
             return stagesState
 
-        case Actions.ProjectActions.SET_SLIDE_SECTION:
-            const section = action as Actions.UpdateProjectAction
-            return Object.assign({}, state, { slideSection: section.payload })
-
         case Actions.ProjectActions.SET_META:
             const meta = action as Actions.UpdateProjectAction
             return Object.assign({}, state, meta.payload)

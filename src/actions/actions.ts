@@ -63,12 +63,7 @@ export class ProjectActions {
         payload: arr
     });
 
-    @dispatch()
-    setSlideSection = (index: number) => ({
-        type: ProjectActions.SET_SLIDE_SECTION,
-        meta: null,
-        payload: index
-    })
+
     // generic method to set any top level meta data
     @dispatch()
     setMeta = (meta: any) => ({

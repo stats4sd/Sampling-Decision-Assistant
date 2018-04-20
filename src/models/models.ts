@@ -17,7 +17,7 @@ export interface AppState {
     savedProjects?: Project[],
     editMode?:boolean,
     reviewMode?:boolean,
-    slideSection?:number,
+    
     view:ViewState
     _dbVersion?: number,
     _platforms?:string[],

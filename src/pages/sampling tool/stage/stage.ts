@@ -30,7 +30,7 @@ export class StagePage {
   @ViewChild('stageSlides') stageSlides: Slides;
   @select(['activeProject', 'values']) readonly formValues$: Observable<any>;
   @select(['view', 'params','tabSection']) readonly tabSection$: Observable<any>;
-  @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<any>;
+  @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<string>;
   stagePart: string;
   activeSection: string = "main";
 
@@ -56,7 +56,7 @@ export class StagePage {
     public projectActions: ProjectActions,
     public viewActions:ViewActions,
     public ngRedux: NgRedux<AppState>,
-    private customRouter:CustomRouterProvider
+    public customRouter:CustomRouterProvider
   ) {
     this.stageInit(navParams)
     // this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
@@ -130,6 +130,24 @@ export class StagePage {
 
   pushPage(component, params) {
     this.navCtrl.push(component, params)
+  }
+
+  // click handler to move to next part of stage subsection
+  nextStep(){
+    console.log('nextStep',this.stagePart)
+    // first part (0) undefined so just go part 1
+    if(!this.stagePart){
+      this.customRouter.updateHashParams({stagePart:1})
+    }
+    // otherwise increment part and update
+    else{
+      try {
+        let nextPart = parseInt(this.stagePart)+1
+        this.customRouter.updateHashParams({stagePart:nextPart})
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   // scrollDown() {

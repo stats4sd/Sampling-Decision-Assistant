@@ -81,7 +81,7 @@
     <!-- Next and back buttons -->
     <div style="display: flex; justify-content:space-between; padding-bottom:20px">
 
-        <button ion-button icon-right (click)="nextStep()" *ngIf="stageSlidesIndex <3" clear block>Continue
+        <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='3'" clear block>Continue
             <ion-icon name="arrow-forward"></ion-icon>
         </button>
 
