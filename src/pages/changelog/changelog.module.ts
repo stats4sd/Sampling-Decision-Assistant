@@ -4,6 +4,7 @@ import { ChangelogPage } from './changelog';
 import { GeneralComponentsModule } from '../../components/general/generalComponents.module'
 import { StageComponentsModule } from '../../components/stage-content/stageComponents.module'
 import { ImageViewerModule } from "ngx-image-viewer";
+import { YoutubePlayerModule } from 'ngx-youtube-player';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ImageViewerModule } from "ngx-image-viewer";
     IonicPageModule.forChild(ChangelogPage),
     GeneralComponentsModule,
     StageComponentsModule,
+    YoutubePlayerModule,
     ImageViewerModule.forRoot({
       btnIcons: {
         zoomIn: 'fa fa-plus',

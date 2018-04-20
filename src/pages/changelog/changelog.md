@@ -1,5 +1,23 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
+## 0.9.4 (20th April 2018)
+
+Glossary - lots of new terms have been added and can be seen from the main <a href="/#/glossary">glossary page</a>. In the next update lists of words that appear in each section will also be populated. 
+
+Videos - A new video for section 1 has been produced. You can see it here:
+https://www.youtube.com/watch?v=akco-dy3dSA
+<youtube-player videoId="akco-dy3dSA" width="450" height="300"></youtube-player>
+
+Save/Load - This page no longer shows projects created from earlier versions. These can still be recovered on request and as of v1.0 it is expected that subsequent data structure changes should automatically upgrade.
+
+Navigation - More changes have been added to the way the app handles transitions between different sections to make the overall experience smoother across mobile and web, and corresponding code more accessible. The main change you might see is some extra portions of the address bar indicating things like '?activeGlossary' for when a glossary term has been selected.
+This is designed to make it easier to direct the user to a specific portion of the app, however may still change slightly in the future as the core platform has a proposed significant upgrade for issues relating to this. 
+
+Code refactoring - Numerous changes to make the codebase more user-friendly (mostly linked to a universal app 'state' (redux) which provides access to all relevant information currently being handled by the app)
+
+Bug fixes and general improvements - various rounds of testing and fixing (11 issues closed, 15 new issues open)
+https://github.com/stats4sd/Sampling-Decision-Assistant/issues
+
 ## 0.9.3 (11th April 2018)
 Admin page (internal use) and glossary editor
 
