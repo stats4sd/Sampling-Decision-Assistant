@@ -22,7 +22,7 @@
           <!-- select -->
           <div *ngSwitchCase="'select'">
             <ion-item *ngIf="!showSelectOther">
-              <ion-select (ionChange)="selectUpdated($event)" interface="action-sheet" [formControlName]="question.controlName">
+              <ion-select (ionChange)="selectUpdated($event)" [interface]="question.interface ? question.interface : 'action-sheet'" [formControlName]="question.controlName">
                 <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
                 <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
               </ion-select>

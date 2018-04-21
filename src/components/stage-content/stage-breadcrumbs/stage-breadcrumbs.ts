@@ -26,12 +26,14 @@ export class StageBreadcrumbsComponent {
   }
 
   goToPart(index) {
-    if(index==0){
+    // unlock nav params if locked (#114)
+    this.customRouter.unlockParams()
+    if (index == 0) {
       this.customRouter.removeHashParam('stagePart')
     }
-    else{
+    else {
       this.customRouter.updateHashParams({ stagePart: index })
     }
-    
+
   }
 } 

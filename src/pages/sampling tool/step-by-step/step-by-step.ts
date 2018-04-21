@@ -7,6 +7,7 @@ import { DecisionToolMenuComponent } from '../../../components/general/decision-
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Project } from '../../../models/models';
+import { CustomRouterProvider } from '../../../providers/router/router';
 
 @IonicPage({
   defaultHistory:['HomePage']
@@ -30,6 +31,7 @@ export class StepByStepPage {
     public events: Events,
     public formPrvdr: FormProvider,
     public popoverCtrl: PopoverController,
+    private customRouter:CustomRouterProvider
   ) {
 
     this.sections = [

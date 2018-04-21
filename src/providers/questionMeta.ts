@@ -160,7 +160,7 @@ export default
             "label": "Is there a single list of all final sampling units from where you can select a sample using a random method?",
             "section": "Selecting the sampling units",
             "condition": "",
-            "labelMultiple": null
+            "labelMultiple": null,
         },
         {
             "isQuestion": "TRUE",

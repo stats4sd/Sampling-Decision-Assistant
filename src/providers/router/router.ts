@@ -38,6 +38,7 @@ export class CustomRouterProvider {
   //  *** slightly messy workaround until a better routing system made available (ionic 4)
   // meta provides any additional info for debugging purposes (e.g. function call stack trace)
   processHash(meta?) {
+    console.log('process hash')
     const hash = location.hash
     const hashParamsArr = location.hash.split('?')
     // calculate any params, identified by splitting '=' and assigning [0] : [1] elements as key-value pairs if exists
@@ -51,10 +52,21 @@ export class CustomRouterProvider {
         }
       })
     }
+    // if using lock params overwrite above changes
+    // *** (temp case due to loss of hash params when select question opened/action sheet triggered #114)
+    try {
+      let lockParams = this.ngRedux.getState().view.lockParams
+      if (lockParams) {
+        return this.setHashParams(lockParams)
+      }
+    } catch (error) {
+      console.error(error)
+     }
+
     this.viewActions.updateView({
       hash: hash,
       params: paramsObj
-    },meta)
+    }, meta)
   }
 
   // set current hash with given query parameters
@@ -72,8 +84,16 @@ export class CustomRouterProvider {
     this.buildHash(viewState)
   }
 
+  clearHashParams() {
+    let viewState = this.ngRedux.getState().view
+    if (viewState) {
+      viewState.params = {}
+      this.buildHash(viewState)
+    }
+  }
+
   // reset default view part by removing a given param (e.g. removing section param defaults to 'main' section)
-  removeHashParam(param:"stagePart" | "activeGlossaryTerm" | "tabSection") {
+  removeHashParam(param: "stagePart" | "activeGlossaryTerm" | "tabSection") {
     let viewState = this.ngRedux.getState().view
     if (viewState.params && viewState.params.hasOwnProperty(param)) {
       delete viewState.params[param]
@@ -93,6 +113,20 @@ export class CustomRouterProvider {
       hash += '?' + paramsArray.join('&')
     }
     location.hash = hash
+  }
+
+  // lock params are used to bypass case where url hash loses navparams on action sheet open (when clicking a select question)
+  // this is likely to be fixed via router upgrade
+  lockParams(params: ViewStateParams) {
+    this.viewActions.updateView({ lockParams: params })
+  }
+
+  unlockParams() {
+    let viewState = this.ngRedux.getState().view
+    if (viewState && viewState.hasOwnProperty('lockParams')) {
+      delete viewState.lockParams
+    }
+    this.viewActions.setView(viewState)
   }
 
 

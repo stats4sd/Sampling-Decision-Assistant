@@ -79,7 +79,7 @@ export class StageCompleteComponent extends StagePage {
         if (v['q1.2'] == 'Non-representative') { return true }
         if (v['q1.1'] == 'A comparison that needs a quasi-experimental or an experimental approach') { return true }
         else {
-          // *** add back in ***
+          // *** add back in ?***
           // this.dataPrvdr.activeProject.stagesComplete[1] = false
           this.stagesComplete[1] = false
           // this.projectActions.updateProjectCompletion(this.stagesComplete)
@@ -90,15 +90,11 @@ export class StageCompleteComponent extends StagePage {
         if (v['q2.3.1']) { return true }
         else if (v['q2.2.3'] && v['q2.2.4']) { return true }
         else {
-          // this.dataPrvdr.activeProject.stagesComplete[2] = false
           return false
         }
 
       }
       case s == 3: {
-        // add patch for 3.5 value
-        // this._patchSection3(v)
-
         return true
       }
       case s == 4: {
@@ -124,6 +120,8 @@ export class StageCompleteComponent extends StagePage {
     // push next stage page and remove currnet page from nav stack to allow direct nav back to home. Could also be done with slugs, will need
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history
     let next: number = this.stage.number + 1
+    // unlock nav params if locked (#114)
+    this.customRouter.unlockParams()
     // remove any existing stagePart hash params
     this.customRouter.removeHashParam('stagePart')
     // push new page and remove duplicate stack
@@ -138,26 +136,4 @@ export class StageCompleteComponent extends StagePage {
     this.projectActions.updateStagesComplete(this.stagesComplete)
     this.dataPrvdr.backgroundSave()
   }
-
-  //   _patchSection3(values) {
-  //     console.log('patching section 3')
-  //     // quick patch to merge section 3 values into one 
-  //   let text = values['q3.1']
-  //   if (values['q3.2']) {
-  //     text = text + " located in " + values['q3.2']
-  //   }
-  //   if (values['q3.3']) {
-  //     text = text + " during " + values['q3.3']
-  //   }
-  //   if (values['q3.4']) {
-  //     text = text + " and " + values['q3.4']
-  //   }
-  //   else { text = "" }
-  //   if (values['q3.5'] != text) {
-  //     let patch = {}
-  //     patch['q3.5'] = text
-  //     this.form.patchValue(patch)
-  //   }
-  // }
-
 }

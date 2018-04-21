@@ -29,7 +29,7 @@ export class StagePage {
   @ViewChild('content') content: Content;
   @ViewChild('stageSlides') stageSlides: Slides;
   @select(['activeProject', 'values']) readonly formValues$: Observable<any>;
-  @select(['view', 'params','tabSection']) readonly tabSection$: Observable<any>;
+  @select(['view', 'params', 'tabSection']) readonly tabSection$: Observable<any>;
   @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<string>;
   stagePart: string;
   activeSection: string = "main";
@@ -54,15 +54,18 @@ export class StagePage {
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public projectActions: ProjectActions,
-    public viewActions:ViewActions,
+    public viewActions: ViewActions,
     public ngRedux: NgRedux<AppState>,
-    public customRouter:CustomRouterProvider
+    public customRouter: CustomRouterProvider
   ) {
+    // part of workaround for router locked params #114
+    this.customRouter.unlockParams()
     this.stageInit(navParams)
     // this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
     this._subscribeToViewChanges()
   }
-    
+
+
 
   stageInit(navParams) {
     let stageID = navParams.data.stageID
@@ -76,7 +79,7 @@ export class StagePage {
     }
     this.stage = this.stages[stageID]
     this.section = this.stage.name
-    this.viewActions.updateView({activeStageID:stageID})
+    this.viewActions.updateView({ activeStageID: stageID })
   }
 
 
@@ -86,34 +89,35 @@ export class StagePage {
   }
 
   // handle routing between main/resource/glossary sections using hash query params (changes subscribed to in _subscribeToViewChanges)
-  goTo(section:'resources' | 'glossary') {
-    if(section){
+  goTo(section: 'resources' | 'glossary') {
+    if (section) {
       this.customRouter.updateHashParams({
-        tabSection:section
+        tabSection: section
       })
     }
-    else{
+    else {
       this.customRouter.removeHashParam('tabSection')
     }
   }
 
-  _subscribeToViewChanges(){
+  _subscribeToViewChanges() {
     this.tabSection$.subscribe(
       section => this.activeSection = section ? section : 'main'
     )
     this.stagePart$.subscribe(
-      p => {this.stagePart = p})
+      p => { this.stagePart = p })
   }
 
   // custom intercept for back button to handle going back in sections vs nav pop
-  _addBackButtonFunction(){
+  _addBackButtonFunction() {
     // if in main section pop, otherwise go to main
     this.navbar.backButtonClick = () => {
+      this.customRouter.unlockParams()
       let section = location.hash.split('tabSection=')[1]
-      if(section){
+      if (section) {
         window.history.back()
       }
-      else{
+      else {
         this.navCtrl.pop()
       }
     }
@@ -133,17 +137,18 @@ export class StagePage {
   }
 
   // click handler to move to next part of stage subsection
-  nextStep(){
-    console.log('nextStep',this.stagePart)
+  nextStep() {
+    // unlock nav params if locked (#114)
+    this.customRouter.unlockParams()
     // first part (0) undefined so just go part 1
-    if(!this.stagePart){
-      this.customRouter.updateHashParams({stagePart:1})
+    if (!this.stagePart) {
+      this.customRouter.updateHashParams({ stagePart: 1 })
     }
     // otherwise increment part and update
-    else{
+    else {
       try {
-        let nextPart = parseInt(this.stagePart)+1
-        this.customRouter.updateHashParams({stagePart:nextPart})
+        let nextPart = parseInt(this.stagePart) + 1
+        this.customRouter.updateHashParams({ stagePart: nextPart })
       } catch (error) {
         console.error(error)
       }

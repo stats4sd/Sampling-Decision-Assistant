@@ -24,11 +24,8 @@ export class FrameBuilderPage {
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, private dataPrvdr:DataProvider, private formPrvdr:FormProvider) {
     console.log('framebuilder params',navParams.data)
-    // this.stageFormGroup=navParams.data.stageFormGroup
-    // this.stageName=this.stageFormGroup.value._parentID 
     this.stageRepeatIndex=navParams.data.stageIndex
-    // console.log('stage values',this.stageFormGroup.value)
-    // console.log('stageName',this.stageName)
+    this.stageName = navParams.data.stageFormGroup.name
     this._buildFormGroup()
   }
 
@@ -44,12 +41,10 @@ export class FrameBuilderPage {
     })
     let builderForm = this.formPrvdr._generateQuestionForm(builderQuestions)
     this.stageFormGroup = builderForm
-    console.log('builder form',builderForm)
   }
 
   _preloadValues(){
     let currentValue = this.formPrvdr.formGroup.value.samplingStages[this.stageRepeatIndex]
-    console.log('current value',currentValue)
     Object.keys(currentValue).forEach(k=>{
       // build additional controls for thing like name and built status which aren't included in questions
       if(!this.stageFormGroup.controls[k]){
@@ -57,12 +52,10 @@ export class FrameBuilderPage {
       }
     })
     this.stageFormGroup.patchValue(currentValue)
-    console.log('stage form group',this.stageFormGroup)
   }
 
   _addValueSubscribers(){
     // listen to changes on this formgroup and reflect on master
-    console.log('master form',this.formPrvdr.formGroup)
     this.stageFormGroup.valueChanges.subscribe(
       v=>{if(v){this._patchValue(v)}}
     )
@@ -70,17 +63,14 @@ export class FrameBuilderPage {
 
   _patchValue(update:any){
     // update value on master group
-    console.log('patching value',update)
     let currentValue = this.formPrvdr.formGroup.value.samplingStages
     Object.keys(update).forEach(k => {
       currentValue[this.stageRepeatIndex][k]=update[k]
     });
-    console.log('value',currentValue)
     this.formPrvdr.formGroup.patchValue({samplingStages:currentValue})
   }
 
   dismiss(){
-    console.log('dismissing')
     if(this.stageFormGroup.value['q5.3.1']){
       this._patchValue({_built:true})
     }

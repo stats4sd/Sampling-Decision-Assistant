@@ -18,7 +18,9 @@ Custom component to add multiple stages, populate repeat formgroup and give opti
 })
 export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent {
   @select(['activeProject', 'values', 'q3.1']) readonly finalSamplingUnit$: Observable<string>
+  @select(['activeProject', 'values']) readonly formValues$: Observable<any>
   @ViewChild('textMultipleInput') textMultipleInput: TextInput;
+
   multipleTextInput: string
   stages: any[] = []
   dragulaOptions = {
@@ -29,21 +31,10 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
   finalSamplingUnit: string = "";
   editMode: boolean;
   editIndex: number;
-  // valueControl: string = "q5.2";
-  // repeatControl: string = "q5.3";
-  // repeatFormArray: FormArray = this.formPrvdr.formGroup.controls[this.repeatControl] as FormArray
-
-
-  // @Input() set preloadValue(v: any[]) {
-  //   if (v) { this.setSavedValue(v) }
-  // }
 
   /************** custom reporting levels *********************************************************
   similar code and template to multiple text input, but builds form controls instead of string array
   could try find better way to combine/reuse code
-
-  NOTE - have removed form array/repeat group bindings to keep things simpler, but may want to 
-  add back in later
   *////////////////////////////////////////////////////////////////////////////////////////////////
 
   constructor(
@@ -55,54 +46,40 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
     public dataPrvdr: DataProvider,
   ) {
     super(cdr, events, formPrvdr, dataPrvdr)
-
   }
 
   ngOnInit() {
-    // preload additional data before component rendered. hooks after input() sets so 
-    // all need to call after initial set value input
-    // listen to fsu changes and update stages array appropriately
-    this.finalSamplingUnit$.subscribe(fsu => { if (fsu) { console.log('fsu', fsu); this._init(fsu) } })
-    this._init(this.formPrvdr.formGroup.value['q3.1'])
+    // run init on fsu changes
+    this.finalSamplingUnit$.subscribe(fsu => this._init(fsu))
+    // rewrite query param on value update (annoying bug in platform that changes hash on action sheet present)
   }
 
-  _init(fsu?) {
+  ngAfterViewInit() {
+    this._addDragDropSubscriber()
+  }
 
+  // on fsu update init function creates a sampling stage for the final sampling unit (if doesn't exist)
+  // and if stages exist runs check that fsu correctly named in case of changes
+  _init(fsu?) {
     let values = this.formPrvdr.formGroup.value
     if (!fsu) { fsu = 'Final Sampling Unit' }
     let stages
     // build group template if doesn't exist or undefined
-    if (!values.samplingStages) {
-      console.log('adding custom stages form control')
+    if (!values.samplingStages || (!(values.samplingStages instanceof Array))) {
       this.formPrvdr.formGroup.addControl('samplingStages', new FormControl([{ name: fsu }]))
       stages = [{ name: fsu }]
     }
-
+    // otherwise ensure final sampling unit named correctly
     else {
-      console.log('copying sampling stages', values.samplingStages)
-      // otherwise ensure final sampling unit named correctly
-      try {
-        /// *** to check with/without timeout
-        setTimeout(() => {
-          stages = values.samplingStages.slice(0)
-        }, 500);
-        
-      } catch (error) {
-        console.error('error', error)
-      }
+      stages = values.samplingStages.slice(0)
       if (stages.length > 0) {
         stages[stages.length - 1].name = fsu
       }
       else { stages = [{ name: fsu }] }
-      console.log('stages', stages)
     }
     this.stages = stages
     this.finalSamplingUnit = fsu
     this.patchForm()
-    //this.preloadValues()
-  }
-  ngAfterViewInit() {
-    this._addDragDropSubscriber()
   }
 
   patchForm() {
@@ -110,31 +87,22 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
     let patch: any = {}
     patch.samplingStages = this.stages
     // patch only works if exists so also provide option to add control
-    console.log('patching form', patch)
-    console.log('sampling stages',form.value.samplingStages)
-    if (!form.value.samplingStages) {
-      console.log('adding sampling stages form control')
+    if (!form.controls.samplingStages) {
       form.addControl('samplingStages', new FormControl())
     }
     form.patchValue(patch)
-    console.log('form',form)
   }
 
   addSamplingStage(name?) {
     // push response to array
     if (!name) { name = this.multipleTextInput }
     if (name == '') { name = "Final Sampling Unit" }
-    //let repeatFormGroup = this.formPrvdr.generateRepeatFormGroup(this.repeatControl, name)
     this.multipleTextInput = ""
-    //this.repeatFormArray.insert(0, repeatFormGroup)
-    // this.stages.unshift(name)
     this.stages.unshift({ name: name })
     this.patchForm()
   }
 
   removeSamplingStage(index, value) {
-    // let formArray: FormArray = this.formPrvdr.formGroup.controls[this.repeatControl] as FormArray
-    // formArray.removeAt(index)
     this.stages.splice(index, 1)
     this.patchForm()
   }
@@ -157,51 +125,7 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
     // automatically save form values when rearranged using drag drop. Push final sampling unit back to array and reverse 
     this.dragulaService.dropModel.subscribe(_ => {
       console.log('drop')
-      // this.reorderBuildStages()
       this.patchForm()
     })
   }
-
-  // preloadValues() {
-  //   console.log('repeat form array', this.repeatFormArray)
-  //   this.repeatFormArray.controls.forEach(control => {
-  //     let stage = control.value._parentID
-  //     this.stages.push(stage)
-  //   });
-  //   if (this.stages.length == 0) { this.addSamplingStage(this.finalSamplingUnit) }
-  // }
-
-  // setSavedValue(value: any) {
-  //   // set saved value templates for when loading value from saved
-  //   this.stages = value
-  // }
-
-  // reorderBuildStages() {
-  //   let orderedControls = []
-  //   this.stages.forEach(stage => {
-  //     let control = this._getControl(stage)
-  //     orderedControls.push(control)
-  //   })
-  //   orderedControls.forEach((control, i) => {
-  //     this._setControl(i, control)
-  //   })
-  // }
-
-  // _getControl(id) {
-  //   let formArray: FormArray = this.formPrvdr.formGroup.controls['q5.3'] as FormArray
-  //   for (let control of formArray.controls) {
-  //     if (control.value._parentID == id) { return control }
-  //   }
-  // }
-
-  // _setControl(index: number, control: FormControl) {
-  //   let formArray: FormArray = this.formPrvdr.formGroup.controls['q5.3'] as FormArray
-  //   formArray.setControl(index, control)
-  // }
-
-
-
-  // }
-
-
 }

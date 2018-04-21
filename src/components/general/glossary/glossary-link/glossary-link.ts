@@ -28,6 +28,7 @@ export class GlossaryLinkComponent {
   }
 
   glossaryClick() {
+    this.customRouter.unlockParams()
     this.customRouter.updateHashParams({
       tabSection:'glossary',
       activeGlossaryTerm:this.slug
