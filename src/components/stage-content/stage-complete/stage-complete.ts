@@ -121,7 +121,7 @@ export class StageCompleteComponent extends StagePage {
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history
     let next: number = this.stage.number + 1
     // unlock nav params if locked (#114)
-    this.customRouter.unlockParams()
+    this.customRouter.unlockHash()
     // remove any existing stagePart hash params
     this.customRouter.removeHashParam('stagePart')
     // push new page and remove duplicate stack

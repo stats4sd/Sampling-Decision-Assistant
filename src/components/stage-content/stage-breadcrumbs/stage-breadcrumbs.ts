@@ -27,7 +27,7 @@ export class StageBreadcrumbsComponent {
 
   goToPart(index) {
     // unlock nav params if locked (#114)
-    this.customRouter.unlockParams()
+    this.customRouter.unlockHash()
     if (index == 0) {
       this.customRouter.removeHashParam('stagePart')
     }

@@ -59,7 +59,7 @@ export class StagePage {
     public customRouter: CustomRouterProvider
   ) {
     // part of workaround for router locked params #114
-    this.customRouter.unlockParams()
+    this.customRouter.unlockHash()
     this.stageInit(navParams)
     // this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
     this._subscribeToViewChanges()
@@ -112,7 +112,7 @@ export class StagePage {
   _addBackButtonFunction() {
     // if in main section pop, otherwise go to main
     this.navbar.backButtonClick = () => {
-      this.customRouter.unlockParams()
+      this.customRouter.unlockHash()
       let section = location.hash.split('tabSection=')[1]
       if (section) {
         window.history.back()
@@ -139,7 +139,7 @@ export class StagePage {
   // click handler to move to next part of stage subsection
   nextStep() {
     // unlock nav params if locked (#114)
-    this.customRouter.unlockParams()
+    this.customRouter.unlockHash()
     // first part (0) undefined so just go part 1
     if (!this.stagePart) {
       this.customRouter.updateHashParams({ stagePart: 1 })

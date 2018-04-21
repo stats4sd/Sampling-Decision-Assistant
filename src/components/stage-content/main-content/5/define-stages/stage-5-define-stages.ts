@@ -11,9 +11,7 @@ export class Stage5_DefineStagesComponent extends Stage5Component {
     console.log('locking navigation')
     // lock params are used to bypass case where url hash loses navparams on action sheet open (when clicking a select question)
     // this is likely to be fixed via router upgrade
-    this.customRouter.lockParams({
-      stagePart: 1
-    })
+    this.customRouter.lockHash()
   }
 
 }

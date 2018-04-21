@@ -15,7 +15,7 @@ export class HelpIconComponent {
 
   // use hash params to change nav to resources tab and show relevant
   helpClicked() {
-    this.customRouter.unlockParams()
+    this.customRouter.unlockHash()
     this.customRouter.setHashParams({
       tabSection: 'resources',
       relevant: this.relevant

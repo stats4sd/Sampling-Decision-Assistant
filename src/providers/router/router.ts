@@ -52,12 +52,13 @@ export class CustomRouterProvider {
         }
       })
     }
-    // if using lock params overwrite above changes
+    // if using lock hash overwrite above changes
     // *** (temp case due to loss of hash params when select question opened/action sheet triggered #114)
     try {
-      let lockParams = this.ngRedux.getState().view.lockParams
-      if (lockParams) {
-        return this.setHashParams(lockParams)
+      let lockHash = this.ngRedux.getState().view.lockHash
+      if (lockHash && hash!=lockHash) {
+        location.hash=lockHash
+        return
       }
     } catch (error) {
       console.error(error)
@@ -112,22 +113,26 @@ export class CustomRouterProvider {
     if (paramsArray.length > 0) {
       hash += '?' + paramsArray.join('&')
     }
+    console.log('building hash',hash)
     location.hash = hash
+
   }
 
   // lock params are used to bypass case where url hash loses navparams on action sheet open (when clicking a select question)
   // this is likely to be fixed via router upgrade
-  lockParams(params: ViewStateParams) {
-    this.viewActions.updateView({ lockParams: params })
-  }
 
-  unlockParams() {
+  lockHash(){
+    this.viewActions.updateView({lockHash:location.hash})
+  }
+  unlockHash(){
     let viewState = this.ngRedux.getState().view
-    if (viewState && viewState.hasOwnProperty('lockParams')) {
-      delete viewState.lockParams
+    if (viewState && viewState.hasOwnProperty('lockHash')) {
+      delete viewState.lockHash
     }
     this.viewActions.setView(viewState)
   }
+
+
 
 
 

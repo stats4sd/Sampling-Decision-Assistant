@@ -27,7 +27,7 @@ export interface ViewState{
     params?:ViewStateParams,
     hash?:string,
     activeStageID?:string,
-    lockParams?:ViewStateParams
+    lockHash?:string
 }
 
 export interface ViewStateParams{
