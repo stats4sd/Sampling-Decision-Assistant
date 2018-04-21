@@ -54,3 +54,10 @@ Currently only installed to show images from roadmap. Can remove alongside font 
 ### viewing inline templates
 Some components are defined in a single .ts file. If editing, to view the html with proper markup try an extension
 such as https://github.com/Microsoft/typescript-lit-html-plugin for vscode
+
+## Docs
+Docs are generated using compodoc https://compodoc.github.io
+build: `npm run doc:build`
+serve: `npm run doc:serve`
+build and serve: `npm run doc:buildandserve`
+Served docs available at http://localhost:8080
