@@ -25,7 +25,9 @@ export class NoteComponent {
  icons:any={
   warning:'alert',
   dev:'construct',
-  info:'information-circle'
+  info:'information-circle',
+  tip:'bulb',
+  clearTip:'bulb'
  }
 
   constructor() {

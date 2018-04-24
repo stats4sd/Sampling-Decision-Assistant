@@ -68,29 +68,9 @@
               </ion-item>
               <ion-input class="range-input" [formControlName]="question.controlName"></ion-input>
             </div>
-            <div style="margin-left:16px">note, dragging is currently disabled due to a bug in google chrome. please use the input box instead</div>
+            <!-- <div style="margin-left:16px">note, dragging is currently disabled due to a bug in google chrome. please use the input box instead</div> -->
           </div>
           
-
-          <!-- text multiple   -->
-          <!-- <div *ngSwitchCase="'textMultiple'">
-          <form style="display: flex; padding:5px">
-            <ion-item>
-              <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
-                type="text" [placeholder]="question.labelMultiple"></ion-input>
-            </ion-item>
-            <button ion-button (click)="addTextMultiple()" type="submit">Add</button>
-          </form>
-          <div *ngFor="let value of multipleTextValues, index as i">
-            <div class="multiple-list">
-              <span class="bullet"></span>
-              <span class="multiple-list-value">{{value}}</span>
-              <span style="cursor: pointer">
-                <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
-              </span>
-            </div>
-          </div>
-        </div> -->
           <question-text-multiple *ngSwitchCase="'textMultiple'" [question]="question"></question-text-multiple>
 
           <!-- label -->

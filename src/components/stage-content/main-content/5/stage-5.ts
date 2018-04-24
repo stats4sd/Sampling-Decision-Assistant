@@ -34,9 +34,10 @@ export class Stage5Component extends StagePage {
     super.pushPage('StagePage', { stageID: stage})
   }
 
-  buildStage(stageFormControl, stageIndex) {
+  buildStage(stage, stageIndex) {
     // get formgroup matching stage name to parentID
-    let params = { stageFormGroup: stageFormControl, stageIndex: stageIndex}
+    console.log('building stage',stage,stageIndex)
+    let params = { stageFormGroup: stage, stageIndex: stageIndex}
     super.openModal('FrameBuilderPage', params)
   }
 

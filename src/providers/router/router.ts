@@ -61,7 +61,7 @@ export class CustomRouterProvider {
         return
       }
     } catch (error) {
-      console.error(error)
+      // console.error(error)
      }
 
     this.viewActions.updateView({

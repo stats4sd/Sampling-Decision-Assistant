@@ -31,12 +31,13 @@
   </p>
   <!-- <survey-question-group [filter]="['q1.1']"></survey-question-group> -->
   <survey-question controlName="q1.1"></survey-question>
-  <div *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
-    <note type="dev">
-      Information will go here explaining main uses of tool directed towards measuring characteristics, but elements that may still
-      be relevant and links to more information
+    <note type="warning" *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
+        <p>This tool does not provide support for sampling designs for experimental or quasi-experimental approaches.
+        <br>
+          To better understand the cases where this tool can support you may wish to view the brief
+          <a href="/#/introduction" style="font-weight:bold">introductory text and video</a>
+        </p>
     </note>
-  </div>
   <!-- q1.2 -->
   <div *ngIf="form.value['q1.1']=='Estimating the value of one or a set of characteristics of a population'">
     <p>For the next question you will need to consider
@@ -44,27 +45,25 @@
       <glossary-link slug="non-representative-sample">non-representative</glossary-link> samples. If you are not familiar with these terms then follow links to the glossary.
       If you are not sure of your requirements then click on the help icon to see some common examples.
     </p>
-    <!-- <survey-question-group [section]="section" [filter]="['q1.2']"></survey-question-group> -->
   </div>
   <survey-question controlName="q1.2"></survey-question>
   <!-- q1.3 -->
   <div *ngIf="form.value['q1.2']=='Representative'">
     <p>With your target population in mind, try to answer the following questions:</p>
-    <!-- <survey-question-group [section]="section" [filter]="['q1.3']"></survey-question-group> -->
   </div>
   <survey-question controlName="q1.3"></survey-question>
 
-  <!-- not relevant responses from 1.1 or 1.2 -->
-  <!-- <p *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
-  </p> -->
-  <p *ngIf="form.value['q1.2']=='Non-representative'" class="warning-box">
-    This tool does not provide support for sampling designs for non-representative samples. You should be aware about the issues
+  <note type="warning" *ngIf="form.value['q1.2']=='Non-representative'" >
+    <p>This tool does not provide support for sampling designs for non-representative samples. </p>
+    <p>
+      You should be aware about the issues
     of biases and the difficulties for making inferences from the sample to the general population, that emerge from studies
     that are based on non-representative samples. <br>
     A good introduction to when non-representative samples may be useful can
     be found in <br><i>“Research Methods in Anthropology: Qualitative and Quantitative Approaches” </i>  by Harvey Russell Bernard.
+    </p>
     <!-- <span class="incomplete">Text to go here responding to measure impact</span> -->
-  </p>
+  </note>
 
   <stage-complete stageNumber=1></stage-complete>
 

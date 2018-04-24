@@ -37,8 +37,13 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
 
   getReportingLevels() {
     // get reporting levels from stage 4, push names into array fo data binding
+    
+    // if reporting levels null that means either stage 4 hasn't been completed or single estimate selected
+    // (can distinguish case scenarios by looking at other questions or stage complete (?))
+    // if reporting levels "" that means stage 4 needs to be completed
     let levels = this.formPrvdr.getSurveyValue('reportingLevels')
-    if (levels == "") { levels = [] }
+    console.log('levels',levels)
+    if (!levels || levels== "") { levels = [] }
     levels.forEach(level => this.reportingLevels.push(level.name))
     console.log('reporting levels', this.reportingLevels)
   }
