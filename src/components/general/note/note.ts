@@ -23,11 +23,12 @@ export class NoteComponent {
  icon:string;
  _type:string="";
  icons:any={
-  warning:'alert',
+  warning:'warning',
   dev:'construct',
   info:'information-circle',
   tip:'bulb',
-  clearTip:'bulb'
+  clearTip:'bulb',
+  error:'alert'
  }
 
   constructor() {

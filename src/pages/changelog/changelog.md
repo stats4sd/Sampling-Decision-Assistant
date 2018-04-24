@@ -1,5 +1,24 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
+## 0.9.5 (24th April 2018)
+
+User notes - You'll find more notes throughout the app, templates as:
+```
+    <note type="tip">Hints/Tips</note>
+    <note type="clearTip">Subtle Hints/Tips</note>
+    <note type="info">Information</note>
+    <note type="warning">Warnings</note>
+    <note type="error">Errors</note>
+    <note type="dev">Features under construction</note>
+```
+
+Bug fixes - Lots more minor fixes and improvements, known issues have also been organised and prioritised into a rough set of milestones.
+
+You can view the full list on github 
+"https://github.com/stats4sd/Sampling-Decision-Assistant/milestones?direction=asc&sort=due_date&state=open"
+    
+Performance and user flow improvements - Again, lots of incremental improvements to how the app runs, aiming for a smooth and consistent experience
+
 ## 0.9.4 (20th April 2018)
 
 Glossary - lots of new terms have been added and can be seen from the main <a href="/#/glossary">glossary page</a>. In the next update lists of words that appear in each section will also be populated. 

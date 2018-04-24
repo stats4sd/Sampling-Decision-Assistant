@@ -22,6 +22,12 @@ note {
             color: #5a4812;
         }
     }
+    .note.error{
+        background-color: rgba(253, 88, 88, 0.66);
+        .note-icon{
+            color: black;
+        }
+    }
     .note.info{
         background-color: white;
         color:color($colors,primary);
