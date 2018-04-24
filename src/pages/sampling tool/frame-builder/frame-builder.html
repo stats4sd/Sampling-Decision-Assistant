@@ -40,11 +40,12 @@
 
 
   <!-- Reporting domains select (question-custom-strata-select)  -->
-  
-  <div *ngIf="stageFormGroup.value['q5.3.3']!='' || stageFormGroup.value['q5.3.1']=='No'">
-    <survey-question controlName="q5.3.4.2" [formGroup]="stageFormGroup" [showLabel]="false"></survey-question>
-
+  <div *ngIf="reportingLevels">
+    <div *ngIf="stageFormGroup.value['q5.3.3']!='' || stageFormGroup.value['q5.3.1']=='No'">
+      <survey-question controlName="q5.3.4.2" [formGroup]="stageFormGroup" [showLabel]="false"></survey-question>
+    </div>
   </div>
+
 
 
 </ion-content>

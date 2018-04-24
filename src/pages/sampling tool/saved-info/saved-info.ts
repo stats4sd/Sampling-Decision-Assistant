@@ -14,7 +14,7 @@ import { Project } from '../../../models/models';
 })
 export class SavedInfoPage {
   @select('savedProjects') savedProjects$: Observable<Project[]>
-  savedProjects = [];
+  savedProjects:Project[] = [];
   saveName: string;
   view: string;
   savedSurveys: any;
@@ -38,7 +38,13 @@ export class SavedInfoPage {
   }
 
   createNew() {
-    if (this.savedSurveys[this.saveName]) {
+    let savedProjectsJson={}
+    this.savedProjects.forEach(project => {
+      if(project.title){
+        savedProjectsJson[project.title]=project
+      }
+    });
+    if (savedProjectsJson[this.saveName]) {
       this.errorMsg = "A project with that name already exists"
     }
     else {

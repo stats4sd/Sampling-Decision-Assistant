@@ -3,6 +3,8 @@ import { IonicPage,  NavParams, ViewController } from 'ionic-angular';
 import { DataProvider} from '../../../providers/data/data'
 import { FormProvider} from '../../../providers/form/form'
 import { FormGroup, FormControl } from '@angular/forms';
+import {select} from '@angular-redux/store';
+import {Observable} from 'rxjs/Observable'
 
 @IonicPage({
   segment: 'builder',
@@ -15,6 +17,8 @@ export class FrameBuilderPage {
   stageFormGroup:FormGroup;
   stageName:string;
   stageRepeatIndex:number;
+  reportingLevels:any;
+  @select(['activeProject','values','reportingLevels']) reportingLevels$ : Observable<any>
 
   /*
   this page handles the view of the repeat stage form builder and bindings to the correct element in the master form group.
@@ -59,6 +63,7 @@ export class FrameBuilderPage {
     this.stageFormGroup.valueChanges.subscribe(
       v=>{if(v){this._patchValue(v)}}
     )
+    this.reportingLevels$.subscribe(levels=>this.reportingLevels=levels)
   }
 
   _patchValue(update:any){
