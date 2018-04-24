@@ -81,6 +81,7 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
         this.selected[level]=true
       }
     })
+    // this.cdr.detectChanges()
     this.selectedChanged()
   }
 

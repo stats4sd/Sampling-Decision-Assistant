@@ -56,7 +56,7 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
   valueSaved: boolean = false;
 
 
-  constructor(private cdr: ChangeDetectorRef, public events: Events, public formPrvdr: FormProvider, public dataPrvdr: DataProvider,
+  constructor(public cdr: ChangeDetectorRef, public events: Events, public formPrvdr: FormProvider, public dataPrvdr: DataProvider,
   ) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data.key))
 

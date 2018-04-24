@@ -75,7 +75,7 @@ export class DataProvider {
           })
           this.savedProjectsJson = res
           saved.sort((a, b) => {
-            return a.edited < b.edited ? 1 : -1
+            return b.edited - a.edited 
           })
           this.projectActions.listProjects(saved)
           if (saved.length > 0) {
@@ -132,6 +132,7 @@ export class DataProvider {
     let activeProject = this.ngRedux.getState().activeProject
     if (activeProject && !this.isSaving) {
       this.isSaving = true
+      activeProject.edited = Date.now()
       setTimeout(_ => {
         // this.activeProject.values = this.formPrvdr.formGroup.value
         this.savedProjectsJson[activeProject.created] = activeProject

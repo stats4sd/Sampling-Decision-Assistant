@@ -38,7 +38,6 @@ export class CustomRouterProvider {
   //  *** slightly messy workaround until a better routing system made available (ionic 4)
   // meta provides any additional info for debugging purposes (e.g. function call stack trace)
   processHash(meta?) {
-    console.log('process hash')
     const hash = location.hash
     const hashParamsArr = location.hash.split('?')
     // calculate any params, identified by splitting '=' and assigning [0] : [1] elements as key-value pairs if exists
