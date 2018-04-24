@@ -32,7 +32,13 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
     // this._parentID = this.formGroup.value._parentID
     this.checkIfFinalStage(this.formGroup.value.name)
     this.checkAlreadySelected()
-    if(this.isFinalStage){this.setFinalStageLevels()}  
+     
+  }
+  ngAfterViewInit(){
+    // run after init with timeout to prevent cdr errors (not the most elegant but should work)
+    setTimeout(() => {
+      if(this.isFinalStage){this.setFinalStageLevels()} 
+    }, 500);
   }
 
   getReportingLevels() {
@@ -81,7 +87,6 @@ export class QuestionCustomStrataSelectComponent extends SurveyQuestionComponent
         this.selected[level]=true
       }
     })
-    // this.cdr.detectChanges()
     this.selectedChanged()
   }
 
