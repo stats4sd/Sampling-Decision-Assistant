@@ -11,6 +11,7 @@ import { ProjectActions } from '../../actions/actions';
 import { SavedProjects, Project, AppState } from '../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { resolve } from 'path';
 
 // import * as dojox from 'dojo'
 
@@ -21,7 +22,7 @@ export class DataProvider {
   // db versions
   // 3 - v0.9.5 April 2018
   private isSaving: boolean = false;
-  private savedProjectsJson: any = {}
+  public savedProjectsJson: any = {}
   public activeProject: Project;
   @select('activeProject') readonly activeProject$: Observable<Project>;
 
@@ -53,6 +54,16 @@ export class DataProvider {
       stagesComplete: [null, false, false, false, false, false, false]
     }
     this.projectActions.setNewProject(project)
+  }
+
+  checkProjectTitleUnique(title:string){
+    let projectTitles:string[]=[]
+    Object.keys(this.savedProjectsJson).forEach(key => {
+      if(this.savedProjectsJson[key].title){
+        projectTitles.push(this.savedProjectsJson[key].title.toLowerCase())
+      }
+    });
+    return projectTitles.indexOf(title)
   }
 
   showNotification(message, duration?, position?) {
@@ -129,7 +140,8 @@ export class DataProvider {
 
   backgroundSave() {
     // throttled save of survey, pulling values from master formgroup
-    let activeProject = this.ngRedux.getState().activeProject
+    return new Promise((resolve,reject)=>{
+      let activeProject = this.ngRedux.getState().activeProject
     if (activeProject && !this.isSaving) {
       this.isSaving = true
       activeProject.edited = Date.now()
@@ -137,10 +149,15 @@ export class DataProvider {
         // this.activeProject.values = this.formPrvdr.formGroup.value
         this.savedProjectsJson[activeProject.created] = activeProject
         this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
-          res => { this.isSaving = false; console.log('saved') }
+          res => { 
+            this.isSaving = false; 
+            console.log('saved') 
+            resolve()
+          }
         )
       }, 500)
     }
+    })    
   }
 
   // }

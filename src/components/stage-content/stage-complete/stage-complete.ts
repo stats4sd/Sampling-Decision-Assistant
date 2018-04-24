@@ -24,8 +24,9 @@ export class StageCompleteComponent extends StagePage {
   lastCall: number = 0
   sectionValid: boolean = false
   stagesComplete: boolean[] = []
-  projectTitle:string;
-  projectTitleInput:string;
+  projectTitle: string;
+  projectTitleInput: string;
+  showErrorMsg:boolean;
 
   ngOnInit() {
     // subscribe to form value changes to mark when section complete
@@ -43,14 +44,27 @@ export class StageCompleteComponent extends StagePage {
       }
     })
     this.projectTitle$.subscribe(
-      t=>this.projectTitle=t
+      t => this.projectTitle = t
     )
   }
 
-  saveProjectTitle(){
-    this.dataPrvdr.activeProject.title=this.projectTitleInput
-    this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
-    this.dataPrvdr.backgroundSave()    
+  saveProjectTitle() {
+    // check title unique, if unique save and update state, if not show error message
+    if (this.dataPrvdr.checkProjectTitleUnique(this.projectTitleInput) == -1) {
+      this.showErrorMsg=false
+      this.dataPrvdr.activeProject.title = this.projectTitleInput
+      this.dataPrvdr.backgroundSave().then(
+        res => {
+          // running project update after as for some reason it rewrites url (#129)
+          setTimeout(() => {
+            this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
+          }, 500);
+        })
+    }
+    else {
+      this.showErrorMsg=true
+    }
+
   }
 
   checkSectionValid() {
@@ -59,10 +73,10 @@ export class StageCompleteComponent extends StagePage {
     if (now - this.lastCall > 300) {
       this.lastCall = now
       setTimeout(() => {
-        let v={}
+        let v = {}
         try {
           v = this.ngRedux.getState().activeProject.values
-        } catch (error) {}
+        } catch (error) { }
         this.sectionValid = this.verify(this.stage.number, v)
       }, 200);
     }

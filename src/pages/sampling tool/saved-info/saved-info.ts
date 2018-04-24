@@ -38,21 +38,14 @@ export class SavedInfoPage {
   }
 
   createNew() {
-    let savedProjectsJson={}
-    this.savedProjects.forEach(project => {
-      if(project.title){
-        savedProjectsJson[project.title]=project
-      }
-    });
-    if (savedProjectsJson[this.saveName]) {
-      this.errorMsg = "A project with that name already exists"
-    }
-    else {
+    if(this.dataPrvdr.checkProjectTitleUnique(this.saveName)==-1){
       this.dataPrvdr.createNewProject(this.saveName)
       this.viewCtrl.dismiss({ title: this.saveName })
     }
-
+    else{this.errorMsg = "A project with that name already exists"}
   }
+
+
   setView(view) { this.view = view }
   dismiss() {
     this.viewCtrl.dismiss()
