@@ -2994,6 +2994,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+jStat@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/jStat/-/jStat-1.7.1.tgz#e636dd87d72b305c060dfcc901de1732d15130c1"
+
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.0.tgz#9e566fee624751a1d720c966cd6226d29d4025aa"
