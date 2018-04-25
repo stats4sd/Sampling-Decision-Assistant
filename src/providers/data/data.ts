@@ -11,7 +11,6 @@ import { ProjectActions } from '../../actions/actions';
 import { SavedProjects, Project, AppState } from '../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { resolve } from 'path';
 
 // import * as dojox from 'dojo'
 

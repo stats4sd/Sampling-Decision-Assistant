@@ -29,13 +29,17 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
   ngOnInit() {
     // bind to reporting level changes to recalculate classification fields 
     this.reportingLevels$.subscribe(
-      l => {
-        if(l && l instanceof Array){this.reportingLevels=l}}
+      levels => {
+        if (levels && levels instanceof Array) { 
+          console.log('reporting levels',levels)
+          this.reportingLevels = [...[],...levels] 
+        }
+      }
     )
   }
 
   // change the current array of level classification data on change, adding placeholder on increase and removing existing on decrease
-  setClassificationsNumber(level: ReportingLevel, levelIndex:number) {
+  setClassificationsNumber(level: ReportingLevel, levelIndex: number) {
     const total: number = parseInt(level.classifications.total)
     let names: string[] = level.classifications.names.slice()
     // case number increased - new names to be added
@@ -46,20 +50,20 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
     }
     // case number decreased - names to be removed
     if (names.length > total) {
-      names = names.slice(0,total)
+      names = names.slice(0, total)
     }
-    this.reportingLevels[levelIndex].classifications.names=names
-    this.save()
+    this.reportingLevels[levelIndex].classifications.names = names
+    this.save(this.reportingLevels)
   }
 
-  setClassificationName(levelIndex:number,nameIndex:number,e){
-    this.reportingLevels[levelIndex].classifications.names[nameIndex]=e.target.value
-    this.save()
+  setClassificationName(levelIndex: number, nameIndex: number,e) {
+    this.reportingLevels[levelIndex].classifications.names[nameIndex] = e.target.value
+    this.save(this.reportingLevels)
   }
 
-  save() {
+  save(reportingLevels) {
     let patch: any = {}
-    patch.reportingLevels = this.reportingLevels
+    patch.reportingLevels = reportingLevels
     this.form.patchValue(patch)
   }
 }

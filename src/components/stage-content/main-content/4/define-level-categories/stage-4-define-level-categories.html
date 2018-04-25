@@ -16,16 +16,14 @@
             <ion-input type="number" (ionChange)="setClassificationsNumber(level,i)" [(ngModel)]="level.classifications.total"></ion-input>
         </ion-col>
         <ion-col col>
-            <form>
-                <div *ngFor="let input of level.classifications.names; let j=index">
-                    <ion-item>
-                        <ion-input [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="level.classifications.names[j]"></ion-input>
-                    </ion-item>
-                </div>
-            </form>
-
-
-
+            <div *ngFor="let name of level.classifications.names; let j=index">
+                <ion-item>
+                    <ion-input [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="name"></ion-input>
+                    <!-- <ion-input [placeholder]="'group '+(j+1)" (change)="setClassificationName(i,j,$event)" [value]="level.classifications.names[j]"></ion-input> -->
+                    <!-- <ion-input [placeholder]="'group '+(j+1)"  [(ngModel)]="namesUpdate[i].classifications.names[j]"></ion-input> -->
+                    <!-- <ion-input [placeholder]="'group '+(j+1)" [value]="level.classifications.names[j]" (change)="setClassificationName($event,i,j)"></ion-input> -->
+                </ion-item>
+            </div>
         </ion-col>
     </ion-row>
 </ion-grid>
