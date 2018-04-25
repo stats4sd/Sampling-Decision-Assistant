@@ -18,7 +18,7 @@ import { DecisionToolMenuComponent } from '../components/general/decision-tool-m
 import { NgRedux, DevToolsExtension, NgReduxModule } from '@angular-redux/store';
 import { AppState } from '../models/models';
 import { rootReducer, INITIAL_STATE } from '../reducers/reducers';
-import { ProjectActions, DevActions, ViewActions } from '../actions/actions';
+import { ProjectActions, DevActions, ViewActions, TreeDiagramActions } from '../actions/actions';
 // dev db
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from '../components/_dev/config';
@@ -56,6 +56,7 @@ import { CustomRouterProvider } from '../providers/router/router';
     ProjectActions,
     DevActions,
     ViewActions,
+    TreeDiagramActions,
     DevToolsExtension,
     CustomRouterProvider
   ]

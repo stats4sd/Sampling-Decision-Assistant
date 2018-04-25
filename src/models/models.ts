@@ -17,10 +17,10 @@ export interface AppState {
     savedProjects?: Project[],
     editMode?:boolean,
     reviewMode?:boolean,
-    
     view:ViewState
     _dbVersion?: number,
     _platforms?:string[],
+    _treeMeta:TreeState;
 }
 
 export interface ViewState{
@@ -35,6 +35,10 @@ export interface ViewStateParams{
     activeGlossaryTerm?:string,
     tabSection?:'resources' | 'glossary',
     relevant?:string
+}
+
+export interface TreeState{
+    activeNode:TreeDiagramNode
 }
 
 export interface Question {
@@ -67,4 +71,22 @@ export interface glossaryTerm{
     slug:string,
     definition:string,
     term:string
+}
+
+// tree diagram
+export interface TreeDiagramNode{
+    id:string,
+    color:TreeDiagramNodeColor,
+    label:string,
+    shape:string
+}
+export interface TreeDiagramNodeColor{
+    background:string,
+    border:string,
+    highlight:TreeDiagramNodeNodeColorHighlight
+}
+
+export interface TreeDiagramNodeNodeColorHighlight{
+    background:string,
+    border:string
 }

@@ -30,9 +30,8 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
     // bind to reporting level changes to recalculate classification fields 
     this.reportingLevels$.subscribe(
       levels => {
-        if (levels && levels instanceof Array) { 
-          console.log('reporting levels',levels)
-          this.reportingLevels = [...[],...levels] 
+        if (levels instanceof Array) {
+          this.reportingLevels = levels
         }
       }
     )
@@ -56,14 +55,37 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
     this.save(this.reportingLevels)
   }
 
-  setClassificationName(levelIndex: number, nameIndex: number,e) {
-    this.reportingLevels[levelIndex].classifications.names[nameIndex] = e.target.value
-    this.save(this.reportingLevels)
-  }
-
   save(reportingLevels) {
     let patch: any = {}
     patch.reportingLevels = reportingLevels
     this.form.patchValue(patch)
   }
+
+  // only save the name changes when leaving the section to avoid strange update bugs
+  ngOnDestroy(){
+    this.updateNames()
+  }
+  // iterate through each name input and update corresponding value on reporting levels
+  // note that we haven't used direct binding due to issues with how the values sometimes incorrectly update when
+  // navigating between different inputs bound to json sub properties (#130)
+  updateNames(){
+    this.reportingLevels.forEach((level,i)=>{
+      level.classifications.names.forEach((name,j)=>{
+        let inputVal = document.getElementById('nameInput-'+i+'-'+j).getElementsByTagName('input')[0].value
+        this.reportingLevels[i].classifications.names[j]=inputVal
+      })
+    })
+    this.save(this.reportingLevels)
+  }
+
+  
+  // setClassificationName(levelIndex: number, nameIndex: number, e) {
+  //   let levels = this.reportingLevels.slice()
+  //   levels[levelIndex].classifications.names[nameIndex] = e.target.value
+  //   this.reportingLevels=levels
+  //   let el = document.getElementById('nameInput-0-1').getElementsByTagName('input')[0]
+  //   console.log('el',el, 'el.value',el.value)
+  //   this.save(this.reportingLevels)
+  // }
+
 }

@@ -8,7 +8,7 @@ export default {
         shape: "ellipse",
     },
   
-    reportingLevel: {
+    reportingLevelNodes: {
         color: {
             border: '#e25f21',
             background: '#f0b89e',
@@ -45,7 +45,7 @@ export default {
             bottom:50
         }
     },
-    stageTitle: {
+    stageNodes: {
         color: {
             border: '#e25f21',
             background: '#ffffff',

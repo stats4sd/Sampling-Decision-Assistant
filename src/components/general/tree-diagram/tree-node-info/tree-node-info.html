@@ -1,0 +1,36 @@
+<div #nodeInfo id="nodeInfo" [attr.data-visible]="activeNode ? 'true' : 'false'">
+    <div *ngIf="activeNode">
+        <div class="node-title">
+            {{activeNode.label}}
+        </div>
+        <div [ngSwitch]="activeNode.group" class="node-info">
+            <div *ngSwitchCase="'stageNodes'">
+                <p>This node represents a sampling stage</p>
+                <p>The full list of stages are:</p>
+                <ol>
+                    <li *ngFor="let stage of (samplingStages$ | async)" style="margin-left:10px" [attr.data-active]="stage.name==activeNode.label">
+                        {{stage.name}}
+                    </li>
+                </ol>
+
+            </div>
+            <div *ngSwitchCase="'reportingLevelNodes'">
+                <p>This node represents a reporting level</p>
+                <p>The full list of levels are:</p>
+                <div *ngFor="let level of (reportingLevels$ | async)">
+                    <div style="text-decoration: underline">{{level.name}}</div>
+                    <ul>
+                        <li *ngFor="let name of level.classifications.names" style="margin-left:10px" [attr.data-active]="name==activeNode.label">
+                            {{name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div *ngSwitchDefault>
+                <p>This node is incomplete. Complete the corresponding stage questions to provide information required</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>

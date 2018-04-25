@@ -8,6 +8,7 @@ import { GlossaryComponent } from './glossary/glossary';
 import { GlossaryDetailComponent } from './glossary/glossary-detail/glossary-detail';
 import { NoteComponent } from './note/note';
 import { TreeDiagramComponent } from './tree-diagram/tree-diagram';
+import { TreeNodeInfoComponent } from './tree-diagram/tree-node-info/tree-node-info';
 import { ResourcesComponent } from './resources/resources';
 import { HelpIconComponent} from './help-icon/help-icon'
 
@@ -19,6 +20,7 @@ import { HelpIconComponent} from './help-icon/help-icon'
 // youtube video player
 import { YoutubePlayerModule } from 'ngx-youtube-player';
 
+
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
     declarations: [
@@ -28,6 +30,7 @@ import { YoutubePlayerModule } from 'ngx-youtube-player';
         GlossaryDetailComponent,
         NoteComponent,
         TreeDiagramComponent,
+        TreeNodeInfoComponent,
         ResourcesComponent,
         HelpIconComponent
     ],
@@ -47,6 +50,7 @@ import { YoutubePlayerModule } from 'ngx-youtube-player';
         GlossaryDetailComponent,
         NoteComponent,
         TreeDiagramComponent,
+        TreeNodeInfoComponent,
         ResourcesComponent,
         HelpIconComponent
     ]

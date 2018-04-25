@@ -9,6 +9,7 @@ export const INITIAL_STATE: Models.AppState = {
     view: null,
     _dbVersion: null,
     _platforms: null,
+    _treeMeta:null
 };
 
 export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Action) {
@@ -64,9 +65,17 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
             const updateViewParamsAction = action as Actions.UpdateProjectAction
             const oldParams = state.view ? state.view.params : {}
             const newParams = Object.assign({}, oldParams, updateViewParamsAction.payload)
-            let newParamsView =  Object.assign({},state.view)
+            let newParamsView = Object.assign({}, state.view)
             newParamsView.params = newParams
             return Object.assign({}, state, { view: newParamsView })
+
+        // tree diagram actions -  *** should be split to seperate reducer ***
+        case Actions.TreeDiagramActions.SET_ACTIVE_NODE:
+        // *** note, this is probably a better way to update nested properties than methods above... may want to update others
+        // update state._treeMeta.activeNode
+            const setActiveNode = action as Actions.UpdateProjectAction
+            return {...state,_treeMeta:{...state._treeMeta,activeNode:setActiveNode.payload}}
+            
 
         // dev actions -  *** should be split to seperate reducer ***
         case Actions.DevActions.EDIT_TOGGLE:

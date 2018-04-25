@@ -11,20 +11,24 @@
             <p>The results will be based the hierarchy of sampling stages and reporting levels that you have specified, with
                 supporting calculations for margin of error and design effect</p>
             <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
-            <div class="tree-container">
-                <tree-diagram [showInputNodes]="false" *ngIf="initComplete" class="fade-in"></tree-diagram>
+            <tree-diagram [showInputNodes]="false" [showKey]="'true'" *ngIf="initComplete" class="fade-in"></tree-diagram>
+            <div style="margin-top:1em; max-width:90%">
+                <note type="tip">Click on the each shape in the diagram for more information about the node</note>
             </div>
-            <p>Each shape represents a collection of units from which a sample will be selected</p>
+
+
+
             <!-- <note type="dev">Currently system assumes all nodes can be treated equally, however in the future the option will be provided
                 to further split a node into strata if desired</note> -->
-            </div>
+        </div>
         <!-- Stratification slide -->
-        <div  *ngSwitchCase="1">
+        <div *ngSwitchCase="1">
             <h4>Stratification</h4>
-            <note type="dev">In this section there will be options to apply additional stratification to the tree diagram beyond what has been classified in the reporting requirements</note>
+            <note type="dev">In this section there will be options to apply additional stratification to the tree diagram beyond what has
+                been classified in the reporting requirements</note>
         </div>
         <!-- Sample sizes slide -->
-        <div  *ngSwitchCase="2">
+        <div *ngSwitchCase="2">
             <h4>Determining an overall sample size</h4>
             <p>We now wish to decide on the total number of final sampling units that data will be recorded for.</p>
             <p>If the number of units you wish to use is already known then please input the answer in the box below. Otherwise
@@ -36,12 +40,12 @@
             <!-- <ion-input type="number" placeholder="Sample size required" [(ngModel)]="sampleSize" class="sample-size-input"></ion-input> -->
 
         </div>
-        <div  *ngSwitchCase="3">
+        <div *ngSwitchCase="3">
             <h4>Allocating resources</h4>
             <p>The next step is to allocate the sampling units throughout the diagram</p>
             <div style="display: flex">
                 <div class="tree-container">
-                    <tree-diagram [showInputNodes]="false" *ngIf="stageSlidesIndex==2"></tree-diagram>
+                    <tree-diagram [showInputNodes]="true"></tree-diagram>
                     <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
                         <div class="node-editor-breadcrumbs"></div>
                         <div class="node-editor-heading">Allocate</div>

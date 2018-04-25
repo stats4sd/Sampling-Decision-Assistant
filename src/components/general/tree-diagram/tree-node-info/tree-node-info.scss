@@ -1,0 +1,45 @@
+tree-node-info{
+    // applies margin to the right to hide additional scroll bar from view
+    $scroll-hide-margin:20px;
+
+    #nodeInfo{
+        position: absolute;
+        width: 220px;
+        top:0;
+        height: 300px;
+        background-color: #d5deea;
+        // want to have scroll when needed, but move to right to hide scrollbar
+        right:-$scroll-hide-margin;
+        overflow-y: auto;
+        
+        // on way in decelerate
+        transition: 0.25s ease-out;
+        
+    
+    }
+    #nodeInfo[data-visible='false']{
+        transform: translateX(100%);
+        // linear and slightly faster on way out
+        transition: 0.2s
+    }
+
+    .node-title{
+        background: color($colors,primary);
+        padding: 5px;
+        color: white;
+        text-align: center;
+        padding-right: $scroll-hide-margin;
+    }
+    .node-info{
+        margin-right: $scroll-hide-margin;
+        padding: 5px;
+        // background: rgba(255,255,255,0.5)
+    }
+
+    ol{
+        padding-left:20px;
+    }
+    li[data-active='true']{
+        font-weight: bold
+    }
+}

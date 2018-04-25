@@ -18,7 +18,8 @@
         <ion-col col>
             <div *ngFor="let name of level.classifications.names; let j=index">
                 <ion-item>
-                    <ion-input [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="name"></ion-input>
+                    <ion-input [id]="'nameInput-'+i+'-'+j" [placeholder]="'group '+(j+1)" [value]="name"></ion-input>
+                    <!-- <ion-input [id]="'nameInput-'+i+'-'+j" [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="name"></ion-input> -->
                     <!-- <ion-input [placeholder]="'group '+(j+1)" (change)="setClassificationName(i,j,$event)" [value]="level.classifications.names[j]"></ion-input> -->
                     <!-- <ion-input [placeholder]="'group '+(j+1)"  [(ngModel)]="namesUpdate[i].classifications.names[j]"></ion-input> -->
                     <!-- <ion-input [placeholder]="'group '+(j+1)" [value]="level.classifications.names[j]" (change)="setClassificationName($event,i,j)"></ion-input> -->

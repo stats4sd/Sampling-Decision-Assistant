@@ -29,12 +29,12 @@ stage-6 {
         transform: translateX(0);
         transition: 0.3s ease;
     }
-    .tree-container{
-        width:100%;
-        height: 300px;
-        position: relative;
-        overflow-x: hidden
-    }
+    // .tree-container{
+    //     width:100%;
+    //     height: 300px;
+    //     position: relative;
+    //     overflow-x: hidden
+    // }
     .touch-scroll-space{
         width: 100px
     }
@@ -50,5 +50,9 @@ stage-6 {
         overflow-wrap: break-word;
         overflow: auto;
         font-size: small;
+    }
+
+    .key-image{
+        max-width: 150px;
     }
 }
