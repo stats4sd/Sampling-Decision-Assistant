@@ -19,6 +19,7 @@ import { HelpIconComponent} from './help-icon/help-icon'
 // import {VgBufferingModule} from 'videogular2/buffering';
 // youtube video player
 import { YoutubePlayerModule } from 'ngx-youtube-player';
+import { SampleSizeCalculatorComponent } from './sample-size-calculator/sample-size-calculator';
 
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
@@ -31,6 +32,7 @@ import { YoutubePlayerModule } from 'ngx-youtube-player';
         NoteComponent,
         TreeDiagramComponent,
         TreeNodeInfoComponent,
+        SampleSizeCalculatorComponent,
         ResourcesComponent,
         HelpIconComponent
     ],
@@ -51,6 +53,7 @@ import { YoutubePlayerModule } from 'ngx-youtube-player';
         NoteComponent,
         TreeDiagramComponent,
         TreeNodeInfoComponent,
+        SampleSizeCalculatorComponent,
         ResourcesComponent,
         HelpIconComponent
     ]

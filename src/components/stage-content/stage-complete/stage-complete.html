@@ -1,3 +1,14 @@
+<!-- project title input prompt -->
+<note type="tip" *ngIf="!projectTitle && sectionValid" [@animationState]="'flyIn'">
+  <div>Your project doesn't have a title yet. You can add one in the space below</div>
+  <form style="display: flex">
+    <ion-input type="text" class="project-title-input" [(ngModel)]="projectTitleInput" [ngModelOptions]="{standalone: true}"></ion-input>
+    <button ion-button clear color="primary-inverted" (click)="saveProjectTitle()" [disabled]="!projectTitleInput || isSaving">Save</button>
+  </form>
+  <note type="error" *ngIf="showErrorMsg">A project with that name already exists</note>
+</note>
+
+<!-- stage complete checkbox -->
 <div class="complete-container">
   <ion-item *ngIf="form" style="max-width:400px">
     <ion-label *ngIf="!text">Mark Section as Complete</ion-label>
@@ -10,13 +21,4 @@
   </button>
 </div>
 
-<!-- project title input prompt -->
 
-  <note type="tip" *ngIf="!projectTitle && sectionValid" [@animationState]="'flyIn'">
-    <div>Your project doesn't have a title yet. You can add one in the space below</div>
-    <form style="display: flex">
-      <ion-input type="text" class="project-title-input" [(ngModel)]="projectTitleInput" [ngModelOptions]="{standalone: true}"></ion-input>
-      <button ion-button clear color="primary-inverted" (click)="saveProjectTitle()" [disabled]="!projectTitleInput">Save</button>
-    </form>
-    <note type="error" *ngIf="showErrorMsg">A project with that name already exists</note>
-  </note>

@@ -113,6 +113,30 @@ export default
                 min: 5
             }
         },
+        {
+            "isQuestion": "TRUE",
+            "controlName": "q2.4.1",
+            "type": "number",
+            "selectOptions": "",
+            "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
+            "section": "Indicators",
+            "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
+            "labelMultiple": null,
+        },
+        {
+            "isQuestion": "TRUE",
+            "controlName": "q2.4.2",
+            "type": "number",
+            "selectOptions": "",
+            "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
+            "section": "Indicators",
+            "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
+            "labelMultiple": null,
+            options: {
+                max: 25,
+                min: 1
+            }
+        },
 
 
         // section 3
@@ -292,32 +316,7 @@ export default
             "labelMultiple": null
         },
 
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.4",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
-        //     "section": "Indicators",
-        //     options:{
-        //         prefix:'+/-',
-        //     },
-        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.4",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
-        //     "section": "Indicators",
-        //     options:{
-        //         prefix:'+/-',
-        //     },
-        //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
-        //     "labelMultiple": null
-        // },
+
 
         // {
         //     "isQuestion": "TRUE",

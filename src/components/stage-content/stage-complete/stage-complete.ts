@@ -27,6 +27,7 @@ export class StageCompleteComponent extends StagePage {
   projectTitle: string;
   projectTitleInput: string;
   showErrorMsg:boolean;
+  isSaving:boolean;
 
   ngOnInit() {
     // subscribe to form value changes to mark when section complete
@@ -52,12 +53,14 @@ export class StageCompleteComponent extends StagePage {
     // check title unique, if unique save and update state, if not show error message
     if (this.dataPrvdr.checkProjectTitleUnique(this.projectTitleInput) == -1) {
       this.showErrorMsg=false
+      this.isSaving=true
       this.dataPrvdr.activeProject.title = this.projectTitleInput
       this.dataPrvdr.backgroundSave().then(
         res => {
           // running project update after as for some reason it rewrites url (#129)
           setTimeout(() => {
             this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
+            this.isSaving=false
           }, 500);
         })
     }

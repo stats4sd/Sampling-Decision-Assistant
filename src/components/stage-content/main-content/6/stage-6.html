@@ -25,21 +25,32 @@
             </p>
             <note type="dev">
                 <strong>Under Construction</strong>
-                <br>This feature is currently under construction. Meanwhile, you can still be able to allocate resources within each
-                stage and reporting level classification.
+                <br>This feature is currently under construction. Meanwhile, you can still be able to allocate resources within
+                each stage and reporting level classification.
             </note>
         </div>
         <!-- Sample sizes section -->
         <div *ngSwitchCase="2">
             <h4>Determining an overall sample size</h4>
-            <p>We now wish to decide on the total number of final sampling units that data will be recorded for.</p>
-            <p>If the number of units you wish to use is already known then please input the answer in the box below. Otherwise
-                you can use the tool below to help determine a reasonable estimate
+            <p>
+                Using the information provided it is possible to generate approximate sample sizes to guide the resource allocation process,
+                based on determining the minimum number of households needed within a group to provide an estimate for an
+                indicator to within a given margin of error. Formulae are provided to assess estimates as either the mean
+                of a numeric indicator or the percentage of a categorical indicator, with the margin of error calculated
+                from a confidence interval of a given level of confidence.
             </p>
-            <button ion-button icon-left (click)="launchSampleSizeCalculator()">
-                <ion-icon name="calculator"></ion-icon>Sample Size Calculator</button>
-            <survey-question-group [filter]="['q6.1']"></survey-question-group>
-            <!-- <ion-input type="number" placeholder="Sample size required" [(ngModel)]="sampleSize" class="sample-size-input"></ion-input> -->
+            <p>
+                This calculator assumes a clustered sample procedure will be taking place, and that random samples are able to be taken from
+                within each cluster. If there is a simple random sample from the whole population is being taken, rather
+                than a clustered sample, then set the design effect to be equal to “none”.
+            </p>
+
+
+            <!-- <button ion-button icon-left (click)="launchSampleSizeCalculator()">
+                <ion-icon name="calculator"></ion-icon>Sample Size Calculator</button> -->
+            <sample-size-calculator></sample-size-calculator>
+            <!-- <survey-question-group [filter]="['q6.1']"></survey-question-group> -->
+
 
         </div>
         <div *ngSwitchCase="3">
@@ -70,8 +81,6 @@
                                 <ion-checkbox></ion-checkbox>
                             </ion-item>
                         </ion-list>
-
-
                     </div>
                 </div>
                 <div class="touch-scroll-space"></div>
