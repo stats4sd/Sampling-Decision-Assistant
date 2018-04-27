@@ -3,6 +3,7 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable'
 import { DataProvider } from '../../../providers/data/data';
 import { CustomRouterProvider } from '../../../providers/router/router';
+import { TreeDiagramActions, ProjectActions } from '../../../actions/actions';
 declare const jStat
 
 @Component({
@@ -10,9 +11,7 @@ declare const jStat
     templateUrl: 'sample-size-calculator.html'
 })
 export class SampleSizeCalculatorComponent {
-
     @select(['activeProject', 'values']) projectValues$: Observable<any>
-
     isCalculating: boolean;
     inputFields: any[] = [
         { title: 'Desired Confidence Level', var: 'conf' },
@@ -24,8 +23,6 @@ export class SampleSizeCalculatorComponent {
         { title: 'Type of Variable', var: 'type' },
         { title: 'Number of Sampling Stages', var: 'stages' },
     ]
-
-
     inputValues: CalculatorVars = {
         moe: 5,
         conf: 0.95,
@@ -35,8 +32,7 @@ export class SampleSizeCalculatorComponent {
     }
     outputs: any = {}
 
-
-    constructor(public dataPrvdr: DataProvider, private customRouter:CustomRouterProvider) {
+    constructor(public dataPrvdr: DataProvider, private customRouter: CustomRouterProvider) {
         this.projectValues$.subscribe(v => {
             if (v && !this.isCalculating) {
                 this.isCalculating = true
@@ -48,20 +44,26 @@ export class SampleSizeCalculatorComponent {
             }
         })
     }
-    ngOnInit(){
+
+    ngOnInit() {
         this.customRouter.lockHash()
     }
 
     calculateVariables(v) {
-        let projectVals: CalculatorVars = {
-            stages: v.samplingStages ? v.samplingStages.length : 0,
+        console.log('calculating variables', v)
+        let projectVals: CalculatorVars = {}
+        // first load any presaved values
+        if (v._calculatorVars) {
+            console.log('preloading vals', v._calculatorVars)
+            projectVals = v._calculatorVars.inputs
         }
+        // then update from survey
+        projectVals.stages = v.samplingStages ? v.samplingStages.length : 0;
         try {
             if (v['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
                 projectVals.type = "proportion";
                 projectVals.prop = v['q2.3.1'];
-                // **** need proper way to define moe
-                projectVals.moe = 5;
+                if (!projectVals.moe) { projectVals.moe = 5 };
                 this.calculatedFields.push(
                     { title: 'Expected %', var: 'prop' },
                     { title: 'Margin of Error (+/- percentage points)', var: 'moe' },
@@ -70,7 +72,7 @@ export class SampleSizeCalculatorComponent {
             if (v['q2.1.2'] == "Average or total value of indicator in the population") {
                 projectVals.type = "average value";
                 projectVals.sd = v["q2.2.2"];
-                projectVals.moe = projectVals.sd / 2;
+                if (!projectVals.moe) { projectVals.moe = projectVals.sd / 2 };
                 this.calculatedFields.push(
                     { title: 'Standard Deviation', var: 'sd' },
                     { title: 'Margin of Error (+/-)', var: 'moe' },
@@ -79,11 +81,7 @@ export class SampleSizeCalculatorComponent {
         } catch (error) {
             console.error('variable assign error', error)
         }
-
-
-
         this.inputValues = Object.assign({}, this.inputValues, projectVals)
-
     }
 
     calculateSize() {
@@ -95,11 +93,11 @@ export class SampleSizeCalculatorComponent {
         }
         // known issue with strings: https://github.com/ionic-team/ionic/issues/7121
         // convert all strings to numbers
-        let input:CalculatorVars={}
-        Object.keys(this.inputValues).forEach(key=>{
-            input[key]=parseFloat(this.inputValues[key])
+        let input: CalculatorVars = {}
+        Object.keys(this.inputValues).forEach(key => {
+            input[key] = parseFloat(this.inputValues[key])
         })
-        input.type=this.inputValues.type
+        input.type = this.inputValues.type
         console.log('calculating size', input)
 
 
@@ -147,7 +145,7 @@ export class SampleSizeCalculatorComponent {
         this.outputs.raw = {
             SRSn: Math.round(SRSn),
             SRSn_FPC: SRSn_FPC,
-            DEFF1: Math.round(DEFF1*100)/100,
+            DEFF1: Math.round(DEFF1 * 100) / 100,
             FinalstageN: Math.round(FinalstageN),
             FinalstageN_FPC: FinalstageN_FPC,
             stage2N
@@ -159,9 +157,14 @@ export class SampleSizeCalculatorComponent {
             { var: 'FinalstageN_FPC', label: "Sample Size Required from Clustered Multi-Stage Sample" },
             { var: 'stage2N', label: "Number of Level 2 Clusters Required" },
         ]
+
+        // update tree meta state
+        this.dataPrvdr.activeProject.values._calculatorVars = {
+            inputs: input,
+            outputs: this.outputs
+        }
+        this.dataPrvdr.backgroundSave()
     }
-
-
 
 }
 

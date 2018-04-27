@@ -49,46 +49,21 @@
             <!-- <button ion-button icon-left (click)="launchSampleSizeCalculator()">
                 <ion-icon name="calculator"></ion-icon>Sample Size Calculator</button> -->
             <sample-size-calculator></sample-size-calculator>
-            <!-- <survey-question-group [filter]="['q6.1']"></survey-question-group> -->
-
 
         </div>
         <div *ngSwitchCase="3">
             <h4>Allocating resources</h4>
             <p>The next step is to allocate the sampling units throughout the diagram</p>
-            <div style="display: flex">
-                <div class="tree-container">
-                    <tree-diagram [showInputNodes]="true"></tree-diagram>
-                    <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
-                        <div class="node-editor-breadcrumbs"></div>
-                        <div class="node-editor-heading">Allocate</div>
-                        <ion-list>
-                            <ion-item>
-                                <ion-input (ionChange)="updateNode($event)" type="number" [placeholder]="'Number of '+selectedNode.label"></ion-input>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label>
-                                    <p>Apply to all
-                                        <br>({{selectedNode.label}})</p>
-                                </ion-label>
-                                <ion-checkbox></ion-checkbox>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label>
-                                    <p>Apply to all
-                                        <br>(this stage)</p>
-                                </ion-label>
-                                <ion-checkbox></ion-checkbox>
-                            </ion-item>
-                        </ion-list>
-                    </div>
-                </div>
-                <div class="touch-scroll-space"></div>
+            <tree-diagram [showInputNodes]="true"></tree-diagram>
+            <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
+                <div class="node-editor-breadcrumbs"></div>
+                <div class="node-editor-heading">Allocate</div>
+                <ion-list>
+                    <ion-item>
+                        <ion-input (ionChange)="updateNode($event)" type="number" [placeholder]="'Number of '+selectedNode.label"></ion-input>
+                    </ion-item>
+                </ion-list>
             </div>
-
-
-
-
         </div>
     </div>
 
