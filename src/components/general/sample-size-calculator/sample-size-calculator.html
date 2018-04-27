@@ -7,11 +7,11 @@
             <ion-list style="margin:10px">
                 <div *ngFor="let field of calculatedFields">
                     <div class="input-item" *ngIf="!inputValues[field.var]">
-                        <div class="input-label">{{field.title}}</div>
+                        <div class="input-label">{{field.label}}</div>
                         <div class="input-value missing">Input Missing</div>
                     </div>
                     <div class="input-item" *ngIf="inputValues[field.var]">
-                        <div class="input-label">{{field.title}}</div>
+                        <div class="input-label">{{field.label}}</div>
                         <div class="input-value">{{inputValues[field.var]}}</div>
                     </div>
                 </div>
@@ -20,7 +20,13 @@
 
         <!-- assumption inputs variables -->
         <div class="calc-section assumptions">
-            <div class="section-title">Assumptions</div>
+            <div class="section-title assumptions">
+                <div>Assumptions</div>
+                <div (click)="resetVariables()" class="reset-button">
+                    <span>reset</span>
+                    <ion-icon name="refresh"></ion-icon>
+                </div>
+            </div>
             <div style="margin:10px">
                 <ion-item class="input-item">
                     <ion-label fixed>Desired Confidence Level</ion-label>
@@ -43,13 +49,19 @@
                     <ion-label fixed>Expected Population Size</ion-label>
                     <ion-input type="number" min="1" max="9999999999" [(ngModel)]="inputValues.Population" (ionChange)="calculateSize()"></ion-input>
                 </ion-item>
+                <ion-item class="input-item">
+                    <ion-label fixed>{{moe.label}}</ion-label>
+                    <ion-input type="number" [(ngModel)]="inputValues.moe" (ionChange)="calculateSize()"></ion-input>
+                </ion-item>
             </div>
         </div>
     </div>
 
     <div class="calc-section results">
         <div class="section-title results">
-            <div style="margin-right: 5px"><ion-icon name="calculator"></ion-icon></div>
+            <div style="margin-right: 5px">
+                <ion-icon name="calculator"></ion-icon>
+            </div>
             <div>Results</div>
         </div>
         <div *ngFor="let result of outputs.formatted" class="input-item">

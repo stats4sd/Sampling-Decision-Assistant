@@ -12,24 +12,35 @@ declare const jStat
 })
 export class SampleSizeCalculatorComponent {
     @select(['activeProject', 'values']) projectValues$: Observable<any>
+
     isCalculating: boolean;
-    inputFields: any[] = [
-        { title: 'Desired Confidence Level', var: 'conf' },
-        { title: 'Clustering Level', var: 'rho' },
-        { title: 'Number of Samples per Cluster', var: 'nHH' },
-        { title: 'Expected Population Size', var: 'Population' }
-    ]
-    calculatedFields: any[] = [
-        { title: 'Type of Variable', var: 'type' },
-        { title: 'Number of Sampling Stages', var: 'stages' },
-    ]
-    inputValues: CalculatorVars = {
+
+    inputFields: any[] = []
+    inputFieldsDefault: any = {
+        conf: { label: 'Desired Confidence Level', var: 'conf' },
+        rho: { label: 'Clustering Level', var: 'rho' },
+        nHH: { label: 'Number of Samples per Cluster', var: 'nHH' },
+        Population: { label: 'Expected Population Size', var: 'Population' },
+    }
+
+    calculatedFields: any[] = []
+    calculatedFieldsDefault: any = {
+        type: { label: 'Type of Variable', var: 'type' },
+        stages: { label: 'Number of Sampling Stages', var: 'stages' },
+    }
+
+    defaultValues: CalculatorVars = {
         moe: 5,
         conf: 0.95,
         rho: 0.1,
         nHH: 10,
         Population: 500000,
     }
+
+    moe:any={}
+
+    inputValues: CalculatorVars = {}
+
     outputs: any = {}
 
     constructor(public dataPrvdr: DataProvider, private customRouter: CustomRouterProvider) {
@@ -48,26 +59,54 @@ export class SampleSizeCalculatorComponent {
     ngOnInit() {
         this.customRouter.lockHash()
     }
+    resetVariables() {
+        this.dataPrvdr.activeProject.values._calculatorVars = null
+        this.calculateVariables(this.dataPrvdr.activeProject.values)
+    }
 
+    setDefaultFields() {
+        this.inputFields = this._jsonToArray(this.inputFieldsDefault)
+        this.calculatedFields = this._jsonToArray(this.calculatedFieldsDefault)
+    }
+
+    _jsonToArray(json) {
+        let arr = []
+        Object.keys(json).forEach(k => {
+            arr.push(json[k])
+        })
+        return arr
+    }
+
+    // take project values, load any saved input calculator variables and assign calculated variables
     calculateVariables(v) {
         console.log('calculating variables', v)
         let projectVals: CalculatorVars = {}
-        // first load any presaved values
+        // set default claculated fields in case type of variable has changed
+        this.setDefaultFields()
+        // load any presaved values
         if (v._calculatorVars) {
-            console.log('preloading vals', v._calculatorVars)
             projectVals = v._calculatorVars.inputs
         }
-        // then update from survey
+        // then update from project values
         projectVals.stages = v.samplingStages ? v.samplingStages.length : 0;
         try {
             if (v['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
                 projectVals.type = "proportion";
                 projectVals.prop = v['q2.3.1'];
                 if (!projectVals.moe) { projectVals.moe = 5 };
-                this.calculatedFields.push(
-                    { title: 'Expected %', var: 'prop' },
-                    { title: 'Margin of Error (+/- percentage points)', var: 'moe' },
-                )
+                // set calculated fields array with propotion element
+                this.calculatedFields.push({
+                    label: 'Expected %', var: 'prop'
+                })
+                // set moe seperately as is an input but changes depending on calculated
+                this.moe = {
+                    label: 'Margin of Error (+/- percentage points)',
+                    var: 'moe',
+                    min: 0.01,
+                    max: 25,
+                    step: 1
+                }
+                this.inputFields.push(this.moe)
             }
             if (v['q2.1.2'] == "Average or total value of indicator in the population") {
                 projectVals.type = "average value";
@@ -75,13 +114,23 @@ export class SampleSizeCalculatorComponent {
                 if (!projectVals.moe) { projectVals.moe = projectVals.sd / 2 };
                 this.calculatedFields.push(
                     { title: 'Standard Deviation', var: 'sd' },
-                    { title: 'Margin of Error (+/-)', var: 'moe' },
                 )
+                this.moe = {
+                    label: 'Margin of Error (+/-)',
+                    var: 'moe',
+                    min: 0.01,
+                    max: 25,
+                    step: 1
+                }
+                this.inputFields.push(this.moe)
             }
         } catch (error) {
             console.error('variable assign error', error)
         }
-        this.inputValues = Object.assign({}, this.inputValues, projectVals)
+        this.inputValues = Object.assign({}, this.defaultValues, projectVals)
+        console.log('input fields',this.inputFields)
+        console.log('calculated fields',this.calculatedFields)
+        console.log('input values',this.inputValues)
     }
 
     calculateSize() {
