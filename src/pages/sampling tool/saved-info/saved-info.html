@@ -33,9 +33,10 @@
             <div class="survey-date">{{project.created | date}}</div>
           </div>
           <div style="margin:5px">
-            <button ion-button icon-only clear (click)="deleteSurvey(survey)">
+            <button ion-button icon-only clear (click)="deleteProject(project)" *ngIf="project.created != activeProject.created">
               <ion-icon name="trash" color="delete"></ion-icon>
             </button>
+            <div class="active-project-label" *ngIf="project.created == activeProject.created">Active</div>
           </div>
         </div>
       </ion-item>

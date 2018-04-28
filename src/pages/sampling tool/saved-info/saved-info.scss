@@ -20,4 +20,8 @@ page-saved-info {
     [data-deprecated=true]{
         display: none;
     }
+    .active-project-label{
+        color:color($colors,primary)
+
+    }
 }

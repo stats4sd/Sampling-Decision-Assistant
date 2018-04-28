@@ -80,14 +80,15 @@ export class StepByStepPage {
     });
   }
   startNew() {
-    let modal = this.modalCtrl.create('SavedInfoPage', { view: 'save' });
-    modal.onDidDismiss(data => {
-      if (data) {
-        this.showIntro = false
-        //this.activeProject=this.dataPrvdr.activeProject
-      }
-    })
-    modal.present()
+    // let modal = this.modalCtrl.create('SavedInfoPage', { view: 'save' });
+    // modal.onDidDismiss(data => {
+    //   if (data) {
+    //     this.showIntro = false
+    //     //this.activeProject=this.dataPrvdr.activeProject
+    //   }
+    // })
+    // modal.present()
+    this.dataPrvdr.createNewProject()
   }
   load() {
     let modal = this.modalCtrl.create('SavedInfoPage', { view: 'load' });

@@ -14,9 +14,9 @@ export class FormProvider {
   section: any;
   // track questions to omit from main lists
   repeatChildren: any = []
-  historicValues: any = {}
+  public historicValues: any = {}
 
-  constructor(private fb: FormBuilder, private events: Events, private projectActions: ProjectActions) {
+  constructor(public fb: FormBuilder, private events: Events, private projectActions: ProjectActions) {
     this.events.subscribe('valueUpdate', update => {
       this._customUpdateTriggers(update)
     })

@@ -11,6 +11,7 @@ import { ProjectActions } from '../../actions/actions';
 import { SavedProjects, Project, AppState } from '../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { FormGroup } from '@angular/forms';
 
 // import * as dojox from 'dojo'
 
@@ -37,7 +38,7 @@ export class DataProvider {
   ) {
     // bind local activeProject to update from redux, save survey whenever value changese
     this.activeProject$.subscribe(p => { if (p) { this.activeProject = p } })
-    this.loadSavedProjects()
+    this.loadSavedProjects(true)
     this.projectActions.setMeta({ _dbVersion: this._dbVersion })
   }
 
@@ -49,10 +50,13 @@ export class DataProvider {
       created: date,
       edited: date,
       dbVersion: this._dbVersion,
-      values: this.formPrvdr.formGroup.value,
+      values: {},
       stagesComplete: [null, false, false, false, false, false, false]
     }
+    this.formPrvdr.historicValues={}
+    this.formPrvdr.formGroup.reset()
     this.projectActions.setNewProject(project)
+
   }
 
   checkProjectTitleUnique(title:string){
@@ -73,7 +77,7 @@ export class DataProvider {
     })
     toast.present()
   }
-  loadSavedProjects() {
+  loadSavedProjects(promptResume?:boolean) {
     let saved: SavedProjects = []
     this.getFromStorage('savedSurveys').then(
       res => {
@@ -88,7 +92,7 @@ export class DataProvider {
             return b.edited - a.edited 
           })
           this.projectActions.listProjects(saved)
-          if (saved.length > 0) {
+          if (saved.length > 0 && promptResume) {
             this.promptProjectResume([...saved][0])
           }
         }
@@ -161,50 +165,22 @@ export class DataProvider {
 
   // }
 
-  // deleteSurvey(title) {
-  //   if (this.activeProject && this.activeProject.title == title) {
-  //     this.activeProject = null
-  //   }
-  //   delete this.savedSurveys[title]
-  //   if (!this.savedSurveys) { this.savedSurveys = {} }
-  //   return this.saveToStorage('savedSurveys', this.savedSurveys)
-  // }
+  deleteProject(project:Project) {
+    if (this.activeProject && this.activeProject.created == project.created) {
+      // prevent active project being deleted?
+    }
+    else{
+      console.log('deleteing project',project.created)
+      delete this.savedProjectsJson[project.created]
+      this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
+        ()=>this.loadSavedProjects()
+      )
+    }
+    console.log('saved projects json',this.savedProjectsJson)
+        
+  }
 
 
-
-  // saveSurvey(survey?, backgroundMode?) {
-  //   // save entire survey to local storage. provide survey param to specify exact (e.g. in import), otherwise will pull from form provider
-  //   return new Promise((resolve, reject) => {
-  //     if (survey) {
-  //       this.savedSurveys[survey.title] = survey
-  //       this.saveToStorage('savedSurveys', this.savedSurveys).then(
-  //         _ => {
-  //           if (!backgroundMode) {
-  //             this.showNotification('Imported Successfully')
-  //           }
-  //           resolve('saved')
-
-  //         })
-  //     }
-  //     else if (this.activeProject.title) {
-  //       let title = this.activeProject.title
-  //       this.savedSurveys[title] = this.activeProject
-  //       this.activeProject.values = this.formPrvdr.formGroup.value
-  //       this.activeProject._dbVersion = this._dbVersion
-  //       this.saveToStorage('savedSurveys', this.savedSurveys).then(
-  //         _ => {
-  //           if (!backgroundMode) {
-  //             this.showNotification('Progress Saved')
-  //           }
-  //           resolve('saved')
-  //         }
-  //       )
-  //     }
-  //     else {
-  //       resolve('saved')
-  //     }
-  //   })
-  // }
 
   // ***** general storage functions ***** //
 

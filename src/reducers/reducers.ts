@@ -24,7 +24,8 @@ export function rootReducer(state: Models.AppState = INITIAL_STATE, action: Acti
 
         case Actions.ProjectActions.NEW_PROJECT:
             const newProject = action as Actions.ProjectSaveAction
-            return Object.assign({}, state, { activeProject: newProject.payload })
+            
+            return {...state,activeProject:newProject.payload}
 
         case Actions.ProjectActions.LIST_PROJECTS:
             const list = action as Actions.ProjectSaveAction

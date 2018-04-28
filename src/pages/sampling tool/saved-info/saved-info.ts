@@ -14,7 +14,9 @@ import { Project } from '../../../models/models';
 })
 export class SavedInfoPage {
   @select('savedProjects') savedProjects$: Observable<Project[]>
+  @select('activeProject') activeProject$: Observable<Project>
   savedProjects:Project[] = [];
+  activeProject:Project;
   saveName: string;
   view: string;
   savedSurveys: any;
@@ -35,6 +37,7 @@ export class SavedInfoPage {
         if (projects) { this.savedProjects = projects.filter(p=> p.dbVersion==this._dbVersion )}
       }
     )
+    this.activeProject$.subscribe(p=>this.activeProject=p)
   }
 
   createNew() {
@@ -54,6 +57,10 @@ export class SavedInfoPage {
     console.log('loading project', project)
     this.dataPrvdr.loadProject(project);
     this.viewCtrl.dismiss();
+  }
+  deleteProject(project:Project){
+
+    this.dataPrvdr.deleteProject(project)
   }
 
   // file drop
