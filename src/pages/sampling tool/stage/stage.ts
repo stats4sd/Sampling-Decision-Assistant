@@ -61,7 +61,6 @@ export class StagePage {
     // part of workaround for router locked params #114
     this.customRouter.unlockHash()
     this.stageInit(navParams)
-    // this.events.subscribe('help:clicked', relevant => this._showResource(relevant))
     this._subscribeToViewChanges()
   }
 

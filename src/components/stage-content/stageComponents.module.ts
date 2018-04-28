@@ -18,6 +18,7 @@ import { Stage5_FrameBuilderOverviewComponent } from './main-content/5/frame-bui
 import { Stage5_RecapComponent } from './main-content/5/recap/stage-5-recap';
 import { Stage5_DefineStagesComponent } from './main-content/5/define-stages/stage-5-define-stages';
 import { Stage6Component } from './main-content/6/stage-6';
+import { DataVisComponentsModule } from '../dataVis/dataVisComponents.module';
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -40,7 +41,8 @@ import { Stage6Component } from './main-content/6/stage-6';
     imports: [
         IonicModule,
         GeneralComponentsModule,
-        SurveyComponentsModule
+        SurveyComponentsModule,
+        DataVisComponentsModule
     ],
     exports: [
         Stage1Component,
