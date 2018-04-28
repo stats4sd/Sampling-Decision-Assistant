@@ -53,9 +53,10 @@ export class DataProvider {
       values: {},
       stagesComplete: [null, false, false, false, false, false, false]
     }
+    this.projectActions.setNewProject(project)
     this.formPrvdr.historicValues={}
     this.formPrvdr.formGroup.reset()
-    this.projectActions.setNewProject(project)
+    
 
   }
 
