@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { dispatch } from '@angular-redux/store';
 import { FluxStandardAction } from 'flux-standard-action';
-import { Project, SavedProjects, ViewState, ViewStateParams, TreeDiagramNode } from '../models/models';
+import { Project, SavedProjects, ViewState, ViewStateParams, TreeDiagramNode, TreeState } from '../models/models';
 
 export type ProjectSaveAction = FluxStandardAction<Project, null>;
 export type ProjectLoadAction = FluxStandardAction<Project, null>;
@@ -97,12 +97,28 @@ export class ViewActions {
 
 export class TreeDiagramActions {
     static readonly SET_ACTIVE_NODE = 'SET_ACTIVE_NODE';
+    static readonly SET_NODES = 'SET_NODES';
+    static readonly SET_META = 'SET_META';
 
     @dispatch()
     setActiveNode = (activeNode: TreeDiagramNode) => ({
         type: TreeDiagramActions.SET_ACTIVE_NODE,
         meta: null,
         payload: activeNode
+    });
+
+    @dispatch()
+    setNodes = (nodes: TreeDiagramNode[]) => ({
+        type: TreeDiagramActions.SET_NODES,
+        meta: null,
+        payload: nodes
+    });
+
+    @dispatch()
+    setMeta = (meta: TreeState) => ({
+        type: TreeDiagramActions.SET_META,
+        meta: null,
+        payload: meta
     });
 }
 

@@ -10,7 +10,6 @@ import { NoteComponent } from './note/note';
 import { ResourcesComponent } from './resources/resources';
 import { HelpIconComponent} from './help-icon/help-icon'
 import { YoutubePlayerModule } from 'ngx-youtube-player';
-import { SampleSizeCalculatorComponent } from './sample-size-calculator/sample-size-calculator';
 
 
 
@@ -22,7 +21,6 @@ import { SampleSizeCalculatorComponent } from './sample-size-calculator/sample-s
         GlossaryComponent,
         GlossaryDetailComponent,
         NoteComponent,
-        SampleSizeCalculatorComponent,
         ResourcesComponent,
         HelpIconComponent
     ],
@@ -36,7 +34,6 @@ import { SampleSizeCalculatorComponent } from './sample-size-calculator/sample-s
         GlossaryComponent,
         GlossaryDetailComponent,
         NoteComponent,
-        SampleSizeCalculatorComponent,
         ResourcesComponent,
         HelpIconComponent
     ]

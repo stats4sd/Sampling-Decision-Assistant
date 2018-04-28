@@ -176,6 +176,7 @@ export class TreeDiagramComponent {
     }
     this.buildNodeEdges()
     this.buildDiagram(this.treeNodes, this.treeEdges)
+    this.treeActions.setNodes(this.treeNodes)
   }
 
 
@@ -233,8 +234,6 @@ export class TreeDiagramComponent {
       nodePath: this.nodePath.slice()
     }
     if (!titleNode) { this.nodeCount++ }
-    console.log('node', node)
-
     this.nodes.push(node)
     return node
   }

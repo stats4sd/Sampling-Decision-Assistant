@@ -12,10 +12,7 @@ export class Stage6Component extends StagePage {
   initComplete: boolean
 
   ngOnInit() {
-    this.events.subscribe('nodeSelected', n => {
-      console.log('this.selectedNode', n)
-      this.selectedNode = n
-    })
+    
   }
 
   ngAfterViewInit() {
@@ -23,9 +20,9 @@ export class Stage6Component extends StagePage {
     setTimeout(_ => this.initComplete = true, 200)
 
   }
-  launchSampleSizeCalculator() {
-    this.modalCtrl.create('SampleSizeCalculatorPage').present()
-  }
+  // launchSampleSizeCalculator() {
+  //   this.modalCtrl.create('SampleSizeCalculatorPage').present()
+  // }
   goBack() {
     this.navCtrl.pop()
   }

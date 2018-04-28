@@ -29,7 +29,7 @@ export class SampleSizeCalculatorComponent {
         stages: { label: 'Number of Sampling Stages', var: 'stages' },
     }
 
-    defaultValues: CalculatorVars = {
+    defaultValues: CalculatorInputVars = {
         moe: 5,
         conf: 0.95,
         rho: 0.1,
@@ -37,11 +37,11 @@ export class SampleSizeCalculatorComponent {
         Population: 500000,
     }
 
-    moe:any={}
+    moe: any = {}
 
-    inputValues: CalculatorVars = {}
+    inputValues: CalculatorInputVars = {}
 
-    outputs: any = {}
+    outputs: CalculatorOutputVars = {}
 
     constructor(public dataPrvdr: DataProvider, private customRouter: CustomRouterProvider) {
         this.projectValues$.subscribe(v => {
@@ -80,7 +80,7 @@ export class SampleSizeCalculatorComponent {
     // take project values, load any saved input calculator variables and assign calculated variables
     calculateVariables(v) {
         console.log('calculating variables', v)
-        let projectVals: CalculatorVars = {}
+        let projectVals: CalculatorInputVars = {}
         // set default claculated fields in case type of variable has changed
         this.setDefaultFields()
         // load any presaved values
@@ -128,9 +128,9 @@ export class SampleSizeCalculatorComponent {
             console.error('variable assign error', error)
         }
         this.inputValues = Object.assign({}, this.defaultValues, projectVals)
-        console.log('input fields',this.inputFields)
-        console.log('calculated fields',this.calculatedFields)
-        console.log('input values',this.inputValues)
+        console.log('input fields', this.inputFields)
+        console.log('calculated fields', this.calculatedFields)
+        console.log('input values', this.inputValues)
     }
 
     calculateSize() {
@@ -142,7 +142,7 @@ export class SampleSizeCalculatorComponent {
         }
         // known issue with strings: https://github.com/ionic-team/ionic/issues/7121
         // convert all strings to numbers
-        let input: CalculatorVars = {}
+        let input: CalculatorInputVars = {}
         Object.keys(this.inputValues).forEach(key => {
             input[key] = parseFloat(this.inputValues[key])
         })
@@ -190,8 +190,7 @@ export class SampleSizeCalculatorComponent {
         /***********************************************************************************************************/
 
 
-        this.outputs = {}
-        this.outputs.raw = {
+        const raw: CalculatorOutputVarsRaw = {
             SRSn: Math.round(SRSn),
             SRSn_FPC: SRSn_FPC,
             DEFF1: Math.round(DEFF1 * 100) / 100,
@@ -199,13 +198,20 @@ export class SampleSizeCalculatorComponent {
             FinalstageN_FPC: FinalstageN_FPC,
             stage2N
         }
-        this.outputs.rawArray = Object.keys(this.outputs.raw)
-        this.outputs.formatted = [
+        const rawArray = Object.keys(raw)
+        const formatted = [
             { var: 'SRSn_FPC', label: "Sample Size Required from Simple Random Sample (1 stage)" },
             { var: 'DEFF1', label: "Design Effect" },
             { var: 'FinalstageN_FPC', label: "Sample Size Required from Clustered Multi-Stage Sample" },
             { var: 'stage2N', label: "Number of Level 2 Clusters Required" },
         ]
+
+        this.outputs = {
+            raw: raw,
+            rawArray: rawArray,
+            formatted: formatted
+
+        }
 
         // update tree meta state
         this.dataPrvdr.activeProject.values._calculatorVars = {
@@ -217,17 +223,40 @@ export class SampleSizeCalculatorComponent {
 
 }
 
-export interface CalculatorVars {
-    type?: 'average value' | 'proportion', // type of variable (number/percentage error), percentage = binary, number = numeric 
+export interface CalculatorVars{
+    inputs:CalculatorInputVars,
+    outputs:CalculatorOutputVars
+}
 
+export interface CalculatorInputVars {
+    type?: 'average value' | 'proportion', // type of variable (number/percentage error), percentage = binary, number = numeric 
     prob?: number,
     prop?: number   // if binary (%), expected, defaults to prop 50, prob 0.5 
     sd?: number,    // if number, standard deviation, default 100
-
     moe?: number,    // desired margin of error, default 5
     stages?: number, // number of sampling stages, default 3
     nHH?: number,    // number of samples per PSU
     Population?: number, // expected population size
     conf?: number,   // desired confidence level, default 0.95
     rho?: number,  // clustering value linked to clus select (none:0, low:0.1, moderate:0.25), default low
+}
+
+export interface CalculatorOutputVarsRaw {
+    SRSn: number,
+    SRSn_FPC: number,
+    DEFF1: number,
+    FinalstageN: number,
+    FinalstageN_FPC: number,
+    stage2N: number
+}
+
+export interface CalculatorOutputVars{
+    raw?:CalculatorOutputVarsRaw,
+    rawArray?:any[],
+    formatted?:CalculatorOutputVarFormatted[]
+}
+
+export interface CalculatorOutputVarFormatted{
+    var:string,
+    label:string
 }

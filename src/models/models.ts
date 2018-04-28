@@ -38,7 +38,9 @@ export interface ViewStateParams{
 }
 
 export interface TreeState{
-    activeNode:TreeDiagramNode
+    activeNode?:TreeDiagramNode,
+    nodes?:TreeDiagramNode[],
+    infoSection?:'info' | 'allocation'
 }
 
 export interface Question {
@@ -76,9 +78,9 @@ export interface glossaryTerm{
 // tree diagram
 export interface TreeDiagramNode{
     id:string,
-    color:TreeDiagramNodeColor,
     label:string,
-    shape:string
+    group:string,
+    title:string
 }
 export interface TreeDiagramNodeColor{
     background:string,

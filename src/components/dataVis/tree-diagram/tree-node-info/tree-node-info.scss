@@ -1,16 +1,14 @@
 tree-node-info{
-    // applies margin to the right to hide additional scroll bar from view
-    $scroll-hide-margin:20px;
 
     #nodeInfo{
         position: absolute;
         width: 220px;
         top:0;
+        right:0;
         height: 300px;
         background-color: #d5deea;
         // want to have scroll when needed, but move to right to hide scrollbar
-        right:-$scroll-hide-margin;
-        overflow-y: auto;
+        
         
         // on way in decelerate
         transition: 0.25s ease-out;
@@ -28,12 +26,13 @@ tree-node-info{
         padding: 5px;
         color: white;
         text-align: center;
-        padding-right: $scroll-hide-margin;
     }
-    .node-info{
-        margin-right: $scroll-hide-margin;
-        padding: 5px;
-        // background: rgba(255,255,255,0.5)
+    .node-info-text{
+        // extra width but padding right to hide scroll bar on overflow
+        width: calc(100% + 22px);
+        padding: 5px 27px 5px 5px;
+        overflow-y: auto;
+        height: 234px;
     }
 
     ol{
@@ -41,5 +40,26 @@ tree-node-info{
     }
     li[data-active='true']{
         font-weight: bold
+    }
+    .info-subsection-labels{
+        display: flex;
+        
+        border: 1px solid color($colors,primary);
+        background-color: white;
+    }
+    .info-subsection-labels > button{
+        text-align: center;
+        cursor: pointer;
+        padding:5px 10px;        
+        margin:0;
+
+    }
+    .button[data-active='true']{
+        font-weight: bold;
+        color:color($colors,primary)
+    }
+    .button[data-active='false']{
+        font-weight: bold;
+        color:gray
     }
 }
