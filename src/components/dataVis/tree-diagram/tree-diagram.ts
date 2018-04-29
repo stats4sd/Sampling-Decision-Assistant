@@ -72,11 +72,11 @@ export class TreeDiagramComponent {
             // build nodes (and combinations if multiple)            
             let reportingLevelGroups = this._buildCombinations(allReportingLevels, stage['q5.3.4.2'])
             if (reportingLevelGroups) {
-              for (let reportingLevel of reportingLevelGroups) {
+              reportingLevelGroups.forEach((reportingLevel, i) => {
                 this.nodePath.pop()
-                this.nodePath.push(stage.name + '|-|' + reportingLevel)
+                this.nodePath.push(stage.name + '|-|' + i + '|-|' + reportingLevel)
                 stageNodes.push(this._createNode((tierIndex), reportingLevel, 'reportingLevelNodes'))
-              }
+              })
             }
           } catch (error) {
             stageNodes.push(this._createNode((tierIndex), 'reporting level not defined', 'reportingLevelUndefined'))
@@ -279,7 +279,7 @@ export class TreeDiagramComponent {
       },
       interaction: {
         dragView: true,
-        tooltipDelay:9999
+        tooltipDelay: 9999
       },
       layout: {
         improvedLayout: true,

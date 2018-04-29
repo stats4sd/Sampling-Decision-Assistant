@@ -16,12 +16,21 @@ export class TreeNodeInfoComponent {
     activeNode: TreeDiagramNode;
     infoSection: string;
     samplingStages: any[] = [];
-    nodeText: any = {}
+    nodeMeta: any = {};
+    reportingLevels: any[] = [];
+    stageMeta:any[]=[
+        {label:'Stage',var:'stageNumber'},
+        {label:'Sampling Unit',var:'name'},
+        {label:'Frame',var:'q5.3.1'},
+        {label:'Units',var:'q5.3.3'},
+        {label:'Reporting Level',var:'q5.3.4.2'},
+    ]
 
     constructor(private treeActions: TreeDiagramActions) {
         this.activeNode$.subscribe(node => this._updateActiveNode(node))
         this.stagePart$.subscribe(p => this._updateInfoSection(null, p))
         this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s } })
+        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l } })
 
     }
 
@@ -29,15 +38,20 @@ export class TreeNodeInfoComponent {
     _updateActiveNode(node: TreeDiagramNode) {
         this.activeNode = node
         let nodeText: any = {}
+        let stageMeta: any = {}
         //  *** incomplete, will use later to add more information to the node info pane
         if (node) {
-            // console.log('node', node)
-            // console.log('stages', this.samplingStages)
-            if (node.group == 'stageNodes') {
-                nodeText.stageNumber = node.title.length
-            }
+            stageMeta = this._getStageMeta(node.title.length)
         }
-        this.nodeText = nodeText
+        this.nodeMeta = { ...node, stageMeta }
+        console.log('nodeMeta', this.nodeMeta)
+    }
+
+    // return sampling stage values for given stage number
+    _getStageMeta(stageNumber: number) {
+        let meta = this.samplingStages[stageNumber - 1]
+        meta.stageNumber = stageNumber
+        return meta
     }
 
     // update the visible section of the info pane automatically on stage part change or when clicking section tab buttons

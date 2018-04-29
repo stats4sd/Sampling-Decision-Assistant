@@ -11,22 +11,54 @@
                 <ion-icon name="calculator"></ion-icon>Allocation
             </button>
         </div>
-        <!-- info tab -->
-        <div *ngIf="infoSection=='info'">
-            <div [ngSwitch]="activeNode.group" class="node-info-text">
-                <div *ngSwitchCase="'stageNodes'">
-                    <p>This node represents a sampling stage</p>
+        <div class="node-info-text">
+            <!-- info tab -->
+        <div [style.display]="infoSection=='info'?'block':'none'">
+                <div *ngFor="let meta of stageMeta">
+                    <div *ngIf="nodeMeta.stageMeta && [meta.var]" class="meta-item" >
+                            <div class="meta-label">{{meta.label}}</div>
+                            <div class="meta-value">{{nodeMeta.stageMeta[meta.var]}}</div>
+                    </div>
+                </div>
+               
+            </div>
+            <!-- allocation tab -->
+            <div [style.display]="infoSection=='allocation'?'block':'none'">
+                <div class="node-info-text">allocation tab</div>
+                <div>You said you want to sample all units in this stage</div>
+                <div>How many units are there?</div>
+            </div>
+        </div>
+        
+
+    </div>
+
+
+</div>
+
+<!-- <div [ngSwitch]="activeNode.group" class="node-info-text">
+        <div *ngSwitchCase="'stageNodes'">
+
+
+        </div>
+        <div *ngSwitchCase="'reportingLevelNodes'">
+            <p>This node represents a reporting level</p>
+
+        </div>
+        <div *ngSwitchDefault>
+            <p>This node is incomplete. Complete the corresponding stage questions to provide information required</p>
+        </div>
+    </div> -->
+
+<!-- <p>This node represents a sampling stage</p>
                     <p>The full list of stages are:</p>
                     <ol>
                         <li *ngFor="let stage of (samplingStages$ | async)" style="margin-left:10px" [attr.data-active]="stage.name==activeNode.label">
                             {{stage.name}}
                         </li>
-                    </ol>
+                    </ol> -->
 
-                </div>
-                <div *ngSwitchCase="'reportingLevelNodes'">
-                    <p>This node represents a reporting level</p>
-                    <p>The full list of levels are:</p>
+<!-- <p>The full list of levels are:</p>
                     <div *ngFor="let level of (reportingLevels$ | async)">
                         <div style="text-decoration: underline">{{level.name}}</div>
                         <ul>
@@ -34,19 +66,4 @@
                                 {{name}}
                             </li>
                         </ul>
-                    </div>
-                </div>
-                <div *ngSwitchDefault>
-                    <p>This node is incomplete. Complete the corresponding stage questions to provide information required</p>
-                </div>
-            </div>
-        </div>
-        <!-- allocation tab -->
-        <div *ngIf="infoSection=='allocation'">
-            <div class="node-info-text">allocation tab</div>
-        </div>
-
-    </div>
-
-
-</div>
+                    </div> -->
