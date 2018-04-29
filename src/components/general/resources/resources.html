@@ -5,7 +5,7 @@
     <ion-item *ngFor="let question of questions; let i=index" [ngClass]="question.expanded ? 'expanded' : 'contracted'">
       <!-- <div class="relevant-question" *ngIf="question.relevant && question.relevant.indexOf(relevant)>-1">*</div> -->
       <div class="question-text" [innerHtml]="question.q" (click)="viewResource(i)"></div>
-      <div class="answer-display-options">
+      <div class="answer-display-options" *ngIf="question.expanded">
         <button outline ion-button icon-left *ngIf="question.a" (click)="viewResource(i,'text')" [class.selected]="question.expanded && question.showFormat=='text'">
           <ion-icon name="list"></ion-icon>Text</button>
         <button outline ion-button icon-left *ngIf="question.audio" (click)="viewResource(i,'audio')" [class.selected]="question.expanded && question.showFormat=='audio'">
@@ -45,8 +45,8 @@
       </div>
     </ion-item>
   </ion-list>
-  <h2>Example Cases</h2>
+  <!-- <h2>Example Cases</h2>
   <note type="dev">Here we plan to have a selection of common examples to illustrate typical answers for this section</note>
   <h2>More Information</h2>
-  <note type="dev">In this space you will be able to find additional links and resources to support the section content</note>
+  <note type="dev">In this space you will be able to find additional links and resources to support the section content</note> -->
 </div>

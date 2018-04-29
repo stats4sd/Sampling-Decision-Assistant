@@ -39,9 +39,9 @@ export class ResourcesComponent {
   videoPlayerHeight:number=450
 
   constructor(private events: Events, private sanitizer: DomSanitizer, private db:AngularFirestore) {
-    this.relevant$.subscribe(
-      r=>{if(r){this.showRelevant(r)}}
-    )
+    // this.relevant$.subscribe(
+    //   r=>{if(r){this.showRelevant(r)}}
+    // )
     this.db.collection('resources').valueChanges().subscribe(
       res=>{
         this.allResources=res

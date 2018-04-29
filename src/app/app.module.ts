@@ -24,6 +24,7 @@ import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from '../components/_dev/config';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { CustomRouterProvider } from '../providers/router/router';
+import { SentryErrorHandler } from '../providers/error-handler/error-handler';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CustomRouterProvider } from '../providers/router/router';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    // { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     DataProvider,
     FormProvider,
     ProjectActions,
@@ -58,7 +60,7 @@ import { CustomRouterProvider } from '../providers/router/router';
     ViewActions,
     TreeDiagramActions,
     DevToolsExtension,
-    CustomRouterProvider
+    CustomRouterProvider,
   ]
 })
 export class AppModule { 
