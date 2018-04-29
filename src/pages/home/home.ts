@@ -60,7 +60,7 @@ export class HomePage {
 
   showChangelog() {
     this.navCtrl.push('ChangelogPage')
-    throw new Error('I am a bug... 🐛')
+    // throw new Error('I am a bug... 🐛')
   }
 
   goToAdmin() {
