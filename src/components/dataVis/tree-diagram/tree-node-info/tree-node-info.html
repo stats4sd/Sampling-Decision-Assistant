@@ -23,11 +23,9 @@
                
             </div>
             <!-- allocation tab -->
-            <div [style.display]="infoSection=='allocation'?'block':'none'">
-                <div class="node-info-text">allocation tab</div>
-                <div>You said you want to sample all units in this stage</div>
-                <div>How many units are there?</div>
-            </div>
+            <tree-node-allocation [style.display]="infoSection=='allocation'?'block':'none'">
+                
+            </tree-node-allocation>
         </div>
         
 

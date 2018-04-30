@@ -3,12 +3,13 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable'
 import { TreeDiagramNode } from '../../../../models/models';
 import { TreeDiagramActions } from '../../../../actions/actions';
+import { TreeNodeInfoComponent } from '../tree-node-info/tree-node-info';
 
 @Component({
-    selector: 'tree-node-info',
-    templateUrl: 'tree-node-info.html'
+    selector: 'tree-node-allocation',
+    templateUrl: 'tree-node-allocation.html'
 })
-export class TreeNodeInfoComponent {
+export class TreeNodeAllocationComponent {
     @select(['_treeMeta', 'activeNode']) readonly activeNode$: Observable<TreeDiagramNode>
     @select(['activeProject', 'values', 'samplingStages']) readonly samplingStages$: Observable<any>
     @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<any>
@@ -77,4 +78,5 @@ export class TreeNodeInfoComponent {
             v = n % 100;
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
+
 }

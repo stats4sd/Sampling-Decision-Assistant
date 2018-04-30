@@ -1,0 +1,15 @@
+<div class="node-info-text" *ngIf="nodeMeta.stageMeta">
+    <div>{{nodeMeta.stageMeta}}</div>
+    <div>{{nodeMeta.stageMeta['q5.3.3']}}</div>
+    <div [ngSwitch]="nodeMeta.stageMeta['q5.3.3']">
+        <div *ngSwitchCase="'all'">
+                <div>You said you want to sample all units in this stage</div>
+                <div>How many units are there?</div>
+        </div>
+        <div *ngSwitchCase="'all'">
+                <div>You said you want to take a sample of units in this stage</div>
+                <div>How many units are there?</div>
+        </div>
+        
+    </div>
+</div>
