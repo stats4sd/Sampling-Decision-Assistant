@@ -1,5 +1,20 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
+
+## 0.9.7 (29th April 2018)
+
+Stage 6 - The R-shiny calculator app has been rewritten entirely in javaScript so that it can be fully embedded into the app and even work offline. You can see it in action on the Stage 6 - Sample Sizes section. More work has also been done to link nodes in the tree diagram to the
+rest of the app, for example when clicking on a node you can now see information relating to the sampling stage. In the next update there
+should also be the finished implementation of allocating sample sizes at each stage.
+
+Errors and Bug fixing - Ahead of the initial beta launch the app has undergone lots of additional tests with any bugs found prioritised for fixing. As it is however difficult to fully test every scenario that the allows for an additional service has been integrated that will automatically track any errors that a user may encounter, and automatically send a report on the error alongside key information to the developer, allowing easier tracking and fixing. 
+
+Save, Load and Project Delete - these have been fixed and should be working as expected. The option to load predefined example templates is yet to be implemented, as is the full xls export/import feature (coming soon!)
+
+## 0.9.6 (26th April 2018)
+
+Various bug fixes and putting more infrastructure in place for stage 6 (including a lightweight javascript-based stats package :D )
+
 ## 0.9.5 (24th April 2018)
 
 User notes - You'll find more notes throughout the app, templates as:

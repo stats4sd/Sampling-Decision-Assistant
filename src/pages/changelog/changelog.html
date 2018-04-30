@@ -15,6 +15,37 @@
   <p>In this document find recorded the main changes that have been implemented.</p>
   <!-- 1.0.0 (remember to include dev docs at some point) -->
 
+  <!-- 0.9.7 -->
+  <div>
+    <h2>0.9.7 (29th April 2018)</h2>
+    <p>
+      <strong>Stage 6</strong> - The R-shiny calculator app has been rewritten entirely in javaScript so that it can be fully embedded
+      into the app and even work offline. You can see it in action on the Stage 6 - Sample Sizes section.
+      <br>More work has also been done to link nodes in the tree diagram to the rest of the app, for example when clicking on
+      a node you can now see information relating to the sampling stage. In the next update there should also be the finished
+      implementation of allocating sample sizes at each stage.
+    </p>
+    <ngx-image-viewer [src]="['assets/img/changelog/0.9.7-update-1.png']"></ngx-image-viewer>
+    <p>
+      <strong>Errors and Bug fixing</strong> Ahead of the initial beta launch the app has undergone lots of additional tests with
+      any bugs found prioritised for fixing. As it is however difficult to fully test every scenario that the allows for
+      an additional service has been integrated that will automatically track any errors that a user may encounter, and automatically
+      send a report on the error alongside key information to the developer, allowing easier tracking and fixing.
+    </p>
+    <p>
+      <strong>Save, Load and Project Delete</strong>- these have been fixed and should be working as expected. The option to load
+      predefined example templates is yet to be implemented, as is the full xls export/import feature (coming soon!)
+    </p>
+  </div>
+
+  <!-- 0.9.6 -->
+  <div>
+    <h2>0.9.6 (26th April 2018)</h2>
+    <p>
+      Various bug fixes and putting more infrastructure in place for stage 6 (including a lightweight javascript-based stats package
+      :D )
+    </p>
+  </div>
 
   <!-- 0.9.5 -->
   <div>
@@ -37,7 +68,8 @@
       <a target="_blank" rel="nofollow" href="https://github.com/stats4sd/Sampling-Decision-Assistant/milestones?direction=asc&sort=due_date&state=open">Github</a>
     </div>
     <p>
-      <strong>Performance and user flow improvements</strong>- Again, lots of incremental improvements to how the app runs, aiming for a smooth and consistent experience</p>
+      <strong>Performance and user flow improvements</strong>- Again, lots of incremental improvements to how the app runs, aiming
+      for a smooth and consistent experience</p>
     <p>
       <strong>Coming soon: service workers</strong> - Part of how the app will function in the future is to automatically download
       all files required so that it can work offline. That way simply loading the site once with internet access will allow
