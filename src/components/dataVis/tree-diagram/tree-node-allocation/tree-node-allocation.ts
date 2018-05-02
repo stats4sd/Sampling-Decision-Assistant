@@ -1,9 +1,11 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { TextInput } from 'ionic-angular'
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable'
 import { TreeDiagramNode } from '../../../../models/models';
 import { TreeDiagramActions } from '../../../../actions/actions';
-import { TreeNodeInfoComponent } from '../tree-node-info/tree-node-info';
+import { FormProvider } from '../../../../providers/form/form';
+import { DataProvider } from '../../../../providers/data/data';
 
 @Component({
     selector: 'tree-node-allocation',
@@ -17,21 +19,41 @@ export class TreeNodeAllocationComponent {
     activeNode: TreeDiagramNode;
     infoSection: string;
     samplingStages: any[] = [];
-    nodeMeta: any = {};
+    nodeMeta: any = { stageMeta: {} };
     reportingLevels: any[] = [];
-    stageMeta:any[]=[
-        {label:'Stage',var:'stageNumber'},
-        {label:'Sampling Unit',var:'name'},
-        {label:'Frame',var:'q5.3.1'},
-        {label:'Units',var:'q5.3.3'},
-        {label:'Reporting Level',var:'q5.3.4.2'},
-    ]
+    allocationInput: number;
+    @ViewChild('allInput') allInput: TextInput
 
-    constructor(private treeActions: TreeDiagramActions) {
+    constructor(private treeActions: TreeDiagramActions, private formPrvdr: FormProvider, private dataPrvdr:DataProvider) {
+        // *** could do some tidying as first node select doesn't display properly due to no sampling stage meta yet (hence the additional update call)
+        this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this._updateActiveNode(this.activeNode) } })
         this.activeNode$.subscribe(node => this._updateActiveNode(node))
-        this.stagePart$.subscribe(p => this._updateInfoSection(null, p))
-        this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s } })
-        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l } })
+        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this._updateActiveNode(this.activeNode) } })
+    }
+    setPopAndSampleSize() {
+        this.setPopSize(this.allocationInput)
+        this.setSampleSize(this.allocationInput)
+    }
+    setPopSize(size?) {
+        const stageNumber = this.nodeMeta.stageMeta.stageNumber
+        this.updateStageControl(stageNumber - 1, { popSize: parseInt(size) })
+    }
+    setSampleSize(size?) {
+        const stageNumber = this.nodeMeta.stageMeta.stageNumber
+        this.updateStageControl(stageNumber - 1, { sampleSize: parseInt(size) })
+    }
+    updateStageControl(stageIndex: number, update: any) {
+        let allStages = this.formPrvdr.formGroup.controls.samplingStages.value.slice()
+        allStages[stageIndex] = Object.assign({}, allStages[stageIndex], update)
+        console.log('all stages', allStages)
+        this.formPrvdr.formGroup.patchValue({
+            samplingStages: allStages
+        })
+        this.dataPrvdr.backgroundSave()
+
+    }
+
+    setStageTotal() {
 
     }
 
@@ -40,43 +62,29 @@ export class TreeNodeAllocationComponent {
         this.activeNode = node
         let nodeText: any = {}
         let stageMeta: any = {}
-        //  *** incomplete, will use later to add more information to the node info pane
         if (node) {
-            console.log('node',node)
             stageMeta = this._getStageMeta(node.title.length)
-            
         }
-        this.nodeMeta = { ...node, stageMeta }
+        this.nodeMeta = Object.assign({}, node, { stageMeta: stageMeta })
         console.log('nodeMeta', this.nodeMeta)
+        this._focusInput()
+
+
+    }
+    _focusInput() {
+        setTimeout(() => {
+            if (this.allInput) { this.allInput.setFocus() }
+        }, 50);
     }
 
     // return sampling stage values for given stage number
     _getStageMeta(stageNumber: number) {
+        console.log('stageNumber', stageNumber, 'stageNumber-1', stageNumber - 1, 'sampling stages length', this.samplingStages.length)
         let meta = this.samplingStages[stageNumber - 1]
-        if(!meta){meta={}}
+        if (!meta) { meta = {} }
         meta.stageNumber = stageNumber
         return meta
     }
 
-    // update the visible section of the info pane automatically on stage part change or when clicking section tab buttons
-    _updateInfoSection(infoSection?: 'info' | 'allocation', stagePart?: string, ) {
-        // default info section
-        if (!infoSection) { infoSection = 'info' }
-        // auto change when part 3 (allocation) selected
-        if (stagePart == "3") { infoSection = 'allocation' }
-        this.treeActions.setMeta({
-            infoSection: infoSection
-        })
-        this.infoSection = infoSection
-        console.log('infoSection', infoSection)
-
-    }
-
-    // convert number to ordinal, e.g. 1->1st, 2->2nd etc.
-    _getGetOrdinal(n) {
-        var s = ["th", "st", "nd", "rd"],
-            v = n % 100;
-        return n + (s[(v - 20) % 10] || s[v] || s[0]);
-    }
 
 }

@@ -57,12 +57,12 @@ export class TreeDiagramComponent {
         if (isFinalStage) { stage['q5.3.4.2'] = '_final' }
         // no reporting levels
         if (!stage['q5.3.4.2'] || stage['q5.3.4.2'].length == 0) {
-          this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, 'stageNodes')]
+          this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, 'stageNodes',stage.sampleSize)]
         }
         // - reporting level
         else {
           // title node
-          this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, 'stageNodes', null, true)]
+          this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, 'stageNodes', stage.sampleSize, null, true)]
           tierIndex++
           // track allocated stages and add final stage levels
           try {
@@ -75,7 +75,7 @@ export class TreeDiagramComponent {
               reportingLevelGroups.forEach((reportingLevel, i) => {
                 this.nodePath.pop()
                 this.nodePath.push(stage.name + '|-|' + i + '|-|' + reportingLevel)
-                stageNodes.push(this._createNode((tierIndex), reportingLevel, 'reportingLevelNodes'))
+                stageNodes.push(this._createNode((tierIndex), reportingLevel, 'reportingLevelNodes', stage.sampleSize))
               })
             }
           } catch (error) {
@@ -224,7 +224,7 @@ export class TreeDiagramComponent {
   }
 
 
-  _createNode(stage: number, label: string, group: string, titleMeta?: string, titleNode?: boolean) {
+  _createNode(stage: number, label: string, group: string, titleMeta?: string, sampleSize?:number, titleNode?: boolean) {
     let node: any = {
       id: stage + '_' + this.nodeCount,
       index: this.nodeCount,

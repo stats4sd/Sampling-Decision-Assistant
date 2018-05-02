@@ -5,9 +5,7 @@ import { TreeNodeInfoComponent } from './tree-diagram/tree-node-info/tree-node-i
 import { TreeNodeAllocationComponent } from './tree-diagram/tree-node-allocation/tree-node-allocation';
 import { TreeTableComponent } from './tree-diagram/tree-table/tree-table';
 import { SampleSizeCalculatorComponent } from './sample-size-calculator/sample-size-calculator';
-
-
-
+import { GeneralComponentsModule } from '../general/generalComponents.module';
 
 @NgModule({
     declarations: [
@@ -19,6 +17,7 @@ import { SampleSizeCalculatorComponent } from './sample-size-calculator/sample-s
     ],
     imports: [
         IonicModule,
+        GeneralComponentsModule
 
     ],
     exports: [

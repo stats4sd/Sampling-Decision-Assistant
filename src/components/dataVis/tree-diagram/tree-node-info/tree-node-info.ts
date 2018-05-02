@@ -27,10 +27,10 @@ export class TreeNodeInfoComponent {
     ]
 
     constructor(private treeActions: TreeDiagramActions) {
-        this.activeNode$.subscribe(node => this._updateActiveNode(node))
         this.stagePart$.subscribe(p => this._updateInfoSection(null, p))
-        this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s } })
-        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l } })
+        this.samplingStages$.subscribe(s => {if (s) {this.samplingStages = s; this._updateActiveNode(this.activeNode)}})
+        this.activeNode$.subscribe(node => this._updateActiveNode(node))
+        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this._updateActiveNode(this.activeNode) } })
 
     }
 
@@ -41,12 +41,9 @@ export class TreeNodeInfoComponent {
         let stageMeta: any = {}
         //  *** incomplete, will use later to add more information to the node info pane
         if (node) {
-            console.log('node',node)
-            stageMeta = this._getStageMeta(node.title.length)
-            
+            stageMeta = this._getStageMeta(node.title.length)  
         }
         this.nodeMeta = { ...node, stageMeta }
-        console.log('nodeMeta', this.nodeMeta)
     }
 
     // return sampling stage values for given stage number

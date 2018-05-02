@@ -1,3 +1,13 @@
 tree-node-allocation{
-    
+    .allocation-input{
+        margin-top:1em;
+    }
+    .allocation-input > input{
+        margin:0;
+        padding:10px;
+        color:color($colors,primary);
+        border:1px solid rgba(0,0,0,0.3);
+        font-weight: bold;
+        
+    }
 }

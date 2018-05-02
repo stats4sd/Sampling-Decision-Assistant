@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { select } from '@angular-redux/store';
+import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable'
 import { DataProvider } from '../../../providers/data/data';
 import { CustomRouterProvider } from '../../../providers/router/router';
 import { TreeDiagramActions, ProjectActions } from '../../../actions/actions';
+import { AppState } from '../../../models/models';
 declare const jStat
 
 @Component({
@@ -43,7 +44,7 @@ export class SampleSizeCalculatorComponent {
 
     outputs: CalculatorOutputVars = {}
 
-    constructor(public dataPrvdr: DataProvider, private customRouter: CustomRouterProvider) {
+    constructor(public dataPrvdr: DataProvider, private customRouter: CustomRouterProvider, private ngRedux: NgRedux<AppState>) {
         this.projectValues$.subscribe(v => {
             if (v && !this.isCalculating) {
                 this.isCalculating = true
@@ -196,15 +197,12 @@ export class SampleSizeCalculatorComponent {
             DEFF1: Math.round(DEFF1 * 100) / 100,
             FinalstageN: Math.round(FinalstageN),
             FinalstageN_FPC: FinalstageN_FPC,
-            stage2N
+            stage2N:stage2N,
+            nHH:this.inputValues.nHH
         }
         const rawArray = Object.keys(raw)
-        const formatted = [
-            { var: 'SRSn_FPC', label: "Sample Size Required from Simple Random Sample (1 stage)" },
-            { var: 'DEFF1', label: "Design Effect" },
-            { var: 'FinalstageN_FPC', label: "Sample Size Required from Clustered Multi-Stage Sample" },
-            { var: 'stage2N', label: "Number of Level 2 Clusters Required" },
-        ]
+
+        const formatted = this._getFormattedLabels()
 
         this.outputs = {
             raw: raw,
@@ -221,11 +219,34 @@ export class SampleSizeCalculatorComponent {
         this.dataPrvdr.backgroundSave()
     }
 
+    // depending on single or multi stage, push labels to display with calculator outputs
+    _getFormattedLabels() {
+        const stages = this.ngRedux.getState().activeProject.values.samplingStages
+        const formatted = []
+        if (stages) {
+            if (stages.length == 1) {
+                formatted.push(
+                    { var: 'SRSn_FPC', label: "Sample Size Required" },
+                )
+            }
+            if (stages.length > 1) {
+                const level2Name=stages[stages.length-2].name
+                const level1Name=stages[stages.length-1].name
+                formatted.push(
+                    { var: 'DEFF1', label: "Design Effect" },
+                    { var: 'stage2N', label: "Number of "+level2Name+" required"},
+                    { var: 'nHH', label:"Number of "+level1Name+" specified for each reporting level" },
+                    { var: 'FinalstageN_FPC', label: "Total sample size for each reporting level" },
+                )
+            }
+        }
+        return formatted
+    }
 }
 
-export interface CalculatorVars{
-    inputs:CalculatorInputVars,
-    outputs:CalculatorOutputVars
+export interface CalculatorVars {
+    inputs: CalculatorInputVars,
+    outputs: CalculatorOutputVars
 }
 
 export interface CalculatorInputVars {
@@ -247,16 +268,17 @@ export interface CalculatorOutputVarsRaw {
     DEFF1: number,
     FinalstageN: number,
     FinalstageN_FPC: number,
-    stage2N: number
+    stage2N: number,
+    nHH:number
 }
 
-export interface CalculatorOutputVars{
-    raw?:CalculatorOutputVarsRaw,
-    rawArray?:any[],
-    formatted?:CalculatorOutputVarFormatted[]
+export interface CalculatorOutputVars {
+    raw?: CalculatorOutputVarsRaw,
+    rawArray?: any[],
+    formatted?: CalculatorOutputVarFormatted[]
 }
 
-export interface CalculatorOutputVarFormatted{
-    var:string,
-    label:string
+export interface CalculatorOutputVarFormatted {
+    var: string,
+    label: string
 }

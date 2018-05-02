@@ -1,14 +1,16 @@
-<div class="node-info-text" *ngIf="nodeMeta.stageMeta">
-    <div>{{nodeMeta.stageMeta}}</div>
-    <div>{{nodeMeta.stageMeta['q5.3.3']}}</div>
+<div class="node-info-text">
     <div [ngSwitch]="nodeMeta.stageMeta['q5.3.3']">
-        <div *ngSwitchCase="'all'">
+        <div *ngSwitchCase="'All'">
                 <div>You said you want to sample all units in this stage</div>
-                <div>How many units are there?</div>
+                <div style="margin-top:1em">How many units are there?</div>
+                <ion-input #allInput class="allocation-input" type="number" [(ngModel)]="allocationInput" (ionChange)="setPopAndSampleSize()"></ion-input>
         </div>
-        <div *ngSwitchCase="'all'">
+        <div *ngSwitchCase="'Sample'">
                 <div>You said you want to take a sample of units in this stage</div>
                 <div>How many units are there?</div>
+        </div>
+        <div *ngSwitchDefault>
+            <div>case: {{nodeMeta.stageMeta['q5.3.3']}}</div>
         </div>
         
     </div>
