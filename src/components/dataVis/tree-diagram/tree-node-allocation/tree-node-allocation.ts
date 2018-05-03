@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { TextInput } from 'ionic-angular'
+import { TextInput, Events } from 'ionic-angular'
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable'
 import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta } from '../../../../models/models';
@@ -27,17 +27,28 @@ export class TreeNodeAllocationComponent {
     stagePart: string;
     @ViewChild('popSizeInput') popSizeInput: TextInput
 
-    constructor(private treeActions: TreeDiagramActions, private formPrvdr: FormProvider, private dataPrvdr: DataProvider, private ngRedux: NgRedux<AppState>) {
+    constructor(
+        private treeActions: TreeDiagramActions, 
+        private formPrvdr: FormProvider, 
+        private dataPrvdr: DataProvider, 
+        private ngRedux: NgRedux<AppState>,
+        private events:Events
+    ) {
         // *** could do some tidying as first node select doesn't display properly due to no sampling stage meta yet (hence the additional update call)
-        this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this._updateActiveNode(this.activeNode) } })
-        this.activeNode$.subscribe(node => this._updateActiveNode(node))
-        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this._updateActiveNode(this.activeNode) } })
+        this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this.setActiveNode(this.activeNode) } })
+        this.activeNode$.subscribe(node => this.setActiveNode(node))
+        this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this.setActiveNode(this.activeNode) } })
         this.stagePart$.subscribe(part => this.stagePart = part)
     }
+
+
+
+
     setPopAndSampleSize() {
         const size = parseInt(this.popSize)
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
         this.updateStageControl(stageNumber - 1, { popSize: size, sampleSize: size })
+        this.updateNodeLabel(size)
     }
     setPopSize() {
         const size = parseInt(this.popSize)
@@ -48,6 +59,7 @@ export class TreeNodeAllocationComponent {
         const size = parseInt(this.sampleSize)
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
         this.updateStageControl(stageNumber - 1, { sampleSize: size })
+        this.updateNodeLabel(size)
     }
     setReportingInput() {
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
@@ -62,15 +74,27 @@ export class TreeNodeAllocationComponent {
         this.dataPrvdr.backgroundSave()
     }
 
+    updateNodeLabel(size:number){
+        let label = this.activeNode.label
+        label = label.split(' (')[0]
+        label = label + ' (' + size + ')'
+        this.activeNode.label = label
+        this.events.publish('node:updated',this.activeNode)
+    }
+
+  
+
+
+
     // set the active node and get meta information depending on node type
-    _updateActiveNode(node: TreeDiagramNode) {
+    setActiveNode(node: TreeDiagramNode) {
         this.activeNode = node
         let nodeText: any = {}
         let stageMeta: StageMeta = {}
         let reportingMeta: any = {}
         if (node) {
             stageMeta = this._getStageMeta(node.title.length)
-            reportingMeta = this._getReportingMeta(stageMeta.stageNumber, node.title)
+            reportingMeta = this._getReportingMeta(node)
         }
         this.nodeMeta = Object.assign({}, node, { stageMeta: stageMeta, reportingMeta: reportingMeta })
         // update input values
@@ -80,7 +104,6 @@ export class TreeNodeAllocationComponent {
             this.reportingInputs = stageMeta.reportingAllocations
         }
         else { this.reportingInputs = [] }
-        //console.log('nodeMeta', this.nodeMeta)
         this._focusInput()
     }
 
@@ -101,19 +124,16 @@ export class TreeNodeAllocationComponent {
     // iterate over all nodes, matching reporting nodes by their title metadata
     // titles given as array of strings, can determine parent by taking active node title (e.g. "[stage1,stage2|-|0|-|Group A"])
     // and removing everything from '|-|' onwards
-    _getReportingMeta(stageNumber: number, activeNodePath: string[]) {
+    _getReportingMeta(node:TreeDiagramNode) {
         try {
             let nodes = this.ngRedux.getState()._treeMeta.nodes
-            const path = activeNodePath.slice()
-            console.log('path',path)
-            // const parentPath = activeNodePath.slice().splice(-1, 1, parentPathSuffix).join()
-            //console.log('filtering nodes', nodes)
-            // console.log('target path', parentPath)
-            // nodes = nodes.filter(n => {
-            //     const suffix = n.title.slice().pop().split('|-|')[0]
-            //     const path = n.title.splice(-1,1,suffix).join()
-            //     return (n.group == 'reportingLevelNodes' && path==parentPath)
-            // })
+            let nodePath = node.id.split('/')
+            let parentPath = nodePath.slice(0,nodePath.length-1)
+            let parentID = parentPath.join('/')
+            // match nodes with same parent, same stage and reporting level
+            nodes = nodes.filter(n => {
+                return (n.id.indexOf(parentID)>-1 && n.title.length==node.title.length && n.group=='reportingLevelNodes')
+            })
             return nodes
         } catch (error) {
             console.log('error')

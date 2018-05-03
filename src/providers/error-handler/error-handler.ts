@@ -10,7 +10,11 @@ import { NgRedux } from '@angular-redux/store';
 
 
 Raven
-  .config('https://e0a8fd91c39e48ba94a465900e4ab2da@sentry.io/1198240')
+  .config('https://e0a8fd91c39e48ba94a465900e4ab2da@sentry.io/1198240', {
+    autoBreadcrumbs: {
+      console: false
+    }
+  })
   .install();
 
 
@@ -20,6 +24,7 @@ export class SentryErrorHandler extends IonicErrorHandler {
   constructor(private ngRedux: NgRedux<AppState>) {
     super()
   }
+
 
 
   handleError(error) {
