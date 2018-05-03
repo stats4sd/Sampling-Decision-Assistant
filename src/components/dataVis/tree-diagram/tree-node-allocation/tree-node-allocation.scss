@@ -10,4 +10,18 @@ tree-node-allocation{
         font-weight: bold;
         
     }
+    .reporting-inputs{
+        display: flex
+    }
+    .reporting-inputs-label{
+        margin-top:1em;
+        margin-right:15px;
+        padding:5% 0
+    }
+    .reporting-total{
+        margin-top:1em;
+    }
+    .reporting-total > span{
+        font-weight:bold
+    }
 }

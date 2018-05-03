@@ -51,8 +51,8 @@ import { SentryErrorHandler } from '../providers/error-handler/error-handler';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    //{ provide: ErrorHandler, useClass: SentryErrorHandler },
+    // { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
     DataProvider,
     FormProvider,
     ProjectActions,

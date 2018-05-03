@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import { IonicErrorHandler } from 'ionic-angular';
 import Raven from 'raven-js'
 import { AppState } from '../../models/models';
@@ -17,24 +17,30 @@ Raven
 
 @Injectable()
 export class SentryErrorHandler extends IonicErrorHandler {
-  constructor(private ngRedux:NgRedux<AppState>){
+  constructor(private ngRedux: NgRedux<AppState>) {
     super()
   }
 
 
   handleError(error) {
-    // super.handleError(error);
-    
-    try {
-      Raven.setExtraContext({
-        appState:this.ngRedux.getState()
-      })
-      console.error(error);
-      Raven.captureException(error.originalError || error);
+    // if serving locally, use ionic handler
+    if (['localhost', '127'].indexOf(location.hostname) != -1) {
+      super.handleError(error)
     }
-    catch (e) {
-      console.error(e);
+    // otherwise push to remote sentry logger
+    else {
+      try {
+        Raven.setExtraContext({
+          appState: this.ngRedux.getState()
+        })
+        console.error(error);
+        Raven.captureException(error.originalError || error);
+      }
+      catch (e) {
+        console.error(e);
+      }
     }
+
   }
 
 }

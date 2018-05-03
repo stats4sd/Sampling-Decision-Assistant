@@ -6,7 +6,7 @@ export interface Project {
     edited: number,
     values: any,
     stagesComplete: boolean[],
-    dbVersion:number,
+    dbVersion: number,
     draft?: boolean
 }
 
@@ -15,32 +15,32 @@ export type SavedProjects = Project[]
 export interface AppState {
     activeProject?: Project,
     savedProjects?: Project[],
-    editMode?:boolean,
-    reviewMode?:boolean,
-    view:ViewState
+    editMode?: boolean,
+    reviewMode?: boolean,
+    view: ViewState
     _dbVersion?: number,
-    _platforms?:string[],
-    _treeMeta:TreeState;
+    _platforms?: string[],
+    _treeMeta: TreeState;
 }
 
-export interface ViewState{
-    params?:ViewStateParams,
-    hash?:string,
-    activeStageID?:string,
-    lockHash?:string
+export interface ViewState {
+    params?: ViewStateParams,
+    hash?: string,
+    activeStageID?: string,
+    lockHash?: string
 }
 
-export interface ViewStateParams{
-    stagePart?:number,
-    activeGlossaryTerm?:string,
-    tabSection?:'resources' | 'glossary',
-    relevant?:string
+export interface ViewStateParams {
+    stagePart?: number,
+    activeGlossaryTerm?: string,
+    tabSection?: 'resources' | 'glossary',
+    relevant?: string
 }
 
-export interface TreeState{
-    activeNode?:TreeDiagramNode,
-    nodes?:TreeDiagramNode[],
-    infoSection?:'info' | 'allocation'
+export interface TreeState {
+    activeNode?: TreeDiagramNode,
+    nodes?: TreeDiagramNode[],
+    infoSection?: 'info' | 'allocation'
 }
 
 export interface Question {
@@ -53,42 +53,62 @@ export interface Question {
     section: string,
     condition?: string,
     labelMultiple?: string,
-    options?:any,
-    triggers?:any,
-    conditionJson?:any
-    
+    options?: any,
+    triggers?: any,
+    conditionJson?: any
+
 }
 
-export interface reportingLevel{
-    name:string,
-    classifications:reportingLevelClassification
+export interface ReportingLevel {
+    name: string,
+    classifications: ReportingLevelClassification
 }
 
-export interface reportingLevelClassification{
-    names:string[],
-    total:string
+export interface ReportingLevelClassification {
+    names: string[],
+    total?: string
 }
 
-export interface glossaryTerm{
-    slug:string,
-    definition:string,
-    term:string
+export interface glossaryTerm {
+    slug: string,
+    definition: string,
+    term: string
 }
 
 // tree diagram
-export interface TreeDiagramNode{
-    id:string,
-    label:string,
-    group:string,
-    title:string
+export interface TreeDiagramNode {
+    id?: string,
+    label?: string,
+    group?: string,
+    title?: string[]
 }
-export interface TreeDiagramNodeColor{
-    background:string,
-    border:string,
-    highlight:TreeDiagramNodeNodeColorHighlight
+export interface ExtendedTreeDiagramNode extends TreeDiagramNode {
+    reportingMeta?: any[],
+    stageMeta?: StageMeta,
 }
 
-export interface TreeDiagramNodeNodeColorHighlight{
-    background:string,
-    border:string
+export interface TreeDiagramNodeColor {
+    background: string,
+    border: string,
+    highlight: TreeDiagramNodeNodeColorHighlight
+}
+
+export interface TreeDiagramNodeNodeColorHighlight {
+    background: string,
+    border: string
+}
+
+// stage meta stored on samplingStages value
+export interface StageMeta {
+    name?: string,
+    'q5.3.1'?: string,
+    'q5.3.2'?: string,
+    'q5.3.3'?: string,
+    'q5.3.4.2'?: string[],
+    'q5.3.4.3'?: string,
+    sampleSize?:number,
+    popSize?:number,
+    stageNumber?: number,
+    reportingAllocations?:number[]
+    _built?: boolean
 }
