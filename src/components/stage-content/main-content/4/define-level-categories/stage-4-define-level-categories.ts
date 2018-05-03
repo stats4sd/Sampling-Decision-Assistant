@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Stage4Component } from '../stage-4';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { reportingLevel } from '../../../../../models/models';
+import { ReportingLevel } from '../../../../../models/models';
 
 export interface ReportingLevel {
   name: string,
@@ -21,7 +21,7 @@ export interface LevelClassification {
 })
 export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
 
-  reportingLevels: reportingLevel[] = []
+  reportingLevels: ReportingLevel[] = []
 
   @select(['view', 'params', 'stagePart']) readonly slideSection$: Observable<string>;
   @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<ReportingLevel[]>;

@@ -15,13 +15,11 @@ declare let vis: any
 })
 export class TreeDiagramComponent {
   // custom component to represent sampling stages in a tree diagram
-  nodeCount: number
   nodes: any[] = []
   treeNodes: any[]
   treeEdges: any[];
-  stages: any;
   form: FormGroup;
-  nodePath: string[]
+  samplingStages: StageMeta[]
   @Input('showInputNodes') showInputNodes: boolean
   @Input('showKey') showKey: boolean
   @ViewChild('treeContainer') treeContainer: ElementRef
@@ -30,60 +28,101 @@ export class TreeDiagramComponent {
 
     this.events.unsubscribe('form:initComplete')
     // this.events.subscribe('form:initComplete', _ => this.prepareStages(this.form.value))
-    this.events.subscribe('form:initComplete', _ => this.prepareStages2())
+    this.events.subscribe('form:initComplete', _ => this.treeInit())
   }
 
   ngOnInit() {
     this.form = this.formPrvdr.formGroup
     //this.prepareStages(this.form.value)
-    this.prepareStages2()
+    this.treeInit()
+  }
+
+  treeInit() {
+    this.nodes = []
+    this.samplingStages = this.form.value.samplingStages
+    this.addFinalStageLevels()
+    this.prepareStages()
+    this.treeEdges = this.buildNodeEdges2(this.nodes)
+    this.treeNodes = this._cleanNodeMeta(this.nodes)
+    console.log('tree nodes', this.treeNodes)
+    console.log('tree edges', this.treeEdges)
+    this.buildDiagram(this.treeNodes, this.treeEdges)
+    this.treeActions.setNodes(this.treeNodes)
+  }
+
+  // check through each stage to see which reporting levels have been assigned,
+  // and automatically allocate any remaining to the final stage
+  addFinalStageLevels() {
+    if (!this.samplingStages) { return }
+    let reportingLevels: ReportingLevel[] = this.form.value.reportingLevels
+    if (!reportingLevels) { return }
+    let reportingLevelNames: string[] = reportingLevels.map(
+      level => { return level.name }
+    )
+    console.log('reportingLevelNames', reportingLevelNames)
+    this.samplingStages.forEach(stage => {
+      let stageLevels = stage["q5.3.4.2"]
+      if (stageLevels) {
+        stageLevels.forEach(level => {
+          const i = reportingLevelNames.indexOf(level)
+          if (i > -1) { reportingLevelNames.splice(i, 1) }
+        })
+      }
+    })
+    console.log('to allocated', reportingLevelNames)
+    if (reportingLevelNames.length > 0) {
+      let finalStageLevels = this.samplingStages[this.samplingStages.length - 1]["q5.3.4.2"]
+      if (finalStageLevels instanceof Array) {
+        console.log('concat',finalStageLevels)
+        this.samplingStages[this.samplingStages.length - 1]["q5.3.4.2"] = finalStageLevels.concat(reportingLevelNames)
+      }
+      else { 
+        console.log('assign',finalStageLevels)
+        this.samplingStages[this.samplingStages.length - 1]["q5.3.4.2"] = reportingLevelNames 
+      }
+    }
+    console.log('samplingStages', this.samplingStages)
   }
 
 
   // recursively go through sampling stages, pushing stage name node and in case of reporting requirements build all stages below
-  prepareStages2(startStage: number = 0, basePath: string[] = []) {
-    const samplingStages: StageMeta[] = this.form.value.samplingStages
+  prepareStages(startStage: number = 0, basePath: string[] = []) {
+    const samplingStages: StageMeta[] = this.samplingStages
     if (!samplingStages) { return }
     const stage = samplingStages[startStage]
     if (stage) {
       const reportingLevels = stage["q5.3.4.2"]
+      let parentID: string
+      if (basePath[0]) { parentID = basePath.join('/') }
       // build nodes for reporting levels
       if (reportingLevels) {
         const reportingLevelCombinations = this._buildCombinations(reportingLevels)
-        console.log('combinations', reportingLevelCombinations)
+        let parentPath = basePath.slice()
+        parentPath.push(stage.name)
+        // first add parent node
+        this.nodes.push(this._createNode(parentPath, 'stageNodes', parentID))
+        // then iterate over each reporting level combination
         reportingLevelCombinations.forEach(combination => {
-          basePath.push(stage.name + '_._' + combination)
-          this.nodes.push(this._createNode2(basePath, 'reportingLevelNodes'))
-          this.prepareStages2(startStage + 1, basePath)
+          let childPath = basePath.slice()
+          childPath.push(stage.name + '_._' + combination)
+          this.nodes.push(this._createNode(childPath, 'reportingLevelNodes', parentPath.join('/')))
+          this.prepareStages(startStage + 1, childPath)
         })
       }
+      // build nodes if no reporting levels
       else {
         basePath.push(stage.name)
-        this.nodes.push(this._createNode2(basePath, 'stageNodes'))
-        this.prepareStages2(startStage + 1, basePath)
+        this.nodes.push(this._createNode(basePath, 'stageNodes', parentID))
+        this.prepareStages(startStage + 1, basePath)
       }
     }
-    else {
-      let nodeIDs = []
-      this.nodes.forEach(n => nodeIDs.push(n.id))
-      console.log('nodes ids', nodeIDs)
-    }
-
-    // samplingStages.forEach((stage,i)=>{
-    //   // update current path
-    //   this.nodePath.push(stage.name)
-    //   // add stage node
-    //   this.nodes.push(this._createNode2(this.nodePath,'stageNodes'))
-    //   // add reporting level nodes
-
-    // })
-
+    else { }
   }
+
   _buildCombinations(levelNames: string[], arrays?) {
     // takes a list of group names and creates a list of all combinations on their category names
     // e.g if group 1 (gender) has male/female, and group 2 (age) has old/young, want 4 combinations
     // [[male,old], [male,young], [female,old], [female,young]]
-    console.log('building combinations', levelNames)
     let allReportingLevels: ReportingLevel[] = this.form.value.reportingLevels
     if (!allReportingLevels) { allReportingLevels = [] }
     if (!arrays) {
@@ -111,7 +150,8 @@ export class TreeDiagramComponent {
       if (arrays[1]) {
         for (let el of arrays[0]) {
           for (let el2 of arrays[1]) {
-            combinations.push(el + ' |∩| ' + el2)
+            // combinations.push(el + ' |∩| ' + el2)
+            combinations.push(el + ' , ' + el2)
           }
         }
         arrays[1] = combinations
@@ -126,102 +166,35 @@ export class TreeDiagramComponent {
     }
   }
 
-  _createNode2(path: string[], group: string) {
+  _createNode(path: string[], group: string, parentID: string) {
+    let pathEnd = path[path.length - 1]
+    let split = pathEnd.split('_._')
+    let label = split[split.length - 1]
     let node: any = {
       id: path.slice().join('/'),
       stage: null,
-      label: path.slice().pop().split('|-|').pop(),
+      label: label,
       group: group,
-      nodePath: path.slice()
+      nodePath: path.slice(),
+      parentID: parentID
     }
-    console.log('node created', node)
     return node
   }
 
+  buildNodeEdges2(nodes) {
+    // sort by stage
+    let edges = []
+    nodes.forEach(node => {
+      if (node.parentID) {
+        edges.push({
+          from: node.parentID,
+          to: node.id
+        })
+      }
+    })
+    return edges
+  }
 
-
-  // _addReportingLevelNodes(levels:string[],stageName){
-  //   // build combinations of classifications for case when multiple levels defined
-  //   const combinations = this._buildCombinations(this.form.value.reportingLevels,levels)
-  //   console.log('combinations',combinations)
-  //   console.log('node path',this.nodePath)
-  //   combinations.forEach(name=>{
-  //     const pathPrefix = this.nodePath.slice().pop()
-  //     console.log('path prefix',pathPrefix)
-  //     // character '_-_' used to denote a reporting level substage
-  //     let path = this.nodePath.slice(0,this.nodePath.length-1)
-  //     path.push(pathPrefix+'_-_'+name)
-  //     this.nodes.push(this._createNode2(path,'reportingLevelNodes'))
-  //   })
-  // }
-  // _getReportingLevelMetaByName(name){
-  //   let levelMeta:ReportingLevel = {
-  //     name:'undefined',
-  //     classifications:{names:['Error not found']}
-  //   }
-  //   const allReportingLevels = this.form.value.reportingLevels
-  //   allReportingLevels.forEach(level=>{
-  //     if(level.name==name){
-  //       levelMeta=level
-  //     }
-  //   })
-  //   return levelMeta
-  // }
-
-
-
-
-  // prepareStages(formValue: any = {}) {
-  //   // iterate through multi stage list and build nodes for diagram as appropriate
-  //   // uses first and second number to add additional meta node for each stage
-  //   this.nodePath = []
-  //   if (formValue.samplingStages && formValue.samplingStages.length > 0) {
-  //     this.stages = {}
-  //     this.nodes = []
-  //     let allocatedLevels = []
-  //     let tierIndex = 1
-  //     formValue.samplingStages.forEach((stage, i) => {
-  //       this.nodeCount = 1
-  //       let stageNodes = []
-  //       this.nodePath.push(stage.name)
-  //       // add placeholder reporting levels to the final stage
-  //       let isFinalStage: boolean = (formValue.samplingStages.length - 1 == i)
-  //       if (isFinalStage) { stage['q5.3.4.2'] = '_final' }
-  //       // no reporting levels
-  //       if (!stage['q5.3.4.2'] || stage['q5.3.4.2'].length == 0) {
-  //         this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, 'stageNodes')]
-  //       }
-  //       // - reporting level
-  //       else {
-  //         // title node
-  //         this.stages[tierIndex] = [this._createNode(tierIndex, stage.name, 'stageNodes', true)]
-  //         tierIndex++
-  //         // track allocated stages and add final stage levels
-  //         try {
-  //           let allReportingLevels = formValue.reportingLevels
-  //           if (stage['q5.3.4.2'] == "_final") { stage['q5.3.4.2'] = this._addFinalStageLevels(allReportingLevels, allocatedLevels) }
-  //           stage['q5.3.4.2'].forEach(level => allocatedLevels.push(level))
-  //           // build nodes (and combinations if multiple)            
-  //           let reportingLevelGroups = this._buildCombinations(allReportingLevels, stage['q5.3.4.2'])
-  //           if (reportingLevelGroups) {
-  //             reportingLevelGroups.forEach((reportingLevel, i) => {
-  //               this.nodePath.pop()
-  //               this.nodePath.push(stage.name + '|-|' + i + '|-|' + reportingLevel)
-  //               stageNodes.push(this._createNode((tierIndex), reportingLevel, 'reportingLevelNodes', stage.sampleSize))
-  //             })
-  //           }
-  //         } catch (error) {
-  //           stageNodes.push(this._createNode((tierIndex), 'reporting level not defined', 'reportingLevelUndefined'))
-  //         }
-
-
-  //         this.stages[tierIndex] = stageNodes
-  //       }
-  //       tierIndex++
-  //     })
-  //     this.buildNodeTree(this.nodes)
-  //   }
-  // }
   _addFinalStageLevels(allReportingLevels: ReportingLevel[], allocatedLevels: string[]) {
     // add any unallocated reporting levels to final stage
     let levels = []
@@ -230,45 +203,6 @@ export class TreeDiagramComponent {
     })
     return levels
   }
-
-
-
-  buildNodeTree(nodes) {
-    // build hierarchy of stages so that each node in each stage has all possible child nodes
-    // tracks in 2 ways, first via stages so that iterative approach can be taken, then also as overall array
-    this.treeNodes = this.stages[1]
-    let mappedStages = {}
-    let totalStages = Object.keys(this.stages).length
-    // iterate over each stage
-    for (var i = 1; i < totalStages; i++) {
-      let childStage = this.stages[i + 1]
-      let parentStage = this.stages[i]
-      mappedStages[i] = this.stages[i]
-      mappedStages[i + 1] = []
-      if (childStage) {
-        // multiply child stage
-        parentStage.forEach((parentNode, ind) => {
-          // iterate over each child node
-          childStage.forEach(childNode => {
-            // create a copy for each parent
-            mappedStages[i + 1].push(this._cloneNode(childNode, parentNode, ind))
-            this.treeNodes.push(this._cloneNode(childNode, parentNode, ind))
-          })
-        })
-      }
-      else {
-        childStage.forEach(childNode => {
-          mappedStages[i + 1].push(this._cloneNode(childNode, { id: null }, 0))
-          this.treeNodes.push(this._cloneNode(childNode, { id: null }, 0))
-        })
-      }
-      this.stages[i + 1] = mappedStages[i + 1]
-    }
-    this.buildNodeEdges()
-    this.buildDiagram(this.treeNodes, this.treeEdges)
-    this.treeActions.setNodes(this.treeNodes)
-  }
-
 
   buildNodeEdges() {
     // sort by stage
@@ -303,31 +237,6 @@ export class TreeDiagramComponent {
     })
   }
 
-  _cloneNode(childNode, parentNode, index) {
-    let n: any = {}
-    Object.keys(childNode).forEach(k => {
-      n[k] = childNode[k]
-    })
-    n.id = n.id + '-' + index
-    n.parentID = parentNode.id
-    return n
-  }
-
-
-  _createNode(stage: number, label: string, group: string, titleNode?: boolean) {
-    let node: any = {
-      id: stage + '_' + this.nodeCount,
-      index: this.nodeCount,
-      stage: stage,
-      label: label,
-      group: group,
-      nodePath: this.nodePath.slice()
-    }
-    if (!titleNode) { this.nodeCount++ }
-    this.nodes.push(node)
-    return node
-  }
-
   _getNode(id) {
     let selected = {}
     this.treeNodes.forEach(n => {
@@ -338,28 +247,18 @@ export class TreeDiagramComponent {
     return selected
   }
 
-
-
-  ngAfterViewInit() {
-    // this.prepareStages(this.form.value)
-  }
-
   buildDiagram(treeNodes, treeEdges) {
     // create an array with nodes
     const nodes = new vis.DataSet(treeNodes);
-
     // create an array with edges
     const edges = new vis.DataSet(treeEdges);
-
     // create a network
     const container = this.treeContainer.nativeElement
-
     // provide the data in the vis format
     const data = {
       nodes: nodes,
       edges: edges
     };
-
     const treeOptions = {
       autoResize: true,
       height: '100%',
@@ -398,16 +297,12 @@ export class TreeDiagramComponent {
     setTimeout(_ => {
       // initialize your network!
       var network = new vis.Network(container, data, treeOptions);
-      // network.on('click', params => {
-      //   console.log('node clicked', params)
-      // })
+      // network.on('click', params => {console.log('node clicked', params)})
       network.on('selectNode', params => {
         let selectedNode = this._getNode(params.nodes[0]) as TreeDiagramNode
-        // this.events.publish('nodeSelected', selectedNode)
         this.treeActions.setActiveNode(selectedNode)
       })
       network.on('deselectNode', params => {
-        // this.events.publish('nodeSelected', {})
         this.treeActions.setActiveNode(null)
       })
         , 500
