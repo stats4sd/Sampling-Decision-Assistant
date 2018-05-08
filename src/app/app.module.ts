@@ -4,7 +4,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 // animations
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnimatorModule } from 'css-animator';
 // platform and providers
 // import { StatusBar } from '@ionic-native/status-bar';
@@ -38,7 +38,7 @@ import { SentryErrorHandler } from '../providers/error-handler/error-handler';
       name: '__sampling',
     }),
     AnimatorModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     NgReduxModule,
     AngularFireModule.initializeApp(firebaseConfig.firebase),
     AngularFirestoreModule.enablePersistence(),
