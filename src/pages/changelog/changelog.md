@@ -2,7 +2,23 @@
 In this document find recorded the main changes that have been implemented.
 
 ## 0.9.8 (8th May 2018)
+    Codebase Upgrade
+    The core codebase received an upgrade to latest versions released as of May 2018. This aims to improve performance,
+    security and future maintenance
 
+    Dramatic Performance Improvements
+    Alongside the codebase upgrade, the existing code has been optimised to be smaller, load faster, and load 'lazily' in the background.
+    This should see a dramatic improvement in the time taken for initial loading and navigation.
+
+    Offline-ready
+    The webapp now works offline! All files used are now cached locally so that the site will still function if internet
+    connectivity is lost. When there are updates to the app these are downloaded silently in the background, and a notification
+    message is presented to request the user reloads the web page to see the latest version.
+
+    Stage 6 - Sample sizes can now be allocated at each stage. This has been through a few iterations and there are still some planned improvements, but for now
+    it will be able to track individual allocation across changing sampling requirements and help to provide a visual overview (future update will also include a table with totals)
+    
+  </div>
 
 ## 0.9.7 (29th April 2018)
 

@@ -15,6 +15,32 @@
   <p>In this document find recorded the main changes that have been implemented.</p>
   <!-- 1.0.0 (remember to include dev docs at some point) -->
 
+  <!-- 0.9.8 -->
+  <div>
+    <h2>0.9.8 (8th May 2018)</h2>
+    <p>
+      <strong>Codebase Upgrade</strong>
+      <br> The core codebase received an upgrade to latest versions released as of May 2018. This aims to improve performance,
+      security and future maintenance
+    </p>
+    <p>
+      <strong>Dramatic Performance Improvements</strong>
+      <ion-icon name="trending-up" style="margin:0 5px"></ion-icon>
+      <br> Alongside the codebase upgrade, the existing code has been optimised to be smaller, load faster, and load 'lazily' in the background.
+      This should see a dramatic improvement in the time taken for initial loading and navigation.
+    </p>
+    <p>
+      <strong>Offline-ready</strong>
+      <br> The webapp now works offline! All files used are now cached locally so that the site will still function if internet
+      connectivity is lost. When there are updates to the app these are downloaded silently in the background, and a notification
+      message is presented to request the user reloads the web page to see the latest version.
+    </p>
+    <p>
+      <strong>Stage 6</strong> - Sample sizes can now be allocated at each stage. This has been through a few iterations and there are still some planned improvements, but for now
+      it will be able to track individual allocation across changing sampling requirements and help to provide a visual overview (future update will also include a table with totals)
+    </p>
+  </div>
+
   <!-- 0.9.7 -->
   <div>
     <h2>0.9.7 (29th April 2018)</h2>
@@ -32,6 +58,8 @@
       an additional service has been integrated that will automatically track any errors that a user may encounter, and automatically
       send a report on the error alongside key information to the developer, allowing easier tracking and fixing.
     </p>
+    <ion-icon name="bug" style="color: green"></ion-icon> =>
+    <ion-icon name="cloud-upload"></ion-icon>
     <p>
       <strong>Save, Load and Project Delete</strong>- these have been fixed and should be working as expected. The option to load
       predefined example templates is yet to be implemented, as is the full xls export/import feature (coming soon!)
