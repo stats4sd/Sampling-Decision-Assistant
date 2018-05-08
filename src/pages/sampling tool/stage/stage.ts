@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 import { DataProvider } from '../../../providers/data/data';
 import { FormProvider } from '../../../providers/form/form'
 // import { timeout } from 'ngx-file-drop/node_modules/rxjs/operators/timeout';
-import animationStates from '../../../providers/animationStates'
 import { ProjectActions, ViewActions } from '../../../actions/actions';
 import { Project, AppState } from '../../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
@@ -20,7 +19,6 @@ import { CustomRouterProvider } from '../../../providers/router/router';
 @Component({
   selector: 'page-stage',
   templateUrl: 'stage.html',
-  animations: [animationStates]
 })
 export class StagePage {
   stage: any;

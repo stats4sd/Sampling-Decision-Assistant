@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
-import animationStates from '../../../providers/animationStates'
 import { select } from '@angular-redux/store'
 import { Observable } from 'rxjs/Observable'
 
@@ -14,12 +13,13 @@ import { Observable } from 'rxjs/Observable'
 import { DomSanitizer } from '@angular/platform-browser';
 // dev
 import { AngularFirestore } from 'angularfire2/firestore';
+import { expand } from '../../../providers/animationStates';
 
 
 @Component({
   selector: 'resources',
   templateUrl: 'resources.html',
-  animations: [animationStates]
+  animations: [expand]
 })
 export class ResourcesComponent {
 

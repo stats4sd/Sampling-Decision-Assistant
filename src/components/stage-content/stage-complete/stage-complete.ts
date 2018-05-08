@@ -6,12 +6,13 @@ import { StagePage } from '../../../pages/sampling tool/stage/stage';
 
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import animationStates from '../../../providers/animationStates';
+import { flyin } from '../../../providers/animationStates';
+
 
 @Component({
   selector: 'stage-complete',
   templateUrl: 'stage-complete.html',
-  animations: [animationStates]
+  animations: [flyin]
 })
 export class StageCompleteComponent extends StagePage {
   @select(['activeProject', 'stagesComplete']) readonly stagesComplete$: Observable<boolean[]>;

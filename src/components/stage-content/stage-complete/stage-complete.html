@@ -1,5 +1,5 @@
 <!-- project title input prompt -->
-<note type="tip" *ngIf="!projectTitle && sectionValid" [@animationState]="'flyIn'">
+<note type="tip" *ngIf="!projectTitle && sectionValid" [@flyin]="'in'">
   <div>Your project doesn't have a title yet. You can add one in the space below</div>
   <form style="display: flex">
     <ion-input type="text" class="project-title-input" [(ngModel)]="projectTitleInput" [ngModelOptions]="{standalone: true}"></ion-input>

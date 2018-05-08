@@ -7,13 +7,12 @@ utilises custom form binding, find out more here:
 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef, forwardRef } from '@angular/core';
 import { FormGroup, NG_VALUE_ACCESSOR, ControlValueAccessor, FormArray, FormControl } from '@angular/forms';
-import { query } from '@angular/core/src/animation/dsl';
 import { Events } from 'ionic-angular';
 import { AnimationBuilder, AnimationMode } from 'css-animator/builder';
 import { FormProvider } from '../../../providers/form/form'
 import { DataProvider } from '../../../providers/data/data';
 import { Question } from '../../../models/models';
-import animationStates from '../../../providers/animationStates';
+import { fadein } from '../../../providers/animationStates';
 
 // settings to enable a model binding
 export const VALUE_ACCESSOR: any = {
@@ -26,7 +25,7 @@ export const VALUE_ACCESSOR: any = {
   selector: 'survey-question',
   templateUrl: 'survey-question.html',
   providers: [VALUE_ACCESSOR],
-  animations: [animationStates]
+  animations: [fadein]
 })
 export class SurveyQuestionComponent implements ControlValueAccessor {
   @Input('question') question: Question;

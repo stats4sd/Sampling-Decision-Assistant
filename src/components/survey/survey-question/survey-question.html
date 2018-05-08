@@ -1,5 +1,5 @@
 <!-- <div>{{question.controlName}} - {{showQuestion}} - {{initComplete}}</div> -->
-<div *ngIf="showQuestion && initComplete" [@animationState]="'fadein'">
+<div *ngIf="showQuestion && initComplete" [@fadein]="'in'">
   <!-- repeat group questions -->
   <div *ngIf="question.type=='repeat'">
     <survey-repeat-group [question]="question"></survey-repeat-group>
