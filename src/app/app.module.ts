@@ -7,8 +7,8 @@ import { MyApp } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnimatorModule } from 'css-animator';
 // platform and providers
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+// import { StatusBar } from '@ionic-native/status-bar';
+// import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { DataProvider } from '../providers/data/data';
 import { FormProvider } from '../providers/form/form';
@@ -33,7 +33,7 @@ import { SentryErrorHandler } from '../providers/error-handler/error-handler';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { preloadModules: true }),
     IonicStorageModule.forRoot({
       name: '__sampling',
     }),
@@ -49,8 +49,8 @@ import { SentryErrorHandler } from '../providers/error-handler/error-handler';
     DecisionToolMenuComponent
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
+    // StatusBar,
+    // SplashScreen,
     // { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     DataProvider,
@@ -63,12 +63,12 @@ import { SentryErrorHandler } from '../providers/error-handler/error-handler';
     CustomRouterProvider,
   ]
 })
-export class AppModule { 
+export class AppModule {
   // configure redux
-  constructor(store: NgRedux<AppState>, devTools:DevToolsExtension) {
+  constructor(store: NgRedux<AppState>, devTools: DevToolsExtension) {
     store.configureStore(
-      rootReducer, 
-      INITIAL_STATE, 
+      rootReducer,
+      INITIAL_STATE,
       [],
       // [reduxLogger.createLogger()],
       devTools.isEnabled() ? [devTools.enhancer()] : []);

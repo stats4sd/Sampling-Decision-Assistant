@@ -12,7 +12,12 @@
     "ionic:serve": "ionic-app-scripts serve",
     "doc:build": "compodoc -p src/tsconfig.app.json",
     "doc:serve": "compodoc -s",
-    "doc:buildandserve": "compodoc -p src/tsconfig.app.json -s"
+    "doc:buildandserve": "compodoc -p src/tsconfig.app.json -s",
+    "dist": "shx rm -rf www/* && npm run build --prod && workbox injectManifest && firebase serve && npm run open",
+    "open": "http-server www -o -a localhost -p 5000"
+  },
+  "config": {
+    "ionic_copy": "./copy.config.js"
   },
   "dependencies": {
     "@angular-redux/store": "^7.1.1",
@@ -37,7 +42,6 @@
     "angular-tooltips": "^1.2.2",
     "angularfire2": "^5.0.0-rc.6",
     "animate.css": "^3.5.2",
-    "cordova-android": "~6.3.0",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-ionic-webview": "^1.1.16",
@@ -70,6 +74,7 @@
     "typescript": "^2.8.1",
     "vis": "^4.21.0",
     "web-animations-js": "^2.3.1",
+    "workbox-sw": "^3.2.0",
     "xlsx": "^0.11.12",
     "zone.js": "0.8.18"
   },
@@ -82,7 +87,8 @@
     "@types/youtube": "0.0.32",
     "ngx-youtube-player": "^0.1.0",
     "typescript": "2.8.1",
-    "typescript-lit-html-plugin": "^0.2.0"
+    "typescript-lit-html-plugin": "^0.2.0",
+    "workbox-cli": "^3.2.0"
   },
   "description": "Sampling decision assistant",
   "cordova": {
@@ -95,8 +101,6 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }
