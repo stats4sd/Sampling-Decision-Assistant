@@ -1,16 +1,58 @@
 <div class="node-info-text" *ngIf="stagePart=='3'">
+
+    <!-- stage allocation -->
+    <div *ngIf="allocationMeta.type=='stage'">
+        <!-- final stage -->
+        <div *ngIf="allocationMeta.isFinalStage">
+            <div>Final stage allocation is automatically populated using the specified
+                <strong>number of samples per cluster</strong>
+            </div>
+        </div>
+        <!-- not final stage -->
+        <div *ngIf="!allocationMeta.isFinalStage">
+            <div [ngSwitch]="allocationMeta.sampleTake">
+                <div *ngSwitchCase="'All'">
+                    <div>You said you want to sample all units in this stage</div>
+                    <div style="margin-top:1em">How many units are there?</div>
+                    <ion-input #popSizeInput class="allocation-input" type="number" [(ngModel)]="popSize" (ionChange)="setPopAndSampleSize()"></ion-input>
+                </div>
+                <div *ngSwitchCase="'Sample'">
+                    <div>You said you want to take a sample of units in this stage</div>
+                    <div style="margin-top:1em">How many units would you like to sample?</div>
+                    <ion-input #sampleSizeInput class="allocation-input" type="number" [(ngModel)]="sampleSize" (ionChange)="setSampleSize()"></ion-input>
+                </div>
+                <note type="error" *ngSwitchDefault>You have not answered q5.3.3 in stage 5</note>
+            </div>
+        </div>
+    </div>
+
+    <!-- reporting unit allocation -->
+    <div *ngIf="allocationMeta.type=='reportingLevel'">
+        <!-- final stage -->
+        <div *ngIf="allocationMeta.isFinalStage">
+            <div>Final stage allocation is automatically populated using the specified
+                <strong>number of samples per cluster</strong>
+            </div>
+        </div>
+        <!-- not final stage -->
+        <div *ngIf="!allocationMeta.isFinalStage">
+            <div>How are the units allocated across reporting levels?</div>
+            <div *ngFor="let level of nodeMeta.reportingMeta; let i=index" class="reporting-inputs">
+                <div class="input-label reporting-inputs-label">{{level.label}}</div>
+                <ion-input #reportingInput class="allocation-input" type="number" [(ngModel)]="reportingInputs[i]" (ionChange)="setReportingInput()"></ion-input>
+            </div>
+            <div class="reporting-total">Total should equal
+                <span>{{nodeMeta.stageMeta.popSize}}</span>
+            </div>
+        </div>
+    </div>
+
     <div [ngSwitch]="nodeMeta.stageMeta['q5.3.3']">
 
         <!-- taking all units -->
         <div *ngSwitchCase="'All'">
-            <!-- allocation at stage level-->
-            <div [style.display]="nodeMeta.group=='stageNodes' ? 'block' : 'none'">
-                <div>You said you want to sample all units in this stage</div>
-                <div style="margin-top:1em">How many units are there?</div>
-                <ion-input #popSizeInput class="allocation-input" type="number" [(ngModel)]="popSize" (ionChange)="setPopAndSampleSize()"></ion-input>
-            </div>
-            <!-- allocation at reporting level -->
-            <div [style.display]="nodeMeta.group=='reportingLevelNodes' ? 'block' : 'none'">
+
+            <!-- <div [style.display]="nodeMeta.group=='reportingLevelNodes' ? 'block' : 'none'">
                 <div>How are the units allocated across reporting levels?</div>
                 <div *ngFor="let level of nodeMeta.reportingMeta; let i=index" class="reporting-inputs">
                     <div class="input-label reporting-inputs-label">{{level.label}}</div>
@@ -19,21 +61,15 @@
                 <div class="reporting-total">Total should equal
                     <span>{{nodeMeta.stageMeta.popSize}}</span>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- taking a sample of units -->
         <div *ngSwitchCase="'Sample'">
             <!-- allocation at stage level-->
-            <div [style.display]="nodeMeta.group=='stageNodes' ? 'block' : 'none'">
-                <div>You said you want to take a sample of units in this stage</div>
-                <!-- <div style="margin-top:1em">Approximately how large is the stage population?</div>
-                <ion-input #popSizeInput class="allocation-input" type="number" [(ngModel)]="popSize" (ionChange)="setPopSize()"></ion-input> -->
-                <div style="margin-top:1em">How many units would you like to sample?</div>
-                <ion-input #sampleSizeInput class="allocation-input" type="number" [(ngModel)]="sampleSize" (ionChange)="setSampleSize()"></ion-input>
-            </div>
+
             <!-- allocation at reporting level -->
-            <div [style.display]="nodeMeta.group=='reportingLevelNodes' ? 'block' : 'none'">
+            <!-- <div [style.display]="nodeMeta.group=='reportingLevelNodes' ? 'block' : 'none'">
                 <div>How are the units allocated across reporting levels?</div>
                 <div *ngFor="let level of nodeMeta.reportingMeta; let i=index" class="reporting-inputs">
                     <div class="input-label reporting-inputs-label">{{level.label}}</div>
@@ -42,12 +78,8 @@
                 <div class="reporting-total">Total should equal
                     <span>{{nodeMeta.stageMeta.sampleSize}}</span>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <div *ngSwitchDefault>
-            <div>case: {{nodeMeta.stageMeta['q5.3.3']}}</div>
-        </div>
-
     </div>
 </div>
 

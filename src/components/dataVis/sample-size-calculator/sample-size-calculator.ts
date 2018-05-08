@@ -5,6 +5,7 @@ import { DataProvider } from '../../../providers/data/data';
 import { CustomRouterProvider } from '../../../providers/router/router';
 import { TreeDiagramActions, ProjectActions } from '../../../actions/actions';
 import { AppState } from '../../../models/models';
+import { FormProvider } from '../../../providers/form/form';
 declare const jStat
 
 @Component({
@@ -12,9 +13,7 @@ declare const jStat
     templateUrl: 'sample-size-calculator.html'
 })
 export class SampleSizeCalculatorComponent {
-    @select(['activeProject', 'values']) projectValues$: Observable<any>
-
-    isCalculating: boolean;
+    // @select(['activeProject', 'values']) projectValues$: Observable<any>
 
     inputFields: any[] = []
     inputFieldsDefault: any = {
@@ -44,25 +43,26 @@ export class SampleSizeCalculatorComponent {
 
     outputs: CalculatorOutputVars = {}
 
-    constructor(public dataPrvdr: DataProvider, private customRouter: CustomRouterProvider, private ngRedux: NgRedux<AppState>) {
-        this.projectValues$.subscribe(v => {
-            if (v && !this.isCalculating) {
-                this.isCalculating = true
-                setTimeout(() => {
-                    this.calculateVariables(v)
-                    this.calculateSize()
-                    this.isCalculating = true
-                }, 200);
-            }
-        })
+    constructor(
+        public dataPrvdr: DataProvider,
+        private customRouter: CustomRouterProvider,
+        private ngRedux: NgRedux<AppState>,
+        private projectActions: ProjectActions,
+        private formPrvdr: FormProvider
+    ) {
     }
 
     ngOnInit() {
         this.customRouter.lockHash()
+        try {
+            this.calculateVariables()
+            this.calculateSize()
+        } catch (error) { }
+
     }
     resetVariables() {
         this.dataPrvdr.activeProject.values._calculatorVars = null
-        this.calculateVariables(this.dataPrvdr.activeProject.values)
+        this.calculateVariables()
     }
 
     setDefaultFields() {
@@ -79,59 +79,58 @@ export class SampleSizeCalculatorComponent {
     }
 
     // take project values, load any saved input calculator variables and assign calculated variables
-    calculateVariables(v) {
-        console.log('calculating variables', v)
-        let projectVals: CalculatorInputVars = {}
-        // set default claculated fields in case type of variable has changed
-        this.setDefaultFields()
-        // load any presaved values
-        if (v._calculatorVars) {
-            projectVals = v._calculatorVars.inputs
-        }
-        // then update from project values
-        projectVals.stages = v.samplingStages ? v.samplingStages.length : 0;
+    calculateVariables() {
         try {
-            if (v['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
-                projectVals.type = "proportion";
-                projectVals.prop = v['q2.3.1'];
-                if (!projectVals.moe) { projectVals.moe = 5 };
-                // set calculated fields array with propotion element
-                this.calculatedFields.push({
-                    label: 'Expected %', var: 'prop'
-                })
-                // set moe seperately as is an input but changes depending on calculated
-                this.moe = {
-                    label: 'Margin of Error (+/- percentage points)',
-                    var: 'moe',
-                    min: 0.01,
-                    max: 25,
-                    step: 1
-                }
-                this.inputFields.push(this.moe)
+            const v = this.ngRedux.getState().activeProject.values
+            let projectVals: CalculatorInputVars = {}
+            // set default claculated fields in case type of variable has changed
+            this.setDefaultFields()
+            // load any presaved values
+            if (v._calculatorVars) {
+                projectVals = v._calculatorVars.inputs
             }
-            if (v['q2.1.2'] == "Average or total value of indicator in the population") {
-                projectVals.type = "average value";
-                projectVals.sd = v["q2.2.2"];
-                if (!projectVals.moe) { projectVals.moe = projectVals.sd / 2 };
-                this.calculatedFields.push(
-                    { title: 'Standard Deviation', var: 'sd' },
-                )
-                this.moe = {
-                    label: 'Margin of Error (+/-)',
-                    var: 'moe',
-                    min: 0.01,
-                    max: 25,
-                    step: 1
+            // then update from project values
+            projectVals.stages = v.samplingStages ? v.samplingStages.length : 0;
+            try {
+                if (v['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
+                    projectVals.type = "proportion";
+                    projectVals.prop = v['q2.3.1'];
+                    if (!projectVals.moe) { projectVals.moe = 5 };
+                    // set calculated fields array with propotion element
+                    this.calculatedFields.push({
+                        label: 'Expected %', var: 'prop'
+                    })
+                    // set moe seperately as is an input but changes depending on calculated
+                    this.moe = {
+                        label: 'Margin of Error (+/- percentage points)',
+                        var: 'moe',
+                        min: 0.01,
+                        max: 25,
+                        step: 1
+                    }
+                    this.inputFields.push(this.moe)
                 }
-                this.inputFields.push(this.moe)
+                if (v['q2.1.2'] == "Average or total value of indicator in the population") {
+                    projectVals.type = "average value";
+                    projectVals.sd = v["q2.2.2"];
+                    if (!projectVals.moe) { projectVals.moe = projectVals.sd / 2 };
+                    this.calculatedFields.push(
+                        { title: 'Standard Deviation', var: 'sd' },
+                    )
+                    this.moe = {
+                        label: 'Margin of Error (+/-)',
+                        var: 'moe',
+                        min: 0.01,
+                        max: 25,
+                        step: 1
+                    }
+                    this.inputFields.push(this.moe)
+                }
+            } catch (error) {
             }
-        } catch (error) {
-            console.error('variable assign error', error)
-        }
-        this.inputValues = Object.assign({}, this.defaultValues, projectVals)
-        console.log('input fields', this.inputFields)
-        console.log('calculated fields', this.calculatedFields)
-        console.log('input values', this.inputValues)
+            this.inputValues = Object.assign({}, this.defaultValues, projectVals)
+        } catch (error) { }
+
     }
 
     calculateSize() {
@@ -148,7 +147,7 @@ export class SampleSizeCalculatorComponent {
             input[key] = parseFloat(this.inputValues[key])
         })
         input.type = this.inputValues.type
-        console.log('calculating size', input)
+        console.log('calculating size')
 
 
         /*********************************************************************************************************** 
@@ -197,8 +196,8 @@ export class SampleSizeCalculatorComponent {
             DEFF1: Math.round(DEFF1 * 100) / 100,
             FinalstageN: Math.round(FinalstageN),
             FinalstageN_FPC: FinalstageN_FPC,
-            stage2N:stage2N,
-            nHH:this.inputValues.nHH
+            stage2N: stage2N,
+            nHH: this.inputValues.nHH
         }
         const rawArray = Object.keys(raw)
 
@@ -216,7 +215,23 @@ export class SampleSizeCalculatorComponent {
             inputs: input,
             outputs: this.outputs
         }
-        this.dataPrvdr.backgroundSave()
+        let vars = {
+            inputs: input,
+            outputs: this.outputs
+        }
+        this._updateFormCalcVars(vars)
+        console.log('inputs', input)
+        //this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
+        //this.dataPrvdr.backgroundSave()
+    }
+    _updateFormCalcVars(vars) {
+        console.log('calc control', this.formPrvdr.formGroup.controls._calculatorVars)
+        if (!this.formPrvdr.formGroup.controls._calculatorVars) {
+            this.formPrvdr.formGroup.addControl('_calculatorVars', this.formPrvdr.fb.control(vars))
+        }
+        else{
+            this.formPrvdr.formGroup.patchValue({_calculatorVars:vars})
+        }
     }
 
     // depending on single or multi stage, push labels to display with calculator outputs
@@ -230,12 +245,12 @@ export class SampleSizeCalculatorComponent {
                 )
             }
             if (stages.length > 1) {
-                const level2Name=stages[stages.length-2].name
-                const level1Name=stages[stages.length-1].name
+                const level2Name = stages[stages.length - 2].name
+                const level1Name = stages[stages.length - 1].name
                 formatted.push(
                     { var: 'DEFF1', label: "Design Effect" },
-                    { var: 'stage2N', label: "Number of "+level2Name+" required"},
-                    { var: 'nHH', label:"Number of "+level1Name+" specified for each reporting level" },
+                    // { var: 'stage2N', label: "Number of " + level2Name + " required" },
+                    { var: 'nHH', label: "Number of " + level1Name + " specified for each reporting level" },
                     { var: 'FinalstageN_FPC', label: "Total sample size for each reporting level" },
                 )
             }
@@ -269,7 +284,7 @@ export interface CalculatorOutputVarsRaw {
     FinalstageN: number,
     FinalstageN_FPC: number,
     stage2N: number,
-    nHH:number
+    nHH: number
 }
 
 export interface CalculatorOutputVars {

@@ -3,8 +3,11 @@ import options from './options'
 import { FormProvider } from '../../../providers/form/form';
 import { FormGroup } from '@angular/forms';
 import { Events } from 'ionic-angular';
-import { ReportingLevel, TreeDiagramNode, StageMeta } from '../../../models/models';
+import { ReportingLevel, TreeDiagramNode, StageMeta, AppState } from '../../../models/models';
 import { TreeDiagramActions } from '../../../actions/actions';
+import { select, NgRedux } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable'
+import { DataProvider } from '../../../providers/data/data';
 
 declare let vis: any
 // import * as vis from 'vis'
@@ -19,42 +22,60 @@ export class TreeDiagramComponent {
   treeNodes: any;
   treeEdges: any;
   form: FormGroup;
-  samplingStages: StageMeta[]
+  samplingStages: StageMeta[];
+  initComplete:boolean;
   @Input('showInputNodes') showInputNodes: boolean
   @Input('showKey') showKey: boolean
   @ViewChild('treeContainer') treeContainer: ElementRef
+  @select(['activeProject', 'values']) readonly projectValues$: Observable<number>;
+  @select(['activeProject', 'values', '_calculatorVars', 'inputs', 'nHH']) readonly finalStageSampleSize$: Observable<number>;
 
-  constructor(private formPrvdr: FormProvider, private events: Events, private treeActions: TreeDiagramActions) {
-
-    this.events.unsubscribe('form:initComplete')
-    // this.events.subscribe('form:initComplete', _ => this.prepareStages(this.form.value))
-    this.events.subscribe('form:initComplete', _ => this.treeInit())
+  constructor(
+    public formPrvdr?: FormProvider,
+    public events?: Events,
+    public treeActions?: TreeDiagramActions,
+    public ngRedux?: NgRedux<AppState>,
+    public dataPrvdr?: DataProvider
+  ) {
   }
 
   ngOnInit() {
-    this.form = this.formPrvdr.formGroup
-    //this.prepareStages(this.form.value)
-    this.treeInit()
+    this.initComplete=false
     this.events.unsubscribe('node:updated')
-    this.events.subscribe('node:updated',update=>this.updateNode(update))
+    this.events.subscribe('node:updated', update => this.updateNode(update))
+    this.projectValues$.debounceTime(200).subscribe(v=>{
+      if(v && !this.initComplete){
+        this.treeInit(v)
+        this.initComplete=true
+      }
+    })
+    this.finalStageSampleSize$.debounceTime(200).subscribe(size=>{
+      this.updateFinalStageSize(size)
+    })
+    
   }
 
-  treeInit() {
-    this.nodes = []
-    this.samplingStages = this.form.value.samplingStages
-    this.addFinalStageLevels()
-    this.prepareStages()
-    this.treeEdges = this.buildNodeEdges(this.nodes)
-    this.treeNodes = this._cleanNodeMeta(this.nodes)
-    this.buildDiagram(this.treeNodes, this.treeEdges)
-    this.treeActions.setNodes(this.treeNodes)
+  treeInit(values) {
+      console.log('tree init',values)
+      this.nodes = []
+      // this.updateFinalStageSize(values)
+      this.samplingStages = values.samplingStages
+      console.log('sampling stages',this.samplingStages)
+      this.addFinalStageLevels()
+      this.prepareStages()
+      console.log('nodes',this.nodes)
+      this.treeEdges = this.buildNodeEdges(this.nodes)
+      this.treeNodes = this._cleanNodeMeta(this.nodes)
+      this.buildDiagram(this.treeNodes, this.treeEdges)
+      this.treeActions.setNodes(this.treeNodes)
+      console.log('tree nodes',this.treeNodes)
   }
 
   // check through each stage to see which reporting levels have been assigned,
   // and automatically allocate any remaining to the final stage
   addFinalStageLevels() {
     if (!this.samplingStages) { return }
-    let reportingLevels: ReportingLevel[] = this.form.value.reportingLevels
+    let reportingLevels: ReportingLevel[] = this.ngRedux.getState().activeProject.values.reportingLevels
     if (!reportingLevels) { return }
     let reportingLevelNames: string[] = reportingLevels.map(
       level => { return level.name }
@@ -73,8 +94,8 @@ export class TreeDiagramComponent {
       if (finalStageLevels instanceof Array) {
         this.samplingStages[this.samplingStages.length - 1]["q5.3.4.2"] = finalStageLevels.concat(reportingLevelNames)
       }
-      else { 
-        this.samplingStages[this.samplingStages.length - 1]["q5.3.4.2"] = reportingLevelNames 
+      else {
+        this.samplingStages[this.samplingStages.length - 1]["q5.3.4.2"] = reportingLevelNames
       }
     }
   }
@@ -95,14 +116,14 @@ export class TreeDiagramComponent {
         parentPath.push(stage.name)
         // first add parent node
         let node = this._createNode(parentPath, 'stageNodes', parentID)
-        node.label = this._generateNodeLabel(node,stage)
+        node.label = this._generateNodeLabel(node, stage)
         this.nodes.push(node)
         // then iterate over each reporting level combination
-        reportingLevelCombinations.forEach((combination,i) => {
+        reportingLevelCombinations.forEach((combination, i) => {
           let childPath = basePath.slice()
           childPath.push(stage.name + '_._' + combination)
           let node = this._createNode(childPath, 'reportingLevelNodes', parentPath.join('/'))
-          node.label = this._generateNodeLabel(node,stage,i)
+          node.label = this._generateNodeLabel(node, stage, i)
           this.nodes.push(node)
           this.prepareStages(startStage + 1, childPath)
         })
@@ -111,7 +132,7 @@ export class TreeDiagramComponent {
       else {
         basePath.push(stage.name)
         let node = this._createNode(basePath, 'stageNodes', parentID)
-        node.label = this._generateNodeLabel(node,stage)
+        node.label = this._generateNodeLabel(node, stage)
         this.nodes.push(node)
         this.prepareStages(startStage + 1, basePath)
       }
@@ -123,7 +144,7 @@ export class TreeDiagramComponent {
     // takes a list of group names and creates a list of all combinations on their category names
     // e.g if group 1 (gender) has male/female, and group 2 (age) has old/young, want 4 combinations
     // [[male,old], [male,young], [female,old], [female,young]]
-    let allReportingLevels: ReportingLevel[] = this.form.value.reportingLevels
+    let allReportingLevels: ReportingLevel[] = this.ngRedux.getState().activeProject.values.reportingLevels
     if (!allReportingLevels) { allReportingLevels = [] }
     if (!arrays) {
       // first step is to simply build a list of all the category names that will be used
@@ -179,14 +200,16 @@ export class TreeDiagramComponent {
   }
 
   // use last part of path as label, extracting reporting level classification if exists and updating with stored value
-  _generateNodeLabel(node:any, stage:StageMeta, reportingClassIndex?:number){
-    console.log('generating label',node)
+  _generateNodeLabel(node: any, stage: StageMeta, reportingClassIndex?: number) {
     let path = node.nodePath
     let pathEnd = path[path.length - 1]
     let split = pathEnd.split('_._')
     let label = split[split.length - 1]
-    if(node.group=="stageNodes" && stage.sampleSize){
-      label = label + ' ('+stage.sampleSize+')'
+    if (node.group == "stageNodes" && stage.sampleSize) {
+      label = label + '\ \n <b>' + stage.sampleSize + '</b>'
+    }
+    else {
+      // label = label + '\ \n <i>(' + stage.sampleSize + ')</i>'
     }
     // *** currently assumes reporting levels equally split so don't need to show
     // at some point will want override method
@@ -219,7 +242,7 @@ export class TreeDiagramComponent {
       clean.label = n.label
       clean.group = n.group
       clean.title = n.nodePath
-      if (clean.label == "Final Sampling Unit") { clean.label = this.form.value['q3.1'] }
+      if (clean.label == "Final Sampling Unit") { clean.label = this.ngRedux.getState().activeProject.values['q3.1'] }
       if (n.nodeOptions) {
         Object.keys(n.nodeOptions).forEach(k => {
           clean[k] = n.nodeOptions[k]
@@ -276,7 +299,10 @@ export class TreeDiagramComponent {
           minimum: 20,
           maximum: 80
         },
-        heightConstraint: 20
+        heightConstraint: 20,
+        font: {
+          multi: true
+        }
       },
       groups: {
         reportingLevelNodes: options.reportingLevelNodes,
@@ -299,12 +325,55 @@ export class TreeDiagramComponent {
     })
   }
 
-  updateNode(update:TreeDiagramNode){ 
-    console.log('node updated',update)
+  updateNode(update: TreeDiagramNode) {
+    console.log('node updated', update)
     this.treeNodes.update({
-      id:update.id,
-      label:update.label
+      id: update.id,
+      label: update.label
     })
+  }
+
+  updateFinalStageSize(size: number) {
+    try {
+      console.log('nhh', size)
+      const samplingStages = this.ngRedux.getState().activeProject.values.samplingStages
+      let finalStage: StageMeta = samplingStages[samplingStages.length - 1]
+      console.log('final stage', finalStage)
+      let nodes
+      // update final reporting level nodes and final stage
+      if (finalStage["q5.3.4.2"] instanceof Array) {
+        nodes = this.nodes.filter(n => {
+          return (n.group == 'reportingLevelNodes' && n.id.indexOf('_._') > -1 && n.nodePath.length == samplingStages.length)
+        })
+        let reportingAllocations = []
+        nodes.forEach((n, i) => {
+          reportingAllocations[i] = size
+          // update labels?
+        })
+        finalStage.reportingAllocations = reportingAllocations
+        size = size * (nodes.length / samplingStages.length)
+      }
+      // update final stage nodes
+      nodes = this.nodes.filter(n => {
+        return (n.group == 'stageNodes' && n.nodePath.length == samplingStages.length)
+      })
+      nodes.forEach(n => {
+        // update labels?
+      })
+      finalStage.sampleSize = size
+      this.updateStageControl(samplingStages.length - 1, finalStage)
+      console.log('final nodes', nodes)
+    } catch (error) {
+    }
+  }
+  // *** lots of shared code with node allocation component
+  updateStageControl(stageIndex: number, update: any) {
+    let allStages = this.formPrvdr.formGroup.controls.samplingStages.value.slice()
+    allStages[stageIndex] = Object.assign({}, allStages[stageIndex], update)
+    this.formPrvdr.formGroup.patchValue({
+      samplingStages: allStages
+    })
+    this.dataPrvdr.backgroundSave()
   }
 
 }
