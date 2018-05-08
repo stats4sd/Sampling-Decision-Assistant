@@ -19,7 +19,8 @@ export class TreeDiagramComponent {
   treeNodes: any;
   treeEdges: any;
   form: FormGroup;
-  samplingStages: StageMeta[]
+  samplingStages: StageMeta[];
+  allocation:any;
   @Input('showInputNodes') showInputNodes: boolean
   @Input('showKey') showKey: boolean
   @ViewChild('treeContainer') treeContainer: ElementRef
@@ -42,6 +43,7 @@ export class TreeDiagramComponent {
   treeInit() {
     this.nodes = []
     this.samplingStages = this.form.value.samplingStages
+    this.allocation = this.form.value.allocation ? this.form.value.allocation : {}
     this.addFinalStageLevels()
     this.prepareStages()
     this.treeEdges = this.buildNodeEdges(this.nodes)
@@ -151,7 +153,7 @@ export class TreeDiagramComponent {
         for (let el of arrays[0]) {
           for (let el2 of arrays[1]) {
             // combinations.push(el + ' |∩| ' + el2)
-            combinations.push(el + ' , ' + el2)
+            combinations.push(el + ', ' + el2)
           }
         }
         arrays[1] = combinations
@@ -169,8 +171,6 @@ export class TreeDiagramComponent {
   _createNode(path: string[], group: string, parentID: string) {
     let node: any = {
       id: path.slice().join('/'),
-      // stage: null,
-      // label: null,
       group: group,
       nodePath: path.slice(),
       parentID: parentID
@@ -180,20 +180,15 @@ export class TreeDiagramComponent {
 
   // use last part of path as label, extracting reporting level classification if exists and updating with stored value
   _generateNodeLabel(node:any, stage:StageMeta, reportingClassIndex?:number){
-    console.log('generating label',node)
     let path = node.nodePath
     let pathEnd = path[path.length - 1]
     let split = pathEnd.split('_._')
     let label = split[split.length - 1]
-    if(node.group=="stageNodes" && stage.sampleSize){
-      label = label + ' ('+stage.sampleSize+')'
+    // attach allocation value to label
+    const allocation = this.allocation[node.id] ? this.allocation[node.id] : {}
+    if(node.group=="stageNodes" && allocation.sampleSize){
+      label = label + ' ('+allocation.sampleSize+')'
     }
-    // *** currently assumes reporting levels equally split so don't need to show
-    // at some point will want override method
-
-    // if(node.group=="reportingLevelNodes" && stage.reportingAllocations){
-    //   label = label + ' ('+stage.reportingAllocations[reportingClassIndex]+')'
-    // }
     return label
   }
 

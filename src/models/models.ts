@@ -112,3 +112,8 @@ export interface StageMeta {
     reportingAllocations?:number[]
     _built?: boolean
 }
+
+export interface TreeNodeAllocation{
+    popSize?:number,
+    sampleSize?:number
+}

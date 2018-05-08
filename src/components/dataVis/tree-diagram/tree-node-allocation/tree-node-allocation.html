@@ -11,14 +11,15 @@
             </div>
             <!-- allocation at reporting level -->
             <div [style.display]="nodeMeta.group=='reportingLevelNodes' ? 'block' : 'none'">
-                <div>How are the units allocated across reporting levels?</div>
+                <!-- <div>How are the units allocated across reporting levels?</div>
                 <div *ngFor="let level of nodeMeta.reportingMeta; let i=index" class="reporting-inputs">
                     <div class="input-label reporting-inputs-label">{{level.label}}</div>
                     <ion-input #reportingInput class="allocation-input" type="number" [(ngModel)]="reportingInputs[i]" (ionChange)="setReportingInput()"></ion-input>
                 </div>
                 <div class="reporting-total">Total should equal
                     <span>{{nodeMeta.stageMeta.popSize}}</span>
-                </div>
+                </div> -->
+                <note type="dev">Currently it is not possible to change allocation for reporting levels (assumes sampled evenly across all classifications)</note>
             </div>
         </div>
 
@@ -34,14 +35,15 @@
             </div>
             <!-- allocation at reporting level -->
             <div [style.display]="nodeMeta.group=='reportingLevelNodes' ? 'block' : 'none'">
-                <div>How are the units allocated across reporting levels?</div>
+                <!-- <div>How are the units allocated across reporting levels?</div>
                 <div *ngFor="let level of nodeMeta.reportingMeta; let i=index" class="reporting-inputs">
                     <div class="input-label reporting-inputs-label">{{level.label}}</div>
                     <ion-input #reportingInput class="allocation-input" type="number" [(ngModel)]="reportingInputs[i]" (ionChange)="setReportingInput()"></ion-input>
                 </div>
                 <div class="reporting-total">Total should equal
                     <span>{{nodeMeta.stageMeta.sampleSize}}</span>
-                </div>
+                </div> -->
+                <note type="dev">Currently it is not possible to change allocation for reporting levels (assumes sampled evenly across all classifications)</note>
             </div>
         </div>
         <div *ngSwitchDefault>

@@ -234,9 +234,9 @@ export class SampleSizeCalculatorComponent {
                 const level1Name=stages[stages.length-1].name
                 formatted.push(
                     { var: 'DEFF1', label: "Design Effect" },
-                    { var: 'stage2N', label: "Number of "+level2Name+" required"},
-                    { var: 'nHH', label:"Number of "+level1Name+" specified for each reporting level" },
-                    { var: 'FinalstageN_FPC', label: "Total sample size for each reporting level" },
+                    { var: 'stage2N', label: "Total "+level2Name+" per disaggregation"},
+                    { var: 'nHH', label:"Total "+level1Name+" per disaggregation" },
+                    { var: 'FinalstageN_FPC', label: "Total sample size per disaggregation" },
                 )
             }
         }

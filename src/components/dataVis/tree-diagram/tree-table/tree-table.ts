@@ -14,6 +14,8 @@ export class TreeTableComponent {
     @select(['activeProject', 'values', 'samplingStages']) readonly samplingStages$: Observable<any>
     @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<any>
     @select(['activeProject', 'values', '_calculatorVars', 'outputs']) readonly calculatorOutputVars$: Observable<CalculatorOutputVars>
+    @select(['activeProject', 'values', 'allocation']) readonly allocation$: Observable<any>
+
     activeNode: TreeDiagramNode
     calculatorOutputs: CalculatorOutputVars = {
         formatted:[]
@@ -23,12 +25,21 @@ export class TreeTableComponent {
         this.activeNode$.subscribe(
             node => {
                 this.activeNode = node
-                console.log('activeNode', this.activeNode)
             }
         )
         this.calculatorOutputVars$.subscribe(
             vars => { if (vars) { this.calculatorOutputs = vars } }
         )
+        this.allocation$.subscribe(
+            allocation=>{if(allocation){
+                this.calculateTotals(allocation)
+            }}
+        )
+
+    }
+
+    // calculate total fsu and intermediate for each path through tree diagram
+    calculateTotals(allocation){
 
     }
 

@@ -61,3 +61,9 @@ build: `npm run doc:build`
 serve: `npm run doc:serve`
 build and serve: `npm run doc:buildandserve`
 Served docs available at http://localhost:8080
+
+###
+Service worker (with workbox)
+https://golb.hplar.ch/2017/11/Ionic-with-Workbox-Service-Worker.html
+https://golb.hplar.ch/2017/12/Workbox-in-Ionic-and-Lazy-Loading-Modules.html
+https://developers.google.com/web/tools/workbox/guides/get-started
