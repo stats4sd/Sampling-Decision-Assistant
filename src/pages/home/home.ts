@@ -74,7 +74,7 @@ export class HomePage {
           console.log('update available?', isAvailable)
           if (isAvailable) {
             const toast = this.toastCtrl.create({
-              message: 'New Update available! Reload the webapp to see the latest juicy changes.',
+              message: 'New Update available! Reload the webapp to see the latest version.',
               position: 'bottom',
               showCloseButton: true,
             });

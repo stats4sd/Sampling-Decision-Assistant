@@ -1,6 +1,9 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+## 0.9.8 (8th May 2018)
+
+
 ## 0.9.7 (29th April 2018)
 
 Stage 6 - The R-shiny calculator app has been rewritten entirely in javaScript so that it can be fully embedded into the app and even work offline. You can see it in action on the Stage 6 - Sample Sizes section. More work has also been done to link nodes in the tree diagram to the

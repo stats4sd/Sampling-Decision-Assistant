@@ -17,6 +17,14 @@ The project is linked to a remote firebase server for deployment. Memebers of SS
 
 
 ## Build notes
+Custom build scripts in place to allow for automatic population of service worker assets and enable production build.
+Build with:
+`npm run build:prod`
+This will also start the firebase server on port 5000 to check for errors
+Then deploy with:
+`firebase deploy`
+
+
 ### Updating changelog
 `pages/changelog/version.ts` -> version number and date
 `pages/changelog/changelog.md` -> changelog markdown

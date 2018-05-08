@@ -29,7 +29,7 @@ export class SentryErrorHandler extends IonicErrorHandler {
 
   handleError(error) {
     // if serving locally, use ionic handler
-    if (['localhost', '127'].indexOf(location.hostname) != -1) {
+    if (location.hostname.indexOf('localhost') > -1) {
       super.handleError(error)
     }
     // otherwise push to remote sentry logger
