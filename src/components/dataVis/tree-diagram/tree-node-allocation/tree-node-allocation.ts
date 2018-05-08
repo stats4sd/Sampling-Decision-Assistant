@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { TextInput, Events } from 'ionic-angular'
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable'
-import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta } from '../../../../models/models';
+import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta, TreeNodeAllocation } from '../../../../models/models';
 import { TreeDiagramActions } from '../../../../actions/actions';
 import { FormProvider } from '../../../../providers/form/form';
 import { DataProvider } from '../../../../providers/data/data';
@@ -16,6 +16,7 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     @select(['_treeMeta', 'activeNode']) readonly activeNode$: Observable<TreeDiagramNode>
     @select(['activeProject', 'values', 'samplingStages']) readonly samplingStages$: Observable<any>
     @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<any>
+    @select(['activeProject', 'values', 'allocation']) readonly allocation$: Observable<any>
     @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<string>;
     nodes: any;
     activeNode: TreeDiagramNode;
@@ -28,18 +29,32 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     sampleSize: any; //should be number but input bug sometimes makes string
     stagePart: string;
     allocationMeta: AllocationMeta = {} // controls which type of allocation view to show, e.g. sampleStage, finalStage, reportingLevel
+    allocation: any = {};
+    allocationControlChecked: boolean;
     @ViewChild('popSizeInput') popSizeInput: TextInput
 
     constructor() {
         super()
-    }
-    ngOnInit() {
-        // *** could do some tidying as first node select doesn't display properly due to no sampling stage meta yet (hence the additional update call)
         this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this.setActiveNode(this.activeNode) } })
         this.activeNode$.debounceTime(200).subscribe(node => this.setActiveNode(node))
         this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this.setActiveNode(this.activeNode) } })
-        this.stagePart$.subscribe(part => this.stagePart = part)
+        this.stagePart$.subscribe(part => { this.stagePart = part })
+        this.allocation$.subscribe(allocation => this.allocation = allocation)
     }
+    ngOnInit() {}
+   
+    // constructor(
+    //     private treeActions: TreeDiagramActions,
+    //     private formPrvdr: FormProvider,
+    //     private dataPrvdr: DataProvider,
+    //     private ngRedux: NgRedux<AppState>,
+    //     private events: Events
+    // ) {
+    //     // *** could do some tidying as first node select doesn't display properly due to no sampling stage meta yet (hence the additional update call)
+    // }
+
+    // **** NOTE - Code contains merge conflicts/deprecated functions which may need resolving
+    // as of 8th May 2018
 
 
 
@@ -47,48 +62,66 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     setPopAndSampleSize() {
         const size = parseInt(this.popSize)
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
-        this.updateStageControl(stageNumber - 1, { popSize: size, sampleSize: size })
+
+        this.allocate(this.activeNode.id, { popSize: size, sampleSize: size })
         this.updateNodeLabel(size)
     }
     setPopSize() {
         const size = parseInt(this.popSize)
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
-        this.updateStageControl(stageNumber - 1, { popSize: size })
+        // this.updateStageControl(stageNumber - 1, { popSize: size })
+        this.allocate(this.activeNode.id, { popSize: size })
     }
     setSampleSize() {
         const size = parseInt(this.sampleSize)
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
-        this.updateStageControl(stageNumber - 1, { sampleSize: size })
+        // this.updateStageControl(stageNumber - 1, { sampleSize: size })
+        this.allocate(this.activeNode.id, { sampleSize: size })
         this.updateNodeLabel(size)
     }
     setReportingInput() {
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
-        this.updateStageControl(stageNumber - 1, { reportingAllocations: this.reportingInputs })
+        // this.updateStageControl(stageNumber - 1, { reportingAllocations: this.reportingInputs })
     }
-    updateStageControl(stageIndex: number, update: any) {
-        let allStages = this.formPrvdr.formGroup.controls.samplingStages.value.slice()
-        allStages[stageIndex] = Object.assign({}, allStages[stageIndex], update)
-        this.formPrvdr.formGroup.patchValue({
-            samplingStages: allStages
-        })
+
+    // refelct all allocation changes to formgroup
+    allocate(nodeID: string, values: TreeNodeAllocation) {
+        if (!this.allocationControlChecked) { this._checkAllocationControl() }
+        this.allocation[nodeID] = values
+        this.formPrvdr.formGroup.patchValue({ allocation: this.allocation })
         this.dataPrvdr.backgroundSave()
+        this.updateNodeLabel(values.sampleSize)
+    }
+
+    
+
+    // add form control for values.allocation if doesn't already exist
+    _checkAllocationControl() {
+        if (!this.formPrvdr.formGroup.controls.allocation) {
+            this.formPrvdr.formGroup.addControl('allocation', this.formPrvdr.fb.control({}))
+        }
+        this.allocationControlChecked = true
     }
 
     updateNodeLabel(size: number) {
-        const node = this.activeNode
-        let path = node.title
-        let pathEnd = path[path.length - 1]
-        let split = pathEnd.split('_._')
-        let label = split[split.length - 1]
-        if (node.group == "stageNodes") {
-            label = label + '\n (' + size + ')'
+        let label = this.activeNode.label
+        label = label.split(' (')[0]
+        if (size) {
+            label = label + ' (' + size + ')'
         }
-
         this.activeNode.label = label
         this.events.publish('node:updated', this.activeNode)
     }
-
-
+    // updateNodeLabel(size: number) {
+    //     const node = this.activeNode
+    //     let path = node.title
+    //     let pathEnd = path[path.length - 1]
+    //     let split = pathEnd.split('_._')
+    //     let label = split[split.length - 1]
+    //     if (node.group == "stageNodes") {
+    //         label = label + '\n (' + size + ')'
+    //     }
+    // }
 
     // set the active node and get meta information depending on node type
     setActiveNode(node: TreeDiagramNode) {
@@ -103,7 +136,7 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
 
             this.nodeMeta = Object.assign({}, node, { stageMeta: stageMeta, reportingMeta: reportingMeta })
             // update input values
-            this.updateInputValues(stageMeta)
+            // this.updateInputValues(stageMeta)
             this.setAllocationType()
         }
 
@@ -127,15 +160,27 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
         this.allocationMeta = allocation
         console.log('allocation meta', this.allocationMeta)
     }
-    updateInputValues(stageMeta: StageMeta) {
-        this.popSize = stageMeta.popSize
-        this.sampleSize = stageMeta.sampleSize
-        if (stageMeta.reportingAllocations) {
-            this.reportingInputs = stageMeta.reportingAllocations
-        }
-        else { this.reportingInputs = [] }
-        this._focusInput()
-    }
+
+    // updateInputValues(stageMeta: StageMeta) {
+    //     this.popSize = stageMeta.popSize
+    //     this.sampleSize = stageMeta.sampleSize
+    //     if (stageMeta.reportingAllocations) {
+    //         this.reportingInputs = stageMeta.reportingAllocations
+    //     }
+    //     else { this.reportingInputs = [] }
+    //     // assign allocation size if set
+    //     try {
+    //         const allocation: TreeNodeAllocation = this.ngRedux.getState().activeProject.values.allocation[node.id]
+    //         this.popSize = allocation.popSize
+    //         this.sampleSize = allocation.sampleSize
+    //     } catch (error) {
+    //         this.popSize = null
+    //         this.sampleSize = null
+    //     }
+
+    //     this.nodeMeta = Object.assign({}, node, { stageMeta: stageMeta, reportingMeta: reportingMeta })
+    //     this._focusInput()
+    // }
 
     _focusInput() {
         setTimeout(() => {
@@ -170,6 +215,18 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
         }
 
     }
+
+    //  // this.updateStageControl(stageNumber - 1, { popSize: size, sampleSize: size })
+
+    // updateStageControl(stageIndex: number, update: any) {
+    //     let allStages = this.formPrvdr.formGroup.controls.samplingStages.value.slice()
+    //     allStages[stageIndex] = Object.assign({}, allStages[stageIndex], update)
+    //     this.formPrvdr.formGroup.patchValue({
+    //         samplingStages: allStages
+    //     })
+    //     this.dataPrvdr.backgroundSave()
+    // }
+
 
 
     updateFinalStageSize(size: number) {

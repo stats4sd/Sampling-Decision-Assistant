@@ -69,26 +69,26 @@ export class HomePage {
 
   checkForUdates() {
     // https://medium.com/progressive-web-apps/pwa-create-a-new-update-available-notification-using-service-workers-18be9168d717
-    //   window['isUpdateAvailable']()
-    //     .then(isAvailable => {
-    //       console.log('update available?', isAvailable)
-    //       if (isAvailable) {
-    //         const toast = this.toastCtrl.create({
-    //           message: 'New Update available! Reload the webapp to see the latest juicy changes.',
-    //           position: 'bottom',
-    //           showCloseButton: true,
-    //         });
-    //         toast.present();
-    //       }
-    //     },
-    //       notAvailable => { console.log('no update available') }
-    //     ).catch(
+      window['isUpdateAvailable']()
+        .then(isAvailable => {
+          console.log('update available?', isAvailable)
+          if (isAvailable) {
+            const toast = this.toastCtrl.create({
+              message: 'New Update available! Reload the webapp to see the latest juicy changes.',
+              position: 'bottom',
+              showCloseButton: true,
+            });
+            toast.present();
+          }
+        },
+          notAvailable => { console.log('no update available') }
+        ).catch(
 
-    //       err => console.error(err)
-    //     )
-    // }
+          err => console.error(err)
+        )
+    }
 
-  }
+  // }
 }
 
 //nextSlide(){

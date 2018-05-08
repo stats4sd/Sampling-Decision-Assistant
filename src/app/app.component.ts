@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events, NavController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+// import { StatusBar } from '@ionic-native/status-bar';
+// import { SplashScreen } from '@ionic-native/splash-screen';
 import { ViewActions, ProjectActions } from '../actions/actions';
 import { CustomRouterProvider } from '../providers/router/router';
 
@@ -16,8 +16,8 @@ export class MyApp {
 
   constructor(
     public platform: Platform,
-    public statusBar: StatusBar,
-    public splashScreen: SplashScreen,
+    // public statusBar: StatusBar,
+    // public splashScreen: SplashScreen,
     private customRouter: CustomRouterProvider,
     private projectActions:ProjectActions
 
@@ -44,8 +44,8 @@ export class MyApp {
       // handle cordova functions
       this.projectActions.setMeta({_platforms:this.platform.platforms()})
       if (this.platform.is('cordova')) {
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
+        // this.statusBar.styleDefault();
+        // this.splashScreen.hide();
       }
     });
   }

@@ -24,6 +24,7 @@ export class TreeDiagramComponent {
   form: FormGroup;
   samplingStages: StageMeta[];
   initComplete:boolean;
+  allocation:any;
   @Input('showInputNodes') showInputNodes: boolean
   @Input('showKey') showKey: boolean
   @ViewChild('treeContainer') treeContainer: ElementRef
@@ -60,6 +61,7 @@ export class TreeDiagramComponent {
       this.nodes = []
       // this.updateFinalStageSize(values)
       this.samplingStages = values.samplingStages
+      this.allocation = values.allocation ? values.allocation : {}
       console.log('sampling stages',this.samplingStages)
       this.addFinalStageLevels()
       this.prepareStages()
@@ -172,7 +174,7 @@ export class TreeDiagramComponent {
         for (let el of arrays[0]) {
           for (let el2 of arrays[1]) {
             // combinations.push(el + ' |∩| ' + el2)
-            combinations.push(el + ' , ' + el2)
+            combinations.push(el + ', ' + el2)
           }
         }
         arrays[1] = combinations
@@ -190,8 +192,6 @@ export class TreeDiagramComponent {
   _createNode(path: string[], group: string, parentID: string) {
     let node: any = {
       id: path.slice().join('/'),
-      // stage: null,
-      // label: null,
       group: group,
       nodePath: path.slice(),
       parentID: parentID
@@ -205,18 +205,12 @@ export class TreeDiagramComponent {
     let pathEnd = path[path.length - 1]
     let split = pathEnd.split('_._')
     let label = split[split.length - 1]
-    if (node.group == "stageNodes" && stage.sampleSize) {
-      label = label + '\ \n <b>' + stage.sampleSize + '</b>'
+    // attach allocation value to label
+    const allocation = this.allocation[node.id] ? this.allocation[node.id] : {}
+    if(node.group=="stageNodes" && allocation.sampleSize){
+      label = label + ' ('+allocation.sampleSize+')'
+      // label = label + '\ \n <b>' + stage.sampleSize + '</b>'
     }
-    else {
-      // label = label + '\ \n <i>(' + stage.sampleSize + ')</i>'
-    }
-    // *** currently assumes reporting levels equally split so don't need to show
-    // at some point will want override method
-
-    // if(node.group=="reportingLevelNodes" && stage.reportingAllocations){
-    //   label = label + ' ('+stage.reportingAllocations[reportingClassIndex]+')'
-    // }
     return label
   }
 

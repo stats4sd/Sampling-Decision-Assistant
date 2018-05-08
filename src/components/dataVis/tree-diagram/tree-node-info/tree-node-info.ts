@@ -18,17 +18,17 @@ export class TreeNodeInfoComponent {
     samplingStages: any[] = [];
     nodeMeta: any = {};
     reportingLevels: any[] = [];
-    stageMeta:any[]=[
-        {label:'Stage',var:'stageNumber'},
-        {label:'Sampling Unit',var:'name'},
-        {label:'Frame',var:'q5.3.1'},
-        {label:'Units',var:'q5.3.3'},
-        {label:'Reporting Level',var:'q5.3.4.2'},
+    stageMeta: any[] = [
+        { label: 'Stage', var: 'stageNumber' },
+        { label: 'Sampling Unit', var: 'name' },
+        { label: 'Frame', var: 'q5.3.1' },
+        { label: 'Units', var: 'q5.3.3' },
+        { label: 'Reporting Level', var: 'q5.3.4.2' },
     ]
 
     constructor(private treeActions: TreeDiagramActions) {
         this.stagePart$.subscribe(p => this._updateInfoSection(null, p))
-        this.samplingStages$.subscribe(s => {if (s) {this.samplingStages = s; this._updateActiveNode(this.activeNode)}})
+        this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this._updateActiveNode(this.activeNode) } })
         this.activeNode$.subscribe(node => this._updateActiveNode(node))
         this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this._updateActiveNode(this.activeNode) } })
 
@@ -37,19 +37,22 @@ export class TreeNodeInfoComponent {
     // set the active node and get meta information depending on node type
     _updateActiveNode(node: TreeDiagramNode) {
         this.activeNode = node
-        let nodeText: any = {}
-        let stageMeta: any = {}
-        //  *** incomplete, will use later to add more information to the node info pane
         if (node) {
-            stageMeta = this._getStageMeta(node.title.length)  
+            console.log('updating active node', node.id)
+            let nodeText: any = {}
+            let stageMeta: any = {}
+            if (node) {
+                stageMeta = this._getStageMeta(node.title.length)
+            }
+            this.nodeMeta = { ...node, stageMeta }
         }
-        this.nodeMeta = { ...node, stageMeta }
+
     }
 
     // return sampling stage values for given stage number
     _getStageMeta(stageNumber: number) {
         let meta = this.samplingStages[stageNumber - 1]
-        if(!meta){meta={}}
+        if (!meta) { meta = {} }
         meta.stageNumber = stageNumber
         return meta
     }
@@ -64,7 +67,8 @@ export class TreeNodeInfoComponent {
             infoSection: infoSection
         })
         this.infoSection = infoSection
-        console.log('infoSection', infoSection)
+        // hide box on first enter
+        if (stagePart) { this.treeActions.setActiveNode(null) }
 
     }
 

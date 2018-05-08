@@ -40,7 +40,9 @@ export class FrameBuilderPage {
 
   _buildFormGroup(){
     // generate a new formgroup which will be used to hold information saved in these questions
-    let builderQuestions = this.formPrvdr.allQuestions.filter(q=>{
+    
+    let builderQuestions:any = this.formPrvdr.allQuestions
+    builderQuestions = builderQuestions.filter(q=>{
       return q.repeatGroup=="q5.3"
     })
     let builderForm = this.formPrvdr._generateQuestionForm(builderQuestions)

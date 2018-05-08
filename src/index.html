@@ -17,67 +17,53 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <!-- cordova.js required for cordova apps -->
-  <script src="cordova.js"></script>
+  <!-- <script src="cordova.js"></script> -->
 
   <script src="assets/js/vis.min.js"></script>
   <script src="assets/js/jstat.min.js"></script>
   <!-- <script defer src="assets/js/fontawesome/js/fontawesome-all.js"></script> -->
 
-  <!-- un-comment this code to enable service worker -->
-  <!-- <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed...'))
-        .catch(err => console.error('Error', err));
-    }
-  </script> -->
-
   <script>
     // register service worker promise to window, listen in home component after init
     window.isUpdateAvailable = () => new Promise(function (resolve, reject) {
       console.log('window update available triggered 12')
-      // lazy way of disabling service workers while developing
-      if ('serviceWorker' in navigator && ['localhost', '127'].indexOf(location.hostname) === -1) {
-        // unregister current service workers and don't function correctly
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-          for (let registration of registrations) {
-            registration.unregister()
-          }
-        })
+      if ('serviceWorker' in navigator) {
+        // disable for localhost (except firebase serve)
+        if (location.hostname.indexOf('localhost') == -1 || location.port == 5000) {
+          navigator.serviceWorker.register('service-worker.js')
+            .then(reg => {
+              console.log('worker registered with scope', reg.scope)
+              console.log('reg.installing', reg.installing)
+              reg.onupdatefound = () => {
+                console.log('onupdatefound')
+                const installingWorker = reg.installing;
+                installingWorker.onstatechange = () => {
+                  console.log('installing worker stage', installingWorker.state)
+                  switch (installingWorker.state) {
+                    case 'installed':
+                      if (navigator.serviceWorker.controller) {
+                        // new update available
+                        resolve(true);
+                      } else {
+                        // no update available
+                        resolve(false);
+                      }
+                      break;
+                  }
+                };
+              };
+            },
+          )
+            .catch(err => console.error('[SW ERROR]', err));
+        }
         // register service worker file
         console.log('live mode')
-        // navigator.serviceWorker.register('service-worker.js')
-        //   .then(reg => {
-        //     console.log('worker registered with scope', reg.scope)
-        //     console.log('reg.installing',reg.installing)
-        //     reg.onupdatefound = () => {
-        //       console.log('onupdatefound')
-        //       const installingWorker = reg.installing;
-        //       installingWorker.onstatechange = () => {
-        //         console.log('installing worker stage',installingWorker.state)
-        //         switch (installingWorker.state) {
-        //           case 'installed':
-        //             if (navigator.serviceWorker.controller) {
-        //               // new update available
-        //               resolve(true);
-        //             } else {
-        //               // no update available
-        //               resolve(false);
-        //             }
-        //             break;
-        //         }
-        //       };
-        //     };
-        //   },
-        // )
-        //   .catch(err => console.error('[SW ERROR]', err));
       }
       else {
         console.log('disabling service worker for local')
         resolve(false)
       }
     });
-
   </script>
 
 
@@ -85,8 +71,6 @@
   <link href="assets/animate.css" rel="stylesheet">
   <link href="assets/js/vis.min.css" rel="stylesheet">
   <link href="assets/dragula.css" rel="stylesheet">
-  <!-- dev editor -->
-
 
 </head>
 
@@ -94,7 +78,6 @@
 
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
-
 
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
@@ -105,8 +88,6 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
-
-
 
 </body>
 
