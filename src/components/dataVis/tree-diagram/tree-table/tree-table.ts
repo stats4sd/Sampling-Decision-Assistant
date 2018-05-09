@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 import { TreeDiagramNode } from '../../../../models/models';
 import { CalculatorOutputVars } from '../../sample-size-calculator/sample-size-calculator';
 

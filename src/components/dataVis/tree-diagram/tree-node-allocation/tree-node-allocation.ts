@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { TextInput, Events } from 'ionic-angular'
 import { select, NgRedux } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
+import {debounceTime} from 'rxjs/operators'
 import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta, TreeNodeAllocation } from '../../../../models/models';
 import { TreeDiagramActions } from '../../../../actions/actions';
 import { FormProvider } from '../../../../providers/form/form';
@@ -18,6 +19,7 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<any>
     @select(['activeProject', 'values', 'allocation']) readonly allocation$: Observable<any>
     @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<string>;
+    @select(['view', 'hash']) readonly hash$: Observable<string>;
     nodes: any;
     activeNode: TreeDiagramNode;
     infoSection: string;
@@ -31,27 +33,24 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     allocationMeta: AllocationMeta = {} // controls which type of allocation view to show, e.g. sampleStage, finalStage, reportingLevel
     allocation: any = {};
     allocationControlChecked: boolean;
+    reviewMode:boolean;
     @ViewChild('popSizeInput') popSizeInput: TextInput
 
     constructor() {
         super()
         this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this.setActiveNode(this.activeNode) } })
-        this.activeNode$.debounceTime(200).subscribe(node => this.setActiveNode(node))
+        this.activeNode$.pipe(debounceTime(200)).subscribe(node => this.setActiveNode(node))
         this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this.setActiveNode(this.activeNode) } })
         this.stagePart$.subscribe(part => { this.stagePart = part })
         this.allocation$.subscribe(allocation => this.allocation = allocation)
+        this.hash$.subscribe(hash=>{
+            this.reviewMode=(hash && hash.indexOf('review')>-1 ? true : false)
+        })
     }
-    ngOnInit() {}
+    ngOnInit() {
+
+    }
    
-    // constructor(
-    //     private treeActions: TreeDiagramActions,
-    //     private formPrvdr: FormProvider,
-    //     private dataPrvdr: DataProvider,
-    //     private ngRedux: NgRedux<AppState>,
-    //     private events: Events
-    // ) {
-    //     // *** could do some tidying as first node select doesn't display properly due to no sampling stage meta yet (hence the additional update call)
-    // }
 
     // **** NOTE - Code contains merge conflicts/deprecated functions which may need resolving
     // as of 8th May 2018

@@ -2,46 +2,62 @@
 
   <ion-navbar color="primary">
     <ion-title>Review and Analysis</ion-title>
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button ion-button icon-left *ngIf="viewSection==0" (click)="slideTo(1)">
         <ion-icon name="analytics"></ion-icon>View Analysis</button>
       <button ion-button icon-left *ngIf="viewSection==1" (click)="slideTo(0)">
         <ion-icon name="list"></ion-icon>View Decisions</button>
-      <!-- <button ion-button icon-left (click)="save()" *ngIf="!showIntro">Save</button> -->
-      <!-- <button ion-button icon-left (click)="export()" *ngIf="!showIntro">Export</button> -->
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-navbar>
 </ion-header>
 <ion-content class="slide-scroll-content survey" style="margin-bottom:10px">
   <ion-content>
-    <ion-slides (ionSlideDidChange)="slideChanged()">
-      <ion-slide>
-        <!-- Review content -->
-        <div padding>
-          <h2>Review Decisions</h2>
-          <div>
-            <div *ngFor="let group of questionGroups">
-              <div class="heading">
-                {{group.section}}
-              </div>
-              <survey-question *ngFor="let question of group.questions" [question]="question"></survey-question>
-              <!-- <survey-question-group [section]="group" [showLabel]=true></survey-question-group> -->
+    <!-- Review content -->
+    <div padding>
+      <h2>Review Decisions</h2>
+      
+      <div>
+        <div *ngFor="let group of questionGroups">
+          <div class="heading">
+            {{group.section}}
+          </div>
+          <div *ngFor="let question of group.questions">
+            <survey-question *ngIf="!question.repeatGroup && !question.hideOnReview" [question]="question" [reviewMode]="true"></survey-question>
+          </div>
+          <div [ngSwitch]="group.section">
+            <!-- additional group-specific content -->
+            <div *ngSwitchCase="'At what level do you need to report these results'">
+              <ion-card class="container">
+                <stage-4-define-level-categories [reviewMode]="true"></stage-4-define-level-categories>
+              </ion-card>
+            </div>
+            <div *ngSwitchCase="'Selecting the sampling units'">
+              <ion-card class="container">
+                <stage-5-frame-builder-overview [reviewMode]="true"></stage-5-frame-builder-overview>
+              </ion-card>
+            </div>
+            <div *ngSwitchCase="'Allocating and deploying resources'">
+              <tree-diagram></tree-diagram>
             </div>
           </div>
+
+
         </div>
-      </ion-slide>
-      <ion-slide>
-        <!-- Analysis Content -->
-        <div padding>
-          <h2>Analysis</h2>
-          <p>In this section there will be a short analysis based on the decisions made, to help to identify potential issues
-            or flags
-            <p>
-              <p>Once satisfied, the user can export their results to xlsx format</p>
-              <button ion-button icon-left (click)="export()">
-                <ion-icon name="download"></ion-icon>Export</button>
-        </div>
-      </ion-slide>
-    </ion-slides>
+      </div>
+    </div>
+
+    <!-- Analysis Content -->
+    <div padding>
+      <h2>Export</h2>
+      <div style="display: flex; flex-wrap: wrap  ">
+        <button ion-button icon-left (click)="exportJSON()" class="export-button">
+          <ion-icon name="custom-database"></ion-icon>Project Data</button>
+        <button ion-button icon-left (click)="exportXLSX()" class="export-button" disabled>
+          <ion-icon name="custom-excel"></ion-icon>XLSX Summary</button>
+        <button ion-button icon-left (click)="exportDiagram()" class="export-button" disabled>
+          <ion-icon name="custom-tree"></ion-icon>Diagram</button>
+      </div>
+
+    </div>
 
   </ion-content>

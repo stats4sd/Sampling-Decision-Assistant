@@ -70,8 +70,14 @@ serve: `npm run doc:serve`
 build and serve: `npm run doc:buildandserve`
 Served docs available at http://localhost:8080
 
-###
+### Service worker
 Service worker (with workbox)
 https://golb.hplar.ch/2017/11/Ionic-with-Workbox-Service-Worker.html
 https://golb.hplar.ch/2017/12/Workbox-in-Ionic-and-Lazy-Loading-Modules.html
 https://developers.google.com/web/tools/workbox/guides/get-started
+
+### Custom icons
+https://golb.hplar.ch/2018/01/Custom-SVG-icons-in-Ionic.html
+Additional icons imported individually (could be converted into auto script, but for now there aren't many)
+SVG icons can be found at https://icomoon.io/app or https://www.flaticon.com/ 
+Icons placed in assets/img/icons folder and imported in app.scss

@@ -7,7 +7,7 @@ import { FormProvider } from '../../../providers/form/form'
 import { ProjectActions, ViewActions } from '../../../actions/actions';
 import { Project, AppState } from '../../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CustomRouterProvider } from '../../../providers/router/router';
 
 

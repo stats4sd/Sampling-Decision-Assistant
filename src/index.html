@@ -19,8 +19,10 @@
   <!-- cordova.js required for cordova apps -->
   <!-- <script src="cordova.js"></script> -->
 
+  <!-- vis has to be included as script due to conflict with hammer.js
+  https://github.com/almende/vis/issues/2000 -->
   <script src="assets/js/vis.min.js"></script>
-  <script src="assets/js/jstat.min.js"></script>
+  <!-- <script src="assets/js/jstat.min.js"></script> -->
   <!-- <script defer src="assets/js/fontawesome/js/fontawesome-all.js"></script> -->
 
   <script>
@@ -68,7 +70,7 @@
 
 
   <link href="build/main.css" rel="stylesheet">
-  <link href="assets/animate.css" rel="stylesheet">
+  <!-- <link href="assets/animate.css" rel="stylesheet"> -->
   <link href="assets/js/vis.min.css" rel="stylesheet">
   <link href="assets/dragula.css" rel="stylesheet">
 

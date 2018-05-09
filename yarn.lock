@@ -5936,10 +5936,6 @@ watchr@2.6.x:
     taskgroup "^5.0.1"
     typechecker "^4.3.0"
 
-web-animations-js@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/web-animations-js/-/web-animations-js-2.3.1.tgz#3a6d9bc15196377a90f8e2803fa5262165b04510"
-
 webpack-manifest-plugin@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/webpack-manifest-plugin/-/webpack-manifest-plugin-2.0.2.tgz#e46747a3c1dbf2e24298ca0f2a91764f51f5af60"

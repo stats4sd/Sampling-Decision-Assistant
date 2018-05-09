@@ -1,67 +1,70 @@
-<h4>Building multi-stage sampling frames</h4>
-<p>We now must determine the strategy to select the individual sampling units for each of your sampling stages
-</p>
-<p>Click on each sampling stage below and answer the questions that follow</p>
-<ion-grid class="builder-container">
-  <ion-row class="row-headers">
-    <ion-col col-2>Stage</ion-col>
-    <ion-col col-2>Sampling Unit</ion-col>
-    <ion-col col-3>Frame</ion-col>
-    <ion-col col-2>Units</ion-col>
-    <ion-col col-3>Reporting Level</ion-col>
-    <!-- <ion-col col-2>Stratification</ion-col> -->
-  </ion-row>
-  <div *ngIf="form.value.samplingStages">
-    <ion-row *ngFor="let stage of form.value.samplingStages; let i=index; let last=last">
+<div [ngClass]="reviewMode ? 'review-mode' : null">
+  <h4>Building multi-stage sampling frames</h4>
+  <p>We now must determine the strategy to select the individual sampling units for each of your sampling stages
+  </p>
+  <p>Click on each sampling stage below and answer the questions that follow</p>
 
-      <ion-col col-2>{{i+1}}</ion-col>
-
-      <ion-col col-2 class="stage-name">
-        <div>{{stage.name}}</div>
-      </ion-col>
-
-      <!-- build frame button -->
-      <ion-col class="cell build-stage hover" (click)="buildStage(stage,i)" *ngIf="!stage._built">
-        <div icon-right>
-          Make sampling decisions for stage
-          <ion-icon name="arrow-forward"></ion-icon>
-        </div>
-      </ion-col>
-
-      <!-- Built frame info -->
-      <!-- Frame -->
-      <ion-col col-3 *ngIf="stage._built">
-        <div>{{stage['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</div>
-      </ion-col>
-
-      <!-- Units -->
-      <ion-col col-2 *ngIf="stage._built">
-        <div *ngIf="stage['q5.3.3']=='All'">
-          <div>All Units</div>
-          <!-- <div class="sample-size">(n={{stageControl.value['q5.3.3.1']}})</div> -->
-        </div>
-        <div *ngIf="stage['q5.3.3']=='Sample'">Sample</div>
-      </ion-col>
-
-      <!-- Reporting Levels -->
-      <ion-col col-3 *ngIf="stage._built">
-        <div *ngIf="!stage['q5.3.4.2'] || stage['q5.3.4.2']==''">
-          <ion-note>None</ion-note>
-        </div>
-        <div *ngIf="stage['q5.3.4.2']">
-          <div *ngFor="let level of stage['q5.3.4.2']">{{level}}</div>
-        </div>
-      </ion-col>
-
-      <!-- Edit button -->
-      <div class="edit-button-container" *ngIf="stage._built">
-        <div class="edit-button" (click)="buildStage(stage,i)">
-          <button ion-button icon-left clear>
-            <ion-icon name="create"></ion-icon>Edit
-          </button>
-        </div>
-        <div class="edit-button-overlay"></div>
-      </div>
+  <ion-grid class="builder-container">
+    <ion-row class="row-headers">
+      <ion-col col-2>Stage</ion-col>
+      <ion-col col-2>Sampling Unit</ion-col>
+      <ion-col col-3>Frame</ion-col>
+      <ion-col col-2>Units</ion-col>
+      <ion-col col-3>Reporting Level</ion-col>
+      <!-- <ion-col col-2>Stratification</ion-col> -->
     </ion-row>
-  </div>
-</ion-grid>
+    <div *ngIf="samplingStages.length>0">
+      <ion-row *ngFor="let stage of samplingStages; let i=index; let last=last">
+
+        <ion-col col-2>{{i+1}}</ion-col>
+
+        <ion-col col-2 class="stage-name">
+          <div>{{stage.name}}</div>
+        </ion-col>
+
+        <!-- build frame button -->
+        <ion-col class="cell build-stage hover" (click)="buildStage(stage,i)" *ngIf="!stage._built">
+          <div icon-right>
+            Make sampling decisions for stage
+            <ion-icon name="arrow-forward"></ion-icon>
+          </div>
+        </ion-col>
+
+        <!-- Built frame info -->
+        <!-- Frame -->
+        <ion-col col-3 *ngIf="stage._built">
+          <div>{{stage['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}</div>
+        </ion-col>
+
+        <!-- Units -->
+        <ion-col col-2 *ngIf="stage._built">
+          <div *ngIf="stage['q5.3.3']=='All'">
+            <div>All Units</div>
+            <!-- <div class="sample-size">(n={{stageControl.value['q5.3.3.1']}})</div> -->
+          </div>
+          <div *ngIf="stage['q5.3.3']=='Sample'">Sample</div>
+        </ion-col>
+
+        <!-- Reporting Levels -->
+        <ion-col col-3 *ngIf="stage._built">
+          <div *ngIf="!stage['q5.3.4.2'] || stage['q5.3.4.2']==''">
+            <ion-note>None</ion-note>
+          </div>
+          <div *ngIf="stage['q5.3.4.2']">
+            <div *ngFor="let level of stage['q5.3.4.2']">{{level}}</div>
+          </div>
+        </ion-col>
+
+        <!-- Edit button -->
+        <div class="edit-button-container" *ngIf="stage._built && !reviewMode">
+          <div class="edit-button" (click)="buildStage(stage,i)">
+            <button ion-button icon-left clear>
+              <ion-icon name="create"></ion-icon>Edit
+            </button>
+          </div>
+          <div class="edit-button-overlay"></div>
+        </div>
+      </ion-row>
+    </div>
+  </ion-grid>
+</div>

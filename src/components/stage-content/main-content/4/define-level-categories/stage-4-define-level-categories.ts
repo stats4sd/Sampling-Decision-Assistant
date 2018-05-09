@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Stage4Component } from '../stage-4';
 import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ReportingLevel } from '../../../../../models/models';
+import { FormProvider } from '../../../../../providers/form/form';
 
 export interface ReportingLevel {
   name: string,
@@ -19,13 +20,16 @@ export interface LevelClassification {
   selector: 'stage-4-define-level-categories',
   templateUrl: 'stage-4-define-level-categories.html'
 })
-export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
+export class Stage4_DefineLevelCategoriesComponent {
 
+  @Input('reviewMode') reviewMode:boolean;
   reportingLevels: ReportingLevel[] = []
-
   @select(['view', 'params', 'stagePart']) readonly slideSection$: Observable<string>;
   @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<ReportingLevel[]>;
 
+  constructor(private formPrvdr:FormProvider){
+
+  }
   ngOnInit() {
     // bind to reporting level changes to recalculate classification fields 
     this.reportingLevels$.subscribe(
@@ -58,7 +62,7 @@ export class Stage4_DefineLevelCategoriesComponent extends Stage4Component {
   save(reportingLevels) {
     let patch: any = {}
     patch.reportingLevels = reportingLevels
-    this.form.patchValue(patch)
+    this.formPrvdr.formGroup.patchValue(patch)
   }
 
   // only save the name changes when leaving the section to avoid strange update bugs

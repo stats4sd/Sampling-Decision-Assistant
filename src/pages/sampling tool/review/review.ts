@@ -1,8 +1,12 @@
 import { Component, ViewChildren, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import {DataProvider} from '../../../providers/data/data'
+import { NgRedux } from '@angular-redux/store';
+import { AppState } from '../../../models/models';
 
-@IonicPage()
+@IonicPage({
+  defaultHistory: ['HomePage', 'StepByStepPage']
+})
 @Component({
   selector: 'page-review',
   templateUrl: 'review.html',
@@ -10,13 +14,12 @@ import {DataProvider} from '../../../providers/data/data'
 export class ReviewPage {
   questionGroups: any = [];
   @ViewChildren('survey') surveys;
-  @ViewChild(Slides) slides: Slides;
   canvasImage: any;
   showIntro: boolean = true;
   viewSection:number=0;
 
 
-  constructor(private modalCtrl: ModalController, private dataPrvdr:DataProvider) {
+  constructor(private modalCtrl: ModalController, private dataPrvdr:DataProvider, private ngRedux:NgRedux<AppState>) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
     console.log('generating question groups')
     this._generateQuestionGroups()
@@ -56,19 +59,19 @@ export class ReviewPage {
   hideIntro() {
     this.showIntro = false;
   }
-  ngAfterViewInit(){
-    this.slides.lockSwipes(true)
+
+  exportJSON(){
+    const project = this.ngRedux.getState().activeProject
+    const dataStr:string = JSON.stringify(project)
+    let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    let exportFileDefaultName = project.title+'.json';
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+
   }
-  slideTo(index){
-    this.slides.lockSwipes(false)
-    this.slides.slideTo(index)
-    this.viewSection=index;
-    this.slides.lockSwipes(true)
-  }
-  slideChanged(){
-    this.viewSection=this.slides.getActiveIndex();
-    this.dataPrvdr.backgroundSave();
-  }
+
 }
 
 

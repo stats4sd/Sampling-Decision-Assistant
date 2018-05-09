@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {select} from '@angular-redux/store'
-import {Observable} from 'rxjs/Observable'
+import {Observable} from 'rxjs'
 
 @IonicPage({
   defaultHistory:['HomePage']

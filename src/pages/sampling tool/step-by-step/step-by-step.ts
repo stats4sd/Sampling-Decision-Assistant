@@ -5,7 +5,7 @@ import { FormProvider } from '../../../providers/form/form'
 import { Popover } from 'ionic-angular/components/popover/popover';
 import { DecisionToolMenuComponent } from '../../../components/general/decision-tool-menu/decision-tool-menu'
 import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Project } from '../../../models/models';
 import { CustomRouterProvider } from '../../../providers/router/router';
 

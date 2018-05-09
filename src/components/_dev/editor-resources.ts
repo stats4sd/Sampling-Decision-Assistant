@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DevActions } from '../../actions/actions';
 
 import demoResources from '../general/resources/data/demo-resources'

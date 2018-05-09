@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular'
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime'
+import {map, debounceTime} from 'rxjs/operators'
 import questionMeta from '../questionMeta';
 import { ProjectActions } from '../../actions/actions';
 import { Question } from '../../models/models';
@@ -29,7 +28,7 @@ export class FormProvider {
     //this.formGroup = this._generateQuestionForm(questions)
     this.formGroup = this.fb.group({})
     // reflect form value changes to redux
-    this.formGroup.valueChanges.debounceTime(200).subscribe(
+    this.formGroup.valueChanges.pipe(debounceTime(200)).subscribe(
       v => {
         if (v) {
           this.projectActions.updateProjectValues(v)

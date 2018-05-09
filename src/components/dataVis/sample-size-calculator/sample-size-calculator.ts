@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { select, NgRedux } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 import { DataProvider } from '../../../providers/data/data';
 import { CustomRouterProvider } from '../../../providers/router/router';
 import { TreeDiagramActions, ProjectActions } from '../../../actions/actions';
 import { AppState } from '../../../models/models';
 import { FormProvider } from '../../../providers/form/form';
-declare const jStat
+// declare const jStat
+import * as jStat from 'jStat'
 
 @Component({
     selector: 'sample-size-calculator',

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 declare let vis: any
+// import * as vis from 'vis'
 
 
 @IonicPage({

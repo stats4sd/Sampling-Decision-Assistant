@@ -6,7 +6,8 @@ import { Events } from 'ionic-angular';
 import { ReportingLevel, TreeDiagramNode, StageMeta, AppState } from '../../../models/models';
 import { TreeDiagramActions } from '../../../actions/actions';
 import { select, NgRedux } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
+import {debounceTime} from 'rxjs/operators'
 import { DataProvider } from '../../../providers/data/data';
 
 declare let vis: any
@@ -44,13 +45,13 @@ export class TreeDiagramComponent {
     this.initComplete=false
     this.events.unsubscribe('node:updated')
     this.events.subscribe('node:updated', update => this.updateNode(update))
-    this.projectValues$.debounceTime(200).subscribe(v=>{
+    this.projectValues$.pipe(debounceTime(200)).subscribe(v=>{
       if(v && !this.initComplete){
         this.treeInit(v)
         this.initComplete=true
       }
     })
-    this.finalStageSampleSize$.debounceTime(200).subscribe(size=>{
+    this.finalStageSampleSize$.pipe(debounceTime(200)).subscribe(size=>{
       this.updateFinalStageSize(size)
     })
     

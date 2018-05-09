@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
 import { select } from '@angular-redux/store'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 
 // import demoResources from './data/demo-resources';
 // import stage1Resources from './data/stage-1-resources'

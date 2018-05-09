@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CustomRouterProvider } from '../../../../providers/router/router';
 import {select} from '@angular-redux/store';
-import {Observable} from 'rxjs/Observable'
+import {Observable} from 'rxjs'
 import { ViewStateParams } from '../../../../models/models';
 
 @Component({

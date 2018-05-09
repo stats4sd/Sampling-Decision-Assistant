@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms/src/model';
 import { StagePage } from '../../../pages/sampling tool/stage/stage';
 
 import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { flyin } from '../../../providers/animationStates';
 
 

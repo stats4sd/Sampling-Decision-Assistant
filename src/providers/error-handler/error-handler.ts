@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { IonicErrorHandler } from 'ionic-angular';
 import Raven from 'raven-js'
 import { AppState } from '../../models/models';

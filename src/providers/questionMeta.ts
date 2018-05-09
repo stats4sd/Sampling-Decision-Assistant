@@ -146,7 +146,10 @@ export default
             "type": "select",
             "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)",
             "label": "Who are you interested in? In other words, who or where should the data come from to be able to calculate the indicator of interest? We will refer to this as the final sampling units. Are they households? Or an individual person?  A community? This definition is important because the sampling is going to have to eventually reach them.",
-            "section": "Definition of the target population and units of study", "condition": "", "labelMultiple": null
+            "section": "Definition of the target population and units of study", 
+            "condition": "", 
+            "labelMultiple": null,
+            "hideOnReview":true
         },
         {
             "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Geographical characteristics (e.g. area, setting, distance, composite)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
@@ -159,7 +162,11 @@ export default
             "isQuestion": "TRUE", "controlName": "q3.4", "type": "text", "selectOptions": "", "label": "Characteristics with respect to time", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", "controlName": "q3.5", "type": "text", "selectOptions": "", "label": "Clearly define your target population, including any specific grouping characteristics such as location, time, ethnic group, origin, status etc.", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
+            "isQuestion": "TRUE", 
+            "controlName": "q3.5", 
+            "type": "text", 
+            "selectOptions": "", 
+            "label": "Clearly define your target population, including any specific grouping characteristics such as location, time, ethnic group, origin, status etc.", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
         },
         {
             "isQuestion": "TRUE", "controlName": "q4.1", "type": "select", "selectOptions": "One estimate, Disaggregated estimates", "label": "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.", "section": "At what level do you need to report these results", "condition": "", "labelMultiple": null
@@ -297,15 +304,16 @@ export default
             "condition": "type:value, controlName:q5.3.3, value:Sample",
             "labelMultiple": null
         },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "strata",
-            "type": "custom",
-            "label": "Specify the individual strata you will us",
-            "section": "Selecting the sampling units",
-            "condition": "type:value, controlName:q5.3.4.1, value:Yes",
-            "labelMultiple": null
-        },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "strata",
+        //     "type": "custom",
+        //     "label": "Specify the individual strata you will us",
+        //     "section": "Selecting the sampling units",
+        //     "condition": "type:value, controlName:q5.3.4.1, value:Yes",
+        //     "labelMultiple": null,
+        //     "hideOnReview":true
+        // },
         {
             "isQuestion": "TRUE",
             "controlName": "q6.1",
@@ -313,7 +321,8 @@ export default
             "label": "Input your required total sample size",
             "section": "Allocating and deploying resources",
             "condition": "",
-            "labelMultiple": null
+            "labelMultiple": null,
+            "hideOnReview":true
         },
 
 

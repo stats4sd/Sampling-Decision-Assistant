@@ -1,34 +1,37 @@
-<h4>Define Reporting Level Classifications</h4>
+<div [ngClass]="reviewMode ? 'review-mode' : null">
+    <h4>Define Reporting Level Classifications</h4>
 
-<p>The next step in this stage is to specify the number and names of classifications used in each of your reporting levels.
-    <br>For example, if you wish to report on seperate geographical regions you should specify the number of regions and your
-    preferred way to denote them.</p>
+    <p>The next step in this stage is to specify the number and names of classifications used in each of your reporting levels.
+        <br>For example, if you wish to report on seperate geographical regions you should specify the number of regions and
+        your preferred way to denote them.</p>
 
-<ion-grid class="builder-container" *ngIf="reportingLevels && reportingLevels.length>0">
-    <ion-row class="row-headers">
-        <ion-col col-2>Reporting Level</ion-col>
-        <ion-col col-2>Number of Classifications</ion-col>
-        <ion-col col class="left">Names of Classifications</ion-col>
-    </ion-row>
-    <ion-row *ngFor="let level of reportingLevels; let i=index; let last=last">
-        <ion-col col-2>{{level.name}}</ion-col>
-        <ion-col col-2 class="center" class="required">
-            <ion-input type="number" (ionChange)="setClassificationsNumber(level,i)" [(ngModel)]="level.classifications.total"></ion-input>
-        </ion-col>
-        <ion-col col>
-            <div *ngFor="let name of level.classifications.names; let j=index">
-                <ion-item>
-                    <ion-input [id]="'nameInput-'+i+'-'+j" [placeholder]="'group '+(j+1)" [value]="name"></ion-input>
-                    <!-- <ion-input [id]="'nameInput-'+i+'-'+j" [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="name"></ion-input> -->
-                    <!-- <ion-input [placeholder]="'group '+(j+1)" (change)="setClassificationName(i,j,$event)" [value]="level.classifications.names[j]"></ion-input> -->
-                    <!-- <ion-input [placeholder]="'group '+(j+1)"  [(ngModel)]="namesUpdate[i].classifications.names[j]"></ion-input> -->
-                    <!-- <ion-input [placeholder]="'group '+(j+1)" [value]="level.classifications.names[j]" (change)="setClassificationName($event,i,j)"></ion-input> -->
-                </ion-item>
-            </div>
-        </ion-col>
-    </ion-row>
-</ion-grid>
 
-<note type="info" *ngIf="!reportingLevels || reportingLevels.length==0">
-    You have not specified any disaggregate estimate reporting levels so you may skip this step
-</note>
+    <ion-grid class="builder-container" *ngIf="reportingLevels && reportingLevels.length>0">
+        <ion-row class="row-headers">
+            <ion-col col-2>Reporting Level</ion-col>
+            <ion-col col-2>Number of Classifications</ion-col>
+            <ion-col col class="left">Names of Classifications</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let level of reportingLevels; let i=index; let last=last">
+            <ion-col col-2>{{level.name}}</ion-col>
+            <ion-col col-2 class="center" class="required">
+                <ion-input type="number" (ionChange)="setClassificationsNumber(level,i)" [(ngModel)]="level.classifications.total" ></ion-input>
+            </ion-col>
+            <ion-col col>
+                <div *ngFor="let name of level.classifications.names; let j=index">
+                    <ion-item>
+                        <ion-input [id]="'nameInput-'+i+'-'+j" [placeholder]="'group '+(j+1)" [value]="name" ></ion-input>
+                        <!-- <ion-input [id]="'nameInput-'+i+'-'+j" [placeholder]="'group '+(j+1)" (focusout)="setClassificationName(i,j,$event)" [value]="name"></ion-input> -->
+                        <!-- <ion-input [placeholder]="'group '+(j+1)" (change)="setClassificationName(i,j,$event)" [value]="level.classifications.names[j]"></ion-input> -->
+                        <!-- <ion-input [placeholder]="'group '+(j+1)"  [(ngModel)]="namesUpdate[i].classifications.names[j]"></ion-input> -->
+                        <!-- <ion-input [placeholder]="'group '+(j+1)" [value]="level.classifications.names[j]" (change)="setClassificationName($event,i,j)"></ion-input> -->
+                    </ion-item>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <note type="info" *ngIf="!reportingLevels || reportingLevels.length==0">
+        You have not specified any disaggregate estimate reporting levels so you may skip this step
+    </note>
+</div>

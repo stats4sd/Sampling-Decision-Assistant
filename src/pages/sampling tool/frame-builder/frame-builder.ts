@@ -4,7 +4,7 @@ import { DataProvider} from '../../../providers/data/data'
 import { FormProvider} from '../../../providers/form/form'
 import { FormGroup, FormControl } from '@angular/forms';
 import {select} from '@angular-redux/store';
-import {Observable} from 'rxjs/Observable'
+import {Observable} from 'rxjs'
 
 @IonicPage({
   segment: 'builder',

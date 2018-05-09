@@ -6,7 +6,7 @@ import { ViewActions, ProjectActions } from '../../../actions/actions';
 import { glossaryTerm } from '../../_dev/editor-glossary';
 import { CustomRouterProvider } from '../../../providers/router/router';
 import { select } from '@angular-redux/store'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 
 
 @Component({

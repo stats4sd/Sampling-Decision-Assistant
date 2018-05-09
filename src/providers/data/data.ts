@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import 'rxjs/add/operator/map';
+import {map} from 'rxjs/operators'
 import { Events, ToastController, AlertController } from 'ionic-angular';
 import questionMeta from '../questionMeta';
 // import * as XLSX from 'xlsx';
@@ -10,7 +10,7 @@ import { FormProvider } from '../form/form'
 import { ProjectActions } from '../../actions/actions';
 import { SavedProjects, Project, AppState } from '../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 // import * as dojox from 'dojo'

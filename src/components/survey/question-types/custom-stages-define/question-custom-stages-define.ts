@@ -6,7 +6,7 @@ import { Events, TextInput } from 'ionic-angular';
 import { FormProvider } from '../../../../providers/form/form';
 import { DataProvider } from '../../../../providers/data/data';
 import { select } from '@angular-redux/store'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 
 /*
 Custom component to add multiple stages, populate repeat formgroup and give option to remove or reorder

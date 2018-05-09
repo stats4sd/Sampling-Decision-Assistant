@@ -3,7 +3,7 @@ import { Events } from 'ionic-angular';
 import { StagePage } from '../../../../pages/sampling tool/stage/stage';
 import { DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { select } from '@angular-redux/store'
 
 

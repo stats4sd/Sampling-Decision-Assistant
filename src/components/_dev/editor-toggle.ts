@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DevActions } from '../../actions/actions';
 import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { select } from '@angular-redux/store'

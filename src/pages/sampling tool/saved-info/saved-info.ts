@@ -4,7 +4,7 @@ import { DataProvider } from '../../../providers/data/data';
 import { FileDropModule, UploadFile, UploadEvent } from 'ngx-file-drop';
 import { read } from 'xlsx/types';
 import { select } from '@angular-redux/store'
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 import { Project } from '../../../models/models';
 
 @IonicPage()
