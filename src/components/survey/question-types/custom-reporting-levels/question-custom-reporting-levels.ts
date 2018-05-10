@@ -24,7 +24,6 @@ export class QuestionCustomReportingLevelsComponent extends SurveyQuestionCompon
   *////////////////////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit() {
-    console.log('question text multiple init', this.question)
     this._generateMultipleValues()
   }
 
@@ -52,7 +51,6 @@ export class QuestionCustomReportingLevelsComponent extends SurveyQuestionCompon
         names: []
       }
     }
-    console.log('values', this.multipleTextValues)
     this.multipleTextValues.unshift(pushValue)
     this.multipleTextInput = "";
     this.saveValue()
@@ -72,11 +70,14 @@ export class QuestionCustomReportingLevelsComponent extends SurveyQuestionCompon
     this.textMultipleInput.setFocus()
   }
   saveEdits() {
-    this.multipleTextValues[this.editIndex].name = this.multipleTextInput
-    this.multipleTextInput = ""
-    this.editMode = false
-    this.editIndex=-1
-    this.saveValue()
+    if (this.multipleTextValues[this.editIndex]) {
+      this.multipleTextValues[this.editIndex].name = this.multipleTextInput
+      this.multipleTextInput = ""
+      this.editMode = false
+      this.editIndex = -1
+      this.saveValue()
+    }
+
   }
 
 

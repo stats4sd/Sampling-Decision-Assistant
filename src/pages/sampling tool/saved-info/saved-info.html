@@ -15,8 +15,8 @@
       <ion-item>
         <ion-input placeholder="Input a name for the project" [(ngModel)]="saveName"></ion-input>
       </ion-item>
-      <div class="error-message">{{errorMsg}}</div>
-      <div class="error-message">Future progress will be automatically saved</div>
+      <note type="error">{{errorMsg}}</note>
+      <note type="info">Future progress will be automatically saved</note>
       <ion-item>
         <button ion-button icon-left [disabled]="!saveName" (click)="createNew()">
           <ion-icon name="create"></ion-icon>Create</button>
@@ -47,13 +47,13 @@
     <ion-list>
       <div class="temp-text">Here you will be able load templates that have been precreated to facilitate the sampling decision processes</div>
     </ion-list>
-    <h3>Import from excel</h3>
+    <h3>Import data JSON</h3>
     <ion-list>
-      <div class="temp-text">In this section you will be able import a previously-created excel file, for sharing projects with others or using
-        on different devices</div>
+      <div>Import a file previously exported from the tool</div>
       <file-drop headertext="Drop files here" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
         <!-- <span>optional content (don't set headertext then)</span> -->
       </file-drop>
+      <note type="error" *ngIf="errorMsg">{{errorMsg}}</note>
     </ion-list>
   </div>
 </ion-content>

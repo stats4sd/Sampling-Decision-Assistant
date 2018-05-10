@@ -2,11 +2,17 @@ page-review {
     .heading{
         font-weight: 700;
         color:white;
-        width:100%;
+        width:calc(100% - 20px);
         background-color: color($colors,primary);
         padding:5px;
         font-size: large;
-        margin-top:5px
+        margin:5px 5px 5px 5px;
+    }
+    .section-group{
+        margin-bottom: 4em;
+        
+    }
+    .section-question{
     }
     #outputTable{
         padding: 10px;

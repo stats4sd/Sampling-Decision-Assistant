@@ -35,7 +35,6 @@ export class DevEditorResourcesComponent {
       })
   }
   save() {
-    console.log('live questions', this.liveQuestions)
     let patch: any = {}
     let questions = {}
     this.liveQuestions.slice(0).forEach(q => {
@@ -45,7 +44,6 @@ export class DevEditorResourcesComponent {
     this.status = 'pending'
     this.db.collection('resources').doc<any>('stage' + this.stageNumber + 'Resources').set(patch).then(
       res => {
-        console.log('res', res)
         this.status = 'ready'
         this.devActions.toggleEditMode(false)
         this.toast.create({
@@ -60,12 +58,9 @@ export class DevEditorResourcesComponent {
 
   getResources(stage: number) {
     if (this.allResources) {
-      console.log('all resources', this.allResources)
       let r = this.allResources[stage]
-      console.log('getting resources', stage)
       // this.db.collection('resources').doc<any>().valueChanges().subscribe(
       //   r => {
-      console.log('r', r)
       this.liveResources = r
       this.liveQuestions=[]
       if (r.questions) {
@@ -75,14 +70,12 @@ export class DevEditorResourcesComponent {
           this.liveQuestions.push(question)
         })
       }
-      console.log('live questions', this.liveQuestions)
     }
     // )
     // }
 
   }
   addQuestion() {
-    console.log('adding question')
     this.liveQuestions.push({
       a: "",
       audio:"",
@@ -91,7 +84,6 @@ export class DevEditorResourcesComponent {
       video:"",
       _key:'Q'+(this.liveQuestions.length+1)
     })
-    console.log('liveQuestions',this.liveQuestions)
   }
   
   deleteQuestion(i){

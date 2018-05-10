@@ -22,13 +22,11 @@ export class DevEditorGlossaryComponent {
     this.db.collection('glossary').valueChanges().subscribe(
       res => {
         this.allGlossaryTerms = res;
-        console.log('allGlossaryTerms', res)
       })
   }
 
   save() {
     this.status='pending'
-    console.log('all terms', this.allGlossaryTerms)
     let patch: any = {}
     let terms = {}
     let promises = []
@@ -40,7 +38,6 @@ export class DevEditorGlossaryComponent {
     })
     Promise.all(promises).then(
       res => {
-        console.log('promise res', res)
         this.status = 'ready'
             this.devActions.toggleEditMode(false)
             this.toast.create({
@@ -52,19 +49,15 @@ export class DevEditorGlossaryComponent {
       },
       err=>{console.error(err);this.status='ready'}
     ).catch(err=>{
-      console.error(err);this.status='ready'
     })
-    console.log('db terms', terms)
   }
 
   addTerm() {
-    console.log('adding question')
     this.allGlossaryTerms.push({
       term: "",
       definition: "",
       slug: "",
     })
-    console.log('glossary terms', this.allGlossaryTerms)
   }
 
   deleteTerm(i, term: glossaryTerm) {
@@ -73,7 +66,6 @@ export class DevEditorGlossaryComponent {
         res => this.allGlossaryTerms.splice(i, 1)
       )
     } catch (error) {
-      console.error(error)
       // catch empty doc remove
       this.allGlossaryTerms.splice(i, 1)
     }

@@ -17,11 +17,11 @@
       <h2>Review Decisions</h2>
       
       <div>
-        <div *ngFor="let group of questionGroups">
+        <div *ngFor="let group of questionGroups" class="section-group">
           <div class="heading">
             {{group.section}}
           </div>
-          <div *ngFor="let question of group.questions">
+          <div *ngFor="let question of group.questions" class="section-question">
             <survey-question *ngIf="!question.repeatGroup && !question.hideOnReview" [question]="question" [reviewMode]="true"></survey-question>
           </div>
           <div [ngSwitch]="group.section">

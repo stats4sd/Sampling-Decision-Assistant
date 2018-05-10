@@ -72,7 +72,7 @@ export class SavedInfoPage {
       this.promptRename(project)
     })
     this.events.subscribe('import:complete', _ => {
-      // this.loadSavedProjects()
+      this.dismiss()
     })
     this.dataPrvdr.import(files)
   }
@@ -94,17 +94,29 @@ export class SavedInfoPage {
         {
           text: 'Save',
           handler: data => {
-            console.log('Saved clicked', data.title);
-            if (data.title != project.title) { return true }
-            else { return false }
+            prompt.dismiss({
+              project:project,
+              newTitle:data.title
+            })
+            // return false to not manually dismiss
+            return false
           }
         }
       ]
     })
     prompt.onDidDismiss(data => {
-      console.log('prompt dismissed', data)
-      this.events.publish('project:rename', data.title)
-      //this.events.unsubscribe('import:duplicate')
+      if(data.newTitle!=data.project.title){
+        project.title=data.newTitle
+        console.log('project',project)
+        this.dataPrvdr.loadProject(data.project)
+        this.dataPrvdr.backgroundSave()
+        this.dismiss()
+      }
+      else{
+        this.errorMsg="A project with that name already exists"
+        this.events.unsubscribe('import:duplicate')
+        this.events.unsubscribe('import:complete')
+      }
     })
     prompt.present()
   }

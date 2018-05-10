@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import {map} from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { Events, ToastController, AlertController } from 'ionic-angular';
 import questionMeta from '../questionMeta';
 // import * as XLSX from 'xlsx';
@@ -12,7 +12,6 @@ import { SavedProjects, Project, AppState } from '../../models/models';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-
 // import * as dojox from 'dojo'
 
 @Injectable()
@@ -54,16 +53,16 @@ export class DataProvider {
       stagesComplete: [null, false, false, false, false, false, false]
     }
     this.projectActions.setNewProject(project)
-    this.formPrvdr.historicValues={}
+    this.formPrvdr.historicValues = {}
     this.formPrvdr.formGroup.reset()
-    
+
 
   }
 
-  checkProjectTitleUnique(title:string){
-    let projectTitles:string[]=[]
+  checkProjectTitleUnique(title: string) {
+    let projectTitles: string[] = []
     Object.keys(this.savedProjectsJson).forEach(key => {
-      if(this.savedProjectsJson[key].title){
+      if (this.savedProjectsJson[key].title) {
         projectTitles.push(this.savedProjectsJson[key].title.toLowerCase())
       }
     });
@@ -78,7 +77,7 @@ export class DataProvider {
     })
     toast.present()
   }
-  loadSavedProjects(promptResume?:boolean) {
+  loadSavedProjects(promptResume?: boolean) {
     let saved: SavedProjects = []
     this.getFromStorage('savedSurveys').then(
       res => {
@@ -90,7 +89,7 @@ export class DataProvider {
           })
           this.savedProjectsJson = res
           saved.sort((a, b) => {
-            return b.edited - a.edited 
+            return b.edited - a.edited
           })
           this.projectActions.listProjects(saved)
           if (saved.length > 0 && promptResume) {
@@ -138,47 +137,48 @@ export class DataProvider {
   }
 
   loadProject(project: Project) {
+    this.formPrvdr.historicValues = {}
     this.projectActions.setActiveProject(project)
     this.formPrvdr.initFormValues(project.values)
   }
 
   backgroundSave() {
     // throttled save of survey, pulling values from master formgroup
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       let activeProject = this.ngRedux.getState().activeProject
-    if (activeProject && !this.isSaving) {
-      this.isSaving = true
-      activeProject.edited = Date.now()
-      setTimeout(_ => {
-        // this.activeProject.values = this.formPrvdr.formGroup.value
-        this.savedProjectsJson[activeProject.created] = activeProject
-        this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
-          res => { 
-            this.isSaving = false; 
-            console.log('saved') 
-            resolve()
-          }
-        )
-      }, 500)
-    }
-    })    
+      if (activeProject && !this.isSaving) {
+        this.isSaving = true
+        activeProject.edited = Date.now()
+        setTimeout(_ => {
+          // this.activeProject.values = this.formPrvdr.formGroup.value
+          this.savedProjectsJson[activeProject.created] = activeProject
+          this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
+            res => {
+              this.isSaving = false;
+              console.log('saved')
+              resolve()
+            }
+          )
+        }, 500)
+      }
+    })
   }
 
   // }
 
-  deleteProject(project:Project) {
+  deleteProject(project: Project) {
     if (this.activeProject && this.activeProject.created == project.created) {
       // prevent active project being deleted?
     }
-    else{
-      console.log('deleteing project',project.created)
+    else {
+      console.log('deleteing project', project.created)
       delete this.savedProjectsJson[project.created]
       this.saveToStorage('savedSurveys', this.savedProjectsJson).then(
-        ()=>this.loadSavedProjects()
+        () => this.loadSavedProjects()
       )
     }
-    console.log('saved projects json',this.savedProjectsJson)
-        
+    console.log('saved projects json', this.savedProjectsJson)
+
   }
 
 
@@ -202,15 +202,17 @@ export class DataProvider {
     return this.storage.set(key, value)
   }
 
-  exportXLSX() {
-    let rows = this.prepareExport()
-    const ws_name = this.activeProject.title;
-    const wb: WorkBook = { SheetNames: [], Sheets: {} };
-    const ws: any = utils.json_to_sheet(rows);
-    wb.SheetNames.push(ws_name);
-    wb.Sheets[ws_name] = ws;
-    const wbout = write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
 
+  exportXLSX(sheets) {
+    console.log('exporting xlsx',sheets)
+    const wb: WorkBook = { SheetNames: [], Sheets: {} };
+    sheets.forEach(sheet=>{
+      const ws_name = sheet.title;
+      const ws: any = utils.json_to_sheet(sheet.rows);
+      wb.SheetNames.unshift(ws_name);
+      wb.Sheets[ws_name] = ws;
+    })
+    const wbout = write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
     function s2ab(s) {
       const buf = new ArrayBuffer(s.length);
       const view = new Uint8Array(buf);
@@ -219,100 +221,10 @@ export class DataProvider {
       };
       return buf;
     }
-
     saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'Sampling Decisions - ' + this.activeProject.title + '.xlsx');
   }
-  import(files) {
-    // support processing of drag and drop files using filereader api
-    // *** note, currently only supporting readasbinarystring so not entirely compatible. Need to test ***
-    // prepare reader
-    let reader = new FileReader()
-    reader.onload = () => this._processImport(reader)
-    reader.onerror = function (err) { console.log('error', err) }
-    // process files
-    files.forEach(file => {
-      file.fileEntry.file(
-        info => {
-          // get in base64 format
-          // reader.readAsDataURL(info)
-          reader.readAsBinaryString(info)
-          //reader.readAsArrayBuffer(info)
-        }
-      )
-    })
-  }
-  _processImport(reader) {
-    // assumes data read in base64 format. Reads workbook data, runs prepare to convert back into correct format and saves to db
-    let data = reader.result
-    var workbook = read(data, { type: 'binary' });
-    let sheetName = workbook.SheetNames[0]
-    let jsonArr = utils.sheet_to_json(workbook.Sheets[sheetName])
-    let values = this.prepareImport(jsonArr)
-    let survey = {
-      title: sheetName,
-      values: values,
-      created: new Date(),
-      imported: true
-    }
-    // this.activeProject = survey
-    // // create new project entry, prompting rename where appropriate
-    // if (this.savedSurveys[survey.title]) {
-    //   this.events.subscribe('project:rename', title => {
-    //     survey.title = title
-    //     this.saveSurvey(survey).then(_ => {
-    //       this.events.unsubscribe('project:rename')
-    //       this.events.publish('import:complete')
-    //     })
-    //   })
-    //   this.events.publish('import:duplicate', survey)
-    // }
-    // else {
-    //   this.saveSurvey(survey).then(_ => this.events.publish('import:complete'))
-    // }
-  }
 
-  prepareExport() {
-    // iterate over json, where array object flatten. Currently bespoke for repeat groups (not generalised)
-    let values = this.formPrvdr.formGroup.value
-    let json = {}
-    for (let key in values) {
-      if (values.hasOwnProperty(key)) { json[key] = values[key] }
-    }
-    let rows = []
-    // prepare labels
-    let labels = {}
-    questionMeta.forEach(q => labels[q.controlName] = q.label)
 
-    Object.keys(json).forEach(key => {
-      let val = json[key]
-      // replace empty strings with 'Not answered'
-      if (val == "") { json[key] = "Not answered" }
-      // convert nested repeat group into seperate entry
-      if (typeof val == "object") {
-        val.forEach((el, index) => {
-          Object.keys(el).forEach(k => {
-            let v = el[k]
-            let entry = k + '_' + index
-            json[entry] = v
-          })
-        });
-        json[key] = "repeat-group"
-      }
-    })
-
-    // second pass, this time creating rows for excel
-    Object.keys(json).forEach(key => {
-      let val = json[key]
-      let temp = {
-        id: key,
-        question: labels[key.split('_')[0]],
-        response: val
-      }
-      rows.push(temp)
-    })
-
-    return rows
-  }
   prepareImport(arr) {
     // inverse of above for importing data back in
     let processed = {}
@@ -345,6 +257,60 @@ export class DataProvider {
 
   }
 
+  import(files) {
+    // support processing of drag and drop files using filereader api
+    // *** note, currently only supporting readasbinarystring so not entirely compatible. Need to test ***
+    // prepare reader
+    let reader = new FileReader()
+    reader.onload = () => this._processImport(reader)
+    reader.onerror = function (err) { console.log('error', err) }
+    // process files
+    files.forEach(file => {
+      file.fileEntry.file(
+        info => {
+          // get in base64 format
+          // reader.readAsDataURL(info)
+          reader.readAsBinaryString(info)
+          //reader.readAsArrayBuffer(info)
+        }
+      )
+    })
+  }
+
+  // read in project json file, check for name conflicts, save project, set active
+  _processImport(reader) {
+    const data = reader.result
+    const project:Project = JSON.parse(reader.result)
+    const saved:Project[] = this.ngRedux.getState().savedProjects
+    let projectTitles={}
+    if(saved && saved.length>0){
+      saved.forEach(p=>projectTitles[p.title]=true)
+    }
+    if(projectTitles.hasOwnProperty(project.title)){
+      this.events.publish('import:duplicate',project)
+    }
+    else{
+      this.loadProject(project)
+      this.events.publish('import:complete')
+      this.backgroundSave()
+    }
+
+  }
+  // _processImport(reader) {
+  //   // assumes data read in base64 format. Reads workbook data, runs prepare to convert back into correct format and saves to db
+  //   let data = reader.result
+  //   var workbook = read(data, { type: 'binary' });
+  //   let sheetName = workbook.SheetNames[0]
+  //   let jsonArr = utils.sheet_to_json(workbook.Sheets[sheetName])
+  //   let values = this.prepareImport(jsonArr)
+  //   let survey = {
+  //     title: sheetName,
+  //     values: values,
+  //     created: new Date(),
+  //     imported: true
+  //   }
+  // }
+
 
 }
 
@@ -352,20 +318,6 @@ export class DataProvider {
 
 
 /*Demos
-
-get(key):
-
-    this.dataPrvdr.get('key')
-      .then(
-      data => console.log('data retrieved from storage', data),
-      err => console.log('error retrieving from storage', err)
-      )
-    
-    
-
- */
-
-
 
 // _generatePdf() {
 //   // somewhat tricky method to try and output contents to a pdf doc
@@ -422,4 +374,6 @@ get(key):
 //   .then((success)=> console.log("File created Succesfully" + JSON.stringify(success)))
 //   .catch((error)=> console.log("Cannot Create File " +JSON.stringify(error)));
 
-// });
+// })
+
+*/

@@ -72,7 +72,7 @@ export default
             "selectOptions": "",
             "label": "What is the value?",
             "section": "Indicators",
-            "condition": "",
+            "condition": "type:value, controlName:q2.2.1, value:Yes",
             "labelMultiple": null
         },
         {

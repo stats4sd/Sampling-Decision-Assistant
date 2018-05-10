@@ -58,20 +58,16 @@ export class TreeDiagramComponent {
   }
 
   treeInit(values) {
-      console.log('tree init',values)
       this.nodes = []
       // this.updateFinalStageSize(values)
       this.samplingStages = values.samplingStages
       this.allocation = values.allocation ? values.allocation : {}
-      console.log('sampling stages',this.samplingStages)
       this.addFinalStageLevels()
       this.prepareStages()
-      console.log('nodes',this.nodes)
       this.treeEdges = this.buildNodeEdges(this.nodes)
       this.treeNodes = this._cleanNodeMeta(this.nodes)
       this.buildDiagram(this.treeNodes, this.treeEdges)
       this.treeActions.setNodes(this.treeNodes)
-      console.log('tree nodes',this.treeNodes)
   }
 
   // check through each stage to see which reporting levels have been assigned,
@@ -321,7 +317,6 @@ export class TreeDiagramComponent {
   }
 
   updateNode(update: TreeDiagramNode) {
-    console.log('node updated', update)
     this.treeNodes.update({
       id: update.id,
       label: update.label
@@ -330,10 +325,8 @@ export class TreeDiagramComponent {
 
   updateFinalStageSize(size: number) {
     try {
-      console.log('nhh', size)
       const samplingStages = this.ngRedux.getState().activeProject.values.samplingStages
       let finalStage: StageMeta = samplingStages[samplingStages.length - 1]
-      console.log('final stage', finalStage)
       let nodes
       // update final reporting level nodes and final stage
       if (finalStage["q5.3.4.2"] instanceof Array) {
@@ -357,7 +350,6 @@ export class TreeDiagramComponent {
       })
       finalStage.sampleSize = size
       this.updateStageControl(samplingStages.length - 1, finalStage)
-      console.log('final nodes', nodes)
     } catch (error) {
     }
   }

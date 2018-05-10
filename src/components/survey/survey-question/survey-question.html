@@ -11,7 +11,7 @@
     <ion-card class="container">
       <div style="flex:1">
         <div *ngIf="question.type!='label' && showLabel!=false" class="question-label">
-          <div class="question-number dark">{{question.controlName}}.</div>
+          <div class="question-number dark" [attr.controlName]="question.controlName">{{question.controlName}}</div>
           <div class="question-label-text" id="questionLabelText" #questionLabelText *ngIf="question.label" [innerHtml]="question.label"></div>
           <help-icon [relevant]="question.controlName" *ngIf="!reviewMode"></help-icon>
         </div>

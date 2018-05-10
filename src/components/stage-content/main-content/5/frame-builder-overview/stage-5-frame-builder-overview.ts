@@ -22,13 +22,11 @@ export class Stage5_FrameBuilderOverviewComponent {
     // this is likely to be fixed via router upgrade
     this.customRouter.lockHash()
     this.samplingStages$.subscribe(stages => {
-      console.log('stages', stages)
       if (stages) { this.samplingStages = stages }
     })
   }
   buildStage(stage, stageIndex) {
     // get formgroup matching stage name to parentID
-    console.log('building stage', stage, stageIndex)
     let params = { stageFormGroup: stage, stageIndex: stageIndex }
     const modal = this.modalCtrl.create({
     })
