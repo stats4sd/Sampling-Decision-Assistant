@@ -37,7 +37,7 @@ page-step-by-step {
         cursor: pointer;
         justify-content: center;
         align-items: center;
-        width:150px;
+        width:120px;
         font-size: large;
         font-weight: 700;
         background-color: rgba(196,201,255,0.8)        
@@ -49,6 +49,7 @@ page-step-by-step {
         border: 1px solid #d2c9d9;
         padding-bottom: 10px;
         cursor: pointer;
+        max-width: 620px;
     }
     .review-box:hover{
         background-color: wheat

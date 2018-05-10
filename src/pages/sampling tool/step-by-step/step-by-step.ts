@@ -79,14 +79,6 @@ export class StepByStepPage {
     });
   }
   startNew() {
-    // let modal = this.modalCtrl.create('SavedInfoPage', { view: 'save' });
-    // modal.onDidDismiss(data => {
-    //   if (data) {
-    //     this.showIntro = false
-    //     //this.activeProject=this.dataPrvdr.activeProject
-    //   }
-    // })
-    // modal.present()
     this.dataPrvdr.createNewProject()
   }
   load() {
@@ -106,11 +98,4 @@ export class StepByStepPage {
   pushPage(page) {
     this.navCtrl.push(page)
   }
-  export() {
-    this.dataPrvdr.export()
-  }
-
-
-
-
 }

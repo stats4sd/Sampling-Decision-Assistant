@@ -54,8 +54,8 @@ export class ReviewPage {
     modal.present()
   }
 
-  export() {
-    this.dataPrvdr.export()
+  exportXLSX() {
+    this.dataPrvdr.exportXLSX()
   }
 
   hideIntro() {

@@ -13,7 +13,9 @@
     "doc:build": "compodoc -p src/tsconfig.app.json",
     "doc:serve": "compodoc -s",
     "doc:buildandserve": "compodoc -p src/tsconfig.app.json -s",
-    "build:prod": "shx rm -rf www/* && npm run build --prod && node ./cache-busting.js && workbox injectManifest && firebase serve",
+    "build:prod": "shx rm -rf www/* && npm run build --prod && node ./cache-busting.js && workbox injectManifest",
+    "serve:prod": "npm run build:prod && firebase serve",
+    "deploy:prod": "npm run build:prod && firebase deploy",
     "open": "http-server www -o -a localhost -p 1234"
   },
   "config": {
@@ -71,7 +73,6 @@
     "rxjs-compat": "^6.1.0",
     "sw-toolbox": "3.6.0",
     "vis": "^4.21.0",
-    
     "webpack-manifest-plugin": "^2.0.2",
     "workbox-sw": "^3.2.0",
     "xlsx": "^0.11.12",

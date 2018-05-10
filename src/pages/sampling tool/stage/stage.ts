@@ -120,9 +120,7 @@ export class StagePage {
     }
   }
 
-  openModal(component, params?) {
-    this.modalCtrl.create(component, params).present()
-  }
+ 
 
   closeModal() {
     this.dataPrvdr.backgroundSave()

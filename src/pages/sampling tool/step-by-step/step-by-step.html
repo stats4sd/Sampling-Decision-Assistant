@@ -28,7 +28,7 @@
         <p class="instruction" icon-left>
           <ion-icon name="information-circle"></ion-icon>Complete each section to build an overview of your sampling decisions</p>
         <!-- section cards -->
-        <ion-card *ngFor="let section of sections" class="hover-fill" style="height: 100%; max-height:120px" (click)="goToSection(section)"
+        <ion-card *ngFor="let section of sections" class="hover-fill" style="height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
             <div *ngIf="section.class=='disabled'" class="section-disabled">This section is not currently available for preview</div>
@@ -52,7 +52,7 @@
       <!-- <div class="review-box" (click)="pushPage('ReviewPage')" style="position: relative; pointer-events:none; opacity:0.6">
         <div class="section-disabled"><p style="width:100%; font-weight:bold">This section is not currently available for preview</p></div> -->
       <div class="review-box" (click)="pushPage('ReviewPage')">
-        <div style="max-width:600px; display:flex; ">
+        <div style="display:flex; ">
           <ion-card class="review-card">
             <span>Review</span>
           </ion-card>
@@ -61,7 +61,7 @@
             <span>Improve</span>
           </ion-card>
         </div>
-        <div style="max-width:600px; display:flex; justify-content:center">
+        <div style="display:flex; justify-content:center">
           <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
           <ion-card class="review-card">
             <span>Export</span>

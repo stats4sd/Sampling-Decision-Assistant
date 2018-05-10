@@ -202,8 +202,7 @@ export class DataProvider {
     return this.storage.set(key, value)
   }
 
-  export() {
-    // export as xlsx
+  exportXLSX() {
     let rows = this.prepareExport()
     const ws_name = this.activeProject.title;
     const wb: WorkBook = { SheetNames: [], Sheets: {} };

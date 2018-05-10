@@ -27,34 +27,4 @@ export class Stage5Component extends StagePage {
       }
     )
   }
-
-  editStage(stage) {
-    // super.openModal('StagePage', { stageID: stage, modalMode: true })
-    //this.projectActions.toggleReviewMode(true)
-    super.pushPage('StagePage', { stageID: stage})
-  }
-
-  buildStage(stage, stageIndex) {
-    // get formgroup matching stage name to parentID
-    console.log('building stage',stage,stageIndex)
-    let params = { stageFormGroup: stage, stageIndex: stageIndex}
-    super.openModal('FrameBuilderPage', params)
-  }
-
-  // _showStrataDefineSlide(){
-  //   for(let stage of this.form.value['q5.3']){
-  //     if(stage['q5.3.4.1']=='Yes'){return true}
-  //   }
-  //   return false
-  // }
-  // stageSlideChange() {
-  //   this.dataPrvdr.saveSurvey(null, true)
-  //   this.stageSlidesIndex = this.stageSlides.getActiveIndex()
-  //   this.showStrataDefineSlide = this._showStrataDefineSlide()
-  // }
-
-
-
-
-
 }
