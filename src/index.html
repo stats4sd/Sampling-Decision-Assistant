@@ -22,13 +22,10 @@
   <!-- vis has to be included as script due to conflict with hammer.js
   https://github.com/almende/vis/issues/2000 -->
   <script src="assets/js/vis.min.js"></script>
-  <!-- <script src="assets/js/jstat.min.js"></script> -->
-  <!-- <script defer src="assets/js/fontawesome/js/fontawesome-all.js"></script> -->
 
   <script>
     // register service worker promise to window, listen in home component after init
     window.isUpdateAvailable = () => new Promise(function (resolve, reject) {
-      console.log('window update available triggered 12')
       if ('serviceWorker' in navigator) {
         // disable for localhost (except firebase serve)
         if (location.hostname.indexOf('localhost') == -1 || location.port == 5000) {
@@ -59,7 +56,6 @@
             .catch(err => console.error('[SW ERROR]', err));
         }
         // register service worker file
-        console.log('live mode')
       }
       else {
         console.log('disabling service worker for local')

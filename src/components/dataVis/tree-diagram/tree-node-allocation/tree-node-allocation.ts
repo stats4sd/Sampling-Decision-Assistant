@@ -36,7 +36,7 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     reviewMode:boolean;
     @ViewChild('popSizeInput') popSizeInput: TextInput
 
-    constructor() {
+    constructor(public formPrvdr:FormProvider, public ngRedux:NgRedux<AppState>, public dataPrvdr:DataProvider, public events:Events) {
         super()
         this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this.setActiveNode(this.activeNode) } })
         this.activeNode$.pipe(debounceTime(200)).subscribe(node => this.setActiveNode(node))
@@ -96,6 +96,7 @@ export class TreeNodeAllocationComponent extends TreeDiagramComponent {
 
     // add form control for values.allocation if doesn't already exist
     _checkAllocationControl() {
+        console.log('formgroup',this.formPrvdr.formGroup)
         if (!this.formPrvdr.formGroup.controls.allocation) {
             this.formPrvdr.formGroup.addControl('allocation', this.formPrvdr.fb.control({}))
         }

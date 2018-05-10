@@ -7,29 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 @IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  animations:[
-    trigger('heroState', [
-      state('inactive', style({transform: 'translateX(0) scale(1)'})),
-      state('active',   style({transform: 'translateX(0) scale(1.1)'})),
-      transition('inactive => active', animate('100ms ease-in')),
-      transition('active => inactive', animate('100ms ease-out')),
-      transition('void => inactive', [
-        style({transform: 'translateX(-100%) scale(1)'}),
-        animate(100)
-      ]),
-      transition('inactive => void', [
-        animate(100, style({transform: 'translateX(100%) scale(1)'}))
-      ]),
-      transition('void => active', [
-        style({transform: 'translateX(0) scale(0)'}),
-        animate(200)
-      ]),
-      transition('active => void', [
-        animate(200, style({transform: 'translateX(0) scale(0)'}))
-      ])
-    ])
-  ]
+  templateUrl: 'home.html'
 })
 export class HomePage {
   sections: any = []
@@ -59,18 +37,12 @@ export class HomePage {
     ]
 
     this.altSections = [
-      { name: "Who is this tool for?", page: "About", class: "disabled" },
+      // { name: "Who is this tool for?", page: "About", class: "disabled" },
       { name: "Glossary of technical terms", page: "GlossaryPage" },
-      { name: "Sample size trade-off tool", page: "SampleSizePage", class: "disabled" },
+      // { name: "Sample size trade-off tool", page: "SampleSizePage", class: "disabled" },
     ];
   }
 
-
-  ionViewDidLoad() {
-    // prevent user swiping (no longer using slides)
-    //this.slides.lockSwipes(true)
-
-  }
   ngOnInit() {
     this.checkForUdates()
   }
@@ -97,10 +69,14 @@ export class HomePage {
           console.log('update available?', isAvailable)
           if (isAvailable) {
             const toast = this.toastCtrl.create({
-              message: 'New Update available! Reload the webapp to see the latest version.',
+              message: 'New Update available! Reload this page to see the latest version.',
               position: 'bottom',
               showCloseButton: true,
+              closeButtonText:'Reload'
             });
+            toast.onDidDismiss(()=>{
+              location.reload()
+            })
             toast.present();
           }
         },
