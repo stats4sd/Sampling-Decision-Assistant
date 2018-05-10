@@ -1,6 +1,44 @@
 # Changelog
 In this document find recorded the main changes that have been implemented.
 
+ ## 0.9.10 (10th May 2018)
+    
+      Review
+      The review page now displays a summary of questions from all of the individual sections. All standard questions can
+      be directly edited, however the specific reporting level classifications and sampling stage builder questions require
+      the user to go back to the corresponding section in the app.
+    
+    
+      Exports and Imports
+       Three methods have been generated to work with exported data from the review section:
+      
+
+      Project Data: This is a text document which can then be shared with others and imported into the calculator through the load
+      project screen
+      
+      XLS Summary: This contains a breakdown of questions answered and information calculated for the project for more general
+      use
+      
+      <ion-icon style="margin-right:5px" name="custom-tree"></ion-icon>
+      Tree Diagram: This is a seperate image containing the generated tree diagram (currently sized at the same size viewed in
+      the browser, but in the future this will be scaled up)
+    
+    
+      More Resource Videos
+      An additional 6 videos have been created to support resource help elements in the first stage. You can view the rest individually the resource section, or together on <a target="_blank" nofollow href="https://www.youtube.com/watch?v=akco-dy3dSA&list=PLK5PktXR1tmOEvcWo1XQ79dYrnQGQlaNO">Youtube.</a>
+    
+    In addition, audio resources now display with text if the user would like to both listen and read along.
+
+  </div>
+
+  <!-- 0.9.9 -->
+  <div>
+    ## 0.9.9 (9th May 2018)</h2>
+    
+      More backend improvements, code tidying and refactoring. Work towards improved import/export functionality (coming soon)
+    
+  </div>
+
 ## 0.9.8 (8th May 2018)
     Codebase Upgrade
     The core codebase received an upgrade to latest versions released as of May 2018. This aims to improve performance,
