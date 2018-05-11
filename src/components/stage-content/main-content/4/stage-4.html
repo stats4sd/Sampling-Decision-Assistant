@@ -18,7 +18,8 @@
 
 
             <div *ngIf="form.value['q4.1']=='One estimate'">
-                <survey-question controlName='q4.3'></survey-question>
+                <p>Provide a name or reference for the estimate. This should be the same as, or an abbreviation of your indicator</p>
+                <survey-question controlName='q4.3' [showLabel]="false"></survey-question>
                 <!-- <stage-complete stageNumber=4></stage-complete> -->
             </div>
         </div>

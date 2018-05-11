@@ -2,7 +2,7 @@ import { Component, ViewChildren, ViewChild, ChangeDetectorRef } from '@angular/
 import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data'
 import { NgRedux } from '@angular-redux/store';
-import { AppState, StageMeta, ReportingLevel, TreeNodeAllocation } from '../../../models/models';
+import { AppState, StageMeta, ReportingLevel, TreeNodeAllocation, ProjectValues } from '../../../models/models';
 import { CalculatorVars } from '../../../components/dataVis/sample-size-calculator/sample-size-calculator';
 
 @IonicPage({
@@ -108,7 +108,7 @@ export class ReviewPage {
     sheets.push(
       {
         title: 'main',
-        rows: this._generateQuestionsSheet(values)
+        rows: this._generateMainSheet(values)
       }
     )
     this.dataPrvdr.exportXLSX(sheets)
@@ -136,7 +136,7 @@ export class ReviewPage {
             response: stage[key]
           })
         })
-        sheet.push({q:null,text:null,response:null})
+        sheet.push({ q: null, text: null, response: null })
       });
     }
     // calculation sheets
@@ -172,7 +172,7 @@ export class ReviewPage {
 
 
   // iterate over question elements, extract control name for valid questions and save alongside project value
-  _generateQuestionsSheet(values) {
+  _generateMainSheet(values: ProjectValues) {
     let qs: any = []
     const els = document.getElementsByClassName('question-number')
     Array.prototype.forEach.call(els, el => {

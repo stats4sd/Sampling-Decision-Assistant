@@ -10,6 +10,7 @@ import { NoteComponent } from './note/note';
 import { ResourcesComponent } from './resources/resources';
 import { HelpIconComponent} from './help-icon/help-icon'
 import { YoutubePlayerModule } from 'ngx-youtube-player';
+import { ProjectTitleComponent } from './project-title';
 
 
 
@@ -22,7 +23,8 @@ import { YoutubePlayerModule } from 'ngx-youtube-player';
         GlossaryDetailComponent,
         NoteComponent,
         ResourcesComponent,
-        HelpIconComponent
+        HelpIconComponent,
+        ProjectTitleComponent
     ],
     imports: [
         IonicModule,
@@ -35,7 +37,8 @@ import { YoutubePlayerModule } from 'ngx-youtube-player';
         GlossaryDetailComponent,
         NoteComponent,
         ResourcesComponent,
-        HelpIconComponent
+        HelpIconComponent,
+        ProjectTitleComponent
     ]
 })
 export class GeneralComponentsModule { }

@@ -7,6 +7,7 @@ import { StagePage } from '../../../pages/sampling tool/stage/stage';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs';
 import { flyin } from '../../../providers/animationStates';
+import { ProjectValues } from '../../../models/models';
 
 
 @Component({
@@ -87,7 +88,7 @@ export class StageCompleteComponent extends StagePage {
   }
 
 
-  verify(stageNumber: number, formValues) {
+  verify(stageNumber: number, formValues:ProjectValues) {
     const s = stageNumber
     // run verfication checks to see if form valid. takes current form values as input
     const v = formValues
@@ -106,6 +107,7 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 2: {
         if (v['q2.3.1']) { return true }
+        else if (v['q2.2.2']){return true}
         else if (v['q2.2.3'] && v['q2.2.4']) { return true }
         else {
           return false
@@ -121,14 +123,21 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 5: {
         //console.log('evaluating section valid 5')
-        return true
+        if(v.samplingStages){
+          const built = v.samplingStages.filter(stage=>{
+            return stage._built
+          })
+            return (built.length==v.samplingStages.length ? true : false)
+        }
+        else{return false}
       }
       case s == 6: {
-        console.log('evaluating section valid 6')
+        // *** basic validation of some allocation complete, could be improved on
+        if(v.allocation){return true}
         break
       }
       default: {
-        console.log('default case')
+        console.log('default case',s)
         return true
       }
     }

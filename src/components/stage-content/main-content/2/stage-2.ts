@@ -34,30 +34,34 @@ export class Stage2Component extends StagePage {
 
   }
   _calculateSD(lower?, upper?) {
-    if (!lower) { lower = this.form.value['q2.2.3'] }
-    if (!upper) { upper = this.form.value['q2.2.4'] }
-    // calculate sd, only update form value if different to previous
-    if (lower && upper) {
-      console.log('calculating sd')
-      let sd = (upper - lower) / 6
-      // round to 2dp with scaling support (avoid long float numbers)
-      sd = Math.round((sd + 0.00001) * 100) / 100
-      if (sd != this.form.value['q2.2.2']) {
-        console.log('updating sd')
+    try {
+      const values = this.ngRedux.getState().activeProject.values
+      if (!lower) { lower = parseFloat(values['q2.2.3']) }
+      if (!upper) { upper = parseFloat(values['q2.2.4']) }
+      if (lower && upper) {
+        let sd = (upper - lower) / 6
+        // round to 2dp with scaling support (avoid long float numbers)
+        sd = Math.round((sd + 0.00001) * 100) / 100
         this.sd = sd
-        let patch = {}
-        patch['q2.2.2'] = sd
-        // patch only works if exists so also provide option to add control
-        if (!this.form.value['q2.2.2']) {
-          console.log('adding form control')
-          this.form.addControl('q2.2.2', new FormControl())
+        if (sd != parseFloat(values['q2.2.2'])) {
+          let patch = {}
+          // save as string to keep consistent with inputs (even though later converted back to number)
+          patch['q2.2.2'] = sd.toString()
+          // patch only works if exists so also provide option to add control
+          if (!values['q2.2.2']) {
+            this.formPrvdr.formGroup.addControl('q2.2.2', this.formPrvdr.fb.control(''))
+          }
+          this.formPrvdr.formGroup.patchValue(patch)
+          this.dataPrvdr.backgroundSave()
         }
-        console.log('patching', patch)
-        this.form.patchValue(patch)
-        console.log('form',this.form.value)
+
       }
 
+    } catch (error) {
+      
     }
+
+    // calculate sd, only update form value if different to previous
   }
 
 }

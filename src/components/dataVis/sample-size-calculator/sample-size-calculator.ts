@@ -14,13 +14,11 @@ import * as jStat from 'jStat'
     templateUrl: 'sample-size-calculator.html'
 })
 export class SampleSizeCalculatorComponent {
-    // @select(['activeProject', 'values']) projectValues$: Observable<any>
 
     inputFields: any[] = []
     inputFieldsDefault: any = {
         conf: { label: 'Desired Confidence Level', var: 'conf' },
         rho: { label: 'Clustering Level', var: 'rho' },
-        nHH: { label: 'Number of Samples per Cluster', var: 'nHH' },
         Population: { label: 'Expected Population Size', var: 'Population' },
     }
 
@@ -83,20 +81,28 @@ export class SampleSizeCalculatorComponent {
     calculateVariables() {
         try {
             const v = this.ngRedux.getState().activeProject.values
-            let projectVals: CalculatorInputVars = {}
+            let calcVals: CalculatorInputVars = {}
             // set default claculated fields in case type of variable has changed
             this.setDefaultFields()
             // load any presaved values
             if (v._calculatorVars) {
-                projectVals = v._calculatorVars.inputs
+                calcVals = v._calculatorVars.inputs
             }
             // then update from project values
-            projectVals.stages = v.samplingStages ? v.samplingStages.length : 0;
+            calcVals.stages = v.samplingStages ? v.samplingStages.length : 0;
+            console.log('input fields', this.inputFields)
             try {
+                // nHH only relevant for multi stage
+                console.log('stages',calcVals.stages)
+                if (calcVals.stages > 1) {
+                    this.inputFields.push({ label: 'Number of Samples per Cluster', var: 'nHH' })
+                }
+                else { delete this.defaultValues.nHH }
+                console.log('default values',this.defaultValues)
                 if (v['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
-                    projectVals.type = "proportion";
-                    projectVals.prop = v['q2.3.1'];
-                    if (!projectVals.moe) { projectVals.moe = 5 };
+                    calcVals.type = "proportion";
+                    calcVals.prop = parseFloat(v['q2.3.1']);
+                    if (!calcVals.moe) { calcVals.moe = 5 };
                     // set calculated fields array with propotion element
                     this.calculatedFields.push({
                         label: 'Expected %', var: 'prop'
@@ -112,11 +118,11 @@ export class SampleSizeCalculatorComponent {
                     this.inputFields.push(this.moe)
                 }
                 if (v['q2.1.2'] == "Average or total value of indicator in the population") {
-                    projectVals.type = "average value";
-                    projectVals.sd = v["q2.2.2"];
-                    if (!projectVals.moe) { projectVals.moe = projectVals.sd / 2 };
+                    calcVals.type = "average value";
+                    calcVals.sd = parseFloat(v["q2.2.2"]);
+                    if (!calcVals.moe) { calcVals.moe = calcVals.sd / 2 };
                     this.calculatedFields.push(
-                        { title: 'Standard Deviation', var: 'sd' },
+                        { label: 'Standard Deviation', var: 'sd' },
                     )
                     this.moe = {
                         label: 'Margin of Error (+/-)',
@@ -129,11 +135,11 @@ export class SampleSizeCalculatorComponent {
                 }
             } catch (error) {
             }
-            this.inputValues = Object.assign({}, this.defaultValues, projectVals)
+            this.inputValues = Object.assign({}, this.defaultValues, calcVals)
+            console.log('input values',this.inputValues)
         } catch (error) { }
 
     }
-
     calculateSize() {
         let SRSn
         let qnorm = function (p) {
@@ -150,47 +156,37 @@ export class SampleSizeCalculatorComponent {
         input.type = this.inputValues.type
         console.log('calculating size')
 
-
         /*********************************************************************************************************** 
          *                              main r code  
          ***********************************************************************************************************/
-        // if (input.type == "numeric") {
-        //   SRSn = (input.sd * (qnorm(1 - (1 - input.conf) / 2) / input.moe)) ^ 2
-        // }
+        let SRSn_FPC
+        let DEFF1
+        let FinalstageN
+        let FinalstageN_FPC
+        let stage2N
+        let p1
+        let moe
+        // use try catch as for now single stage will still try to calculate and likely lead to errors
+        try {
+            if (input.type == "average value") {
+                SRSn = (input.sd * qnorm(1 - (1 - input.conf) / 2) / input.moe) ** 2
+            }
+            if (input.type == "proportion") {
+                p1 = input.prop / 100
+                moe = input.moe / 100
+                SRSn = (Math.sqrt(p1 * (1 - p1)) * qnorm(1 - (1 - input.conf) / 2) / moe) ** 2
+            }
+            SRSn_FPC = Math.ceil((SRSn * input.Population) / (SRSn + input.Population - 1))
+            DEFF1 = (1 + (input.nHH - 1) * input.rho)
+            FinalstageN = SRSn * DEFF1
+            FinalstageN_FPC = Math.ceil((FinalstageN * input.Population) / (FinalstageN + input.Population - 1))
+            stage2N = Math.ceil(FinalstageN_FPC / input.nHH)
 
-        // if (input.type == "binary") {
-        //   const p1 = input.prop / 100
-        //   const moe = input.moe / 100
-        //   SRSn = (Math.sqrt(p1 * (1 - p1)) * qnorm(1 - (1 - input.conf) / 2) / moe) ^ 2
-        // }
+        } catch (error) {
 
-        // const SRSn_FPC = Math.ceil((SRSn * input.population) / (SRSn + input.population - 1))
-        // const DEFF1 = (1 + (input.nHH - 1) * input.rho)
-        // const FinalstageN = SRSn * DEFF1
-        // const FinalstageN_FPC = Math.ceil((FinalstageN * input.population) / (FinalstageN + input.population - 1))
-        // const stage2N = Math.ceil(FinalstageN_FPC / input.nHH)
-
-        if (input.type == "average value") {
-            SRSn = (input.sd * qnorm(1 - (1 - input.conf) / 2) / input.moe) ** 2
         }
-
-        if (input.type == "proportion") {
-            const p1 = input.prop / 100
-            const moe = input.moe / 100
-            SRSn = (Math.sqrt(p1 * (1 - p1)) * qnorm(1 - (1 - input.conf) / 2) / moe) ** 2
-        }
-        const SRSn_FPC = Math.ceil((SRSn * input.Population) / (SRSn + input.Population - 1))
-
-        const DEFF1 = (1 + (input.nHH - 1) * input.rho)
-
-        const FinalstageN = SRSn * DEFF1
-        const FinalstageN_FPC = Math.ceil((FinalstageN * input.Population) / (FinalstageN + input.Population - 1))
-
-        const stage2N = Math.ceil(FinalstageN_FPC / input.nHH)
 
         /***********************************************************************************************************/
-
-
         const raw: CalculatorOutputVarsRaw = {
             SRSn: Math.round(SRSn),
             SRSn_FPC: SRSn_FPC,
@@ -208,7 +204,6 @@ export class SampleSizeCalculatorComponent {
             raw: raw,
             rawArray: rawArray,
             formatted: formatted
-
         }
 
         // update tree meta state
@@ -226,12 +221,11 @@ export class SampleSizeCalculatorComponent {
         //this.dataPrvdr.backgroundSave()
     }
     _updateFormCalcVars(vars) {
-        console.log('calc control', this.formPrvdr.formGroup.controls._calculatorVars)
         if (!this.formPrvdr.formGroup.controls._calculatorVars) {
             this.formPrvdr.formGroup.addControl('_calculatorVars', this.formPrvdr.fb.control(vars))
         }
-        else{
-            this.formPrvdr.formGroup.patchValue({_calculatorVars:vars})
+        else {
+            this.formPrvdr.formGroup.patchValue({ _calculatorVars: vars })
         }
     }
 
@@ -250,8 +244,8 @@ export class SampleSizeCalculatorComponent {
                 const level1Name = stages[stages.length - 1].name
                 formatted.push(
                     { var: 'DEFF1', label: "Design Effect" },
-                    { var: 'stage2N', label: "Total "+level2Name+" per disaggregation"},
-                    { var: 'nHH', label:"Total "+level1Name+" per disaggregation" },
+                    { var: 'stage2N', label: "Total " + level2Name + " per disaggregation" },
+                    { var: 'nHH', label: "Total " + level1Name + " per disaggregation" },
                     { var: 'FinalstageN_FPC', label: "Total sample size per disaggregation" },
                 )
             }

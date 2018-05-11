@@ -8,7 +8,7 @@
                 <div *ngFor="let field of calculatedFields">
                     <div class="input-item" *ngIf="!inputValues[field.var]">
                         <div class="input-label">{{field.label}}</div>
-                        <div class="input-value missing">Input Missing</div>
+                        <note type="error">Input Missing</note>
                     </div>
                     <div class="input-item" *ngIf="inputValues[field.var]">
                         <div class="input-label">{{field.label}}</div>
@@ -41,7 +41,7 @@
                         <ion-option value="0.5">High (0.5)</ion-option>
                     </ion-select>
                 </ion-item>
-                <ion-item class="input-item">
+                <ion-item class="input-item" *ngIf="inputValues.nHH">
                     <ion-label fixed>Number of Samples per Cluster</ion-label>
                     <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="calculateSize()"></ion-input>
                 </ion-item>

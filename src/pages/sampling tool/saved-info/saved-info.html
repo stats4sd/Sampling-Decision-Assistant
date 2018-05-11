@@ -29,7 +29,7 @@
       <ion-item *ngFor="let project of savedProjects">
         <div style="display: flex">
           <div style="flex:1; cursor:pointer" (click)="loadProject(project)">
-            <div class="survey-title">{{project.title? project.title : 'untitiled'}}</div>
+            <div class="survey-title">{{project.title? project.title : 'untitled'}}</div>
             <div class="survey-date">{{project.created | date}}</div>
           </div>
           <div style="margin:5px">

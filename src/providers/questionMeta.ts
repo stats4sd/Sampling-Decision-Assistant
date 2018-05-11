@@ -72,7 +72,7 @@ export default
             "selectOptions": "",
             "label": "What is the value?",
             "section": "Indicators",
-            "condition": "type:value, controlName:q2.2.1, value:Yes",
+            "condition": "",
             "labelMultiple": null
         },
         {
@@ -113,30 +113,30 @@ export default
                 min: 5
             }
         },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q2.4.1",
-            "type": "number",
-            "selectOptions": "",
-            "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
-            "section": "Indicators",
-            "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
-            "labelMultiple": null,
-        },
-        {
-            "isQuestion": "TRUE",
-            "controlName": "q2.4.2",
-            "type": "number",
-            "selectOptions": "",
-            "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
-            "section": "Indicators",
-            "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
-            "labelMultiple": null,
-            options: {
-                max: 25,
-                min: 1
-            }
-        },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.4.1",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
+        //     "section": "Indicators",
+        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
+        //     "labelMultiple": null,
+        // },
+        // {
+        //     "isQuestion": "TRUE",
+        //     "controlName": "q2.4.2",
+        //     "type": "number",
+        //     "selectOptions": "",
+        //     "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
+        //     "section": "Indicators",
+        //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
+        //     "labelMultiple": null,
+        //     options: {
+        //         max: 25,
+        //         min: 1
+        //     }
+        // },
 
 
         // section 3
@@ -198,7 +198,7 @@ export default
             "controlName": "q5.1.1",
             "type": "select",
             "selectOptions": "Single-stage, Multi-stage",
-            "label": "Would you prefer conduct your sampling in a single stage or in multiple stages",
+            "label": "Would you prefer to conduct your sampling in a single stage or in multiple stages",
             "section": "Selecting the sampling units",
             "condition": "type:value, controlName:q5.1, value:Yes",
             "labelMultiple": null,

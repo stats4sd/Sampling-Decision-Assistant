@@ -20,6 +20,8 @@
     <p>This value may be known from previous studies. You don’t need to be exact about this value, but the more exact you are,
       the better.</p>
     <div *ngIf="form.value['q2.2.1']=='Yes'">
+      <!-- q2.2.2 needs ngif logic instead of question condition so that it displays in all cases on review and export
+      (it's updated programatically in case no) -->
       <survey-question controlName='q2.2.2'></survey-question>
     </div>
     <div *ngIf="form.value['q2.2.1']=='No'">

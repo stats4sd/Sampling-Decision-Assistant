@@ -12,6 +12,7 @@
                 supporting calculations for margin of error and design effect</p>
             <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
             <tree-diagram [showInputNodes]="false" [showKey]="'true'" *ngIf="initComplete" class="fade-in"></tree-diagram>
+            
             <div style="margin-top:1em; max-width:90%">
                 <note type="tip">Click on the each shape in the diagram for more information about the node</note>
             </div>
@@ -53,8 +54,9 @@
         </div>
         <div *ngSwitchCase="3">
             <h4>Allocating resources</h4>
-            <p>The next step is to allocate the sampling units throughout the diagram</p>
+            <p>The final step is to allocate the sampling units throughout the diagram</p>
             <tree-diagram [showInputNodes]="true"></tree-diagram>
+            <note type="info">Select each sampling stage to allocate size</note>
             <div style="height:2em"></div>
             <tree-table></tree-table>
             
@@ -68,6 +70,7 @@
                 </ion-list>
             </div> -->
         </div>
+        <stage-complete stageNumber=6></stage-complete>
     </div>
 
 

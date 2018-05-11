@@ -26,7 +26,6 @@ export class CustomRouterProvider {
       v => this.processHash('viewDidLoad')
     )
     window.onhashchange = () => {
-      console.log('hash changed',location.hash)
       this.processHash('onhashchange')
     }
     // possible future function to prevent user accidentally navigating away from app entirely

@@ -1,10 +1,12 @@
+import { CalculatorVars } from "../components/dataVis/sample-size-calculator/sample-size-calculator";
+
 // models for how variables should be stored
 
 export interface Project {
     title?: string,
     created: number,
     edited: number,
-    values: any,
+    values: ProjectValues,
     stagesComplete: boolean[],
     dbVersion: number,
     draft?: boolean
@@ -106,14 +108,50 @@ export interface StageMeta {
     'q5.3.3'?: string,
     'q5.3.4.2'?: string[],
     'q5.3.4.3'?: string,
-    sampleSize?:number,
-    popSize?:number,
+    sampleSize?: number,
+    popSize?: number,
     stageNumber?: number,
-    reportingAllocations?:number[]
+    reportingAllocations?: number[]
     _built?: boolean
 }
 
-export interface TreeNodeAllocation{
-    popSize?:number,
-    sampleSize?:number
+export interface TreeNodeAllocation {
+    popSize?: number,
+    sampleSize?: number
+}
+
+export interface ProjectValues {
+    "q1.1"?: string,
+    "q1.2"?: string,
+    "q1.3"?: string,
+    "q2.1.1"?: string,
+    "q2.1.2"?: string,
+    "q2.2.1"?: string,
+    "q2.2.2"?: string,
+    // 2.2.2 (indicator specified value of s.d) needs float parse 
+    "q2.2.3"?: string,
+    "q2.2.4"?: string,
+    "q2.3.1"?: string,
+    // 2.3.1 (indicator proportion) needs float parse 
+    "q3.1"?: string,
+    "q3.2"?: string,
+    "q3.3"?: string,
+    "q3.4"?: string,
+    "q3.5"?: string,
+    "q4.1"?: string,
+    "q4.3"?: string,
+    "q5.1"?: string,
+    "q5.1.1"?: string,
+    "q5.2"?: string,
+    "q5.3"?: StageMeta[],
+    "q5.3.1"?: string,
+    "q5.3.2"?: string,
+    "q5.3.3"?: string,
+    "q5.3.4.2"?: string,
+    "q5.3.4.3"?: string,
+    "q6.1"?: string,
+    reportingLevels?: ReportingLevel[],
+    samplingStages?:StageMeta[],
+    _calculatorVars?:CalculatorVars,
+    allocation?:any
 }

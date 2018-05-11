@@ -3,7 +3,7 @@ import { TextInput, Events } from 'ionic-angular'
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs'
 import {debounceTime} from 'rxjs/operators'
-import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta, TreeNodeAllocation } from '../../../../models/models';
+import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta, TreeNodeAllocation, ReportingLevel } from '../../../../models/models';
 import { TreeDiagramActions } from '../../../../actions/actions';
 import { FormProvider } from '../../../../providers/form/form';
 import { DataProvider } from '../../../../providers/data/data';
@@ -15,8 +15,8 @@ import { TreeDiagramComponent } from '../tree-diagram';
 })
 export class TreeNodeAllocationComponent extends TreeDiagramComponent {
     @select(['_treeMeta', 'activeNode']) readonly activeNode$: Observable<TreeDiagramNode>
-    @select(['activeProject', 'values', 'samplingStages']) readonly samplingStages$: Observable<any>
-    @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<any>
+    @select(['activeProject', 'values', 'samplingStages']) readonly samplingStages$: Observable<StageMeta[]>
+    @select(['activeProject', 'values', 'reportingLevels']) readonly reportingLevels$: Observable<ReportingLevel[]>
     @select(['activeProject', 'values', 'allocation']) readonly allocation$: Observable<any>
     @select(['view', 'params', 'stagePart']) readonly stagePart$: Observable<string>;
     @select(['view', 'hash']) readonly hash$: Observable<string>;

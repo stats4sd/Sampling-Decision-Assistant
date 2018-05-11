@@ -3,7 +3,7 @@ import options from './options'
 import { FormProvider } from '../../../providers/form/form';
 import { FormGroup } from '@angular/forms';
 import { Events } from 'ionic-angular';
-import { ReportingLevel, TreeDiagramNode, StageMeta, AppState } from '../../../models/models';
+import { ReportingLevel, TreeDiagramNode, StageMeta, AppState, ProjectValues } from '../../../models/models';
 import { TreeDiagramActions } from '../../../actions/actions';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs'
@@ -29,7 +29,7 @@ export class TreeDiagramComponent {
   @Input('showInputNodes') showInputNodes: boolean
   @Input('showKey') showKey: boolean
   @ViewChild('treeContainer') treeContainer: ElementRef
-  @select(['activeProject', 'values']) readonly projectValues$: Observable<number>;
+  @select(['activeProject', 'values']) readonly projectValues$: Observable<ProjectValues>;
   @select(['activeProject', 'values', '_calculatorVars', 'inputs', 'nHH']) readonly finalStageSampleSize$: Observable<number>;
 
   constructor(

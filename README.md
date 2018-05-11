@@ -81,3 +81,7 @@ https://golb.hplar.ch/2018/01/Custom-SVG-icons-in-Ionic.html
 Additional icons imported individually (could be converted into auto script, but for now there aren't many)
 SVG icons can be found at https://icomoon.io/app or https://www.flaticon.com/ 
 Icons placed in assets/img/icons folder and imported in app.scss
+
+### Workspace suggestions
+Editor: VSCode
+Extensions: angular2-inline
