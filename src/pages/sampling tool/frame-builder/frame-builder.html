@@ -12,17 +12,24 @@
   <p>You said you need a stage where you sample
     <strong>{{stageName}}</strong>. This section will help you to make decisions about how to select the sampling units</p>
   <survey-question controlName="q5.3.1" [formGroup]="stageFormGroup"></survey-question>
-  <div>Note: this list will be the sampling frame for this stage</div>
+  <note type="info" *ngIf="stageFormGroup.value['q5.3.1']=='Yes'">Note: this list will be the sampling frame for this stage</note>
   <survey-question controlName="q5.3.2" [formGroup]="stageFormGroup"></survey-question>
+  <note type="info" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
+    When there is no list available you will need to decide upon an appropriate strategy to build a list.
+    
+  </note>
 
   <note type="dev" *ngIf="stageFormGroup.value['q5.3.2']=='No'">
     <strong>Under construction</strong> - Here will include some information and advice on how to handle incomplete or outdated lists</note>
 
-  <survey-question controlName="q5.3.3" [formGroup]="stageFormGroup"></survey-question>
 
   <note type="dev" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
     <strong>Building a list</strong> - More questions will follow here to help users determine a strategy for the building a suitable
     sampling frame, such as through the use of key informants or area-based sampling</note>
+
+  <survey-question controlName="q5.3.3" [formGroup]="stageFormGroup"></survey-question>
+
+
 
   <survey-question controlName="q5.3.4.3" [formGroup]="stageFormGroup"></survey-question>
 
