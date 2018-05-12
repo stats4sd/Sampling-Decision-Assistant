@@ -41,7 +41,7 @@
                         <ion-option value="0.5">High (0.5)</ion-option>
                     </ion-select>
                 </ion-item>
-                <ion-item class="input-item" *ngIf="inputValues.nHH">
+                <ion-item class="input-item" *ngIf="sampleStages>1">
                     <ion-label fixed>Number of Samples per Cluster</ion-label>
                     <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="calculateSize()"></ion-input>
                 </ion-item>

@@ -36,6 +36,8 @@ export class SampleSizeCalculatorComponent {
         Population: 500000,
     }
 
+    sampleStages: number
+
     moe: any = {}
 
     inputValues: CalculatorInputVars = {}
@@ -90,15 +92,8 @@ export class SampleSizeCalculatorComponent {
             }
             // then update from project values
             calcVals.stages = v.samplingStages ? v.samplingStages.length : 0;
-            console.log('input fields', this.inputFields)
+            this.sampleStages = calcVals.stages
             try {
-                // nHH only relevant for multi stage
-                console.log('stages',calcVals.stages)
-                if (calcVals.stages > 1) {
-                    this.inputFields.push({ label: 'Number of Samples per Cluster', var: 'nHH' })
-                }
-                else { delete this.defaultValues.nHH }
-                console.log('default values',this.defaultValues)
                 if (v['q2.1.2'] == "Proportion of elements in the population with the characteristics of the indicator") {
                     calcVals.type = "proportion";
                     calcVals.prop = parseFloat(v['q2.3.1']);
@@ -136,7 +131,7 @@ export class SampleSizeCalculatorComponent {
             } catch (error) {
             }
             this.inputValues = Object.assign({}, this.defaultValues, calcVals)
-            console.log('input values',this.inputValues)
+            console.log('input values', this.inputValues)
         } catch (error) { }
 
     }
@@ -166,7 +161,6 @@ export class SampleSizeCalculatorComponent {
         let stage2N
         let p1
         let moe
-        // use try catch as for now single stage will still try to calculate and likely lead to errors
         try {
             if (input.type == "average value") {
                 SRSn = (input.sd * qnorm(1 - (1 - input.conf) / 2) / input.moe) ** 2
@@ -177,23 +171,28 @@ export class SampleSizeCalculatorComponent {
                 SRSn = (Math.sqrt(p1 * (1 - p1)) * qnorm(1 - (1 - input.conf) / 2) / moe) ** 2
             }
             SRSn_FPC = Math.ceil((SRSn * input.Population) / (SRSn + input.Population - 1))
-            DEFF1 = (1 + (input.nHH - 1) * input.rho)
-            FinalstageN = SRSn * DEFF1
-            FinalstageN_FPC = Math.ceil((FinalstageN * input.Population) / (FinalstageN + input.Population - 1))
-            stage2N = Math.ceil(FinalstageN_FPC / input.nHH)
-
+            if (this.sampleStages == 1) {
+                FinalstageN = SRSn
+                FinalstageN_FPC = SRSn_FPC
+            }
+            if (this.sampleStages > 1) {
+                DEFF1 = (1 + (input.nHH - 1) * input.rho)
+                FinalstageN = SRSn * DEFF1
+                FinalstageN_FPC = Math.ceil((FinalstageN * input.Population) / (FinalstageN + input.Population - 1))
+                stage2N = Math.ceil(FinalstageN_FPC / input.nHH)
+            }
         } catch (error) {
-
+            console.log(error)
         }
 
         /***********************************************************************************************************/
         const raw: CalculatorOutputVarsRaw = {
             SRSn: Math.round(SRSn),
             SRSn_FPC: SRSn_FPC,
-            DEFF1: Math.round(DEFF1 * 100) / 100,
+            DEFF1: DEFF1 ? Math.round(DEFF1 * 100) / 100 : 'NA',
             FinalstageN: Math.round(FinalstageN),
             FinalstageN_FPC: FinalstageN_FPC,
-            stage2N: stage2N,
+            stage2N: stage2N ? stage2N : 'NA',
             nHH: this.inputValues.nHH
         }
         const rawArray = Object.keys(raw)
@@ -217,6 +216,7 @@ export class SampleSizeCalculatorComponent {
         }
         this._updateFormCalcVars(vars)
         console.log('inputs', input)
+        console.log('outputs',this.outputs)
         //this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
         //this.dataPrvdr.backgroundSave()
     }
@@ -275,10 +275,10 @@ export interface CalculatorInputVars {
 export interface CalculatorOutputVarsRaw {
     SRSn: number,
     SRSn_FPC: number,
-    DEFF1: number,
+    DEFF1: number | 'NA',
     FinalstageN: number,
     FinalstageN_FPC: number,
-    stage2N: number,
+    stage2N: number | 'NA',
     nHH: number
 }
 

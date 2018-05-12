@@ -7,7 +7,7 @@ import { ReportingLevel, TreeDiagramNode, StageMeta, AppState, ProjectValues } f
 import { TreeDiagramActions } from '../../../actions/actions';
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs'
-import {debounceTime} from 'rxjs/operators'
+import { debounceTime } from 'rxjs/operators'
 import { DataProvider } from '../../../providers/data/data';
 
 declare let vis: any
@@ -24,13 +24,13 @@ export class TreeDiagramComponent {
   treeEdges: any;
   form: FormGroup;
   samplingStages: StageMeta[];
-  initComplete:boolean;
-  allocation:any;
+  initComplete: boolean;
+  allocation: any;
   @Input('showInputNodes') showInputNodes: boolean
   @Input('showKey') showKey: boolean
-  @ViewChild('treeContainer') treeContainer: ElementRef
+  @ViewChild('treeContainer') readonly treeContainer: ElementRef
   @select(['activeProject', 'values']) readonly projectValues$: Observable<ProjectValues>;
-  @select(['activeProject', 'values', '_calculatorVars', 'inputs', 'nHH']) readonly finalStageSampleSize$: Observable<number>;
+  // @select(['activeProject', 'values', '_calculatorVars', 'inputs', 'nHH']) readonly finalStageSampleSize$: Observable<number>;
 
   constructor(
     public formPrvdr?: FormProvider,
@@ -41,33 +41,35 @@ export class TreeDiagramComponent {
   ) {
   }
 
-  ngOnInit() {
-    this.initComplete=false
+  ngAfterViewInit() {
+    this.initComplete = false
     this.events.unsubscribe('node:updated')
     this.events.subscribe('node:updated', update => this.updateNode(update))
-    this.projectValues$.pipe(debounceTime(200)).subscribe(v=>{
-      if(v && !this.initComplete){
+    this.projectValues$.pipe(debounceTime(200)).subscribe(v => {
+      if (v && !this.initComplete) {
         this.treeInit(v)
-        this.initComplete=true
+        this.initComplete = true
       }
     })
-    this.finalStageSampleSize$.pipe(debounceTime(200)).subscribe(size=>{
-      this.updateFinalStageSize(size)
-    })
-    
+    // this.finalStageSampleSize$.pipe(debounceTime(200)).subscribe(size => {
+    //   this.updateFinalStageSize(size)
+    // })
   }
 
   treeInit(values) {
-      this.nodes = []
-      // this.updateFinalStageSize(values)
-      this.samplingStages = values.samplingStages
-      this.allocation = values.allocation ? values.allocation : {}
-      this.addFinalStageLevels()
-      this.prepareStages()
-      this.treeEdges = this.buildNodeEdges(this.nodes)
-      this.treeNodes = this._cleanNodeMeta(this.nodes)
-      this.buildDiagram(this.treeNodes, this.treeEdges)
-      this.treeActions.setNodes(this.treeNodes)
+    this.nodes = []
+    console.log('tree init',values)
+    // this.updateFinalStageSize(values)
+    this.samplingStages = values.samplingStages
+    this.allocation = values.allocation ? values.allocation : {}
+    this.addFinalStageLevels()
+    console.log('sampling stages',this.samplingStages)
+    this.prepareStages()
+    console.log('nodes',this.nodes)
+    this.treeEdges = this.buildNodeEdges(this.nodes)
+    this.treeNodes = this._cleanNodeMeta(this.nodes)
+    this.treeActions.setNodes(this.treeNodes)
+    this.buildDiagram(this.treeNodes, this.treeEdges)
   }
 
   // check through each stage to see which reporting levels have been assigned,
@@ -181,6 +183,7 @@ export class TreeDiagramComponent {
       else {
         // final list
         combinations = arrays[0]
+        if(!combinations){combinations=[]}
         return combinations
       }
     }
@@ -204,14 +207,14 @@ export class TreeDiagramComponent {
     let label = split[split.length - 1]
     // attach allocation value to label
     const allocation = this.allocation[node.id] ? this.allocation[node.id] : {}
-    if(node.group=="stageNodes" && allocation.sampleSize){
-      label = label + ' ('+allocation.sampleSize+')'
+    if (node.group == "stageNodes" && allocation.sampleSize) {
+      label = label + ' (' + allocation.sampleSize + ')'
       // label = label + '\ \n <b>' + stage.sampleSize + '</b>'
     }
     return label
   }
 
-  buildNodeEdges(nodes) {
+  buildNodeEdges(nodes=[]) {
     // sort by stage
     let edges = []
     nodes.forEach(node => {
@@ -258,7 +261,6 @@ export class TreeDiagramComponent {
     this.treeNodes = new vis.DataSet(treeNodes);
     // create an array with edges
     this.treeEdges = new vis.DataSet(treeEdges);
-    // create a network
     const container = this.treeContainer.nativeElement
     // provide the data in the vis format
     const data = {
@@ -300,7 +302,6 @@ export class TreeDiagramComponent {
         stageNodes: options.stageNodes
       }
     };
-
     setTimeout(_ => {
       // initialize your network!
       var network = new vis.Network(container, data, treeOptions);
@@ -322,37 +323,37 @@ export class TreeDiagramComponent {
       label: update.label
     })
   }
-
-  updateFinalStageSize(size: number) {
-    try {
-      const samplingStages = this.ngRedux.getState().activeProject.values.samplingStages
-      let finalStage: StageMeta = samplingStages[samplingStages.length - 1]
-      let nodes
-      // update final reporting level nodes and final stage
-      if (finalStage["q5.3.4.2"] instanceof Array) {
-        nodes = this.nodes.filter(n => {
-          return (n.group == 'reportingLevelNodes' && n.id.indexOf('_._') > -1 && n.nodePath.length == samplingStages.length)
-        })
-        let reportingAllocations = []
-        nodes.forEach((n, i) => {
-          reportingAllocations[i] = size
-          // update labels?
-        })
-        finalStage.reportingAllocations = reportingAllocations
-        size = size * (nodes.length / samplingStages.length)
-      }
-      // update final stage nodes
-      nodes = this.nodes.filter(n => {
-        return (n.group == 'stageNodes' && n.nodePath.length == samplingStages.length)
-      })
-      nodes.forEach(n => {
-        // update labels?
-      })
-      finalStage.sampleSize = size
-      this.updateStageControl(samplingStages.length - 1, finalStage)
-    } catch (error) {
-    }
-  }
+  // *** Snippet from code which might be reused to automatically calculate sample sizes for final stage
+  // updateFinalStageSize(size: number) {
+  //   try {
+  //     const samplingStages = this.ngRedux.getState().activeProject.values.samplingStages
+  //     let finalStage: StageMeta = samplingStages[samplingStages.length - 1]
+  //     let nodes
+  //     // update final reporting level nodes and final stage
+  //     if (finalStage["q5.3.4.2"] instanceof Array) {
+  //       nodes = this.nodes.filter(n => {
+  //         return (n.group == 'reportingLevelNodes' && n.id.indexOf('_._') > -1 && n.nodePath.length == samplingStages.length)
+  //       })
+  //       let reportingAllocations = []
+  //       nodes.forEach((n, i) => {
+  //         reportingAllocations[i] = size
+  //         // update labels?
+  //       })
+  //       finalStage.reportingAllocations = reportingAllocations
+  //       size = size * (nodes.length / samplingStages.length)
+  //     }
+  //     // update final stage nodes
+  //     nodes = this.nodes.filter(n => {
+  //       return (n.group == 'stageNodes' && n.nodePath.length == samplingStages.length)
+  //     })
+  //     nodes.forEach(n => {
+  //       // update labels?
+  //     })
+  //     finalStage.sampleSize = size
+  //     this.updateStageControl(samplingStages.length - 1, finalStage)
+  //   } catch (error) {
+  //   }
+  // }
   // *** lots of shared code with node allocation component
   updateStageControl(stageIndex: number, update: any) {
     let allStages = this.formPrvdr.formGroup.controls.samplingStages.value.slice()
