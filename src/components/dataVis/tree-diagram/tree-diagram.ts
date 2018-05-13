@@ -11,6 +11,7 @@ import { debounceTime } from 'rxjs/operators'
 import { DataProvider } from '../../../providers/data/data';
 
 declare let vis: any
+// format to lazy load vis if there weren't conflict with hammer.js
 // import * as vis from 'vis'
 
 @Component({
@@ -58,14 +59,11 @@ export class TreeDiagramComponent {
 
   treeInit(values) {
     this.nodes = []
-    console.log('tree init',values)
     // this.updateFinalStageSize(values)
     this.samplingStages = values.samplingStages
     this.allocation = values.allocation ? values.allocation : {}
     this.addFinalStageLevels()
-    console.log('sampling stages',this.samplingStages)
     this.prepareStages()
-    console.log('nodes',this.nodes)
     this.treeEdges = this.buildNodeEdges(this.nodes)
     this.treeNodes = this._cleanNodeMeta(this.nodes)
     this.treeActions.setNodes(this.treeNodes)
@@ -206,10 +204,10 @@ export class TreeDiagramComponent {
     let split = pathEnd.split('_._')
     let label = split[split.length - 1]
     // attach allocation value to label
-    const allocation = this.allocation[node.id] ? this.allocation[node.id] : {}
-    if (node.group == "stageNodes" && allocation.sampleSize) {
-      label = label + ' (' + allocation.sampleSize + ')'
-      // label = label + '\ \n <b>' + stage.sampleSize + '</b>'
+    const sampleSize = this.allocation[node.id] ? this.allocation[node.id] : {}
+    // could change here if want different display for reporting label vs stage (i.e if node.group=='stageNodes'...)
+    if (sampleSize) {
+      label = label + ' (' + sampleSize + ')'
     }
     return label
   }

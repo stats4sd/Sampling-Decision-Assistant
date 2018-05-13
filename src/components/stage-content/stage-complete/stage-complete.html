@@ -15,10 +15,12 @@
     <ion-label *ngIf="text">{{text}}</ion-label>
     <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="stagesComplete[stage.number]" (ionChange)="toggleCheckbox()"></ion-checkbox>
   </ion-item>
-  <button ion-button icon-right *ngIf="stagesComplete[stageNumber] && !hideButton" (click)="nextStage()">
+  <button ion-button icon-right *ngIf="stagesComplete[stageNumber] && !hideButton && stage.number!=6" (click)="nextStage()">
     Next Stage
     <ion-icon name="arrow-forward"></ion-icon>
   </button>
+  <button ion-button icon-right *ngIf="stagesComplete[stageNumber] && !hideButton && stage.number==6" (click)="goToReview()">
+    Review and Export
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
 </div>
-
-

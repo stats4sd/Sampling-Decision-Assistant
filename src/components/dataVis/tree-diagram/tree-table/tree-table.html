@@ -1,13 +1,28 @@
-<div style="display: flex; flex-wrap: wrap">
-    <div style="flex:1; min-width: 300px">
+<!-- aggregation table -->
+<div *ngIf="showByDisaggregation">
+    <div class="section-title">Totals by disaggregation</div>
 
-    </div>
-    <div style="width:200px">
-        
+    <table>
+        <!-- header row -->
+        <tr>
+            <th *ngFor="let stage of reportingStages" [attr.has-reporting]="stage['q5.3.4.2'] ? true : false">{{stage.name}}</th>
+            <th class="spacing-header">...</th>
+            <th>Sampled</th>
+        </tr>
+        <!-- main rows -->
+        <tr *ngFor="let r of reportingTotals">
+            <td *ngFor="let classification of r.allocationTitle">{{classification}}</td>
+            <td class="spacing-header">...</td>
+            <td>{{r.allocationTotal.total}}</td>
+        </tr>
+    </table>
+    <div style="margin-top:1em">The recommended sample size per group is
+        <strong>{{calculatorOutputs.raw.FinalstageN_FPC}}</strong>
     </div>
 </div>
 
-<div class="calc-section results">
+
+<!-- <div class="calc-section results">
     <div class="section-title results">
         <div style="margin-right: 5px">
             <ion-icon name="calculator"></ion-icon>
@@ -19,6 +34,6 @@
         <div class="input-label results">{{result.label}}</div>
         <div class="input-value results">{{calculatorOutputs.raw[result.var]}}</div>
     </div>
-</div>
+</div> -->
 
 <!-- *** copied from sample size calculator, could be made into own component -->

@@ -1,3 +1,15 @@
 tree-table{
-    
+    tr{
+        border:1px solid transparent;
+    }
+    th[has-reporting='true']{
+        background-color: #F0B89E
+    }
+    .spacing-header{
+        color: white;
+        border: none
+    }
+    .section-title{
+        padding:1em 0;
+    }
 }

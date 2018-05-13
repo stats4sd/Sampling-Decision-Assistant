@@ -51,23 +51,23 @@
         <ion-icon name="information-circle"></ion-icon>Review the decisions you have made and make revisions before final export</p>
       <!-- <div class="review-box" (click)="pushPage('ReviewPage')" style="position: relative; pointer-events:none; opacity:0.6">
         <div class="section-disabled"><p style="width:100%; font-weight:bold">This section is not currently available for preview</p></div> -->
-      <div class="review-box" (click)="pushPage('ReviewPage')">
+      <ion-card class="review-box" (click)="pushPage('ReviewPage')">
         <div style="display:flex; ">
-          <ion-card class="review-card">
+          <div class="review-card">
             <span>Review</span>
-          </ion-card>
+          </div>
           <img class="section-icon _80px" src="assets/img/icons/arrows-dual.svg">
-          <ion-card class="review-card">
+          <div class="review-card">
             <span>Improve</span>
-          </ion-card>
+          </div>
         </div>
         <div style="display:flex; justify-content:center">
           <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
-          <ion-card class="review-card">
-            <span>Export</span>
-          </ion-card>
+          <div class="review-card">
+            <div>Export</div>
+          </div>
         </div>
-      </div>
+      </ion-card>
     </div>
   </div>
 </ion-content>

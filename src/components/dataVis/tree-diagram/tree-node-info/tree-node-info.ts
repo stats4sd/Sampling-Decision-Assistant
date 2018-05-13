@@ -38,7 +38,6 @@ export class TreeNodeInfoComponent {
     _updateActiveNode(node: TreeDiagramNode) {
         this.activeNode = node
         if (node) {
-            console.log('updating active node', node.id)
             let nodeText: any = {}
             let stageMeta: any = {}
             if (node) {

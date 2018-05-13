@@ -82,10 +82,19 @@ export interface TreeDiagramNode {
     id?: string,
     label?: string,
     group?: string,
-    title?: string[]
+    title?: string[],
+    allocationTotal?: TreeDiagramNodeFinalAllocation,
+    allocationTitle?:string[]
 }
+
+// used by tree table when getting total of reporting combination
+interface TreeDiagramNodeFinalAllocation{
+    byPart:any,
+    total:number
+}
+
 export interface ExtendedTreeDiagramNode extends TreeDiagramNode {
-    reportingMeta?: any[],
+    reportingMeta?: TreeDiagramNode[],
     stageMeta?: StageMeta,
 }
 
@@ -115,10 +124,11 @@ export interface StageMeta {
     _built?: boolean
 }
 
-export interface TreeNodeAllocation {
-    popSize?: number,
-    sampleSize?: number
-}
+// no longer tracking popsize, want to just use sample size to make it easier to bind to redux changes
+// export interface TreeNodeAllocation {
+//     popSize?: number,
+//     sampleSize?: number
+// }
 
 export interface ProjectValues {
     "q1.1"?: string,

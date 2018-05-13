@@ -2,8 +2,8 @@ import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { TextInput, Events } from 'ionic-angular'
 import { select, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs'
-import { debounceTime } from 'rxjs/operators'
-import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta, TreeNodeAllocation, ReportingLevel } from '../../../../models/models';
+import { debounceTime, sample } from 'rxjs/operators'
+import { TreeDiagramNode, AppState, ExtendedTreeDiagramNode, StageMeta, ReportingLevel } from '../../../../models/models';
 import { TreeDiagramActions } from '../../../../actions/actions';
 import { FormProvider } from '../../../../providers/form/form';
 import { DataProvider } from '../../../../providers/data/data';
@@ -27,17 +27,20 @@ export class TreeNodeAllocationComponent {
     nodeMeta: ExtendedTreeDiagramNode = { stageMeta: {} };
     reportingLevels: any[] = [];
     reportingInputs: number[] = [];
-    popSize: any; //should be number but input bug sometimes makes string
     sampleSize: any; //should be number but input bug sometimes makes string
     stagePart: string;
     allocationMeta: AllocationMeta = {} // controls which type of allocation view to show, e.g. sampleStage, finalStage, reportingLevel
     allocation: any = {};
     allocationControlChecked: boolean;
     reviewMode: boolean;
-    @ViewChild('popSizeInput') popSizeInput: TextInput
     @ViewChild('sampleSizeInput') sampleSizeInput: TextInput
 
-    constructor(public formPrvdr: FormProvider, public ngRedux: NgRedux<AppState>, public dataPrvdr: DataProvider, public events: Events) {
+    constructor(
+        public formPrvdr: FormProvider,
+        public ngRedux: NgRedux<AppState>,
+        public dataPrvdr: DataProvider,
+        public events: Events,
+    ) {
         this.samplingStages$.subscribe(s => { if (s) { this.samplingStages = s; this.setActiveNode(this.activeNode) } })
         this.activeNode$.pipe(debounceTime(200)).subscribe(node => this.setActiveNode(node))
         this.reportingLevels$.subscribe(l => { if (l) { this.reportingLevels = l; this.setActiveNode(this.activeNode) } })
@@ -48,27 +51,35 @@ export class TreeNodeAllocationComponent {
         })
     }
 
-    setPopAndSampleSize() {
-        const size = parseInt(this.popSize)
-        const stageNumber = this.nodeMeta.stageMeta.stageNumber
-
-        this.allocate(this.activeNode.id, { popSize: size, sampleSize: size })
-        this.updateNodeLabel(size)
-    }
     setSampleSize() {
         const size = parseInt(this.sampleSize)
         const stageNumber = this.nodeMeta.stageMeta.stageNumber
-        this.allocate(this.activeNode.id, { sampleSize: size })
-        this.updateNodeLabel(size)
+        this.allocate(this.activeNode, size)
+        // also set child reporting level nodes if appropriate
+        if (this.nodeMeta.reportingMeta && this.nodeMeta.reportingMeta.length > 0) {
+            this.setReportingAllocations(this.nodeMeta, this.sampleSize)
+        }
+        // use event subscriber on change as redux can't see sub property changes
+        this.events.publish('allocation:updated', this.allocation)
+    }
+    setReportingAllocations(parentNodeMeta: ExtendedTreeDiagramNode, parentSampleSize: number) {
+        const totalChildNodes = parentNodeMeta.reportingMeta.length
+        const childAllocationSize = Math.round((parentSampleSize / totalChildNodes) * 100) / 100
+        parentNodeMeta.reportingMeta.forEach(node => {
+            this.allocate(node, childAllocationSize)
+        });
     }
 
     // refelct all allocation changes to formgroup
-    allocate(nodeID: string, values: TreeNodeAllocation) {
+    allocate(node: TreeDiagramNode, sampleSize: number) {
+        const nodeID = node.id
         if (!this.allocationControlChecked) { this._checkAllocationControl() }
-        this.allocation[nodeID] = values
-        this.formPrvdr.formGroup.patchValue({ allocation: this.allocation })
-        this.dataPrvdr.backgroundSave()
-        this.updateNodeLabel(values.sampleSize)
+        if (this.allocation[nodeID] != sampleSize) {
+            this.allocation[nodeID] = sampleSize
+            this.formPrvdr.formGroup.patchValue({ allocation: this.allocation })
+            this.dataPrvdr.backgroundSave()
+            this.updateNodeLabel(node, sampleSize)
+        }
     }
 
     // add form control for values.allocation if doesn't already exist
@@ -79,18 +90,18 @@ export class TreeNodeAllocationComponent {
         this.allocationControlChecked = true
     }
 
-    updateNodeLabel(size: number) {
-        let label = this.activeNode.label
+    updateNodeLabel(node: TreeDiagramNode, size: number) {
+        let label = node.label
         label = label.split(' (')[0]
         if (size) {
             label = label + ' (' + size + ')'
         }
-        this.activeNode.label = label
-        this.events.publish('node:updated', this.activeNode)
+        node.label = label
+        this.events.publish('node:updated', node)
     }
 
     // set the active node and get meta information depending on node type
-    setActiveNode(node: TreeDiagramNode) {
+    setActiveNode(node: TreeDiagramNode = {}) {
         this.activeNode = node
         if (node && node.id) {
             let nodeText: any = {}
@@ -124,18 +135,16 @@ export class TreeNodeAllocationComponent {
         this.allocationMeta = allocation
     }
 
-    setInputValue(nodeID:string){
-        console.log('allocation',this.allocation)
-        if(this.allocation.hasOwnProperty(nodeID)){
-            this.popSize = this.allocation[nodeID].popSize
-            this.sampleSize = this.allocation[nodeID].sampleSize
+    setInputValue(nodeID: string) {
+        if (this.allocation.hasOwnProperty(nodeID)) {
+            this.sampleSize = this.allocation[nodeID]
         }
+        else { this.sampleSize = null }
     }
 
     focusInput() {
         setTimeout(() => {
-            if (this.popSizeInput) { this.popSizeInput.setFocus() }
-            else if (this.sampleSizeInput) { this.sampleSizeInput.setFocus() }
+            if (this.sampleSizeInput) { this.sampleSizeInput.setFocus() }
         }, 50);
     }
 

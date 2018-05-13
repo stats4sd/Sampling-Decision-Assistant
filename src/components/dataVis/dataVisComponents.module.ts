@@ -13,19 +13,18 @@ import { GeneralComponentsModule } from '../general/generalComponents.module';
         TreeNodeInfoComponent,
         TreeNodeAllocationComponent,
         TreeTableComponent,
-        SampleSizeCalculatorComponent
+        SampleSizeCalculatorComponent,
     ],
     imports: [
         IonicModule,
-        GeneralComponentsModule
-
+        GeneralComponentsModule,
     ],
     exports: [
         TreeDiagramComponent,
         TreeNodeInfoComponent,
         TreeNodeAllocationComponent,
         TreeTableComponent,
-        SampleSizeCalculatorComponent
+        SampleSizeCalculatorComponent,
     ]
 })
 export class DataVisComponentsModule { }

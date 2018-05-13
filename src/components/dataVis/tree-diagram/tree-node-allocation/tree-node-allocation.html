@@ -7,7 +7,7 @@
                 <div *ngSwitchCase="'All'">
                     <div>You said you want to sample all units in this stage</div>
                     <div style="margin-top:1em">How many units are there?</div>
-                    <ion-input #popSizeInput class="allocation-input" type="number" [(ngModel)]="popSize" (ionChange)="setPopAndSampleSize()"></ion-input>
+                    <ion-input #sampleSizeInput class="allocation-input" type="number" [(ngModel)]="sampleSize" (ionChange)="setSampleSize()"></ion-input>
                 </div>
                 <div *ngSwitchCase="'Sample'">
                     <div>You said you want to take a sample of units in this stage</div>
@@ -21,7 +21,7 @@
 
     <!-- reporting unit allocation -->
     <div *ngIf="allocationMeta.type=='reportingLevel'">
-
+        <note type="dev">Currently assumes sample sizes allocated evenly, in the future there will be an option to change this</note>
     </div>
 
 </div>

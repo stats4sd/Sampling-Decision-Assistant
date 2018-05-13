@@ -94,7 +94,7 @@ export class ReviewPage {
     ]
     // custom sheets
     additionalSheets.forEach(s => {
-      if (values.hasOwnProperty(s.controlName)) {
+      if (values[s.controlName]) {
         sheets.push(
           {
             title: s.title,
@@ -124,6 +124,7 @@ export class ReviewPage {
 
   // various methods to generate json array mappings for sheets (which will then be converted so keys match row names)
   _generateSheet(type, values) {
+    console.log('generating sheet',type,values)
     let sheet: any[] = []
     // stage sheets
     if (type == 'stages') {

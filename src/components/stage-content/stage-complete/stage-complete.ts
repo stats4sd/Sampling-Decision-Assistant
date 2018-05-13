@@ -28,8 +28,8 @@ export class StageCompleteComponent extends StagePage {
   stagesComplete: boolean[] = []
   projectTitle: string;
   projectTitleInput: string;
-  showErrorMsg:boolean;
-  isSaving:boolean;
+  showErrorMsg: boolean;
+  isSaving: boolean;
 
   ngOnInit() {
     // subscribe to form value changes to mark when section complete
@@ -54,20 +54,20 @@ export class StageCompleteComponent extends StagePage {
   saveProjectTitle() {
     // check title unique, if unique save and update state, if not show error message
     if (this.dataPrvdr.checkProjectTitleUnique(this.projectTitleInput) == -1) {
-      this.showErrorMsg=false
-      this.isSaving=true
+      this.showErrorMsg = false
+      this.isSaving = true
       this.dataPrvdr.activeProject.title = this.projectTitleInput
       this.dataPrvdr.backgroundSave().then(
         res => {
           // running project update after as for some reason it rewrites url (#129)
           setTimeout(() => {
             this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
-            this.isSaving=false
+            this.isSaving = false
           }, 500);
         })
     }
     else {
-      this.showErrorMsg=true
+      this.showErrorMsg = true
     }
 
   }
@@ -88,7 +88,7 @@ export class StageCompleteComponent extends StagePage {
   }
 
 
-  verify(stageNumber: number, formValues:ProjectValues) {
+  verify(stageNumber: number, formValues: ProjectValues) {
     const s = stageNumber
     // run verfication checks to see if form valid. takes current form values as input
     const v = formValues
@@ -107,7 +107,7 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 2: {
         if (v['q2.3.1']) { return true }
-        else if (v['q2.2.2']){return true}
+        else if (v['q2.2.2']) { return true }
         else if (v['q2.2.3'] && v['q2.2.4']) { return true }
         else {
           return false
@@ -123,21 +123,21 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 5: {
         //console.log('evaluating section valid 5')
-        if(v.samplingStages){
-          const built = v.samplingStages.filter(stage=>{
+        if (v.samplingStages) {
+          const built = v.samplingStages.filter(stage => {
             return stage._built
           })
-            return (built.length==v.samplingStages.length ? true : false)
+          return (built.length == v.samplingStages.length ? true : false)
         }
-        else{return false}
+        else { return false }
       }
       case s == 6: {
         // *** basic validation of some allocation complete, could be improved on
-        if(v.allocation){return true}
+        if (v.allocation) { return true }
         break
       }
       default: {
-        console.log('default case',s)
+        console.log('default case', s)
         return true
       }
     }
@@ -156,6 +156,13 @@ export class StageCompleteComponent extends StagePage {
       _ => {
         this.navCtrl.remove(this.navCtrl.length() - 2)
       }
+    )
+  }
+  goToReview() {
+    this.customRouter.unlockHash()
+    this.customRouter.removeHashParam('stagePart')
+    this.navCtrl.push('ReviewPage').then(
+      _ => this.navCtrl.remove(this.navCtrl.length() - 2)
     )
   }
 

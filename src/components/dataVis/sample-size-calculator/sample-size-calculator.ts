@@ -131,7 +131,6 @@ export class SampleSizeCalculatorComponent {
             } catch (error) {
             }
             this.inputValues = Object.assign({}, this.defaultValues, calcVals)
-            console.log('input values', this.inputValues)
         } catch (error) { }
 
     }
@@ -149,7 +148,6 @@ export class SampleSizeCalculatorComponent {
             input[key] = parseFloat(this.inputValues[key])
         })
         input.type = this.inputValues.type
-        console.log('calculating size')
 
         /*********************************************************************************************************** 
          *                              main r code  
@@ -182,7 +180,6 @@ export class SampleSizeCalculatorComponent {
                 stage2N = Math.ceil(FinalstageN_FPC / input.nHH)
             }
         } catch (error) {
-            console.log(error)
         }
 
         /***********************************************************************************************************/
@@ -215,10 +212,6 @@ export class SampleSizeCalculatorComponent {
             outputs: this.outputs
         }
         this._updateFormCalcVars(vars)
-        console.log('inputs', input)
-        console.log('outputs',this.outputs)
-        //this.projectActions.setActiveProject(this.dataPrvdr.activeProject)
-        //this.dataPrvdr.backgroundSave()
     }
     _updateFormCalcVars(vars) {
         if (!this.formPrvdr.formGroup.controls._calculatorVars) {
@@ -273,13 +266,13 @@ export interface CalculatorInputVars {
 }
 
 export interface CalculatorOutputVarsRaw {
-    SRSn: number,
-    SRSn_FPC: number,
-    DEFF1: number | 'NA',
-    FinalstageN: number,
-    FinalstageN_FPC: number,
-    stage2N: number | 'NA',
-    nHH: number
+    SRSn?: number,
+    SRSn_FPC?: number,
+    DEFF1?: number | 'NA',
+    FinalstageN?: number,
+    FinalstageN_FPC?: number,
+    stage2N?: number | 'NA',
+    nHH?: number
 }
 
 export interface CalculatorOutputVars {
