@@ -2,7 +2,7 @@ import { Component, ViewChildren, ViewChild, ChangeDetectorRef } from '@angular/
 import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data'
 import { NgRedux } from '@angular-redux/store';
-import { AppState, StageMeta, ReportingLevel, TreeNodeAllocation, ProjectValues } from '../../../models/models';
+import { AppState, StageMeta, ReportingLevel, ProjectValues } from '../../../models/models';
 import { CalculatorVars } from '../../../components/dataVis/sample-size-calculator/sample-size-calculator';
 
 @IonicPage({
@@ -155,8 +155,8 @@ export class ReviewPage {
     if (type == 'allocation') {
       const allocation: any = values
       Object.keys(allocation).forEach(key => {
-        const val: TreeNodeAllocation = values[key]
-        sheet.push({ 'step': key, 'popSize': val.popSize, 'sampleSize': val.sampleSize })
+        const val: number = values[key]
+        sheet.push({ 'step': key, 'sampleSize': val })
       })
     }
     if (type == 'reporting') {
