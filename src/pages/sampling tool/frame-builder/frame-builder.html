@@ -16,11 +16,18 @@
   <survey-question controlName="q5.3.2" [formGroup]="stageFormGroup"></survey-question>
   <note type="info" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
     When there is no list available you will need to decide upon an appropriate strategy to build a list.
-    
-  </note>
 
-  <note type="dev" *ngIf="stageFormGroup.value['q5.3.2']=='No'">
-    <strong>Under construction</strong> - Here will include some information and advice on how to handle incomplete or outdated lists</note>
+  </note>
+  <div style="height: 1em"></div>
+  <note type="warning" *ngIf="stageFormGroup.value['q5.3.2']=='No'">
+    <strong>Possibly outdated lists</strong>
+    <p>
+        If the sampling unit listing is not up to date, you should first consider if there might be ways to update it. If this
+        is not possible, think of how the incomplete list may affect the representativeness of the sample and the biases it may
+        introduce.
+    </p>
+    <p>Use the space below if you would like to record any specific notes</p>
+  </note>
 
 
   <note type="dev" *ngIf="stageFormGroup.value['q5.3.1']=='No'">

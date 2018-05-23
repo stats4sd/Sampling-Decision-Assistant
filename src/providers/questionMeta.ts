@@ -1,4 +1,4 @@
-export default
+const questionMeta: QuestionMeta[] =
     [
         // Section 1
         {
@@ -65,7 +65,6 @@ export default
             "labelMultiple": null
         },
         {
-
             "isQuestion": "TRUE",
             "controlName": "q2.2.2",
             "type": "number",
@@ -76,7 +75,6 @@ export default
             "labelMultiple": null
         },
         {
-
             "isQuestion": "TRUE",
             "controlName": "q2.2.3",
             "type": "number",
@@ -87,7 +85,6 @@ export default
             "labelMultiple": null
         },
         {
-
             "isQuestion": "TRUE",
             "controlName": "q2.2.4",
             "type": "number",
@@ -113,32 +110,6 @@ export default
                 min: 5
             }
         },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.4.1",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What margin of error is acceptable in your estimation? Please use quantities and not percentages to answer this question.",
-        //     "section": "Indicators",
-        //     "condition": "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
-        //     "labelMultiple": null,
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q2.4.2",
-        //     "type": "number",
-        //     "selectOptions": "",
-        //     "label": "What margin of error is acceptable in your estimation? (Plus or minus how many percentage points?",
-        //     "section": "Indicators",
-        //     "condition": "type:value, controlName:q2.1.2, value:Proportion of elements in the population with the characteristics of the indicator",
-        //     "labelMultiple": null,
-        //     options: {
-        //         max: 25,
-        //         min: 1
-        //     }
-        // },
-
-
         // section 3
         {
             "isQuestion": "TRUE",
@@ -146,10 +117,10 @@ export default
             "type": "select",
             "selectOptions": "Individuals, Households, Groups of Individuals or households, Other (please specify)",
             "label": "Who are you interested in? In other words, who or where should the data come from to be able to calculate the indicator of interest? We will refer to this as the final sampling units. Are they households? Or an individual person?  A community? This definition is important because the sampling is going to have to eventually reach them.",
-            "section": "Definition of the target population and units of study", 
-            "condition": "", 
+            "section": "Definition of the target population and units of study",
+            "condition": "",
             "labelMultiple": null,
-            "hideOnReview":true
+            "hideOnReview": true
         },
         {
             "isQuestion": "TRUE", "controlName": "q3.2", "type": "text", "selectOptions": "", "label": "Geographical characteristics (e.g. area, setting, distance, composite)", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
@@ -162,10 +133,10 @@ export default
             "isQuestion": "TRUE", "controlName": "q3.4", "type": "text", "selectOptions": "", "label": "Characteristics with respect to time", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
         },
         {
-            "isQuestion": "TRUE", 
-            "controlName": "q3.5", 
-            "type": "text", 
-            "selectOptions": "", 
+            "isQuestion": "TRUE",
+            "controlName": "q3.5",
+            "type": "text",
+            "selectOptions": "",
             "label": "Clearly define your target population, including any specific grouping characteristics such as location, time, ethnic group, origin, status etc.", "section": "Definition of the target population and units of study", "condition": "type:prerequisite, controlName:q3.1", "labelMultiple": null
         },
         {
@@ -252,6 +223,15 @@ export default
         },
         {
             "isQuestion": "TRUE",
+            "controlName": "q5.3.2.1",
+            "repeatGroup": "q5.3",
+            "type": "text",
+            "label": "Notes for possibly outdated list",
+            "section": "Selecting the sampling units",
+            "condition": "type:value, controlName:q5.3.2, value:No",
+        },
+        {
+            "isQuestion": "TRUE",
             "controlName": "q5.3.3",
             "repeatGroup": "q5.3",
             "type": "select",
@@ -261,27 +241,6 @@ export default
             "condition": "type:prerequisite, controlName:q5.3.1",
             "labelMultiple": null
         },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.3.1",
-        //     "repeatGroup":"q5.3",
-        //     "type": "number",
-        //     "label": "How many units are there in the list? (If you are not sure make an estimate, this can be changed later)",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.3, value:All",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.4.1",
-        //     "repeatGroup":"q5.3",
-        //     "type": "select",
-        //     "selectOptions": "Yes, No",
-        //     "label": "Do you want to use any stratification at this stage?",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.3, value:Sample",
-        //     "labelMultiple": null
-        // },
         {
             "isQuestion": "TRUE",
             "controlName": "q5.3.4.2",
@@ -304,16 +263,6 @@ export default
             "condition": "type:value, controlName:q5.3.3, value:Sample",
             "labelMultiple": null
         },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "strata",
-        //     "type": "custom",
-        //     "label": "Specify the individual strata you will us",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.4.1, value:Yes",
-        //     "labelMultiple": null,
-        //     "hideOnReview":true
-        // },
         {
             "isQuestion": "TRUE",
             "controlName": "q6.1",
@@ -322,71 +271,24 @@ export default
             "section": "Allocating and deploying resources",
             "condition": "",
             "labelMultiple": null,
-            "hideOnReview":true
+            "hideOnReview": true
         },
-
-
-
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.2",
-        //     "type": "select",
-        //     "selectOptions": "Yes, No",
-        //     "label": "Can a list be obtained from elsewhere?",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.1, value:No",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.3",
-        //     "type": "select",
-        //     "selectOptions":
-        //         "Area based sampling, WASH clusters, Key informant lists, Community build frames\nArea based sampling",
-        //     "label": "Are any of these options a sensible way forward to replace the sampling frame for the sampling units?",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.2, value:No",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.4",
-        //     "type": "select",
-        //     "selectOptions": "Yes, No",
-        //     "label": "Is this list (sampling frame) up-to-date?",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.1, value:Yes",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.5",
-        //     "type": "select",
-        //     "selectOptions": "Yes, No",
-        //     "label": "Are there any exclusions or omissions that you are aware of?",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.1, value:Yes",
-        //     "labelMultiple": null
-        // },
-        // {
-        //     "isQuestion": "TRUE",
-        //     "controlName": "q5.3.6",
-        //     "type": "text",
-        //     "label": "If yes, what are the biases that may be introduced by it?",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q5.3.5, value:Yes",
-        //     "labelMultiple": null
-        // },
-        // {
-
-        //     "isQuestion": "FALSE",
-        //     "controlName": "l5.4",
-        //     "type": "label",
-        //     "selectOptions": "",
-        //     "label": "You said that the information needs to be disaggregated by {{reportingLevels}}. Consider whether the sampling units at this stage need to be separated into strata according to the reporting criteria",
-        //     "section": "Selecting the sampling units",
-        //     "condition": "type:value, controlName:q4.1, value:Disaggregated estimates",
-        //     "labelMultiple": null
-        // },
-        // {
     ]
+
+export default questionMeta
+
+
+
+interface QuestionMeta {
+    isQuestion: string,
+    controlName: string,
+    type: "select" | "text" | "number" | "range" | "custom-reporting-levels" | "custom-stages-define" | "repeat" | "custom-strata-select",
+    selectOptions?: any,
+    options?:any,
+    repeatGroup?:string,
+    label: string,
+    section: string,
+    condition: string,
+    labelMultiple?: string,
+    hideOnReview?: boolean
+}

@@ -12,7 +12,7 @@
                 supporting calculations for margin of error and design effect</p>
             <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
             <tree-diagram [showInputNodes]="false" [showKey]="'true'" *ngIf="initComplete" class="fade-in"></tree-diagram>
-            
+
             <div style="margin-top:1em; max-width:90%">
                 <note type="tip">Click on the each shape in the diagram for more information about the node</note>
             </div>
@@ -21,9 +21,14 @@
         <div *ngSwitchCase="1">
             <h4>Stratification</h4>
             <p>
-                There may be cases where you wish to further sub-divide the existing stages and sampling units into strata for the purpose
-                of allocating units.
+                Sometimes the population falls naturally, or can be conveniently partitioned, into a set of sub-populations. Such population
+                is said to be stratified. If a random sample is taken from each stratum a stratified sampling design is obtained.
+                The two main advantages of stratification are:
             </p>
+            <ul>
+                <li>To ensure that sampling units from all strata are correctly represented in the overall sample,</li>
+                <li style="margin-top:1em">The precision of the estimates is, for equally large sample sizes, somewhat greater than simple random sampling</li>
+            </ul>
             <note type="dev">
                 <strong>Under Construction</strong>
                 <br>This feature is currently under construction. Meanwhile, you can still be able to allocate resources within
@@ -58,7 +63,7 @@
             <tree-diagram [showInputNodes]="true"></tree-diagram>
             <div style="margin-bottom: 1em">Select each sampling stage to allocate size</div>
             <tree-table></tree-table>
-            
+
             <!-- <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
                 <div class="node-editor-breadcrumbs"></div>
                 <div class="node-editor-heading">Allocate</div>
@@ -70,7 +75,7 @@
             </div> -->
             <stage-complete stageNumber=6></stage-complete>
         </div>
-        
+
     </div>
 
 
