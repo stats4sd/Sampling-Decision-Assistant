@@ -12,7 +12,8 @@ glossary-link {
     visibility: hidden;
     width: 200px;
     right: 40%;
-    overflow: auto;
+    overflow-y: auto;
+    max-height: 300px;
     background-color: #5d5d5d;
     color: #fff;
     text-align: center;
