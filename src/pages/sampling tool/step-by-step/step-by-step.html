@@ -12,26 +12,27 @@
 
 <ion-content padding>
   <div class="content-container">
-    <!-- intro -->
-
-    <introduction *ngIf="showIntro"></introduction>
-    <div [ngClass]="showIntro ? 'hidden':'not-hidden'">
+    <div>
       <div style="font-size: medium" icon-left *ngIf="activeProject && !activeProject.title">
         <ion-icon name="bulb"></ion-icon>
         <span>You are working on a new project. Any changes will be saved automatically to this device</span>
       </div>
       <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeProject && activeProject.title">
-        <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}</div>
+        <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}
+      </div>
       <!-- step by step sections -->
       <div class="section-break">Step By Step Decisions</div>
       <div class="main-container">
         <p class="instruction" icon-left>
-          <ion-icon name="information-circle"></ion-icon>Complete each section to build an overview of your sampling decisions</p>
+          <ion-icon name="information-circle"></ion-icon>Use each section below to build an overview of your sampling
+          decisions
+        </p>
         <!-- section cards -->
         <ion-card *ngFor="let section of sections" class="hover-fill" style="height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
-            <div *ngIf="section.class=='disabled'" class="section-disabled">This section is not currently available for preview</div>
+            <div *ngIf="section.class=='disabled'" class="section-disabled">This section is not currently available for
+              preview</div>
             <div class="section-icon-container">
               <img class="section-icon" [src]="section.icon">
             </div>
@@ -48,7 +49,9 @@
       <!-- Review and export -->
       <div class="section-break">Review and Export</div>
       <p class="instruction" icon-left>
-        <ion-icon name="information-circle"></ion-icon>Review the decisions you have made and make revisions before final export</p>
+        <ion-icon name="information-circle"></ion-icon>Review the decisions you have made and make revisions before
+        final export
+      </p>
       <!-- <div class="review-box" (click)="pushPage('ReviewPage')" style="position: relative; pointer-events:none; opacity:0.6">
         <div class="section-disabled"><p style="width:100%; font-weight:bold">This section is not currently available for preview</p></div> -->
       <ion-card class="review-box" (click)="pushPage('ReviewPage')">

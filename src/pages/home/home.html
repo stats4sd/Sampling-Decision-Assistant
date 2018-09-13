@@ -24,31 +24,33 @@
       <div style="text-align: center">
         <h2 style='margin-bottom:20px'>Where do you want to start?</h2>
         <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image">
-        <hr/>
+        <hr />
         <div>
           <h3 class="invert">Sampling Decision Assistant</h3>
-          <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)" [ngClass]="section.class">
+          <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)"
+            [ngClass]="section.class">
             <div class="section-container">
               <div class="section-title" id="useTheTool">{{section.name}}
                 <ion-icon style="margin-left:10px" [name]="section.icon"></ion-icon>
               </div>
             </div>
           </ion-card>
-          <hr/>
+          <hr />
           <h3 class="invert">Extra Resources</h3>
           <!-- Add other options to the main menu / home page -->
-          <ion-card *ngFor="let alt of altSections" style="height: 100%; max-height:120px" (click)="goToSection(alt)" [ngClass]="alt.class">
+          <ion-card *ngFor="let alt of altSections" style="height: 100%; max-height:120px" (click)="goToSection(alt)"
+            [ngClass]="alt.class">
             <div class="section-container">
               <div class="section-title">{{alt.name}}</div>
             </div>
           </ion-card>
-          <hr/>
-          <h3 class="invert">Additional Support</h3>
+          <hr />
+          <!-- <h3 class="invert">Additional Support</h3>
           <ion-card (click)="goToSection('ContactPage')" class="disabled">
             <div class="section-container">
               <div class="section-title">How to find help within your organisation</div>
             </div>
-          </ion-card>
+          </ion-card> -->
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
     <ion-buttons end>
       <!-- <button ion-button icon-left (click)="goBack()" *ngIf="reviewMode">
         <ion-icon name="checkmark"></ion-icon>Close</button> -->
-        
+
     </ion-buttons>
   </ion-navbar>
 
@@ -26,14 +26,14 @@
       <resources *ngIf="!editMode" [stage]="stage.number"></resources>
       <dev-editor-resources *ngIf="editMode" [stage]="stage.number"></dev-editor-resources>
     </div>
-   
+
     <!-- Glossary -->
     <div class="slide-content" [style.display]="activeSection=='glossary'? 'block' : 'none'">
-      <glossary></glossary>
+      <glossary-list></glossary-list>
     </div>
 
     <div class="segment-container">
-      <ion-segment [(ngModel)]="activeSection" >
+      <ion-segment [(ngModel)]="activeSection">
         <ion-segment-button value="main" (click)="goTo(null)">Main</ion-segment-button>
         <ion-segment-button value="resources" (click)="goTo('resources')">Resources</ion-segment-button>
         <ion-segment-button value="glossary" (click)="goTo('glossary')">Glossary</ion-segment-button>

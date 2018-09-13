@@ -25,6 +25,8 @@ import { firebaseConfig } from '../components/_dev/config';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { CustomRouterProvider } from '../providers/router/router';
 import { SentryErrorHandler } from '../providers/error-handler/error-handler';
+import { GlossaryProvider } from '../providers/glossary/glossary';
+import { ResourcesProvider } from '../providers/resources/resources';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { SentryErrorHandler } from '../providers/error-handler/error-handler';
     TreeDiagramActions,
     DevToolsExtension,
     CustomRouterProvider,
+    GlossaryProvider,
+    ResourcesProvider,
   ]
 })
 export class AppModule {

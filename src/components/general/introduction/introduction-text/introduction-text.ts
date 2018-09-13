@@ -1,19 +1,15 @@
-import { Component } from '@angular/core';
-import { IonicPage, ViewController } from 'ionic-angular';
-
+import { Component } from "@angular/core";
+import { IonicPage, ViewController } from "ionic-angular";
 
 @IonicPage()
 @Component({
-  selector: 'page-introduction-text',
-  templateUrl: 'introduction-text.html',
+  selector: "page-introduction-text",
+  templateUrl: "introduction-text.html"
 })
 export class IntroductionTextPage {
+  constructor(public viewCtrl: ViewController) {}
 
-  constructor(public viewCtrl: ViewController) {
-  }
-
-  dismiss(){
+  dismiss() {
     this.viewCtrl.dismiss();
   }
-
 }

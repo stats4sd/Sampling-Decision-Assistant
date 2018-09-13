@@ -1,31 +1,35 @@
-import { Component, Input } from '@angular/core';
-import {GlossaryComponent} from '../glossary'
-import { glossaryTerm } from '../../../../models/models';
+import { Component, Input } from "@angular/core";
+import { GlossaryListComponent } from "../glossary-list";
+import { IGlossaryTerm } from "../../../../models/models";
 
 @Component({
-  selector: 'glossary-detail',
-  templateUrl: 'glossary-detail.html'
+  selector: "glossary-detail",
+  templateUrl: "glossary-detail.html"
 })
-export class GlossaryDetailComponent extends GlossaryComponent{
-  @Input() set term(term:glossaryTerm){
-    if(term && term.term){
-        this._term=term}
+export class GlossaryDetailComponent extends GlossaryListComponent {
+  @Input()
+  set term(term: IGlossaryTerm) {
+    if (term && term.term) {
+      this._term = term;
+    }
   }
-  _term:any;
+  _term: any;
 
   _renderHtml(definition) {
-    if(definition==""){definition="term definition to go here"}
-    let content = document.getElementById('definition')
-    content.innerHTML=definition
-    let links = Array.prototype.slice.call(content.querySelectorAll('a'));
+    if (definition == "") {
+      definition = "term definition to go here";
+    }
+    let content = document.getElementById("definition");
+    content.innerHTML = definition;
+    let links = Array.prototype.slice.call(content.querySelectorAll("a"));
     for (let link of links) {
-      link.onclick = function (e) {
-        this._linkClick(link.href, link.text, e)
-      }.bind(this)
+      link.onclick = function(e) {
+        this._linkClick(link.href, link.text, e);
+      }.bind(this);
     }
   }
 
-  _linkClick(href){
+  _linkClick(href) {
     // if(href.indexOf('#/glossary/')>-1){
     //   // internal links
     //   let arr = href.split('/')

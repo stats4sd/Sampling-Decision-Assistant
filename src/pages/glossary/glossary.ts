@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams, NavController, Events } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage } from "ionic-angular";
 
 /*
 Simple page placeholder for glossary page
 */
 
 @IonicPage({
-  segment: 'glossary',
-  defaultHistory: ['HomePage']
+  segment: "glossary",
+  defaultHistory: ["HomePage"]
 })
 @Component({
-  selector: 'page-glossary',
-  template:`
+  selector: "page-glossary",
+  template: `
   <ion-header>
   <ion-navbar color="primary">
     <ion-title>Glossary</ion-title>
@@ -24,20 +24,9 @@ Simple page placeholder for glossary page
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <glossary displayMode="page"></glossary>
+  <glossary-list displayMode="page"></glossary-list>
 </ion-content>`
 })
 export class GlossaryPage {
-
-  constructor() {
-
-  }
-
-
-
+  constructor() {}
 }
-
-
-
-
-
