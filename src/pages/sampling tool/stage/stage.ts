@@ -20,7 +20,7 @@ import { IStageResources, AppState } from "../../../models/models";
 
 const INTRO_HTML = {
   1: `You will identify the main objectives of the survey to help inform future decision making and identify how
-  the tool can best be used. There will be <strong>1-4 questions</strong> to answer during this section`,
+  the tool can best be used. There will be <strong>1-3 questions</strong> to answer during this section`,
   2: `You will specify the indicator that will guide some of your decisions about sampling.`,
   3: `You will identify your target population and consider any additional criteria for exclusion or inclusion to
   make it as well-defined as possible`,
