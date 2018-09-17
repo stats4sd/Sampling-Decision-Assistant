@@ -77,6 +77,12 @@ export interface IGlossaryTerm {
   links?: string;
 }
 
+export interface IStageResources {
+  questions?: any[];
+  examples?: any[];
+  links?: any[];
+}
+
 // tree diagram
 export interface TreeDiagramNode {
   id?: string;

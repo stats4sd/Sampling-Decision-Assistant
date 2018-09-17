@@ -1,17 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { AngularFirestore } from "angularfire2/firestore";
 
-/*
-  Generated class for the ResourcesProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ResourcesProvider {
+  constructor(private afs: AngularFirestore) {}
 
-  constructor(public http: HttpClient) {
-    console.log('Hello ResourcesProvider Provider');
+  // return resources from live database
+  // later should be modified to return from file (replacing methods from resources component)
+  getStageResources(stage: number) {
+    return this.afs.doc(`resources/stage${stage}Resources`).valueChanges();
   }
-
 }

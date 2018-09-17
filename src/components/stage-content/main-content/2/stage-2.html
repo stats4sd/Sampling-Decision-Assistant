@@ -1,15 +1,17 @@
 <div class="slide-content">
-    <stage-intro [stage]="2"></stage-intro>
   <h4>What indicators will guide your sampling decisions?</h4>
   <p>
-    While most studies that use sampling intend to quantify multiple <glossary-link slug="indicator">indicators</glossary-link>, it is normal to base the decisions on a key
-    indicator. In this section you will be asked to select such indicator and to establish the estimation requirements that
+    While most studies that use sampling intend to quantify multiple <glossary-link slug="indicator">indicators</glossary-link>,
+    it is normal to base the decisions on a key
+    indicator. In this section you will be asked to select such indicator and to establish the estimation requirements
+    that
     will help you making sampling decisions later on.
   </p>
   <survey-question controlName='q2.1.1'></survey-question>
   <div>
     <p>
-      The next question is about the estimate you are interested in. Many estimation processes are about estimating either of the
+      The next question is about the estimate you are interested in. Many estimation processes are about estimating
+      either of the
       following, please select the estimate that best describes your interest.
     </p>
     <survey-question controlName='q2.1.2'></survey-question>
@@ -17,7 +19,8 @@
   <!-- case averages -->
   <div *ngIf="form.value['q2.1.2']=='Average or total value of indicator in the population'">
     <survey-question controlName='q2.2.1'></survey-question>
-    <p>This value may be known from previous studies. You don’t need to be exact about this value, but the more exact you are,
+    <p>This value may be known from previous studies. You don’t need to be exact about this value, but the more exact
+      you are,
       the better.</p>
     <div *ngIf="form.value['q2.2.1']=='Yes'">
       <!-- q2.2.2 needs ngif logic instead of question condition so that it displays in all cases on review and export
@@ -25,13 +28,17 @@
       <survey-question controlName='q2.2.2'></survey-question>
     </div>
     <div *ngIf="form.value['q2.2.1']=='No'">
-      <p>If you don’t know the value and there is no information you can rely on, you may be able to come to an approximate
+      <p>If you don’t know the value and there is no information you can rely on, you may be able to come to an
+        approximate
         value by answering the following questions</p>
-        <survey-question controlName='q2.2.3'></survey-question>
-        <survey-question controlName='q2.2.4'></survey-question>
-      <p>If the distribution of the values of (indicator) in the population is roughly symmetric, this value would be an acceptable
-        estimate. If the distribution is heavily skewed the value may be an overestimate and you may want to correct it slightly
-        down. If the distribution is flat, that is the values do not cluster towards the mean, but low values and high values
+      <survey-question controlName='q2.2.3'></survey-question>
+      <survey-question controlName='q2.2.4'></survey-question>
+      <p>If the distribution of the values of (indicator) in the population is roughly symmetric, this value would be
+        an acceptable
+        estimate. If the distribution is heavily skewed the value may be an overestimate and you may want to correct it
+        slightly
+        down. If the distribution is flat, that is the values do not cluster towards the mean, but low values and high
+        values
         are as likely as values around the mean, this may be a slight underestimate.
       </p>
       <div *ngIf="form.value['q2.2.3'] && form.value['q2.2.4']">
@@ -45,15 +52,15 @@
         <!-- <survey-question-group section="Indicators" [showLabel]=false [filter]="['q2.2.2']"></survey-question-group> -->
         <!-- <survey-question controlName="q2.2.2" [showLabel]=false></survey-question> -->
       </div>
-      
+
     </div>
   </div>
   <!-- case proportions *** tbc ***-->
   <!-- <div *ngIf="form.value['q2.1.2']=='Proportion of elements in the population with the characteristics of the indicator'"> -->
-    <!-- <note type="dev">Questions for case proportions will go here</note> -->
-    <survey-question controlName="q2.3.1"></survey-question>
+  <!-- <note type="dev">Questions for case proportions will go here</note> -->
+  <survey-question controlName="q2.3.1"></survey-question>
   <!-- </div> -->
-    
+
   <!-- q2.4 -->
   <!-- <survey-question controlName="q2.4.1"></survey-question>
   <survey-question controlName="q2.4.2"></survey-question> -->

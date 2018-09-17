@@ -4,6 +4,7 @@ import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { GlossaryProvider } from "../../../../providers/glossary/glossary";
 import { IGlossaryTerm } from "../../../../models/models";
+import { NavController } from "ionic-angular";
 
 @Component({
   selector: "glossary-link",
@@ -21,7 +22,8 @@ export class GlossaryLinkComponent {
 
   constructor(
     private customRouter: CustomRouterProvider,
-    private glossaryPrvdr: GlossaryProvider
+    private glossaryPrvdr: GlossaryProvider,
+    public navCtrl: NavController
   ) {
     // remove glossary term on section change
     this.tabSection$.subscribe(section => {
@@ -30,30 +32,45 @@ export class GlossaryLinkComponent {
       }
     });
   }
+  // on init load glossary from provider (wait if live version and not sync'd)
+  // then set terms
   ngOnInit() {
-    if (this.slug) {
-      this.term = this.glossaryPrvdr.allGlossary[this.slug];
-      if (!this.term) {
-        throw new Error(`no glossary entry for ${this.slug}`);
+    if (this.glossaryPrvdr.initComplete) {
+      if (this.slug) {
+        this.term = this.glossaryPrvdr.allGlossary[this.slug];
+        if (!this.term) {
+          throw new Error(`no glossary entry for ${this.slug}`);
+        }
+        if (this.customDefinition) {
+          this.term.definition = this.customDefinition;
+        }
       }
-      if (this.customDefinition) {
-        this.term.definition = this.customDefinition;
-      }
-      console.log("glossary term init", this.term);
+    } else {
+      // as loading from firestore and not binding to value changes simply use timeout to ensure
+      // glossary fully loaded (only should be a factor when directly navigating to page)
+      setTimeout(() => {
+        this.ngOnInit();
+      }, 500);
     }
   }
 
+  // on hover determine whether to show to left or right
   tooltipHover(e: MouseEvent) {
-    console.log("hover", e.x);
-    if (e.x < 250) {
+    if (e.x < window.innerWidth / 2) {
       this.tooltipPos = "right";
     } else {
       this.tooltipPos = "left";
     }
   }
 
+  goToGlossary() {
+    console.log("going to glossary", this.term);
+    this.navCtrl.push("GlossaryPage");
+  }
+
+  // previously glossary clicks changed slide section, currently does nothing
+  // but maintaining method in case of future changes
   glossaryClick() {
-    console.log("glossary click", this.term);
     // this.customRouter.unlockHash();
     // this.customRouter.updateHashParams({
     //   tabSection: "glossary",

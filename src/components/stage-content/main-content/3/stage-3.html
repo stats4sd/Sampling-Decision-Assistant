@@ -1,45 +1,47 @@
 <div class="slide-content">
-    <stage-intro [stage]="3"></stage-intro>
-    <h4>Decisions about the target population</h4>
-    <p>
-        <a target="_blank" rel="nofollow" href="http://needsassessment.unhcr.org/media/downloads/2017-05_NAH_BOOK_lowres_2017-08-14_part2.pdf">Table 4 “Standard categories of analysis”</a> in the UNHCR Needs Assessment Handbook provides a useful description
-        of criteria for the analytical framework of assessments. This framework is useful to specify the target population
-        of the survey. In most cases, these populations are constructs that are determined by the objectives for which the
-        study is being set up. Getting the boundaries of the population right, means that it would be possible to manage
-        potential biases in the study.
-        <br>
-        <br> Use the following questions to describe the population of interest. We recommend that you look at standard categories
-        of analysis presented in the UNHCR assessment handbook.
+  <h4>Decisions about the target population</h4>
+  <p>
+    <a target="_blank" rel="nofollow" href="http://needsassessment.unhcr.org/media/downloads/2017-05_NAH_BOOK_lowres_2017-08-14_part2.pdf">Table
+      4 “Standard categories of analysis”</a> in the UNHCR Needs Assessment Handbook provides a useful description
+    of criteria for the analytical framework of assessments. This framework is useful to specify the target population
+    of the survey. In most cases, these populations are constructs that are determined by the objectives for which the
+    study is being set up. Getting the boundaries of the population right, means that it would be possible to manage
+    potential biases in the study.
+    <br>
+    <br> Use the following questions to describe the population of interest. We recommend that you look at standard
+    categories
+    of analysis presented in the UNHCR assessment handbook.
+  </p>
+  <survey-question controlName="q3.1"></survey-question>
+  <div *ngIf="form.value['q3.1']">
+    <p>The next step is to identify any specific characteristics of those
+      <survey-reference [controlName]="'q3.1'"></survey-reference> that can be used to define them as a group of
+      interest and distinguish them from others.
+      You should try to be as specific as you can, and consider the characteristics in the following ways:
     </p>
-    <survey-question controlName="q3.1"></survey-question>
-    <div *ngIf="form.value['q3.1']">
-        <p>The next step is to identify any specific characteristics of those
-            <survey-reference [controlName]="'q3.1'"></survey-reference> that can be used to define them as a group of interest and distinguish them from others.
-            You should try to be as specific as you can, and consider the characteristics in the following ways:
-        </p>
-        <survey-question-group section="Definition of the target population and units of study" [filter]="['q3.2','q3.3','q3.4']"></survey-question-group>
-    </div>
-    <div *ngIf="form.value['q3.1']">
-        <p>Is the description below accurate of the population you are interested in, and fully differentiatites from other
-            populations?
-        </p>
-        <div class="quote">
-            <survey-reference [controlName]="'q3.1'" *ngIf="form.value['q3.1']"></survey-reference>
-            <span *ngIf="form.value['q3.2']"> located in
-                <survey-reference [controlName]="'q3.2'"></survey-reference>
-            </span>
-            <span *ngIf="form.value['q3.3']"> with specific interest in
-                <survey-reference [controlName]="'q3.3'"></survey-reference>
-            </span>
-            <span *ngIf="form.value['q3.4']">. Time period:
-                <survey-reference [controlName]="'q3.4'"></survey-reference>
-            </span>
+    <survey-question-group section="Definition of the target population and units of study" [filter]="['q3.2','q3.3','q3.4']"></survey-question-group>
+  </div>
+  <div *ngIf="form.value['q3.1']">
+    <p>Is the description below accurate of the population you are interested in, and fully differentiatites from other
+      populations?
+    </p>
+    <div class="quote">
+      <survey-reference [controlName]="'q3.1'" *ngIf="form.value['q3.1']"></survey-reference>
+      <span *ngIf="form.value['q3.2']"> located in
+        <survey-reference [controlName]="'q3.2'"></survey-reference>
+      </span>
+      <span *ngIf="form.value['q3.3']"> with specific interest in
+        <survey-reference [controlName]="'q3.3'"></survey-reference>
+      </span>
+      <span *ngIf="form.value['q3.4']">. Time period:
+        <survey-reference [controlName]="'q3.4'"></survey-reference>
+      </span>
 
-        </div>
-        <p>If yes, check the box below. If no then change your answers to the questions above</p>
-        <stage-complete stageNumber=3 text="Yes, it is an accurate description"></stage-complete>
     </div>
-    <!-- <p>
+    <p>If yes, check the box below. If no then change your answers to the questions above</p>
+    <stage-complete stageNumber=3 text="Yes, it is an accurate description"></stage-complete>
+  </div>
+  <!-- <p>
         You can access extra help in the section "Resources" where some more technical issues are discussed to help you developing
         a better understanding that should help in your decision making.
     </p> -->

@@ -1,70 +1,75 @@
 <div class="slide-content">
-    <stage-breadcrumbs [stage]='6' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
-    <div [ngSwitch]="stagePart">
-        <!-- recap  -->
-        <div *ngSwitchDefault>
-            <stage-intro [stage]="6"></stage-intro>
-            <h4>Allocating resources</h4>
-            <p>The final step in this process is to determine the number of units that should be sampled at every stage in the
-                process
-            </p>
-            <p>The results will be based the hierarchy of sampling stages and reporting levels that you have specified, with
-                supporting calculations for margin of error and design effect</p>
-            <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
-            <tree-diagram [showInputNodes]="false" [showKey]="'true'" *ngIf="initComplete" class="fade-in"></tree-diagram>
+  <stage-breadcrumbs [stage]='6' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
+  <div [ngSwitch]="stagePart">
+    <!-- recap  -->
+    <div *ngSwitchDefault>
+      <h4>Allocating resources</h4>
+      <p>The final step in this process is to determine the number of units that should be sampled at every stage in
+        the
+        process
+      </p>
+      <p>The results will be based the hierarchy of sampling stages and reporting levels that you have specified, with
+        supporting calculations for margin of error and design effect</p>
+      <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
+      <tree-diagram [showInputNodes]="false" [showKey]="'true'" *ngIf="initComplete" class="fade-in"></tree-diagram>
 
-            <div style="margin-top:1em; max-width:90%">
-                <note type="tip">Click on the each shape in the diagram for more information about the node</note>
-            </div>
-        </div>
-        <!-- Stratification section -->
-        <div *ngSwitchCase="1">
-            <h4>Stratification</h4>
-            <p>
-                Sometimes the population falls naturally, or can be conveniently partitioned, into a set of sub-populations. Such population
-                is said to be stratified. If a random sample is taken from each stratum a stratified sampling design is obtained.
-                The two main advantages of stratification are:
-            </p>
-            <ul>
-                <li>To ensure that sampling units from all strata are correctly represented in the overall sample,</li>
-                <li style="margin-top:1em">The precision of the estimates is, for equally large sample sizes, somewhat greater than simple random sampling</li>
-            </ul>
-            <note type="dev">
-                <strong>Under Construction</strong>
-                <br>This feature is currently under construction. Meanwhile, you can still be able to allocate resources within
-                each stage and reporting level classification.
-            </note>
-        </div>
-        <!-- Sample sizes section -->
-        <div *ngSwitchCase="2">
-            <h4>Determining an overall sample size</h4>
-            <p>
-                Using the information provided it is possible to generate approximate sample sizes to guide the resource allocation process,
-                based on determining the minimum number of households needed within a group to provide an estimate for an
-                indicator to within a given margin of error. Formulae are provided to assess estimates as either the mean
-                of a numeric indicator or the percentage of a categorical indicator, with the margin of error calculated
-                from a confidence interval of a given level of confidence.
-            </p>
-            <p>
-                This calculator assumes a clustered sample procedure will be taking place, and that random samples are able to be taken from
-                within each cluster. If there is a simple random sample from the whole population is being taken, rather
-                than a clustered sample, then set the design effect to be equal to “none”.
-            </p>
+      <div style="margin-top:1em; max-width:90%">
+        <note type="tip">Click on the each shape in the diagram for more information about the node</note>
+      </div>
+    </div>
+    <!-- Stratification section -->
+    <div *ngSwitchCase="1">
+      <h4>Stratification</h4>
+      <p>
+        Sometimes the population falls naturally, or can be conveniently partitioned, into a set of sub-populations.
+        Such population
+        is said to be stratified. If a random sample is taken from each stratum a stratified sampling design is
+        obtained.
+        The two main advantages of stratification are:
+      </p>
+      <ul>
+        <li>To ensure that sampling units from all strata are correctly represented in the overall sample,</li>
+        <li style="margin-top:1em">The precision of the estimates is, for equally large sample sizes, somewhat greater
+          than simple random sampling</li>
+      </ul>
+      <note type="dev">
+        <strong>Under Construction</strong>
+        <br>This feature is currently under construction. Meanwhile, you can still be able to allocate resources within
+        each stage and reporting level classification.
+      </note>
+    </div>
+    <!-- Sample sizes section -->
+    <div *ngSwitchCase="2">
+      <h4>Determining an overall sample size</h4>
+      <p>
+        Using the information provided it is possible to generate approximate sample sizes to guide the resource
+        allocation process,
+        based on determining the minimum number of households needed within a group to provide an estimate for an
+        indicator to within a given margin of error. Formulae are provided to assess estimates as either the mean
+        of a numeric indicator or the percentage of a categorical indicator, with the margin of error calculated
+        from a confidence interval of a given level of confidence.
+      </p>
+      <p>
+        This calculator assumes a clustered sample procedure will be taking place, and that random samples are able to
+        be taken from
+        within each cluster. If there is a simple random sample from the whole population is being taken, rather
+        than a clustered sample, then set the design effect to be equal to “none”.
+      </p>
 
 
-            <!-- <button ion-button icon-left (click)="launchSampleSizeCalculator()">
+      <!-- <button ion-button icon-left (click)="launchSampleSizeCalculator()">
                 <ion-icon name="calculator"></ion-icon>Sample Size Calculator</button> -->
-            <sample-size-calculator></sample-size-calculator>
+      <sample-size-calculator></sample-size-calculator>
 
-        </div>
-        <div *ngSwitchCase="3">
-            <h4>Allocating resources</h4>
-            <p>The final step is to allocate the sampling units throughout the diagram</p>
-            <tree-diagram [showInputNodes]="true"></tree-diagram>
-            <div style="margin-bottom: 1em">Select each sampling stage to allocate size</div>
-            <tree-table></tree-table>
+    </div>
+    <div *ngSwitchCase="3">
+      <h4>Allocating resources</h4>
+      <p>The final step is to allocate the sampling units throughout the diagram</p>
+      <tree-diagram [showInputNodes]="true"></tree-diagram>
+      <div style="margin-bottom: 1em">Select each sampling stage to allocate size</div>
+      <tree-table></tree-table>
 
-            <!-- <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
+      <!-- <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
                 <div class="node-editor-breadcrumbs"></div>
                 <div class="node-editor-heading">Allocate</div>
                 <ion-list>
@@ -73,19 +78,19 @@
                     </ion-item>
                 </ion-list>
             </div> -->
-            <stage-complete stageNumber=6></stage-complete>
-        </div>
-
+      <stage-complete stageNumber=6></stage-complete>
     </div>
 
+  </div>
 
-    <!-- Next and back buttons -->
-    <div style="display: flex; justify-content:space-between; padding-bottom:20px">
 
-        <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='3'" clear block>Continue
-            <ion-icon name="arrow-forward"></ion-icon>
-        </button>
+  <!-- Next and back buttons -->
+  <div style="display: flex; justify-content:space-between; padding-bottom:20px">
 
-    </div>
+    <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='3'" clear block>Continue
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+
+  </div>
 
 </div>

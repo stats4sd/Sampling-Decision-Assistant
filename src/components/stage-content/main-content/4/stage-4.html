@@ -1,46 +1,47 @@
 <div class="slide-content">
-    <stage-breadcrumbs [stage]='4' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
-    <div [ngSwitch]="stagePart">
-        <!-- Intro slide -->
-        <div *ngSwitchDefault>
-            <stage-intro [stage]="4"></stage-intro>
-            <p>
-                Before you try to determine the individual sampling units, it is important to define the reporting requirements or goals.
-                Depending on how you intend to report results, you may or may not have to consider your total sample size
-                and method of selection differently.
-            </p>
-            <p>The first question is to decide if you need wish to divide your population to produce
-                <glossary-link slug="disaggregate-estimates">disaggregated estimates</glossary-link>
-            </p>
-            <survey-question controlName="q4.1"></survey-question>
+  <stage-breadcrumbs [stage]='4' [stageSlidesIndex]="stageSlidesIndex"></stage-breadcrumbs>
+  <div [ngSwitch]="stagePart">
+    <!-- Intro slide -->
+    <div *ngSwitchDefault>
+      <p>
+        Before you try to determine the individual sampling units, it is important to define the reporting requirements
+        or goals.
+        Depending on how you intend to report results, you may or may not have to consider your total sample size
+        and method of selection differently.
+      </p>
+      <p>The first question is to decide if you need wish to divide your population to produce
+        <glossary-link slug="disaggregate-estimates">disaggregated estimates</glossary-link>
+      </p>
+      <survey-question controlName="q4.1"></survey-question>
 
-            <survey-question controlName='reportingLevels'></survey-question>
+      <survey-question controlName='reportingLevels'></survey-question>
 
 
-            <div *ngIf="form.value['q4.1']=='One estimate'">
-                <p>Provide a name or reference for the estimate. This should be the same as, or an abbreviation of your indicator</p>
-                <survey-question controlName='q4.3' [showLabel]="false"></survey-question>
-                <!-- <stage-complete stageNumber=4></stage-complete> -->
-            </div>
-        </div>
-
-        <!-- define levels slide -->
-        <div *ngSwitchCase="1">
-            <stage-4-define-level-categories></stage-4-define-level-categories>
-        </div>
-
-        <div *ngSwitchCase="2">  
-                <stage-4-review-levels></stage-4-review-levels>
-                <stage-complete stageNumber=4></stage-complete>
-        </div>
+      <div *ngIf="form.value['q4.1']=='One estimate'">
+        <p>Provide a name or reference for the estimate. This should be the same as, or an abbreviation of your
+          indicator</p>
+        <survey-question controlName='q4.3' [showLabel]="false"></survey-question>
+        <!-- <stage-complete stageNumber=4></stage-complete> -->
+      </div>
     </div>
 
-    <!-- Next and back buttons -->
-    <div style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px">
-        <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='2'" clear block>Continue
-            <ion-icon name="arrow-forward"></ion-icon>
-        </button>
+    <!-- define levels slide -->
+    <div *ngSwitchCase="1">
+      <stage-4-define-level-categories></stage-4-define-level-categories>
     </div>
+
+    <div *ngSwitchCase="2">
+      <stage-4-review-levels></stage-4-review-levels>
+      <stage-complete stageNumber=4></stage-complete>
+    </div>
+  </div>
+
+  <!-- Next and back buttons -->
+  <div style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px">
+    <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='2'" clear block>Continue
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </div>
 </div>
 
 

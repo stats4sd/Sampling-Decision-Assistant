@@ -1,14 +1,17 @@
 <div class="slide-content">
   <!-- intro -->
-  <stage-intro [stage]="1"></stage-intro>
+
   <h2>Introduction</h2>
-  <p>To design a sampling process, you should first have a clear idea of your main objective. This is, your overall aim for
+  <p>To design a sampling process, you should first have a clear idea of your main objective. This is, your overall aim
+    for
     the activity that you are doing sampling for.</p>
 
   <p>
-    Developing sampling designs is about making decisions that will define how you will collect data and how you will estimate
+    Developing sampling designs is about making decisions that will define how you will collect data and how you will
+    estimate
     the value of one or a set of characteristics of a population. We sometimes call those characteristics:
-    <glossary-link slug="indicator">indicators</glossary-link>. This guide has been designed to help with this type of objective. This may happen for example
+    <glossary-link slug="indicator">indicators</glossary-link>. This guide has been designed to help with this type of
+    objective. This may happen for example
     when profiling populations, setting
     <glossary-link slug="baseline">baselines</glossary-link>
     or assessing the value of indicators at
@@ -18,31 +21,38 @@
 
   <p>In some cases a study may be established to compare interventions and require a
     <glossary-link slug="quasi-experiments">quasi-experimental</glossary-link> or
-    <glossary-link slug="experiments">experimental</glossary-link> approach. This tool has not been aimed to support decisions for this type of design, but
-    it will provide pointers to resources and links that may help with the question of how many times a treatment should
+    <glossary-link slug="experiments">experimental</glossary-link> approach. This tool has not been aimed to support
+    decisions for this type of design, but
+    it will provide pointers to resources and links that may help with the question of how many times a treatment
+    should
     be repeated.</p>
 
   <!-- q1.1 -->
   <p>
-    The first question you will answer broadly separates these two types of objectives. The first answer provided is for people
-    conducting a survey to estimate a characteristic of a population. The second answer is for those wishing to evaluate
-    the comparative benefits of a set of options while controlling external factors, that is, setting an experimental or
-    a quasi-experimental study. If you are not sure which is the correct answer for you, have a look at the examples provided.
+    The first question you will answer broadly separates these two types of objectives. The first answer provided is
+    for people
+    conducting a survey to estimate a characteristic of a population. The second answer is for those wishing to
+    evaluate
+    the comparative benefits of a set of options while controlling external factors, that is, setting an experimental
+    or
+    a quasi-experimental study. If you are not sure which is the correct answer for you, have a look at the examples
+    provided.
   </p>
   <!-- <survey-question-group [filter]="['q1.1']"></survey-question-group> -->
   <survey-question controlName="q1.1"></survey-question>
-    <note type="warning" *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
-        <p>This tool does not provide support for sampling designs for experimental or quasi-experimental approaches.
-        <br>
-          To better understand the cases where this tool can support you may wish to view the brief
-          <a href="/#/introduction" style="font-weight:bold">introductory text and video</a>
-        </p>
-    </note>
+  <note type="warning" *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
+    <p>This tool does not provide support for sampling designs for experimental or quasi-experimental approaches.
+      <br>
+      To better understand the cases where this tool can support you may wish to view the brief
+      <a href="/#/introduction" style="font-weight:bold">introductory text and video</a>
+    </p>
+  </note>
   <!-- q1.2 -->
   <div *ngIf="form.value['q1.1']=='Estimating the value of one or a set of characteristics of a population'">
     <p>For the next question you will need to consider
       <glossary-link slug="representative-sample">representative</glossary-link> and
-      <glossary-link slug="non-representative-sample">non-representative</glossary-link> samples. If you are not familiar with these terms then follow links to the glossary.
+      <glossary-link slug="non-representative-sample">non-representative</glossary-link> samples. If you are not
+      familiar with these terms then follow links to the glossary.
       If you are not sure of your requirements then click on the help icon to see some common examples.
     </p>
   </div>
@@ -53,14 +63,16 @@
   </div>
   <survey-question controlName="q1.3"></survey-question>
 
-  <note type="warning" *ngIf="form.value['q1.2']=='Non-representative'" >
+  <note type="warning" *ngIf="form.value['q1.2']=='Non-representative'">
     <p>This tool does not provide support for sampling designs for non-representative samples. </p>
     <p>
       You should be aware about the issues
-    of biases and the difficulties for making inferences from the sample to the general population, that emerge from studies
-    that are based on non-representative samples. <br>
-    A good introduction to when non-representative samples may be useful can
-    be found in <br><i>“Research Methods in Anthropology: Qualitative and Quantitative Approaches” </i>  by Harvey Russell Bernard.
+      of biases and the difficulties for making inferences from the sample to the general population, that emerge from
+      studies
+      that are based on non-representative samples. <br>
+      A good introduction to when non-representative samples may be useful can
+      be found in <br><i>“Research Methods in Anthropology: Qualitative and Quantitative Approaches” </i> by Harvey
+      Russell Bernard.
     </p>
     <!-- <span class="incomplete">Text to go here responding to measure impact</span> -->
   </note>

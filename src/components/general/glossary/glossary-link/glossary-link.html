@@ -4,8 +4,18 @@
     <span [class]="term.definition == '' ? 'missing' : 'default'">
       <ng-content></ng-content>
     </span>
-    <span [class]="'tooltiptext '+tooltipPos" *ngIf="term.definition && term.definition!=''">{{term.definition}}</span>
+    <span [class]="'tooltiptext '+tooltipPos" *ngIf="term.definition && term.definition!=''">
+      <span style="display: flex; flex-direction: column">
+        <span id="termDefinition">
+          {{term.definition}}
+        </span>
+        <div id="fullGlossaryLink" (click)="goToGlossary()">
+          View in full glossary
+        </div>
+      </span>
+    </span>
     <span [class]="'tooltiptext '+tooltipPos" *ngIf="!term.definition || term.definition==''">No defintion available</span>
+
   </span>
 </span>
 
