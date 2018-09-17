@@ -13,9 +13,14 @@
 <ion-content padding>
   <div class="content-container">
     <div>
-      <div style="font-size: medium" icon-left *ngIf="activeProject && !activeProject.title">
-        <ion-icon name="bulb"></ion-icon>
-        <span>You are working on a new project. Any changes will be saved automatically to this device</span>
+      <div style="font-size: medium; display:flex" *ngIf="activeProject && !activeProject.title">
+        <div style="margin-right:10px">
+          <ion-icon name="bulb"></ion-icon>
+        </div>
+        <div>
+          <div>You are working on a new project, changes will be saved automatically to this device</div>
+          <div>To load a saved project click on the "menu" in the top right corner</div>
+        </div>
       </div>
       <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeProject && activeProject.title">
         <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}

@@ -22,10 +22,8 @@
   <p>In some cases a study may be established to compare interventions and require a
     <glossary-link slug="quasi-experiments">quasi-experimental</glossary-link> or
     <glossary-link slug="experiments">experimental</glossary-link> approach. This tool has not been aimed to support
-    decisions for this type of design, but
-    it will provide pointers to resources and links that may help with the question of how many times a treatment
-    should
-    be repeated.</p>
+    decisions for this type of design, and it is recommended to seek advice from a statistician to design this type of
+    study.</p>
 
   <!-- q1.1 -->
   <p>
@@ -35,9 +33,13 @@
     evaluate
     the comparative benefits of a set of options while controlling external factors, that is, setting an experimental
     or
-    a quasi-experimental study. If you are not sure which is the correct answer for you, have a look at the examples
-    provided.
-  </p>
+    a quasi-experimental study.</p>
+  <div style="margin:1em 0; padding:5px">
+    <span>If you are not sure of your requirements, then click on the</span>
+    <ion-icon style="padding:0 8px" ios="ios-help-circle-outline" md="ios-help-circle-outline"></ion-icon>
+    <span>icon to see some common examples.</span>
+  </div>
+
   <!-- <survey-question-group [filter]="['q1.1']"></survey-question-group> -->
   <survey-question controlName="q1.1"></survey-question>
   <note type="warning" *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
