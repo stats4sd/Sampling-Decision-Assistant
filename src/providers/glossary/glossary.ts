@@ -11,9 +11,7 @@ export class GlossaryProvider {
   // allGlossaryArray: IGlossaryTerm[] = TERMS;
   public allGlossary: allGlossaryObj = {};
   initComplete: boolean;
-  constructor(private afs: AngularFirestore) {
-    this.init();
-  }
+  constructor(private afs: AngularFirestore) {}
 
   async init() {
     // convert glossary terms array to object for faster term retrieval
@@ -21,7 +19,7 @@ export class GlossaryProvider {
     allGlossaryArray.forEach(term => {
       this.allGlossary[term.slug] = term;
     });
-    console.log("all glossary obj", this.allGlossary);
+    console.log("glossary ready", this.allGlossary);
     this.initComplete = true;
   }
 

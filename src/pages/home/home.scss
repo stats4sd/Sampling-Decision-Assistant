@@ -1,40 +1,46 @@
 page-home {
-    
-    
-    .start-button{
-        font-size: large;
-    }
-    .align-start{
-        align-items: flex-start;
-    }
-    .feature-image{
-        height: 140px
-    }
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+  }
 
-    
-    .button-block{
-        // minor tweak to prevent block buttons stretching over
-        margin:2px;
+  .start-button {
+    font-size: large;
+  }
+  .align-start {
+    align-items: flex-start;
+  }
+  .feature-image {
+    height: 140px;
+  }
+
+  .button-block {
+    // minor tweak to prevent block buttons stretching over
+    margin: 2px;
+  }
+  .version-info {
+    position: absolute;
+    right: 5px;
+    color: color($colors, primary);
+    font-weight: 500;
+    text-align: right;
+    .button {
+      padding: 0;
+      margin: 0;
     }
-    .version-info{
-        position: absolute;
-        right: 5px;
-        color: color($colors,primary);
-        font-weight: 500;
-        text-align: right;
-        .button{padding:0;margin:0}
-    }
-    #useTheTool{
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
-        
-    }
-    #stats4sdAdmin{
-        margin-top:100px;
-        text-align: right;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    
+  }
+  #useTheTool {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  #stats4sdAdmin {
+    margin-top: 100px;
+    text-align: right;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  #stats4sdLink {
+    color: #cf1a27;
+  }
 }

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage } from "ionic-angular";
+import { IonicPage, NavController } from "ionic-angular";
 
 /*
 Simple page placeholder for glossary page
@@ -28,5 +28,5 @@ Simple page placeholder for glossary page
 </ion-content>`
 })
 export class GlossaryPage {
-  constructor() {}
+  constructor(public navCtrl: NavController) {}
 }

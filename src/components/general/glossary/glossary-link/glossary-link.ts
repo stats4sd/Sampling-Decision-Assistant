@@ -67,14 +67,4 @@ export class GlossaryLinkComponent {
     console.log("going to glossary", this.term);
     this.navCtrl.push("GlossaryPage");
   }
-
-  // previously glossary clicks changed slide section, currently does nothing
-  // but maintaining method in case of future changes
-  glossaryClick() {
-    // this.customRouter.unlockHash();
-    // this.customRouter.updateHashParams({
-    //   tabSection: "glossary",
-    //   activeGlossaryTerm: this.slug
-    // });
-  }
 }

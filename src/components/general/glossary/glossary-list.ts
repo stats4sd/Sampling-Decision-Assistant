@@ -29,26 +29,6 @@ export class GlossaryListComponent {
     private customRouter: CustomRouterProvider,
     private glossaryPrvdr: GlossaryProvider
   ) {
-    this.allSectionTerms = {
-      1: [
-        "baseline",
-        "endline",
-        "experiments",
-        "external-validity",
-        "hypothesis-testing",
-        "indicator",
-        "inference",
-        "internal validity",
-        "quasi-experiments",
-        "representative-sample",
-        "non-representative-sample"
-      ],
-      2: [],
-      3: [],
-      4: ["disaggregate-estimates"],
-      5: [],
-      6: []
-    };
     this.activeGlossarySlug$.subscribe(slug => {
       if (slug) {
         let term = this.allGlossaryJson[slug];

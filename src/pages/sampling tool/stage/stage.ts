@@ -11,12 +11,12 @@ import {
 import { FormGroup } from "@angular/forms";
 import { DataProvider } from "../../../providers/data/data";
 import { FormProvider } from "../../../providers/form/form";
-import { ViewActions } from "../../../actions/actions";
-import { select } from "@angular-redux/store";
+import { ViewActions, ProjectActions } from "../../../actions/actions";
+import { select, NgRedux } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { CustomRouterProvider } from "../../../providers/router/router";
 import { ResourcesProvider } from "../../../providers/resources/resources";
-import { IStageResources } from "../../../models/models";
+import { IStageResources, AppState } from "../../../models/models";
 
 const INTRO_HTML = {
   1: `You will identify the main objectives of the survey to help inform future decision making and identify how
@@ -72,7 +72,10 @@ export class StagePage {
     public viewCtrl: ViewController,
     public viewActions: ViewActions,
     public customRouter: CustomRouterProvider,
-    private resourcesPrvdr: ResourcesProvider
+    private resourcesPrvdr: ResourcesProvider,
+    // project actions and ngredux required for child components
+    public ngRedux: NgRedux<AppState>,
+    public projectActions: ProjectActions
   ) {
     // part of workaround for router locked params #114
     this.customRouter.unlockHash();

@@ -1,6 +1,5 @@
 <span *ngIf="term">
-  <!-- <span class="glossary-link" ></span> -->
-  <span class="tooltip" (click)="glossaryClick()" (mouseenter)="tooltipHover($event)">
+  <span class="tooltip" (mouseenter)="tooltipHover($event)">
     <span [class]="term.definition == '' ? 'missing' : 'default'">
       <ng-content></ng-content>
     </span>
@@ -15,20 +14,5 @@
       </span>
     </span>
     <span [class]="'tooltiptext '+tooltipPos" *ngIf="!term.definition || term.definition==''">No defintion available</span>
-
   </span>
 </span>
-
-<!-- <span *ngIf="term && term.definition!=''">
-  <span class="tooltip" (click)="glossaryClick()" (mouseenter)="tooltipHover($event)">
-    <ng-content></ng-content>
-    <span [class]="'tooltiptext '+tooltipPos">{{term.definition}}</span>
-  </span>
-</span>
-
-<span *ngIf="term && term.definition==''">
-  <span class="tooltip missing" (click)="glossaryClick()" (mouseenter)="tooltipHover($event)">
-    <ng-content></ng-content>
-    <span [class]="'tooltiptext '+tooltipPos">No definition available</span>
-  </span>
-</span> -->

@@ -4,285 +4,299 @@
 // styles are for the entire app and not just one component.
 // Additionally, this file can be also used as an entry point
 // to import other Sass files to be included in the output CSS.
-@import './scrollbars.scss';
+@import "./scrollbars.scss";
 // dev
 @import "https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css";
 // --------------------------------------------------
-$max-app-width:768px;
+$max-app-width: 768px;
+$small-screen-width: 320px;
+$medium-screen-width: 500px;
 // also applied direct to body so adjust accordingly
 // --------------------------------------------------
 // header settings
 .header-logo {
-    height: 50px;
+  height: 50px;
 }
 
 .header {
-    display: flex;
+  display: flex;
 }
 
 .header-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: color($colors, primary)
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: color($colors, primary);
 }
 
 // --------------------------------------------------
 // text block css
 h3 {
-    font-size: large;
-    font-weight: bold;
-    color: color($colors, primary); //padding: 10px 0;
+  font-size: large;
+  font-weight: bold;
+  color: color($colors, primary); //padding: 10px 0;
 }
 
 h2 {
-    font-size: x-large;
-    color: color($colors, primary);
+  font-size: x-large;
+  color: color($colors, primary);
 }
 
 .feature-image {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .hidden {
-    display: none
+  display: none;
 }
 
 .incomplete {
-    color: red !important; //background-color: #ecbdb6;
-    padding: 5px;
-    font-weight: bold !important;
+  color: red !important; //background-color: #ecbdb6;
+  padding: 5px;
+  font-weight: bold !important;
 }
 
 .dev-note {
-    margin: 5px;
-    color: rgba(11, 120, 175, 1)
+  margin: 5px;
+  color: rgba(11, 120, 175, 1);
 }
 
 .multi-line-button {
-    // requires text-wrap attribute on element for multiple lines
-    text-transform: none;
-    font-weight: 300;
-    @media screen and (max-width: 300px) {
-        // make buttons larger on very small screens
-        height:6rem;
-    }
+  // requires text-wrap attribute on element for multiple lines
+  text-transform: none;
+  font-weight: 300;
+  @media screen and (max-width: 300px) {
+    // make buttons larger on very small screens
+    height: 6rem;
+  }
 }
 
 // multi-line text in buttons
 .button-inner {
-    white-space: normal
+  white-space: normal;
 }
 
 body {
-    user-select: text;
-    font-family: 'proxima_nova', lato, sans-serif !important;
-    font-size: 1.3em;
+  user-select: text;
+  font-family: "proxima_nova", lato, sans-serif !important;
+  font-size: 1.3em;
 }
 
 // project resume prompt
 .project-title {
-    margin-top: 1em;
-    font-weight: bold;
+  margin-top: 1em;
+  font-weight: bold;
 }
 
 // --------------------------------------------------
 // css commonly used to help display vertical columns with correct height sections
 .central-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 // --------------------------------------------------
 // more section css
 .hover-fill {
-    :hover {
-        background-color: wheat;
-        cursor: pointer;
-    }
+  :hover {
+    background-color: wheat;
+    cursor: pointer;
+  }
 }
 
 .card.disabled {
-    opacity: 0.6;
-    :hover {
-        background-color: white
-    }
-    ;
+  opacity: 0.6;
+  :hover {
+    background-color: white;
+  }
 }
 
 .invert {
-    background-color: color($colors, primary);
-    color: rgba(255, 255, 255, 0.9)
+  background-color: color($colors, primary);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .section-icon {
-    height: 100%;
-    max-height: 110px;
-    max-width: 110px;
-    padding: 5px;
-    width: auto;
+  height: 100%;
+  max-height: 110px;
+  max-width: 110px;
+  padding: 5px;
+  width: auto;
 }
 
 .section-icon-container {
-    width: 120px;
+  width: 120px;
 }
 
 .section-container {
-    padding: 5px;
-    height: 100%;
-    display: flex;
-    cursor: pointer;
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
 }
 
 .section-title {
-    color: color($colors, primary);
-    font-size: large;
-    flex: 1;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  color: color($colors, primary);
+  font-size: large;
+  flex: 1;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .content-container {
-    height: calc(100vh - 106px);
-    display: flex;
-    flex-direction: column;
+  height: calc(100vh - 106px);
+  display: flex;
+  flex-direction: column;
 }
 
 // segment buttons
-.segment-button {}
+.segment-button {
+}
 
 .segment-button.activated,
 .segment-button.segment-activated {
-    background-color: color($colors, primary) !important;
-    color: white !important;
-    opacity: 1 !important;
+  background-color: color($colors, primary) !important;
+  color: white !important;
+  opacity: 1 !important;
 }
 
 .segment-container {
-    position: fixed;
-    bottom: 0;
-    padding-bottom: 1rem;
-    width: calc(100% - 55px);
-    max-width: calc(100vw - 32px);
-    z-index: 2;
-    background-color: white;
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 1rem;
+  width: calc(100% - 55px);
+  max-width: calc(100vw - 32px);
+  z-index: 2;
+  background-color: white;
 }
 
-@media screen and (min-width:$max-app-width) {
-    // .segment-container{
-    //     // bottom:2rem;
-    // }
+@media screen and (min-width: $max-app-width) {
+  // .segment-container{
+  //     // bottom:2rem;
+  // }
 }
 
 // allow vertical scroll in slides
 .central-inner-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .slide-content {
-    font-size: 14px;
-    text-align: left;
-    line-height: 18px;
-    margin-bottom: 40px;
+  font-size: 14px;
+  text-align: left;
+  line-height: 18px;
+  margin-bottom: 40px;
 }
 
 .swiper-slide {
-    display: block !important; // max-height: calc(100vh - 150px);
-    overflow-y: scroll;
-    width: 100%;
+  display: block !important; // max-height: calc(100vh - 150px);
+  overflow-y: scroll;
+  width: 100%;
 }
 
 .slide-scroll-content {
-    // .scroll-content{
-    //     overflow-y: hidden
-    // }
+  // .scroll-content{
+  //     overflow-y: hidden
+  // }
 }
 
 // fix to stop height filling largest slide even when inactive
 // combine with @Viewchild for slides after view init: `this.slides.autoHeight=true`;
-.swiper-slide:not(.swiper-slide-active)>div {
-    display: none;
+.swiper-slide:not(.swiper-slide-active) > div {
+  display: none;
 }
 
 // --------------------------------------------------
 // glossary
 .glossary-link {
-    color: brown;
-    font-weight: 500;
-    cursor: pointer;
+  color: brown;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 // --------------------------------------------------
 // question display overrides
 ion-card {
-    #questionLabelText,
-    .question-number.dark {
-        color: color($colors, dark);
-        font-size: 14px;
-        font-weight: 500;
-    }
-    .question-number.dark {
-        font-size: 10px;
-    }
+  #questionLabelText,
+  .question-number.dark {
+    color: color($colors, dark);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .question-number.dark {
+    font-size: 10px;
+  }
 }
 
 .card {
-    margin: 5px; // padding:5px;
-    //background-color: color($colors,secondary);
+  margin: 5px; // padding:5px;
+  //background-color: color($colors,secondary);
 }
 
 // popover fix for screen resizing (max-width - 100?)
 .popover-content {
-    // margin-right:400px;
-    // right: 0!important;
-    top: 56px !important;
-    left: unset !important;
-    width: 150px !important;
-    right: 0 !important; // right: calc(100% - #{$max-app-width}/2)!important;
+  // margin-right:400px;
+  // right: 0!important;
+  top: 56px !important;
+  left: unset !important;
+  width: 150px !important;
+  right: 0 !important; // right: calc(100% - #{$max-app-width}/2)!important;
 }
 
 // --------------------------------------------------
 // app root centering for wide display
-@media screen and (min-width:$max-app-width) {
-    body {
-        max-width: 768px;
-        left: calc(50% - #{$max-app-width}/2);
-        background-color: color($colors, primary);
-        height: calc(100vh - 10px);
-        margin: 5px auto;
-    } // add padding, background and curved edges for large devices
-    .menu-content,
-    .app-root {
-        border-radius: 10px;
-        border: 1px solid white;
-    } // modal fix for screen resizing
-    .modal-wrapper {
-        left: calc(50% - #{$max-app-width}/2);
-        top: 0px;
-        position: absolute;
-        width: $max-app-width;
-        height: calc(100vh - 20px); //margin-top:100px;
-    }
+@media screen and (min-width: $max-app-width) {
+  body {
+    max-width: 768px;
+    left: calc(50% - #{$max-app-width}/ 2);
+    background-color: color($colors, primary);
+    height: calc(100vh - 10px);
+    margin: 5px auto;
+  } // add padding, background and curved edges for large devices
+  .menu-content,
+  .app-root {
+    border-radius: 10px;
+    border: 1px solid white;
+  } // modal fix for screen resizing
+  .modal-wrapper {
+    left: calc(50% - #{$max-app-width}/ 2);
+    top: 0px;
+    position: absolute;
+    width: $max-app-width;
+    height: calc(100vh - 20px); //margin-top:100px;
+  }
+}
+// content to hide on small displays
+@media screen and (max-width: $small-screen-width) {
+  .hide-small {
+    display: none;
+  }
+}
+// content to hide on medium displays
+@media screen and (max-width: $medium-screen-width) {
+  .hide-medium {
+    display: none;
+  }
 }
 
 // --------------------------------------------------
 // --------------------------------------------------
 // matched css from questions.scss to apply to pdf clone
 .pdf-output {
-    .heading {
-        font-weight: 700;
-        color: white;
-        width: 100%;
-        background-color: color($colors, primary);
-        padding: 5px;
-        font-size: large;
-        margin-top: 5px
-    }
+  .heading {
+    font-weight: 700;
+    color: white;
+    width: 100%;
+    background-color: color($colors, primary);
+    padding: 5px;
+    font-size: large;
+    margin-top: 5px;
+  }
 }
 
 // --------------------------------------------------
@@ -292,30 +306,30 @@ ion-card {
 // }
 // *************************** Custom Icons ******************************** //
 ion-icon {
-    &[class*="custom-"] {
-        mask-size: contain;
-        mask-position: 50% 50%;
-        mask-repeat: no-repeat;
-        background: currentColor;
-        width: 1em;
-        height: 1em;
-    }
-    &[class*="custom-allocate"] {
-        mask-image: url(../assets/img/icons/allocate.svg);
-    }
-    &[class*="custom-indicators"] {
-        mask-image: url(../assets/img/icons/indicators.svg);
-    }
-    &[class*="custom-objectives"] {
-        mask-image: url(../assets/img/icons/objectives.svg);
-    }
-    &[class*="custom-database"] {
-        mask-image: url(../assets/img/icons/database.svg);
-    }
-    &[class*="custom-tree"] {
-        mask-image: url(../assets/img/icons/tree.svg);
-    }
-    &[class*="custom-excel"] {
-        mask-image: url(../assets/img/icons/excel.svg);
-    }
+  &[class*="custom-"] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: currentColor;
+    width: 1em;
+    height: 1em;
+  }
+  &[class*="custom-allocate"] {
+    mask-image: url(../assets/img/icons/allocate.svg);
+  }
+  &[class*="custom-indicators"] {
+    mask-image: url(../assets/img/icons/indicators.svg);
+  }
+  &[class*="custom-objectives"] {
+    mask-image: url(../assets/img/icons/objectives.svg);
+  }
+  &[class*="custom-database"] {
+    mask-image: url(../assets/img/icons/database.svg);
+  }
+  &[class*="custom-tree"] {
+    mask-image: url(../assets/img/icons/tree.svg);
+  }
+  &[class*="custom-excel"] {
+    mask-image: url(../assets/img/icons/excel.svg);
+  }
 }
