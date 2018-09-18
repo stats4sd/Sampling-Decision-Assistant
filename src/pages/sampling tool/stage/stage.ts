@@ -16,7 +16,7 @@ import { select, NgRedux } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { CustomRouterProvider } from "../../../providers/router/router";
 import { ResourcesProvider } from "../../../providers/resources/resources";
-import { IStageResources, AppState } from "../../../models/models";
+import { IStageResources, AppState, IStageMeta } from "../../../models/models";
 
 const INTRO_HTML = {
   1: `You will identify the main objectives of the survey to help inform future decision making and identify how
@@ -39,8 +39,8 @@ const INTRO_HTML = {
   templateUrl: "stage.html"
 })
 export class StagePage {
-  stage: any;
-  stages: any;
+  stage: IStageMeta;
+  stages: { [stageId: string]: IStageMeta };
   @ViewChild("navbar")
   navbar: Navbar;
   @ViewChild("content")
@@ -80,6 +80,7 @@ export class StagePage {
     // part of workaround for router locked params #114
     this.customRouter.unlockHash();
     this.stageInit(navParams);
+    this.getResources(this.stage.number);
     this._subscribeToViewChanges();
   }
 

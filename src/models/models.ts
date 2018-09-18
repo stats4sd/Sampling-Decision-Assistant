@@ -82,6 +82,17 @@ export interface IStageResources {
   examples?: any[];
   links?: any[];
 }
+export interface IStageMeta {
+  name: string;
+  title: string;
+  icon: string;
+  number: number;
+}
+// hard coded into stages page but keeping as reminder of how to
+// allow for any json key but with specific value format
+interface stages {
+  [stageId: string]: IStageMeta;
+}
 
 // tree diagram
 export interface TreeDiagramNode {

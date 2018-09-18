@@ -66,7 +66,6 @@ export class GlossaryLinkComponent {
   // push term navParams to glossary to automatically load
   // had previously been done with url parameters but messy
   goToGlossary() {
-    console.log("going to glossary", this.term);
     this.navCtrl.push("GlossaryPage", this.term);
   }
 }

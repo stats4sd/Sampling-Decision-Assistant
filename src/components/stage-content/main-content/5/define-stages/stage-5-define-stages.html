@@ -1,24 +1,29 @@
 <h4>Sampling stages and frames</h4>
 <p>The next step is to determine whether your sampling will be carried out over a single stage or multiple stages.</p>
 <p>Consider the
-    <glossary-link text="final sampling units" slug="sampling-units"></glossary-link>
-    that make up your target population of
-    <survey-reference controlName="q3.1"></survey-reference>.</p>
+  <glossary-link slug="final-sampling-unit">final sampling units</glossary-link>
+  that make up your target population of
+  <survey-reference controlName="q3.1"></survey-reference>.</p>
 <survey-question controlName="q5.1"></survey-question>
 <!-- q5.1 -->
-<p *ngIf="form.value['q5.1']=='Yes'">As a final list does exist you have the choice to use it in a single stage sampling approach with
-    <glossary-link text="simple random sampling" slug="simple-random-sampling"></glossary-link>, or you may still decide to use
-    <glossary-link text="multiple stages" slug="multi-stage-sampling"></glossary-link>. Some of the pros and cons of each approach are discussed in the resources section.
+<p *ngIf="form.value['q5.1']=='Yes'">As a final list does exist you have the choice to use it in a single stage
+  sampling approach with
+  <glossary-link slug="simple-random-sampling">simple random sampling</glossary-link>, or you may still decide
+  to use
+  <glossary-link slug="multi-stage-sampling">multiple stages</glossary-link>. Some of the pros and cons of each
+  approach are discussed in the resources section.
 </p>
 
 <survey-question controlName="q5.1.1"></survey-question>
 <!-- <note *ngIf="form.value['q5.1.1'] =='Single-stage'" type='dev'>Next steps for single stage to be completed, multi stage more indicative</note> -->
 
 <p *ngIf="form.value['q5.1']=='No'">In this case you will need to use a
-    <glossary-link text="multi-stage sampling" slug="multi-stage-sampling"></glossary-link>strategy. In order to do this you must first determine a set of sampling stages that will eventually
-    narrow down to your final sampling units.
+  <glossary-link slug="multi-stage-sampling">multi-stage sampling</glossary-link>strategy. In order to do this
+  you must first determine a set of sampling stages that will eventually
+  narrow down to your final sampling units.
 </p>
 
 <!--     *** additional hidden field to make up for not being able to use multiple conditions
             will need to find a way to correct in template binding -->
-<survey-question [style.display]="(form.value['q5.1.1']=='Single-stage' || form.value['q5.1.1']=='')?'none':'block'" controlName="q5.2"></survey-question>
+<survey-question [style.display]="(form.value['q5.1.1']=='Single-stage' || form.value['q5.1.1']=='')?'none':'block'"
+  controlName="q5.2"></survey-question>

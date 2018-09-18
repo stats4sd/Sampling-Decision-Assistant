@@ -1,67 +1,69 @@
 <h4>Introduction</h4>
 <p>We will now find a method to select and reach the
-    <glossary-link text="sampling units" slug="sampling-unit"></glossary-link>
-    .
+  <glossary-link slug="sampling-unit">sampling units</glossary-link>
+  .
 </p>
 <p>
-    When selecting the sampling units, it is important to ensure that any biases are limited as much as possible. Sometimes this
-    is a relatively straight-forward process, but often it can involve multiple stages and more advanced techniques such
-    as the contstruction of
-    <glossary-link text="sampling frames." slug="sampling-frame"></glossary-link>
+  When selecting the sampling units, it is important to ensure that any biases are limited as much as possible.
+  Sometimes this
+  is a relatively straight-forward process, but often it can involve multiple stages and more advanced techniques such
+  as the contstruction of
+  <glossary-link>sampling frames.</glossary-link>
 </p>
-<p>To start, let us review some of the information that you have presented so far. Note that at any point you can modify this
-    to assist building an appropriate strategy</p>
+<p>To start, let us review some of the information that you have presented so far. Note that at any point you can
+  modify this
+  to assist building an appropriate strategy</p>
 <div class="info-card-container">
-    <ion-card *ngFor="let info of infoProvided" class="info-provided-card">
-        <div style="display: flex" class="info-card-header">
-            <div>{{info.heading}}</div>
+  <ion-card *ngFor="let info of infoProvided" class="info-provided-card">
+    <div style="display: flex" class="info-card-header">
+      <div>{{info.heading}}</div>
+    </div>
+    <div style="padding:5px">
+      <!-- specific cases for content boxes-->
+      <div [ngSwitch]="info.stage">
+        <!-- stage 1 -->
+        <div *ngSwitchCase="'stage-1'">
+          <survey-reference controlName="q1.3"></survey-reference>
         </div>
-        <div style="padding:5px">
-            <!-- specific cases for content boxes-->
-            <div [ngSwitch]="info.stage">
-                <!-- stage 1 -->
-                <div *ngSwitchCase="'stage-1'">
-                    <survey-reference controlName="q1.3"></survey-reference>
-                </div>
-                <!-- stage 2 -->
-                <div *ngSwitchCase="'stage-2'">
-                    <survey-reference controlName="q2.1.1"></survey-reference>
-                    <!-- averages -->
-                    <div *ngIf="form.value['q2.1.2']=='Average or total value of indicator in the population'">
-                        <span style="padding-left:5px">&sigma; = </span>
-                        <survey-reference controlName="q2.2.2"></survey-reference>
-                    </div>
-                    <!-- proportions -->
-                    <div *ngIf="form.value['q2.1.2']=='Proportion of elements in the population with the characteristics of the indicator'">
-                        <span style="padding-left:5px">Estimated Proportion: </span>
-                        <survey-reference controlName="q2.3.1"></survey-reference>
-                    </div>
-                </div>
-                <!-- stage 3 -->
-                <div *ngSwitchCase="'stage-3'">
-                    <survey-reference controlName="q3.5"></survey-reference>
-                </div>
-                <!-- stage 4 -->
-                <div *ngSwitchCase="'stage-4'">
-                    <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
-                        <div>Disaggregated by:</div>
-                        <ul *ngIf="form.value['reportingLevels']!=''">
-                            <li *ngFor="let estimate of form.value['reportingLevels']">{{estimate.name}}</li>
-                        </ul>
-                    </div>
-                    <div *ngIf="form.value['q4.1']=='One estimate'">
-                            One estimate
-                        </div>
-                    <div *ngIf="!form.value['q4.1']">
-                        <survey-reference controlName="4.1"></survey-reference>
-                    </div>
-                </div>
-
-            </div>
+        <!-- stage 2 -->
+        <div *ngSwitchCase="'stage-2'">
+          <survey-reference controlName="q2.1.1"></survey-reference>
+          <!-- averages -->
+          <div *ngIf="form.value['q2.1.2']=='Average or total value of indicator in the population'">
+            <span style="padding-left:5px">&sigma; = </span>
+            <survey-reference controlName="q2.2.2"></survey-reference>
+          </div>
+          <!-- proportions -->
+          <div *ngIf="form.value['q2.1.2']=='Proportion of elements in the population with the characteristics of the indicator'">
+            <span style="padding-left:5px">Estimated Proportion: </span>
+            <survey-reference controlName="q2.3.1"></survey-reference>
+          </div>
+        </div>
+        <!-- stage 3 -->
+        <div *ngSwitchCase="'stage-3'">
+          <survey-reference controlName="q3.5"></survey-reference>
+        </div>
+        <!-- stage 4 -->
+        <div *ngSwitchCase="'stage-4'">
+          <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
+            <div>Disaggregated by:</div>
+            <ul *ngIf="form.value['reportingLevels']!=''">
+              <li *ngFor="let estimate of form.value['reportingLevels']">{{estimate.name}}</li>
+            </ul>
+          </div>
+          <div *ngIf="form.value['q4.1']=='One estimate'">
+            One estimate
+          </div>
+          <div *ngIf="!form.value['q4.1']">
+            <survey-reference controlName="4.1"></survey-reference>
+          </div>
         </div>
 
-    </ion-card>
-    <!-- <div class="dev-note" icon-left>
+      </div>
+    </div>
+
+  </ion-card>
+  <!-- <div class="dev-note" icon-left>
                     <ion-icon name="bug"></ion-icon>Developer note: sampling unit should include full definition with exclusions and reporting
                     level should include multiple</div> -->
 </div>

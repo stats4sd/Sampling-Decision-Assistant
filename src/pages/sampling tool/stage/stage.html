@@ -16,16 +16,16 @@
         <div class="intro-heading">In this section</div>
         <div class="stage-info">
           <div id="stageOverview" [innerHtml]="introHtml[stage.number]">
-            <div id="stageResources">
-              <button ion-button clear (click)="showResourcesList()">
-                <span *ngIf="totalResources">
-                  {{totalResources}}
-                </span>
-                <span>
-                  Additional Resources
-                </span>
-              </button>
-            </div>
+          </div>
+          <div id="stageResources">
+            <button ion-button clear (click)="showResourcesList()">
+              <span *ngIf="totalResources">
+                {{totalResources}}
+              </span>
+              <span>
+                Additional Resources
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -38,24 +38,6 @@
       <stage-4 *ngIf="stage.number==4"></stage-4>
       <stage-5 *ngIf="stage.number==5"></stage-5>
       <stage-6 *ngIf="stage.number==6"></stage-6>
-    </div>
-    <!-- Resources -->
-    <div class="slide-content" [style.display]="activeSection=='resources'? 'block' : 'none'">
-      <resources *ngIf="!editMode" [stage]="stage.number"></resources>
-      <dev-editor-resources *ngIf="editMode" [stage]="stage.number"></dev-editor-resources>
-    </div>
-
-    <!-- Glossary -->
-    <div class="slide-content" [style.display]="activeSection=='glossary'? 'block' : 'none'">
-      <glossary-list></glossary-list>
-    </div>
-
-    <div class="segment-container">
-      <ion-segment [(ngModel)]="activeSection">
-        <ion-segment-button value="main" (click)="goTo(null)">Main</ion-segment-button>
-        <ion-segment-button value="resources" (click)="goTo('resources')">Resources</ion-segment-button>
-        <ion-segment-button value="glossary" (click)="goTo('glossary')">Glossary</ion-segment-button>
-      </ion-segment>
     </div>
   </div>
 
