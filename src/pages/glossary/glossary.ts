@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController } from "ionic-angular";
+import { IonicPage, NavParams } from "ionic-angular";
+import { IGlossaryTerm } from "../../models/models";
 
 /*
 Simple page placeholder for glossary page
@@ -24,9 +25,14 @@ Simple page placeholder for glossary page
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <glossary-list displayMode="page"></glossary-list>
+  <glossary-list displayMode="page" [activeTerm]="activeTerm"></glossary-list>
 </ion-content>`
 })
 export class GlossaryPage {
-  constructor(public navCtrl: NavController) {}
+  activeTerm: IGlossaryTerm;
+  constructor(public navParams: NavParams) {
+    if (navParams.data.slug) {
+      this.activeTerm = navParams.data;
+    }
+  }
 }

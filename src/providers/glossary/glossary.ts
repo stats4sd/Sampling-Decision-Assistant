@@ -15,10 +15,7 @@ export class GlossaryProvider {
 
   async init() {
     // convert glossary terms array to object for faster term retrieval
-    const allGlossaryArray = await this.getGlossary();
-    allGlossaryArray.forEach(term => {
-      this.allGlossary[term.slug] = term;
-    });
+    this.allGlossary = await this.getGlossary();
     console.log("glossary ready", this.allGlossary);
     this.initComplete = true;
   }
@@ -26,11 +23,16 @@ export class GlossaryProvider {
   // return glossary from live database
   // later should be modified to return from file (replacing methods from resources component)
   async getGlossary() {
-    const snapshot = await this.afs.firestore.collection("glossary").get();
-    const terms = [];
-    snapshot.forEach(doc => {
-      return terms.push(doc.data());
-    });
-    return terms;
+    if (this.initComplete) {
+      return this.allGlossary;
+    } else {
+      const snapshot = await this.afs.firestore.collection("glossary").get();
+      const terms = {};
+      snapshot.forEach(doc => {
+        const term: IGlossaryTerm = doc.data() as IGlossaryTerm;
+        return (terms[term.slug] = term);
+      });
+      return terms;
+    }
   }
 }
