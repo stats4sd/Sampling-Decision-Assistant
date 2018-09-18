@@ -43,10 +43,8 @@
   <!-- <survey-question-group [filter]="['q1.1']"></survey-question-group> -->
   <survey-question controlName="q1.1"></survey-question>
   <note type="warning" *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'">
-    <p>This tool does not provide support for sampling designs for experimental or quasi-experimental approaches.
-      <br>
-      To better understand the cases where this tool can support you may wish to view the brief
-      <a href="/#/introduction" style="font-weight:bold">introductory text and video</a>
+    <p>This tool has not been aimed to support decisions for this type of design, and it is recommended to seek advice
+      from a statistician to design this type of study
     </p>
   </note>
   <!-- q1.2 -->
@@ -66,7 +64,9 @@
   <survey-question controlName="q1.3"></survey-question>
 
   <note type="warning" *ngIf="form.value['q1.2']=='Non-representative'">
-    <p>This tool does not provide support for sampling designs for non-representative samples. </p>
+    <p>This tool does not provide support for sampling designs for non-representative samples, and it is recommended to
+      seek advice
+      from a statistician to design this type of study.</p>
     <p>
       You should be aware about the issues
       of biases and the difficulties for making inferences from the sample to the general population, that emerge from
