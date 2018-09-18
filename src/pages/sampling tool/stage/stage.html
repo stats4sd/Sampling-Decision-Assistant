@@ -19,9 +19,9 @@
           </div>
           <div id="stageResources">
             <button ion-button clear (click)="showResourcesList()">
-              <span *ngIf="totalResources">
+              <!-- <span *ngIf="totalResources">
                 {{totalResources}}
-              </span>
+              </span> -->
               <span>
                 Additional Resources
               </span>
@@ -30,7 +30,6 @@
         </div>
       </div>
 
-      <stage-intro [stage]="stage.number"></stage-intro>
       <!-- main stage content -->
       <stage-1 *ngIf="stage.number==1"></stage-1>
       <stage-2 *ngIf="stage.number==2"></stage-2>

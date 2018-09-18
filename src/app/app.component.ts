@@ -2,6 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { Nav, Platform } from "ionic-angular";
 import { ProjectActions } from "../actions/actions";
 import { GlossaryProvider } from "../providers/glossary/glossary";
+import { ResourcesProvider } from "../providers/resources/resources";
 
 @Component({
   templateUrl: "app.html"
@@ -16,7 +17,8 @@ export class MyApp {
   constructor(
     public platform: Platform,
     private projectActions: ProjectActions,
-    private glossaryPrvdr: GlossaryProvider
+    private glossaryPrvdr: GlossaryProvider,
+    private resourcesPrvdr: ResourcesProvider
   ) {
     this.initializeApp();
 
@@ -51,6 +53,7 @@ export class MyApp {
       }
       // initialise glossary and resources
       this.glossaryPrvdr.init();
+      this.resourcesPrvdr.init();
     });
   }
 

@@ -6,7 +6,8 @@ import {
   Slides,
   Navbar,
   ViewController,
-  Content
+  Content,
+  ModalController
 } from "ionic-angular";
 import { FormGroup } from "@angular/forms";
 import { DataProvider } from "../../../providers/data/data";
@@ -49,8 +50,8 @@ export class StagePage {
   stageSlides: Slides;
   @select(["activeProject", "values"])
   readonly formValues$: Observable<any>;
-  @select(["view", "params", "tabSection"])
-  readonly tabSection$: Observable<any>;
+  // @select(["view", "params", "tabSection"])
+  // readonly tabSection$: Observable<any>;
   @select(["view", "params", "stagePart"])
   readonly stagePart$: Observable<string>;
   stagePart: string;
@@ -69,6 +70,7 @@ export class StagePage {
     public navParams: NavParams,
     public dataPrvdr: DataProvider,
     public formPrvdr: FormProvider,
+    public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public viewActions: ViewActions,
     public customRouter: CustomRouterProvider,
@@ -80,8 +82,10 @@ export class StagePage {
     // part of workaround for router locked params #114
     this.customRouter.unlockHash();
     this.stageInit(navParams);
-    this.getResources(this.stage.number);
     this._subscribeToViewChanges();
+  }
+  ionViewWillEnter() {
+    this.getResources(this.stage.number);
   }
 
   stageInit(navParams) {
@@ -134,16 +138,18 @@ export class StagePage {
     this._addBackButtonFunction();
   }
 
-  async getResources(stage: number) {
-    const resourcesObs = this.resourcesPrvdr.getStageResources(
-      stage
-    ) as Observable<IStageResources>;
-    resourcesObs.subscribe(res => {
-      if (res && res.questions) {
-        this.stageResources = res;
-        this.totalResources = Object.keys(res.questions).length;
-      }
+  showResourcesList() {
+    this.navCtrl.push("ResourcesPage", {
+      stage: this.stage,
+      resources: this.stageResources
     });
+  }
+
+  // load resources from provider, take the 'questions' field as measure for total number
+  // *** note, will want to change in future if containing additional resource types, e.g. weblinks
+  async getResources(stage: number) {
+    this.stageResources = await this.resourcesPrvdr.getStageResources(stage);
+    this.totalResources = Object.keys(this.stageResources.questions).length;
   }
 
   // handle routing between main/resource/glossary sections using hash query params (changes subscribed to in _subscribeToViewChanges)
@@ -158,9 +164,9 @@ export class StagePage {
   }
 
   _subscribeToViewChanges() {
-    this.tabSection$.subscribe(
-      section => (this.activeSection = section ? section : "main")
-    );
+    // this.tabSection$.subscribe(
+    //   section => (this.activeSection = section ? section : "main")
+    // );
     this.stagePart$.subscribe(p => {
       this.stagePart = p;
     });
