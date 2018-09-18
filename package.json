@@ -80,7 +80,7 @@
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.2",
-    "@ionic/app-scripts": "3.1.9",
+    "@ionic/app-scripts": "3.2.0",
     "@types/flat": "^0.0.28",
     "@types/html2canvas": "^0.5.35",
     "@types/jspdf": "^1.1.31",

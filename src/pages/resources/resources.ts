@@ -1,21 +1,26 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavParams } from "ionic-angular";
-import { ResourcesProvider } from "../../providers/resources/resources";
+import { IStageMeta, IStageResources } from "../../models/models";
 
-@IonicPage()
+@IonicPage({
+  defaultHistory: ["StepByStepPage"]
+})
 @Component({
   selector: "page-resources",
   templateUrl: "resources.html"
 })
 export class ResourcesPage {
-  constructor(
-    public navParams: NavParams,
-    private resourcesPrvdr: ResourcesProvider
-  ) {
-    console.log("resource params", navParams.data);
+  stage: IStageMeta;
+  resources: IStageResources;
+  relevant: string;
+  constructor(public navParams: NavParams) {
+    this.stage = navParams.data.stage;
+    this.resources = navParams.data.resources;
+    this.relevant = navParams.data.relevant;
   }
-
-  ngOnInit() {
-    // get stage resources
-  }
+  /*
+    Currently this just passes resources from navParams into resource list
+    In future may want to link to resources provider to also alternate between different resource
+    types and sections
+  */
 }

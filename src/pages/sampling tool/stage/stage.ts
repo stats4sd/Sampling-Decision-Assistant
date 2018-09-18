@@ -1,13 +1,14 @@
 import { Component, ViewChild } from "@angular/core";
 import {
+  Content,
+  Events,
   IonicPage,
+  ModalController,
+  Navbar,
   NavController,
   NavParams,
   Slides,
-  Navbar,
-  ViewController,
-  Content,
-  ModalController
+  ViewController
 } from "ionic-angular";
 import { FormGroup } from "@angular/forms";
 import { DataProvider } from "../../../providers/data/data";
@@ -69,6 +70,7 @@ export class StagePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public dataPrvdr: DataProvider,
+    public events: Events,
     public formPrvdr: FormProvider,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
@@ -86,6 +88,11 @@ export class StagePage {
   }
   ionViewWillEnter() {
     this.getResources(this.stage.number);
+    // use events to listen for help click and show relevant resources
+    this.events.unsubscribe("help:clicked");
+    this.events.subscribe("help:clicked", relevant => {
+      this.showResourcesList(relevant);
+    });
   }
 
   stageInit(navParams) {
@@ -138,10 +145,11 @@ export class StagePage {
     this._addBackButtonFunction();
   }
 
-  showResourcesList() {
+  showResourcesList(relevant?: string) {
     this.navCtrl.push("ResourcesPage", {
       stage: this.stage,
-      resources: this.stageResources
+      resources: this.stageResources,
+      relevant: relevant
     });
   }
 

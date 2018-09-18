@@ -18,18 +18,19 @@ export class ResourcesListComponent {
     this.setResources(this.allResources[stage]);
     this._stage = stage;
   }
+  @Input()
+  set relevant(relevant: string) {
+    this.showRelevant(relevant);
+  }
 
   _stage: number;
   allResources = [];
   questions: any[] = [];
-  relevant: string = "N/A";
+  // relevant: string = "N/A";
   videoPlayerWidth: number = 675;
   videoPlayerHeight: number = 450;
 
   constructor(private sanitizer: DomSanitizer, private db: AngularFirestore) {
-    // this.relevant$.subscribe(
-    //   r=>{if(r){this.showRelevant(r)}}
-    // )
     this.db
       .collection("resources")
       .valueChanges()
@@ -86,16 +87,17 @@ export class ResourcesListComponent {
     return format;
   }
 
+  // automatically expand relevant questions on click
   showRelevant(relevant: string) {
-    console.log("showing relevant", relevant);
-    // automatically expand relevant questions on click
-    this.relevant = relevant;
-    this.questions.forEach((q, i) => {
-      if (q.relevant && q.relevant.indexOf(relevant) > -1) {
-        this.viewResource(i);
-      } else {
-        this.questions[i].expanded = false;
-      }
-    });
+    if (relevant) {
+      console.log("showing relevant", relevant);
+      this.questions.forEach((q, i) => {
+        if (q.relevant && q.relevant.indexOf(relevant) > -1) {
+          this.viewResource(i);
+        } else {
+          this.questions[i].expanded = false;
+        }
+      });
+    }
   }
 }

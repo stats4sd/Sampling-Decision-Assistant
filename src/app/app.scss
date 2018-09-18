@@ -190,19 +190,13 @@ body {
   font-size: 14px;
   text-align: left;
   line-height: 18px;
-  margin-bottom: 40px;
+  margin-bottom: 1em; // need to increase to 40px if using tabs
 }
 
 .swiper-slide {
   display: block !important; // max-height: calc(100vh - 150px);
   overflow-y: scroll;
   width: 100%;
-}
-
-.slide-scroll-content {
-  // .scroll-content{
-  //     overflow-y: hidden
-  // }
 }
 
 // fix to stop height filling largest slide even when inactive
@@ -271,12 +265,14 @@ ion-card {
     height: calc(100vh - 20px); //margin-top:100px;
   }
 }
+
 // content to hide on small displays
 @media screen and (max-width: $small-screen-width) {
   .hide-small {
     display: none;
   }
 }
+
 // content to hide on medium displays
 @media screen and (max-width: $medium-screen-width) {
   .hide-medium {

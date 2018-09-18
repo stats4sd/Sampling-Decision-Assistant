@@ -1,7 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { Events } from "ionic-angular";
-import { ProjectActions, ViewActions } from "../../../actions/actions";
-import { CustomRouterProvider } from "../../../providers/router/router";
 
 @Component({
   selector: "help-icon",
@@ -17,19 +15,22 @@ export class HelpIconComponent {
   @Input("relevant")
   relevant: any;
 
-  constructor(
-    public events: Events,
-    private projectActions: ProjectActions,
-    private customRouter: CustomRouterProvider
-  ) {}
+  constructor(public events: Events) {}
 
-  // use hash params to change nav to resources tab and show relevant
   helpClicked() {
-    this.customRouter.unlockHash();
+    this.events.publish("help:clicked", this.relevant);
+  }
+  /* 
+
+  // Old code using has params to change to show resources. Events simpler now no longer using tabs
+  // use hash params to change nav to resources tab and show relevant
+
+  this.customRouter.unlockHash();
     this.customRouter.setHashParams({
       tabSection: "resources",
       relevant: this.relevant
     });
-    // this.projectActions.setRelevantResources(this.relevant)
-  }
+    this.projectActions.setRelevantResources(this.relevant)
+
+  */
 }

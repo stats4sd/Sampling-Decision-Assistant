@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Stage5Component } from '../stage-5';
-import { FormArray } from '@angular/forms';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs'
 import { CustomRouterProvider } from '../../../../../providers/router/router';
