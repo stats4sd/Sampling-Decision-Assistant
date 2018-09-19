@@ -17,10 +17,13 @@
 <survey-question controlName="q5.1.1"></survey-question>
 <!-- <note *ngIf="form.value['q5.1.1'] =='Single-stage'" type='dev'>Next steps for single stage to be completed, multi stage more indicative</note> -->
 
-<p *ngIf="form.value['q5.1']=='No'">In this case you will need to use a
-  <glossary-link slug="multi-stage-sampling">multi-stage sampling</glossary-link>strategy. In order to do this
-  you must first determine a set of sampling stages that will eventually
-  narrow down to your final sampling units.
+<p *ngIf="form.value['q5.1']=='No'">In this case it is likely that a
+  <glossary-link slug="multi-stage-sampling">multi-stage sampling</glossary-link> design may be appropriate.
+  In order to do this you must first determine a set of sampling stages that will eventually narrow down to your final
+  sampling units.</p>
+<p>We recommend you include any levels at the top of the hierarchy that are not sampled, but that
+  represent sections of the population that you definitely want to include or strata that have been considered
+  necessary.
 </p>
 
 <!--     *** additional hidden field to make up for not being able to use multiple conditions

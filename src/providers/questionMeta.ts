@@ -193,7 +193,7 @@ const questionMeta: QuestionMeta[] = [
     type: "custom-reporting-levels",
     selectOptions: "",
     label:
-      "Specify the different levels that you wish to produce estimates for",
+      "Specify the different levels or strata that you wish to produce estimates for",
     section: "At what level do you need to report these results",
     condition: "type:value, controlName:q4.1, value:Disaggregated estimates",
     labelMultiple: "Name of level"
@@ -214,7 +214,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions: "Yes, No",
     label:
-      "Is there a single list of all final sampling units from where you can select a sample using a random method?",
+      "Is there a single list of <span class='emphasise'>all</span> final sampling units from where you can select a sample using a random method?",
     section: "Selecting the sampling units",
     condition: "",
     labelMultiple: null

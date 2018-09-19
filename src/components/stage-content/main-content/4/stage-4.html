@@ -9,10 +9,24 @@
         Depending on how you intend to report results, you may or may not have to consider your total sample size
         and method of selection differently.
       </p>
-      <p>The first question is to decide if you need wish to divide your population to produce
+      <p>The first question is to decide if you wish to divide your population to produce
         <glossary-link slug="disaggregate-estimates">disaggregated estimates</glossary-link>
       </p>
       <survey-question controlName="q4.1"></survey-question>
+      <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
+        <p>
+          Here think about the reporting requirements for your estimates or any stratification criteria that you need
+          to
+          include. Reporting requirements means that you will provide estimates for the indicator of interest for each
+          subsection of the population. </p>
+        <p>Often strata are formed to define reporting requirements and in those cases this
+          tool makes no difference between strata and reporting requirements. Sometimes strata are constructed to
+          improve
+          the precision of estimation, with no intention of producing estimates disaggregated by those strata. If you
+          have strata of the second type, make sure you remove the tick from the table in the next screen where your
+          reporting requirements and strata are summarised.
+        </p>
+      </div>
 
       <survey-question controlName='reportingLevels'></survey-question>
 

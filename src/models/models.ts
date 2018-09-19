@@ -63,6 +63,7 @@ export interface Question {
 export interface ReportingLevel {
   name: string;
   classifications: ReportingLevelClassification;
+  reportingRequired: boolean;
 }
 
 export interface ReportingLevelClassification {
