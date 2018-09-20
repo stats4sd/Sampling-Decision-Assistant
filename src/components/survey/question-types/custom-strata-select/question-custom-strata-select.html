@@ -2,10 +2,10 @@
   <div style="display: flex;">
     <div>
       <div *ngIf="reportingLevels!=''">
-        <p *ngIf="!isFinalStage">Can the
-          <strong>{{_parentID}}</strong> sampling units form strata to satisfy any of your reporting requirements?
+        <p *ngIf="!isFinalStage">Do the sampling units form strata to satisfy any of your reporting requirements?
           <br> If yes select from the list below.</p>
-        <p *ngIf="isFinalStage">As this is the final sampling stage all reporting requirements that have not already been satisfied will be included
+        <p *ngIf="isFinalStage">As this is the final sampling stage all reporting requirements that have not already
+          been satisfied will be included
           here
         </p>
       </div>

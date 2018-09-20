@@ -3,16 +3,20 @@
     <ion-title>Building a Sampling Frame</ion-title>
     <ion-buttons end>
       <button ion-button icon-left (click)="dismiss()" color="primary">
-        <ion-icon name="checkmark"></ion-icon>Save</button>
+        <ion-icon name="checkmark"></ion-icon>Save
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <p>You said you need a stage where you sample
-    <strong>{{stageName}}</strong>. This section will help you to make decisions about how to select the sampling units</p>
+    <strong>{{stageName}}</strong>
+    <span *ngIf="parentStageName"> within the <strong>{{parentStageName}}</strong> sampled in the previous stage</span>.</p>
+  <p>This section will help you to make decisions about how to select the sampling units</p>
   <survey-question controlName="q5.3.1" [formGroup]="stageFormGroup"></survey-question>
-  <note type="info" *ngIf="stageFormGroup.value['q5.3.1']=='Yes'">Note: this list will be the sampling frame for this stage</note>
+  <note type="info" *ngIf="stageFormGroup.value['q5.3.1']=='Yes'">Note: this list will be the sampling frame for this
+    stage</note>
   <survey-question controlName="q5.3.2" [formGroup]="stageFormGroup"></survey-question>
   <note type="info" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
     When there is no list available you will need to decide upon an appropriate strategy to build a list.
@@ -22,16 +26,19 @@
   <note type="warning" *ngIf="stageFormGroup.value['q5.3.2']=='No'">
     <strong>Possibly outdated lists</strong>
     <p>
-        If the sampling unit listing is not up to date, you should first consider if there might be ways to update it. If this
-        is not possible, think of how the incomplete list may affect the representativeness of the sample and the biases it may
-        introduce.
+      If the sampling unit listing is not up to date, you should first consider if there might be ways to update it. If
+      this
+      is not possible, think of how the incomplete list may affect the representativeness of the sample and the biases
+      it may
+      introduce.
     </p>
     <p>Use the space below if you would like to record any specific notes</p>
   </note>
 
 
   <note type="dev" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
-    <strong>Building a list</strong> - More questions will follow here to help users determine a strategy for the building a suitable
+    <strong>Building a list</strong> - More questions will follow here to help users determine a strategy for the
+    building a suitable
     sampling frame, such as through the use of key informants or area-based sampling</note>
 
   <survey-question controlName="q5.3.3" [formGroup]="stageFormGroup"></survey-question>
@@ -43,7 +50,8 @@
   <div *ngIf="stageFormGroup.value['q5.3.3']=='All'">
     <note type="tip">
       <p>
-        If you are selecting all the units at this stage, it is likely that the sampling units in the previous stage can be considered
+        If you are selecting all the units at this stage, it is likely that the sampling units in the previous stage
+        can be considered
         as clusters for the purpose of analysis.
       </p>
       <p>
