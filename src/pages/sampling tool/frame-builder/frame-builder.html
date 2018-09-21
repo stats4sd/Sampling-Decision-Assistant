@@ -36,10 +36,14 @@
   </note>
 
 
-  <note type="dev" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
-    <strong>Building a list</strong> - More questions will follow here to help users determine a strategy for the
-    building a suitable
-    sampling frame, such as through the use of key informants or area-based sampling</note>
+  <note type="warning" *ngIf="stageFormGroup.value['q5.3.1']=='No'">
+    <strong>Building a list</strong>
+    <p>
+      When there is no list available you will need to decide upon an appropriate
+      strategy to build a list of units for this stage within the selected units in the previous stage. For example the
+      list of villages within the districts selected in the previous stage.
+    </p>
+  </note>
 
   <survey-question controlName="q5.3.3" [formGroup]="stageFormGroup"></survey-question>
 
