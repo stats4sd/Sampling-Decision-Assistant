@@ -16,6 +16,7 @@ import { Stage5Component } from "./main-content/5/stage-5";
 import { Stage5_FrameBuilderOverviewComponent } from "./main-content/5/frame-builder-overview/stage-5-frame-builder-overview";
 import { Stage5_RecapComponent } from "./main-content/5/recap/stage-5-recap";
 import { Stage5_DefineStagesComponent } from "./main-content/5/define-stages/stage-5-define-stages";
+import { Stage5_SamplingWeightsComponent } from "./main-content/5/sampling-weights/stage-5-sampling-weights";
 import { Stage6Component } from "./main-content/6/stage-6";
 import { DataVisComponentsModule } from "../dataVis/dataVisComponents.module";
 
@@ -32,6 +33,7 @@ import { DataVisComponentsModule } from "../dataVis/dataVisComponents.module";
     Stage5_FrameBuilderOverviewComponent,
     Stage5_RecapComponent,
     Stage5_DefineStagesComponent,
+    Stage5_SamplingWeightsComponent,
     Stage6Component,
     StageCompleteComponent,
     StageBreadcrumbsComponent
@@ -53,6 +55,7 @@ import { DataVisComponentsModule } from "../dataVis/dataVisComponents.module";
     Stage5_FrameBuilderOverviewComponent,
     Stage5_RecapComponent,
     Stage5_DefineStagesComponent,
+    Stage5_SamplingWeightsComponent,
     Stage6Component,
     StageCompleteComponent,
     StageBreadcrumbsComponent

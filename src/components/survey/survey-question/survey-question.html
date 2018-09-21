@@ -8,7 +8,7 @@
   <!-- non-repeat group questions -->
   <div *ngIf="question.type!='repeat'" [formGroup]="formGroup">
     <!-- general section for all questions -->
-    <ion-card class="container">
+    <ion-card [class]="'container '+inline ? 'inline' :null">
       <div style="flex:1">
         <div *ngIf="question.type!='label' && showLabel!=false" class="question-label">
           <div class="question-number dark" [attr.controlName]="question.controlName">{{question.controlName}}</div>
@@ -22,23 +22,24 @@
           <!-- select -->
           <div *ngSwitchCase="'select'">
             <ion-item *ngIf="!showSelectOther">
-              <ion-select (ionChange)="selectUpdated($event)" [interface]="question.interface ? question.interface : 'action-sheet'" [formControlName]="question.controlName">
+              <ion-select (ionChange)="selectUpdated($event)" [interface]="question.interface ? question.interface : 'action-sheet'"
+                [formControlName]="question.controlName">
                 <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
                 <ion-option *ngFor="let option of selectOptionsArray" [value]="option">{{option}}</ion-option>
               </ion-select>
             </ion-item>
             <!-- select with type other -->
             <ion-item *ngIf="showSelectOther">
-              <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="valueUpdated(null,$event)"
-                placeholder="please specify"></ion-input>
+              <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue"
+                (focusout)="valueUpdated(null,$event)" placeholder="please specify"></ion-input>
             </ion-item>
           </div>
 
           <!-- text area input -->
           <div *ngSwitchCase="'text'">
             <ion-item>
-              <textarea id="textAreaInput" #textAreaInput [(ngModel)]="value" [ngModelOptions]="{standalone: true}" (focusout)="valueUpdated()"
-                (keyup)="resize()"></textarea>
+              <textarea id="textAreaInput" #textAreaInput [(ngModel)]="value" [ngModelOptions]="{standalone: true}"
+                (focusout)="valueUpdated()" (keyup)="resize()"></textarea>
             </ion-item>
           </div>
 
@@ -50,8 +51,8 @@
                 {{question.options.prefix}}
               </div>
               <ion-item>
-                <ion-input type="number" [max]="question.options && question.options.max ? question.options.max : null" [min]="question.options && question.options.min ? question.options.min : null"
-                  [formControlName]="question.controlName"></ion-input>
+                <ion-input type="number" [max]="question.options && question.options.max ? question.options.max : null"
+                  [min]="question.options && question.options.min ? question.options.min : null" [formControlName]="question.controlName"></ion-input>
               </ion-item>
             </div>
           </div>
@@ -61,7 +62,8 @@
             <div style="display: flex">
               <ion-item>
                 <!-- should work with formcontrolname however recently chrome has a bug and isn't working. should retry in future -->
-                <ion-range disabled min="5" max="95" step="5" color="primary" debounce="500" snaps="true" pin="true" [ngModel]="formGroup.value[question.controlName]" [ngModelOptions]="{standalone: true}">
+                <ion-range disabled min="5" max="95" step="5" color="primary" debounce="500" snaps="true" pin="true"
+                  [ngModel]="formGroup.value[question.controlName]" [ngModelOptions]="{standalone: true}">
                   <ion-label range-left>5%</ion-label>
                   <ion-label range-right>95%</ion-label>
                 </ion-range>
@@ -70,7 +72,7 @@
             </div>
             <!-- <div style="margin-left:16px">note, dragging is currently disabled due to a bug in google chrome. please use the input box instead</div> -->
           </div>
-          
+
           <question-text-multiple *ngSwitchCase="'textMultiple'" [question]="question"></question-text-multiple>
 
           <!-- label -->
@@ -80,7 +82,8 @@
 
           <!-- custom types -->
           <question-custom-reporting-levels *ngSwitchCase="'custom-reporting-levels'" [question]="question"></question-custom-reporting-levels>
-          <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [formGroup]="formGroup" [preloadValue]="value" (onValueChange)="valueUpdated($event)"></question-custom-strata-select>
+          <question-custom-strata-select *ngSwitchCase="'custom-strata-select'" [formGroup]="formGroup" [preloadValue]="value"
+            (onValueChange)="valueUpdated($event)"></question-custom-strata-select>
           <question-custom-stages-define *ngSwitchCase="'custom-stages-define'" (onValueChange)="valueUpdated($event)"></question-custom-stages-define>
           <!-- <question-base [question]="question" (onUpdate)="valueUpdated($event)"></question-base> -->
         </div>

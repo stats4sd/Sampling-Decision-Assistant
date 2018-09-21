@@ -40,12 +40,15 @@
       </div>
     </div>
   </div>
-  <div style="opacity:0.9">
-    Developed in partnership with <a id="stats4sdLink" href="https://stats4sd.org" target="_blank" rel="nofollow">Statistics
-      for Sustainable
-      Development</a>
+  <div style="opacity:0.9; display: flex">
+    <div style="flex:1">
+      Developed in partnership with <a id="stats4sdLink" href="https://stats4sd.org" target="_blank" rel="nofollow">Statistics
+        for Sustainable
+        Development</a>
+    </div>
+    <div style="cursor: pointer; opacity: 0.5; padding:5px" (click)="showChangelog()">v{{version.number}}</div>
   </div>
-  <!-- <div id="stats4sdAdmin" (click)="goToAdmin()">
-    Stats4SD Admin
-  </div> -->
+  <!-- <div id=" stats4sdAdmin" (click)="goToAdmin()">
+      Stats4SD Admin
+    </div> -->
 </ion-content>

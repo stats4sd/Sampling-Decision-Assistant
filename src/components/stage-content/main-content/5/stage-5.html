@@ -12,6 +12,10 @@
     <!-- multi-stage builder slide -->
     <div *ngSwitchCase="2">
       <stage-5-frame-builder-overview></stage-5-frame-builder-overview>
+    </div>
+    <!-- sampling weights slide -->
+    <div *ngSwitchCase="3">
+      <stage-5-sampling-weights></stage-5-sampling-weights>
       <stage-complete stageNumber=5></stage-complete>
     </div>
 
@@ -21,7 +25,7 @@
   <!-- Next and back buttons -->
   <div style="display: flex; justify-content:space-between; padding-bottom:20px">
 
-    <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='2'" clear block>Continue
+    <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='3'" clear block>Continue
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
   </div>

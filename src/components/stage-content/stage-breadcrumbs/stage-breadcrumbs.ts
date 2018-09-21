@@ -20,7 +20,7 @@ export class StageBreadcrumbsComponent {
   breadcrumbs: any = [];
   stageBreadcrumbs = {
     4: ["Intro", "Level Classifications and Strata", "Review"],
-    5: ["Intro", "Sampling Stages", "Building Frames"],
+    5: ["Intro", "Sampling Stages", "Building Frames", "Sampling Weights"],
     6: ["Intro", "Stratification", "Sample Sizes", "Resource Allocation"]
   };
 

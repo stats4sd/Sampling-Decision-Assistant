@@ -268,6 +268,17 @@ const questionMeta: QuestionMeta[] = [
   },
   {
     isQuestion: "TRUE",
+    controlName: "q5.3.1.1",
+    repeatGroup: "q5.3",
+    type: "text",
+    label:
+      "Describe how you intend to build the list of sampling units for this stage",
+    section: "Selecting the sampling units",
+    condition: "type:value, controlName:q5.3.1, value:No",
+    labelMultiple: null
+  },
+  {
+    isQuestion: "TRUE",
     controlName: "q5.3.2",
     repeatGroup: "q5.3",
     type: "select",

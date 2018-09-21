@@ -100,4 +100,9 @@ survey-question {
     z-index: 2;
     font-size: 24px;
   }
+  // inline view
+  ion-card.inline .item {
+    background-color: transparent;
+    padding-left: 0;
+  }
 }
