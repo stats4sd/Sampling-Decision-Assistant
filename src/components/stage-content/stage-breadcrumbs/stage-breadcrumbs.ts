@@ -21,7 +21,7 @@ export class StageBreadcrumbsComponent {
   stageBreadcrumbs = {
     4: ["Intro", "Level Classifications and Strata", "Review"],
     5: ["Intro", "Sampling Stages", "Building Frames", "Sampling Weights"],
-    6: ["Intro", "Stratification", "Sample Sizes", "Resource Allocation"]
+    6: ["Intro", "Sample Sizes", "Resource Allocation"]
   };
 
   constructor(private customRouter: CustomRouterProvider) {
