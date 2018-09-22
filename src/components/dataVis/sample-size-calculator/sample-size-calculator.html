@@ -1,75 +1,75 @@
 <div>
 
-    <div style="display: flex; flex-wrap: wrap">
-        <!-- Information provided -->
-        <div class="calc-section provided">
-            <div class="section-title">Information provided</div>
-            <ion-list style="margin:10px">
-                <div *ngFor="let field of calculatedFields">
-                    <div class="input-item" *ngIf="!inputValues[field.var]">
-                        <div class="input-label">{{field.label}}</div>
-                        <note type="error">Input Missing</note>
-                    </div>
-                    <div class="input-item" *ngIf="inputValues[field.var]">
-                        <div class="input-label">{{field.label}}</div>
-                        <div class="input-value">{{inputValues[field.var]}}</div>
-                    </div>
-                </div>
-            </ion-list>
-        </div>
-
-        <!-- assumption inputs variables -->
-        <div class="calc-section assumptions">
-            <div class="section-title assumptions">
-                <div>Assumptions</div>
-                <div (click)="resetVariables()" class="reset-button">
-                    <span>reset</span>
-                    <ion-icon name="refresh"></ion-icon>
-                </div>
+  <div style="display: flex; flex-wrap: wrap">
+    <div>
+      <!-- Information provided -->
+      <div class="calc-section provided">
+        <div class="section-title">Information provided</div>
+        <ion-list style="margin:10px">
+          <div *ngFor="let field of calculatedFields">
+            <div class="input-item" *ngIf="!inputValues[field.var]">
+              <div class="input-label">{{field.label}}</div>
+              <note type="error">Input Missing</note>
             </div>
-            <div style="margin:10px">
-                <ion-item class="input-item">
-                    <ion-label fixed>Desired Confidence Level</ion-label>
-                    <ion-input type="number" min="0.9" max="0.999" step="0.01" [(ngModel)]="inputValues.conf" (ionChange)="calculateSize()"></ion-input>
-                </ion-item>
-                <ion-item class="input-item">
-                    <ion-label fixed>Clustering Level</ion-label>
-                    <ion-select [(ngModel)]="inputValues.rho" (ionChange)="calculateSize()">
-                        <ion-option value="0">None</ion-option>
-                        <ion-option value="0.1">Low (0.1)</ion-option>
-                        <ion-option value="0.25">Moderate (0.25)</ion-option>
-                        <ion-option value="0.5">High (0.5)</ion-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item class="input-item" *ngIf="sampleStages>1">
-                    <ion-label fixed>Number of Samples per Cluster</ion-label>
-                    <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="calculateSize()"></ion-input>
-                </ion-item>
-                <ion-item class="input-item">
-                    <ion-label fixed>Expected Population Size</ion-label>
-                    <ion-input type="number" min="1" max="9999999999" [(ngModel)]="inputValues.Population" (ionChange)="calculateSize()"></ion-input>
-                </ion-item>
-                <ion-item class="input-item">
-                    <ion-label fixed>{{moe.label}}</ion-label>
-                    <ion-input type="number" [(ngModel)]="inputValues.moe" (ionChange)="calculateSize()"></ion-input>
-                </ion-item>
+            <div class="input-item" *ngIf="inputValues[field.var]">
+              <div class="input-label">{{field.label}}</div>
+              <div class="input-value">{{inputValues[field.var]}}</div>
             </div>
+          </div>
+        </ion-list>
+      </div>
+      <!-- assumption inputs variables -->
+      <div class="calc-section assumptions">
+        <div class="section-title assumptions">
+          <div>Assumptions</div>
+          <div (click)="resetVariables()" class="reset-button">
+            <span>reset</span>
+            <ion-icon name="refresh"></ion-icon>
+          </div>
         </div>
+        <div style="margin:10px">
+          <ion-item class="input-item">
+            <ion-label fixed>Desired Confidence Level</ion-label>
+            <ion-input type="number" min="0.9" max="0.999" step="0.01" [(ngModel)]="inputValues.conf" (ionChange)="calculateSize()"></ion-input>
+          </ion-item>
+          <ion-item class="input-item">
+            <ion-label fixed>Clustering Level</ion-label>
+            <ion-select [(ngModel)]="inputValues.rho" (ionChange)="calculateSize()">
+              <ion-option value="0">None</ion-option>
+              <ion-option value="0.1">Low (0.1)</ion-option>
+              <ion-option value="0.25">Moderate (0.25)</ion-option>
+              <ion-option value="0.5">High (0.5)</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="input-item" *ngIf="sampleStages>1">
+            <ion-label fixed>Number of Samples per Cluster</ion-label>
+            <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="calculateSize()"></ion-input>
+          </ion-item>
+          <ion-item class="input-item">
+            <ion-label fixed>Expected Population Size</ion-label>
+            <ion-input type="number" min="1" max="9999999999" [(ngModel)]="inputValues.Population" (ionChange)="calculateSize()"></ion-input>
+          </ion-item>
+          <ion-item class="input-item">
+            <ion-label fixed>{{moe.label}}</ion-label>
+            <ion-input type="number" [(ngModel)]="inputValues.moe" (ionChange)="calculateSize()"></ion-input>
+          </ion-item>
+        </div>
+      </div>
     </div>
-
+    <!-- calculator results -->
     <div class="calc-section results">
-        <div class="section-title results">
-            <div style="margin-right: 5px">
-                <ion-icon name="calculator"></ion-icon>
-                <span style="margin-left:5px">Results</span>
-            </div>
-           
+      <div class="section-title results">
+        <div style="margin-right: 5px">
+          <ion-icon name="calculator"></ion-icon>
+          <span style="margin-left:5px">Results</span>
         </div>
-        <div *ngFor="let result of outputs.formatted" class="input-item">
-            <div class="input-label results">{{result.label}}</div>
-            <div class="input-value results">{{outputs.raw[result.var]}}</div>
-        </div>
+      </div>
+      <div *ngFor="let result of outputs.formatted" class="input-item">
+        <div class="input-label results">{{result.label}}</div>
+        <div class="input-value results">{{outputs.raw[result.var]}}</div>
+      </div>
     </div>
+  </div>
 </div>
 
 

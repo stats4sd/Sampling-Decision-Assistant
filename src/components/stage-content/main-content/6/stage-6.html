@@ -12,10 +12,11 @@
         supporting calculations for margin of error and design effect</p>
       <p>Here is a diagram summarising the stages and reporting requirements provided so far:</p>
       <tree-diagram [showInputNodes]="false" [showKey]="'true'" *ngIf="initComplete" class="fade-in"></tree-diagram>
-      <tree-diagram-key></tree-diagram-key>
       <div style="margin-top:1em; max-width:90%">
         <note type="tip">Click on the each shape in the diagram for more information about the node</note>
       </div>
+      <tree-diagram-key></tree-diagram-key>
+
     </div>
     <!-- Sample sizes section -->
     <div *ngSwitchCase="1">
