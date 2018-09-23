@@ -15,6 +15,7 @@ import { select, NgRedux } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { DataProvider } from "../../../providers/data/data";
+import { DataVisProvider } from "../../../providers/data-vis/data-vis";
 
 declare let vis: any;
 // format to lazy load vis if there weren't conflict with hammer.js
@@ -48,7 +49,8 @@ export class TreeDiagramComponent {
     public events?: Events,
     public treeActions?: TreeDiagramActions,
     public ngRedux?: NgRedux<AppState>,
-    public dataPrvdr?: DataProvider
+    public dataPrvdr?: DataProvider,
+    private dataVisPrvdr?: DataVisProvider
   ) {}
 
   ngAfterViewInit() {
@@ -135,8 +137,10 @@ export class TreeDiagramComponent {
       }
       // build nodes for reporting levels
       if (reportingLevels) {
-        const reportingRequired = this._isReportingRequired(reportingLevels);
-        const reportingLevelCombinations = this._buildCombinations(
+        const reportingRequired = this.dataVisPrvdr.isReportingRequired(
+          reportingLevels
+        );
+        const reportingLevelCombinations = this.dataVisPrvdr.buildReportingCombinations(
           reportingLevels
         );
         let parentPath = basePath.slice();
@@ -171,87 +175,6 @@ export class TreeDiagramComponent {
         this.prepareStages(startStage + 1, basePath);
       }
     } else {
-    }
-  }
-
-  // additional method to distinguish between strata and reporting required levels for colouring
-  // simply looks up level names and return if any has 'reportingRequired'
-  _isReportingRequired(levels: string[]) {
-    const reportingRequiredLevels: string[] = this._getReportingRequiredLevels();
-    let containsRequired = false;
-    levels.forEach(level => {
-      if (reportingRequiredLevels.indexOf(level) > -1) {
-        containsRequired = true;
-      }
-    });
-    return containsRequired;
-  }
-  // iterate over all reporting levels and return string array of just those marked as reportingRequired
-  _getReportingRequiredLevels() {
-    try {
-      const reportingLevels = this.ngRedux
-        .getState()
-        .activeProject.values.reportingLevels.filter(level => {
-          return level.reportingRequired;
-        })
-        .map(level => {
-          return level.name;
-        });
-      return reportingLevels;
-    } catch (error) {
-      return [];
-    }
-  }
-
-  _buildCombinations(levelNames: string[], arrays?) {
-    // takes a list of group names and creates a list of all combinations on their category names
-    // e.g if group 1 (gender) has male/female, and group 2 (age) has old/young, want 4 combinations
-    // [[male,old], [male,young], [female,old], [female,young]]
-    let allReportingLevels: ReportingLevel[] = this.ngRedux.getState()
-      .activeProject.values.reportingLevels;
-    if (!allReportingLevels) {
-      allReportingLevels = [];
-    }
-    if (!arrays) {
-      // first step is to simply build a list of all the category names that will be used
-      // e.g. [male,female],[old,young]
-      // build list of category name arrays
-      let arrs = [];
-      // reshape groups to correct form array of arrays
-      let i = 0;
-      allReportingLevels.forEach(level => {
-        if (levelNames.indexOf(level.name) > -1) {
-          arrs[i] = [];
-          level.classifications.names.forEach(name => {
-            arrs[i].push(name);
-          });
-          i++;
-        }
-      });
-      // once complete pass back into function to run again
-      return this._buildCombinations(levelNames, arrs);
-    }
-    // on subsequent passes we combine all combinations of the first 2 arrays, remove the first and repeat until only one set remains
-    else {
-      let combinations = [];
-      if (arrays[1]) {
-        for (let el of arrays[0]) {
-          for (let el2 of arrays[1]) {
-            // combinations.push(el + ' |∩| ' + el2)
-            combinations.push(el + ", " + el2);
-          }
-        }
-        arrays[1] = combinations;
-        arrays.splice(0, 1);
-        return this._buildCombinations(levelNames, arrays);
-      } else {
-        // final list
-        combinations = arrays[0];
-        if (!combinations) {
-          combinations = [];
-        }
-        return combinations;
-      }
     }
   }
 

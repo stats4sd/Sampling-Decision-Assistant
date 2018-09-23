@@ -12,6 +12,7 @@ import {
 } from "ionic-angular";
 import { FormGroup } from "@angular/forms";
 import { DataProvider } from "../../../providers/data/data";
+import { DataVisProvider } from "../../../providers/data-vis/data-vis";
 import { FormProvider } from "../../../providers/form/form";
 import { ViewActions, ProjectActions } from "../../../actions/actions";
 import { select, NgRedux } from "@angular-redux/store";
@@ -70,6 +71,7 @@ export class StagePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public dataPrvdr: DataProvider,
+    public dataVisPrvdr: DataVisProvider,
     public events: Events,
     public formPrvdr: FormProvider,
     public modalCtrl: ModalController,
