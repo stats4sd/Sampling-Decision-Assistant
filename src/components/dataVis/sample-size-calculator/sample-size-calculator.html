@@ -64,10 +64,43 @@
           <span style="margin-left:5px">Results</span>
         </div>
       </div>
-      <div *ngFor="let result of outputs.formatted" class="input-item">
+      <div *ngIf="disaggregationMeta" style="margin-top:1em">
+        <div>
+          <span>You specified that you wish to disaggregate reports based on </span>
+          <span *ngFor="let level of disaggregationMeta.reportingLevels; last as isLast">
+            <span class="reporting-level-name">{{level.name}}</span>
+            <span *ngIf="!isLast"> and </span>
+          </span>
+          <span>, with a total of </span>
+          <span class="total-classifications">{{disaggregationMeta.levelCombinations.length}}</span>
+          <span> combinations</span>
+        </div>
+        <div style="margin-top:1em" *ngIf="sampleStageMeta">
+          <span>You intend to conduct {{sampleStageMeta.length}} stages of sampling</span>
+        </div>
+        <div style="margin-top:1em">
+          <div>The minimum sampling recommendations are as follows:</div>
+          <div style="margin-top:1em" *ngIf="sampleStageMeta">
+            <div>{{outputs.raw.nHH}} {{sampleStageMeta[sampleStageMeta.length-1].name}} per
+              {{sampleStageMeta[sampleStageMeta.length-2].name}}</div>
+            <div>
+              <span>{{outputs.raw.stage2N}} {{sampleStageMeta[sampleStageMeta.length-2].name}} per </span>
+              <span *ngIf="sampleStageMeta.length>2">{{sampleStageMeta[0].name}}</span>
+              <span *ngIf="sampleStageMeta.length==2">in total</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1em">
+          This will results in an overall sample size of
+        </div>
+        <div style="margin-top:1em">
+          The total design effect for the survey will be {{outputs.raw.DEFF1}}
+        </div>
+      </div>
+      <!-- <div *ngFor="let result of outputs.formatted" class="input-item">
         <div class="input-label results">{{result.label}}</div>
         <div class="input-value results">{{outputs.raw[result.var]}}</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

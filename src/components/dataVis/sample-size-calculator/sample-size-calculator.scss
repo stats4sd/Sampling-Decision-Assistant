@@ -26,7 +26,6 @@ tree-table {
     background-color: white;
     border: 2px solid color($colors, primary);
   }
-
   .input-label {
     width: 120px;
   }
@@ -56,5 +55,10 @@ tree-table {
   .reset-button {
     font-size: small;
     cursor: pointer;
+  }
+  .reporting-level-name,
+  .total-classifications {
+    color: color($colors, primary);
+    font-weight: bold;
   }
 }
