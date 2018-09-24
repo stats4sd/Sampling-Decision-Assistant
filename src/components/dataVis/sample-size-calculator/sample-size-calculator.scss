@@ -56,9 +56,17 @@ tree-table {
     font-size: small;
     cursor: pointer;
   }
-  .reporting-level-name,
-  .total-classifications {
-    color: color($colors, primary);
+  .result-subsection {
+    margin-top: 1em;
+  }
+  .result {
     font-weight: bold;
+  }
+  .primary {
+    color: color($colors, primary)
+  }
+  .section-divider {
+    border-bottom: 1px solid color($colors, primary);
+    margin: 1em 0;
   }
 }

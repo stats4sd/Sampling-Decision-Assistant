@@ -41,6 +41,8 @@ export class SampleSizeCalculatorComponent {
     reportingLevels: ReportingLevel[];
     levelCombinations: string[];
   };
+  combinationSampleSize: number;
+  totalSampleSize: number;
 
   constructor(
     public dataPrvdr: DataProvider,
@@ -53,15 +55,18 @@ export class SampleSizeCalculatorComponent {
   ngOnInit() {
     this.customRouter.lockHash();
     try {
+      this.sampleStageMeta = this.ngRedux.getState().activeProject.values.samplingStages;
+      console.log("sample stage meta", this.sampleStageMeta);
+      // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
+      if (!this.dataVisPrvdr.levelCombinations) {
+        this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
+        console.log("disaggregationMeta", this.disaggregationMeta);
+      }
       this.calculateVariables();
       this.calculateSize();
-      this.sampleStageMeta = this.ngRedux.getState().activeProject.values.samplingStages;
       console.log("outputs", this.outputs);
-    } catch (error) {}
-    // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
-    if (!this.dataVisPrvdr.levelCombinations) {
-      this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
-      console.log("disaggregationMeta", this.disaggregationMeta);
+    } catch (error) {
+      console.error(error);
     }
   }
   resetVariables() {
@@ -230,8 +235,26 @@ export class SampleSizeCalculatorComponent {
       inputs: input,
       outputs: this.outputs
     };
+    this.calculateTotalSampleSize();
     this._updateFormCalcVars(vars);
   }
+
+  calculateTotalSampleSize() {
+    // for multi stage multiply combinations * nHH * stage2N
+    // for single stage simply return finalStageN
+    if (
+      this.sampleStageMeta.length > 1 &&
+      typeof this.outputs.raw.stage2N == "number"
+    ) {
+      this.totalSampleSize =
+        this.outputs.raw.FinalstageN *
+        this.disaggregationMeta.levelCombinations.length;
+    } else {
+      this.totalSampleSize = this.outputs.raw.FinalstageN;
+    }
+    console.log("total sample size", this.totalSampleSize);
+  }
+
   _updateFormCalcVars(vars) {
     if (!this.formPrvdr.formGroup.controls._calculatorVars) {
       this.formPrvdr.formGroup.addControl(

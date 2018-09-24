@@ -206,7 +206,6 @@ export class TreeDiagramComponent {
     if (sampleSize) {
       label = label + " (" + sampleSize + ")";
     }
-    console.log("generating node label", node, label);
     return label;
   }
 
@@ -226,7 +225,6 @@ export class TreeDiagramComponent {
 
   // strip unwanted bits from tree nodes and rename repeats
   _cleanNodeMeta(nodes) {
-    console.log("cleaning meta", nodes);
     return nodes.map(n => {
       let clean: any = {};
       clean.id = n.id;
@@ -257,7 +255,6 @@ export class TreeDiagramComponent {
 
   buildDiagram(treeNodes, treeEdges) {
     // create an array with nodes
-    console.log("building diagram", treeNodes);
     this.treeNodes = new vis.DataSet(treeNodes);
     // create an array with edges
     this.treeEdges = new vis.DataSet(treeEdges);
