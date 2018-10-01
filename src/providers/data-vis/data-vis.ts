@@ -7,7 +7,9 @@ export class DataVisProvider {
   reportingCombinations: string[];
   levelCombinations: string[];
   reportingLevels: ReportingLevel[];
-  constructor(private ngRedux: NgRedux<AppState>) {}
+  constructor(private ngRedux: NgRedux<AppState>) {
+    console.log("hello data vis provider");
+  }
 
   buildReportingCombinations(levelNames: string[], arrays?) {
     // takes a list of group names and creates a list of all combinations on their category names

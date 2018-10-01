@@ -88,6 +88,10 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/fire@5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-5.0.2.tgz#3ca9c09aee924e129059c4bf8780aa4c99ebb631"
+
 "@angular/forms@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-6.0.0.tgz#436e2df39dc57db124da5a5c02bc63909fdf7046"
@@ -483,9 +487,11 @@ angular-tooltips@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/angular-tooltips/-/angular-tooltips-1.2.2.tgz#01aa154698f438b073d4d85f7daf2423435a0f54"
 
-angularfire2@5.0.0-rc.4:
-  version "5.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-5.0.0-rc.4.tgz#65c4d2ed768c3251b0b611ce51d6b42ac8afeabc"
+angularfire2@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-5.0.2.tgz#7208bb07162a43334114ed9cabade3961b366160"
+  dependencies:
+    "@angular/fire" "5.0.2"
 
 animate.css@^3.5.2:
   version "3.5.2"

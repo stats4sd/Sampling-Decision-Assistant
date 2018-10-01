@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+
     <!-- calculator results -->
     <div class="calc-section results">
       <div class="section-title results">
@@ -65,58 +66,67 @@
         </div>
       </div>
       <!-- multi stage results -->
-      <div class="result-subsection" *ngIf="sampleStageMeta && disaggregationMeta">
-        <div>
-          <span>You specified that you wish to disaggregate reports based on </span>
-          <span *ngFor="let level of disaggregationMeta.reportingLevels; last as isLast">
-            <span class="result primary">{{level.name}}</span>
-            <span *ngIf="!isLast"> and </span>
-          </span>
-          <span>, with a total of </span>
-          <span class="result primary">{{disaggregationMeta.levelCombinations.length}}</span>
-          <span> combinations</span>
+      <div class="result-subsection" id="multiStageResults" *ngIf="sampleStageMeta && disaggregationMeta">
+        <!-- Show results button -->
+        <div *ngIf="!showResults" id="showResults">
+          <button ion-button (click)="toggleShowResults()">Show Results</button>
         </div>
-        <div class="result-subsection">
-          <span>You intend to conduct {{sampleStageMeta.length}} stages of sampling</span>
-          <div *ngFor="let stage of sampleStageMeta; last as isLast; first as isFirst; index as i">
-            <div *ngIf="isFirst" class="primary">{{stage.name}},</div>
-            <div *ngIf="!isFirst">
-              <span class="primary">{{stage.name}}</span> within <span class="primary">
-                {{sampleStageMeta[i-1].name}}
-              </span>
-            </div>
+        <!-- main results section -->
+        <div [style.opacity]="showResults ? 1 : 0.2">
+          <div>
+            <span>You specified that you wish to disaggregate reports based on </span>
+            <span *ngFor="let level of disaggregationMeta.reportingLevels; last as isLast">
+              <span class="result primary">{{level.name}}</span>
+              <span *ngIf="!isLast"> and </span>
+            </span>
+            <span>, with a total of </span>
+            <span class="result primary">{{disaggregationMeta.levelCombinations.length}}</span>
+            <span> combinations</span>
           </div>
           <div class="result-subsection">
-            <span>The sample size calculation for each reporting combination is </span>
-            <span class="result primary">{{outputs.raw.FinalstageN}} {{sampleStageMeta[sampleStageMeta.length-1].name}}</span>
-            <span> and an overall sample size of</span>
-            <span class="result primary"> {{totalSampleSize}}</span>.
+            <span>You intend to conduct {{sampleStageMeta.length}} stages of sampling</span>
+            <div *ngFor="let stage of sampleStageMeta; last as isLast; first as isFirst; index as i">
+              <div *ngIf="isFirst" class="primary">{{stage.name}},</div>
+              <div *ngIf="!isFirst">
+                <span class="primary">{{stage.name}}</span> within <span class="primary">
+                  {{sampleStageMeta[i-1].name}}
+                </span>
+              </div>
+            </div>
+            <div class="result-subsection">
+              <span>The sample size calculation for each reporting combination is </span>
+              <span class="result primary">{{outputs.raw.FinalstageN}}
+                {{sampleStageMeta[sampleStageMeta.length-1].name}}</span>
+              <span> and an overall sample size of</span>
+              <span class="result primary"> {{totalSampleSize}}</span>.
+            </div>
           </div>
+          <div class="section-divider"></div>
+          <div class="result-subsection">
+            <span>With the information you provided, if you visit</span>
+            <span class="primary">
+              {{outputs.raw.nHH}} {{sampleStageMeta[sampleStageMeta.length-1].name}}
+              per
+              {{sampleStageMeta[sampleStageMeta.length-2].name}}
+            </span>
+            <span> and</span>
+            <span class="primary"> {{outputs.raw.stage2N}} {{sampleStageMeta[sampleStageMeta.length-2].name}}</span>
+            <span> in each reporting combination you will have </span>
+            <span class="primary"> {{outputs.raw.nHH * outputs.raw.stage2N}}
+              {{sampleStageMeta[sampleStageMeta.length-1].name}}</span>
+            <span> and an estimated design effect of</span>
+            <span class="primary"> {{outputs.raw.DEFF1}}.</span>
+          </div>
+          <div class="result-subsection"> You will need to think
+            about how you want to distribute the {{sampleStageMeta[sampleStageMeta.length-2].name}} within the other
+            sampling stages.
+          </div>
+          <!-- <div class="result-subsection">
+                You may change the number of sampling units selected throughout the stages until you get a distribution
+                that matches your field conditions and the recommended sample size.
+              </div> -->
         </div>
-        <div class="section-divider"></div>
-        <div class="result-subsection">
-          <span>With the information you provided, if you visit</span>
-          <span class="primary">
-            {{outputs.raw.nHH}} {{sampleStageMeta[sampleStageMeta.length-1].name}}
-            per
-            {{sampleStageMeta[sampleStageMeta.length-2].name}}
-          </span>
-          <span> and</span>
-          <span class="primary"> {{outputs.raw.stage2N}} {{sampleStageMeta[sampleStageMeta.length-2].name}}</span>
-          <span> in each reporting combination you will have </span>
-          <span class="primary"> {{outputs.raw.nHH * outputs.raw.stage2N}}
-            {{sampleStageMeta[sampleStageMeta.length-1].name}}</span>
-          <span> and an estimated design effect of</span>
-          <span class="primary"> {{outputs.raw.DEFF1}}.</span>
-        </div>
-        <div class="result-subsection"> You will need to think
-          about how you want to distribute the {{sampleStageMeta[sampleStageMeta.length-2].name}} within the other
-          sampling stages.
-        </div>
-        <!-- <div class="result-subsection">
-          You may change the number of sampling units selected throughout the stages until you get a distribution
-          that matches your field conditions and the recommended sample size.
-        </div> -->
+
       </div>
     </div>
   </div>

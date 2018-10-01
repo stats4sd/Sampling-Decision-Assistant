@@ -2,11 +2,17 @@ import { Component } from "@angular/core";
 import { NgRedux } from "@angular-redux/store";
 import { DataProvider } from "../../../providers/data/data";
 import { CustomRouterProvider } from "../../../providers/router/router";
-import { AppState, ReportingLevel, StageMeta } from "../../../models/models";
+import {
+  AppState,
+  ReportingLevel,
+  StageMeta,
+  ProjectValues
+} from "../../../models/models";
 import { FormProvider } from "../../../providers/form/form";
 // declare const jStat
 import * as jStat from "jStat";
 import { DataVisProvider } from "../../../providers/data-vis/data-vis";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "sample-size-calculator",
@@ -43,35 +49,50 @@ export class SampleSizeCalculatorComponent {
   };
   combinationSampleSize: number;
   totalSampleSize: number;
+  showResults: boolean;
+  valuesSubscription$: Subscription;
 
   constructor(
     public dataPrvdr: DataProvider,
     private customRouter: CustomRouterProvider,
     private ngRedux: NgRedux<AppState>,
     private formPrvdr: FormProvider,
-    private dataVisPrvdr: DataVisProvider
+    public dataVisPrvdr: DataVisProvider
   ) {}
 
   ngOnInit() {
     this.customRouter.lockHash();
-    try {
-      this.sampleStageMeta = this.ngRedux.getState().activeProject.values.samplingStages;
-      console.log("sample stage meta", this.sampleStageMeta);
-      // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
-      if (!this.dataVisPrvdr.levelCombinations) {
-        this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
-        console.log("disaggregationMeta", this.disaggregationMeta);
-      }
-      this.calculateVariables();
-      this.calculateSize();
-      console.log("outputs", this.outputs);
-    } catch (error) {
-      console.error(error);
+    this._waitForProject();
+  }
+  init(values: ProjectValues) {
+    console.log("init", values);
+    this.sampleStageMeta = values.samplingStages;
+    console.log("sample stage meta", this.sampleStageMeta);
+    // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
+    if (!this.dataVisPrvdr.levelCombinations) {
+      this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
     }
+    this.calculateVariables();
+    this.calculateSize();
+    console.log("outputs", this.outputs);
   }
   resetVariables() {
     this.dataPrvdr.activeProject.values._calculatorVars = null;
     this.calculateVariables();
+  }
+  toggleShowResults() {
+    this.showResults = !this.showResults;
+  }
+  // listen for values load just once
+  _waitForProject() {
+    this.valuesSubscription$ = this.ngRedux
+      .select(["activeProject", "values"])
+      .subscribe(v => {
+        this.init(v);
+        setTimeout(() => {
+          this.valuesSubscription$.unsubscribe();
+        }, 50);
+      });
   }
 
   setDefaultFields() {
@@ -246,6 +267,12 @@ export class SampleSizeCalculatorComponent {
       this.sampleStageMeta.length > 1 &&
       typeof this.outputs.raw.stage2N == "number"
     ) {
+      // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
+      if (!this.disaggregationMeta) {
+        console.log("fetching disaggregation meta");
+        this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
+        console.log("disaggregation meta", this.disaggregationMeta);
+      }
       this.totalSampleSize =
         this.outputs.raw.FinalstageN *
         this.disaggregationMeta.levelCombinations.length;

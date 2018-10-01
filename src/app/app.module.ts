@@ -29,10 +29,9 @@ import {
   TreeDiagramActions
 } from "../actions/actions";
 // dev db
-import firebase from "firebase";
-import { AngularFireModule } from "angularfire2";
+import { AngularFireModule } from "@angular/fire";
 import { firebaseConfig } from "../components/_dev/config";
-import { AngularFirestoreModule } from "angularfire2/firestore";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { CustomRouterProvider } from "../providers/router/router";
 import { SentryErrorHandler } from "../providers/error-handler/error-handler";
 import { GlossaryProvider } from "../providers/glossary/glossary";

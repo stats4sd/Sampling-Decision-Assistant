@@ -63,10 +63,27 @@ tree-table {
     font-weight: bold;
   }
   .primary {
-    color: color($colors, primary)
+    color: color($colors, primary);
   }
   .section-divider {
     border-bottom: 1px solid color($colors, primary);
     margin: 1em 0;
+  }
+  #multiStageResults {
+    position: relative;
+  }
+  #showResults {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+  }
+  #showResults > button {
+    width: 33%;
+    margin: auto;
   }
 }
