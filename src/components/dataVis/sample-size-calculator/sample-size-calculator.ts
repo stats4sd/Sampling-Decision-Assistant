@@ -65,16 +65,13 @@ export class SampleSizeCalculatorComponent {
     this._waitForProject();
   }
   init(values: ProjectValues) {
-    console.log("init", values);
     this.sampleStageMeta = values.samplingStages;
-    console.log("sample stage meta", this.sampleStageMeta);
     // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
     if (!this.dataVisPrvdr.levelCombinations) {
       this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
     }
     this.calculateVariables();
     this.calculateSize();
-    console.log("outputs", this.outputs);
   }
   resetVariables() {
     this.dataPrvdr.activeProject.values._calculatorVars = null;
@@ -88,10 +85,12 @@ export class SampleSizeCalculatorComponent {
     this.valuesSubscription$ = this.ngRedux
       .select(["activeProject", "values"])
       .subscribe(v => {
-        this.init(v);
-        setTimeout(() => {
-          this.valuesSubscription$.unsubscribe();
-        }, 50);
+        if (v) {
+          this.init(v);
+          setTimeout(() => {
+            this.valuesSubscription$.unsubscribe();
+          }, 50);
+        }
       });
   }
 
@@ -111,7 +110,7 @@ export class SampleSizeCalculatorComponent {
   // take project values, load any saved input calculator variables and assign calculated variables
   calculateVariables() {
     try {
-      const v = this.ngRedux.getState().activeProject.values;
+      const v: ProjectValues = this.ngRedux.getState().activeProject.values;
       let calcVals: CalculatorInputVars = {};
       // set default claculated fields in case type of variable has changed
       this.setDefaultFields();
@@ -269,9 +268,7 @@ export class SampleSizeCalculatorComponent {
     ) {
       // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
       if (!this.disaggregationMeta) {
-        console.log("fetching disaggregation meta");
         this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
-        console.log("disaggregation meta", this.disaggregationMeta);
       }
       this.totalSampleSize =
         this.outputs.raw.FinalstageN *
@@ -279,7 +276,6 @@ export class SampleSizeCalculatorComponent {
     } else {
       this.totalSampleSize = this.outputs.raw.FinalstageN;
     }
-    console.log("total sample size", this.totalSampleSize);
   }
 
   _updateFormCalcVars(vars) {
@@ -290,6 +286,7 @@ export class SampleSizeCalculatorComponent {
       );
     } else {
       this.formPrvdr.formGroup.patchValue({ _calculatorVars: vars });
+      this.dataPrvdr.backgroundSave();
     }
   }
 
