@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
-import { TERMS } from "./glossaryTerms";
 import { IGlossaryTerm } from "../../models/models";
-import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 
 interface allGlossaryObj {
   slug?: IGlossaryTerm;

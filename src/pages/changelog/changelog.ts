@@ -1,38 +1,42 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-declare let vis: any
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ModalController
+} from "ionic-angular";
+declare let vis: any;
 // import * as vis from 'vis'
 
-
 @IonicPage({
-  segment: 'changelog',
-  defaultHistory: ['HomePage']
+  segment: "changelog",
+  defaultHistory: ["HomePage"]
 })
 @Component({
-  selector: 'page-changelog',
-  templateUrl: 'changelog.html',
+  selector: "page-changelog",
+  templateUrl: "changelog.html"
 })
 export class ChangelogPage {
-
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl:ModalController) {
-  }
-
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public modalCtrl: ModalController
+  ) {}
 
   launchSampleSizeCalculator() {
-    this.modalCtrl.create('SampleSizeCalculatorPage').present()
+    this.modalCtrl.create("SampleSizeCalculatorPage").present();
   }
 
   // tree diagram demo
   ngAfterViewInit() {
     // create an array with nodes
-    console.log('vis', vis)
+    console.log("vis", vis);
     var nodes = new vis.DataSet([
-      { id: 1, label: 'Node 1' },
-      { id: 2, label: 'Node 2' },
-      { id: 3, label: 'Node 3' },
-      { id: 4, label: 'Node 4' },
-      { id: 5, label: 'Node 5' }
+      { id: 1, label: "Node 1" },
+      { id: 2, label: "Node 2" },
+      { id: 3, label: "Node 3" },
+      { id: 4, label: "Node 4" },
+      { id: 5, label: "Node 5" }
     ]);
 
     // create an array with edges
@@ -44,7 +48,7 @@ export class ChangelogPage {
     ]);
 
     // create a network
-    var container = document.getElementById('mynetwork');
+    var container = document.getElementById("mynetwork");
 
     // provide the data in the vis format
     var data = {
@@ -62,13 +66,13 @@ export class ChangelogPage {
         hierarchical: {
           enabled: true,
           levelSeparation: 100,
-          sortMethod: 'directed'
+          sortMethod: "directed"
         }
       }
     };
 
     // initialize your network!
-    var network = new vis.Network(container, data, options);
+    const network = new vis.Network(container, data, options);
+    console.log("network", network);
   }
-
 }

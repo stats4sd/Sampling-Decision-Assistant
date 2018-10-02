@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { DevActions } from "../../actions/actions";
 import { ToastController } from "ionic-angular";
 

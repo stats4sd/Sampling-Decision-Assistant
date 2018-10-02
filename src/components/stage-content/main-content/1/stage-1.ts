@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { StagePage } from "../../../../pages/sampling tool/stage/stage";
 
 @Component({

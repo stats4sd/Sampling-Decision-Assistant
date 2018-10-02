@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 // dev
-import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { expand } from "../../../providers/animationStates";
 
 @Component({

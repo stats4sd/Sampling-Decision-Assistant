@@ -91,9 +91,9 @@ export interface IStageMeta {
 }
 // hard coded into stages page but keeping as reminder of how to
 // allow for any json key but with specific value format
-interface stages {
-  [stageId: string]: IStageMeta;
-}
+// interface stages {
+//   [stageId: string]: IStageMeta;
+// }
 
 // tree diagram
 export interface TreeDiagramNode {

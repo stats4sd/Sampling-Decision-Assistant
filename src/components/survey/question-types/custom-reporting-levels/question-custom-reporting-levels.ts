@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild
-} from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { SurveyQuestionComponent } from "../../survey-question/survey-question";
 import { TextInput } from "ionic-angular";
 
@@ -61,7 +55,6 @@ export class QuestionCustomReportingLevelsComponent extends SurveyQuestionCompon
   }
 
   removeTextMultiple(index) {
-    let removeValue = this.multipleTextValues[index];
     this.multipleTextValues.splice(index, 1);
     this.saveValue();
     // notify for anything trying to monitor changes to array (e.g. repeat groups)

@@ -293,7 +293,6 @@ export class DataProvider {
 
   // read in project json file, check for name conflicts, save project, set active
   _processImport(reader) {
-    const data = reader.result;
     const project: Project = JSON.parse(reader.result);
     const saved: Project[] = this.ngRedux.getState().savedProjects;
     let projectTitles = {};

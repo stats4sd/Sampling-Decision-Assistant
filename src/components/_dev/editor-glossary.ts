@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { DevActions } from "../../actions/actions";
 import { ToastController } from "ionic-angular";
 import { IGlossaryTerm } from "../../models/models";
@@ -27,7 +27,6 @@ export class DevEditorGlossaryComponent {
 
   save() {
     this.status = "pending";
-    let patch: any = {};
     let terms = {};
     let promises = [];
     this.allGlossaryTerms.slice(0).forEach(term => {

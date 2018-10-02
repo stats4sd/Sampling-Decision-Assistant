@@ -244,7 +244,6 @@ export class SurveyQuestionComponent implements ControlValueAccessor {
       console.log("updating label");
       let value = this.formPrvdr.getSurveyValue(key);
       let el = document.getElementById(this.question.type + "LabelText");
-      let className = ".dynamicText" + key;
       if (el) {
         let instances = el.querySelectorAll(".dynamic-text");
         for (let i = 0; i < instances.length; i++) {

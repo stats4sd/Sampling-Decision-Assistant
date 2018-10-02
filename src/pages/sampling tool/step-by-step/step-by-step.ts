@@ -9,12 +9,10 @@ import {
 } from "ionic-angular";
 import { DataProvider } from "../../../providers/data/data";
 import { FormProvider } from "../../../providers/form/form";
-import { Popover } from "ionic-angular/components/popover/popover";
 import { DecisionToolMenuComponent } from "../../../components/general/decision-tool-menu/decision-tool-menu";
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { Project } from "../../../models/models";
-import { CustomRouterProvider } from "../../../providers/router/router";
 
 @IonicPage({
   defaultHistory: ["HomePage"]
@@ -37,8 +35,7 @@ export class StepByStepPage {
     public modalCtrl: ModalController,
     public events: Events,
     public formPrvdr: FormProvider,
-    public popoverCtrl: PopoverController,
-    private customRouter: CustomRouterProvider
+    public popoverCtrl: PopoverController
   ) {
     this.sections = [
       // add class:disabled to disable a button

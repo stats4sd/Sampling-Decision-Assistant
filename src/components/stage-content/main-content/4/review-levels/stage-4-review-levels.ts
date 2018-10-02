@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { FormGroup, FormControl, FormArray } from "@angular/forms";
 import { Stage4Component } from "../stage-4";
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
