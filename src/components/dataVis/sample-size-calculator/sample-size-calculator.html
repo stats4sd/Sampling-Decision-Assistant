@@ -69,7 +69,7 @@
       <div class="result-subsection" id="multiStageResults" *ngIf="sampleStageMeta && disaggregationMeta">
         <!-- Show results button -->
         <div *ngIf="!showResults" id="showResults">
-          <button ion-button (click)="toggleShowResults()">Show Results</button>
+          <button ion-button (click)="toggleShowResults()">Calculate Results</button>
         </div>
         <!-- main results section -->
         <div [style.opacity]="showResults ? 1 : 0.2">

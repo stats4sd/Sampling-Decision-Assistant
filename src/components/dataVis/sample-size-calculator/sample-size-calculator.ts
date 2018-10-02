@@ -245,17 +245,21 @@ export class SampleSizeCalculatorComponent {
       rawArray: rawArray,
       formatted: formatted
     };
-
-    // update tree meta state
-    this.dataPrvdr.activeProject.values._calculatorVars = {
-      inputs: input,
-      outputs: this.outputs
+    this.calculateTotalSampleSize();
+    const recommendations: CalculatorRecommendations = {
+      disaggregationMeta: this.disaggregationMeta,
+      countFinalStage: this.outputs.raw.nHH,
+      countPenultimateStage: this.outputs.raw.stage2N,
+      requiredPerAggregation: this.outputs.raw.FinalstageN,
+      totalSampleSize: this.totalSampleSize
     };
     let vars = {
       inputs: input,
-      outputs: this.outputs
+      outputs: this.outputs,
+      recommendations: recommendations
     };
-    this.calculateTotalSampleSize();
+    // update tree meta state
+    this.dataPrvdr.activeProject.values._calculatorVars = vars;
     this._updateFormCalcVars(vars);
   }
 
@@ -322,6 +326,7 @@ export class SampleSizeCalculatorComponent {
 export interface CalculatorVars {
   inputs: CalculatorInputVars;
   outputs: CalculatorOutputVars;
+  recommendations: CalculatorRecommendations;
 }
 
 export interface CalculatorInputVars {
@@ -345,6 +350,14 @@ export interface CalculatorOutputVarsRaw {
   FinalstageN_FPC?: number;
   stage2N?: number | "NA";
   nHH?: number;
+}
+
+export interface CalculatorRecommendations {
+  disaggregationMeta: any;
+  countFinalStage: number;
+  countPenultimateStage: number | "NA";
+  totalSampleSize: number;
+  requiredPerAggregation: number;
 }
 
 export interface CalculatorOutputVars {

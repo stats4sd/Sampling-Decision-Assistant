@@ -18,7 +18,7 @@ export class Stage2Component extends StagePage {
     this._calculateSD();
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
     console.log("subscription removed?", this.sdLower$);
