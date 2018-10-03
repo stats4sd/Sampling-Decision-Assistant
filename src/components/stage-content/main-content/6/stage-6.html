@@ -5,8 +5,7 @@
     <div *ngSwitchDefault>
       <h4>Allocating resources</h4>
       <p>The final step in this process is to determine the number of units that should be sampled at every stage in
-        the
-        process
+        the process
       </p>
       <p>The results will be based the hierarchy of sampling stages and reporting levels that you have specified, with
         supporting calculations for margin of error and design effect</p>
@@ -16,9 +15,7 @@
         <note type="tip">Click on the each shape in the diagram for more information about the node</note>
       </div>
       <tree-diagram-key></tree-diagram-key>
-      <div>CC TO PUT SOMEWHERE</div>
-      <div>You may change the number of sampling units selected throughout the stages until you get a distribution that
-        matches your field conditions and the recommended sample size. </div>
+
 
     </div>
     <!-- Sample sizes section -->
@@ -47,20 +44,10 @@
     </div>
     <div *ngSwitchCase="2">
       <h4>Allocating resources</h4>
-      <p>The final step is to allocate the sampling units throughout the diagram</p>
-      <!-- <tree-diagram [showInputNodes]="true"></tree-diagram> -->
-      <div style="margin-bottom: 1em">Select each sampling stage to allocate size</div>
+      <div style="margin-bottom:2em">You may change the number of sampling units selected throughout the stages until
+        you get a distribution that
+        matches your field conditions and the recommended sample size.</div>
       <tree-table></tree-table>
-
-      <!-- <div class="node-editor" [attr.data-show]="selectedNode.id ? 'show' : null">
-                <div class="node-editor-breadcrumbs"></div>
-                <div class="node-editor-heading">Allocate</div>
-                <ion-list>
-                    <ion-item>
-                        <ion-input (ionChange)="updateNode($event)" type="number" [placeholder]="'Number of '+selectedNode.label"></ion-input>
-                    </ion-item>
-                </ion-list>
-            </div> -->
       <stage-complete stageNumber=6></stage-complete>
     </div>
 
@@ -70,7 +57,7 @@
   <!-- Next and back buttons -->
   <div style="display: flex; justify-content:space-between; padding-bottom:20px">
 
-    <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='3'" clear block>Continue
+    <button ion-button icon-right (click)="nextStep()" *ngIf="stagePart !='2'" clear block>Continue
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
 

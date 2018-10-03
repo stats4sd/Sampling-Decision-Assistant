@@ -24,7 +24,11 @@ export class HomePage {
     private toastCtrl: ToastController
   ) {
     this.sections = [
-      { name: "Use the Tool", page: "StepByStepPage" },
+      {
+        name: "Use the Tool",
+        page: "StepByStepPage",
+        icon: "arrow-round-forward"
+      },
       {
         name: "Tutorial and Examples",
         page: "TutorialPage"

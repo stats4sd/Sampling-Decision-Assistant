@@ -1,7 +1,7 @@
 <div>
   <!-- section glossary terms -->
   <div *ngIf="filteredGlossaryTerms && filteredGlossaryTerms.length>0">
-    <h3>In this section</h3>
+    <h3>In this step</h3>
     <span *ngFor="let term of filteredGlossaryTerms">
       <span (click)="setActiveTerm(term)" class="glossary-term" [ngClass]="{
         'term-selected':activeTerm && term.slug==activeTerm.slug,

@@ -27,7 +27,7 @@ tree-table {
   }
   .strata-name {
     color: color($colors, primary);
-    text-decoration: underline;
+    border-bottom: 1px solid;
   }
   ul {
     margin: 2px;

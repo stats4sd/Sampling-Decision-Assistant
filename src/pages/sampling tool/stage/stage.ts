@@ -22,14 +22,14 @@ import { IStageResources, AppState, IStageMeta } from "../../../models/models";
 
 const INTRO_HTML = {
   1: `You will identify the main objectives of the survey to help inform future decision making and identify how
-  the tool can best be used. There will be <strong>1-3 questions</strong> to answer during this section`,
+  the tool can best be used. There will be <strong>1-3 questions</strong> to answer during this step`,
   2: `You will specify the indicator that will guide some of your decisions about sampling.`,
   3: `You will identify your target population and consider any additional criteria for exclusion or inclusion to
   make it as well-defined as possible`,
   4: `You will consider the reporting requirements for the data to be collected, to use as a basis for determining
   sampling frames and strata`,
   5: `You will develop a sampling system to support the collection of data to meet your overall objective`,
-  6: `You will determine your desired sampling size and specify the number of sampling units across all stages`
+  6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages`
 };
 
 @IonicPage({
@@ -74,7 +74,6 @@ export class StagePage {
     public ngRedux: NgRedux<AppState>,
     public projectActions: ProjectActions
   ) {
-    // part of workaround for router locked params #114
     this.stageInit(navParams);
     this._addSubscribers();
   }

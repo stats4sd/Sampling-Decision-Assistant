@@ -29,10 +29,15 @@ page-home {
       margin: 0;
     }
   }
-  #useTheTool {
+  #StepByStepPage {
     justify-content: center;
     align-items: center;
     flex-direction: row;
+    display: flex;
+    font-weight: bold;
+  }
+  .section-icon {
+    font-size: x-large;
   }
   #stats4sdAdmin {
     margin-top: 100px;

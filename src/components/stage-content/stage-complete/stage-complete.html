@@ -11,7 +11,7 @@
 <!-- stage complete checkbox -->
 <div class="complete-container">
   <ion-item *ngIf="form" style="max-width:400px">
-    <ion-label *ngIf="!text">Mark Section as Complete</ion-label>
+    <ion-label *ngIf="!text">Mark Step as Complete</ion-label>
     <ion-label *ngIf="text">{{text}}</ion-label>
     <ion-checkbox [disabled]="!sectionValid" [(ngModel)]="stagesComplete[stage.number]" (ionChange)="toggleCheckbox()"></ion-checkbox>
   </ion-item>

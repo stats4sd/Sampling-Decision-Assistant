@@ -22,8 +22,9 @@
         <ion-card *ngFor="let section of sections" style="height: 100%; max-height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
-            <div class="section-title" id="useTheTool">{{section.name}}
-              <ion-icon style="margin-left:10px" [name]="section.icon"></ion-icon>
+            <div class="section-title" [id]="section.page">
+              <span>{{section.name}}</span>
+              <ion-icon style="margin-left:10px" [name]="section.icon" class="section-icon"></ion-icon>
             </div>
           </div>
         </ion-card>
