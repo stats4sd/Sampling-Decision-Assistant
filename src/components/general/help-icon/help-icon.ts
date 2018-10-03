@@ -20,17 +20,4 @@ export class HelpIconComponent {
   helpClicked() {
     this.events.publish("help:clicked", this.relevant);
   }
-  /* 
-
-  // Old code using has params to change to show resources. Events simpler now no longer using tabs
-  // use hash params to change nav to resources tab and show relevant
-
-  this.customRouter.unlockHash();
-    this.customRouter.setHashParams({
-      tabSection: "resources",
-      relevant: this.relevant
-    });
-    this.projectActions.setRelevantResources(this.relevant)
-
-  */
 }

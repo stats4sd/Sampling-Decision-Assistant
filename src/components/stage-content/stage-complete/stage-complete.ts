@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { StagePage } from "../../../pages/sampling tool/stage/stage";
 
 import { select } from "@angular-redux/store";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { flyin } from "../../../providers/animationStates";
 import { ProjectValues } from "../../../models/models";
 
@@ -16,6 +16,7 @@ export class StageCompleteComponent extends StagePage {
   readonly stagesComplete$: Observable<boolean[]>;
   @select(["activeProject", "title"])
   readonly projectTitle$: Observable<string>;
+  formValues$: Subscription;
   @Input("disabled")
   disabled: boolean;
   @Input("stageNumber")
@@ -36,17 +37,22 @@ export class StageCompleteComponent extends StagePage {
   ngOnInit() {
     // subscribe to form value changes to mark when section complete
     this.checkSectionValid();
-    this.formValues$.subscribe(v => {
-      if (v) {
-        this.checkSectionValid();
-      }
-    });
+    this.formValues$ = this.ngRedux
+      .select(["activeProject", "values"])
+      .subscribe(v => {
+        if (v) {
+          this.checkSectionValid();
+        }
+      });
     this.stagesComplete$.subscribe(s => {
       if (s) {
         this.stagesComplete = s;
       }
     });
     this.projectTitle$.subscribe(t => (this.projectTitle = t));
+  }
+  ngOnDestroy() {
+    this.formValues$.unsubscribe();
   }
 
   saveProjectTitle() {
@@ -158,18 +164,12 @@ export class StageCompleteComponent extends StagePage {
     // push next stage page and remove currnet page from nav stack to allow direct nav back to home. Could also be done with slugs, will need
     // method to recognise stage-2 -> stage-1 when wanting to go fully back and auto pop history
     let next: number = this.stage.number + 1;
-    // unlock nav params if locked (#114)
-    this.customRouter.unlockHash();
-    // remove any existing stagePart hash params
-    this.customRouter.removeHashParam("stagePart");
     // push new page and remove duplicate stack
     this.navCtrl.push("StagePage", { stageID: "stage-" + next }).then(_ => {
       this.navCtrl.remove(this.navCtrl.length() - 2);
     });
   }
   goToReview() {
-    this.customRouter.unlockHash();
-    this.customRouter.removeHashParam("stagePart");
     this.navCtrl
       .push("ReviewPage")
       .then(_ => this.navCtrl.remove(this.navCtrl.length() - 2));

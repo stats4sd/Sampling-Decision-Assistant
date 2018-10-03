@@ -17,6 +17,7 @@ export class ResourcesPage {
     this.stage = navParams.data.stage;
     this.resources = navParams.data.resources;
     this.relevant = navParams.data.relevant;
+    console.log("resources contructor", navParams.data);
   }
   /*
     Currently this just passes resources from navParams into resource list

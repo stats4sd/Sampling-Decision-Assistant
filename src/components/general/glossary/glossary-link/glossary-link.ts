@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core";
-import { CustomRouterProvider } from "../../../../providers/router/router";
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { GlossaryProvider } from "../../../../providers/glossary/glossary";
@@ -21,17 +20,9 @@ export class GlossaryLinkComponent {
   tabSection$: Observable<string>;
 
   constructor(
-    private customRouter: CustomRouterProvider,
     private glossaryPrvdr: GlossaryProvider,
     public navCtrl: NavController
-  ) {
-    // remove glossary term on section change
-    this.tabSection$.subscribe(section => {
-      if (section && section != "glossary") {
-        this.customRouter.removeHashParam("activeGlossaryTerm");
-      }
-    });
-  }
+  ) {}
   // on init load glossary from provider (wait if live version and not sync'd)
   // then set terms
   ngOnInit() {

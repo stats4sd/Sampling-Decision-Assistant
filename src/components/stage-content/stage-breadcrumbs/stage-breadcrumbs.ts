@@ -1,7 +1,8 @@
 import { Component, Input } from "@angular/core";
-import { CustomRouterProvider } from "../../../providers/router/router";
-import { select } from "@angular-redux/store";
-import { Observable } from "rxjs";
+import { select, NgRedux } from "@angular-redux/store";
+import { Subject, Subscription } from "rxjs";
+import { ViewActions } from "../../../actions/actions";
+import { AppState } from "../../../models/models";
 
 @Component({
   selector: "stage-breadcrumbs",
@@ -14,27 +15,33 @@ export class StageBreadcrumbsComponent {
   }
   @Input("stageSlidesIndex")
   stageSlidesIndex: number;
-  @select(["view", "params", "stagePart"])
-  part$: Observable<number>;
+  part$: Subscription;
   activePart: number;
   breadcrumbs: any = [];
+  componentDestroyed: Subject<any> = new Subject();
   stageBreadcrumbs = {
     4: ["Intro", "Level Classifications and Strata", "Review"],
     5: ["Intro", "Sampling Stages", "Building Frames", "Sampling Weights"],
     6: ["Intro", "Sample Sizes", "Resource Allocation"]
   };
 
-  constructor(private customRouter: CustomRouterProvider) {
-    this.part$.subscribe(p => (this.activePart = p));
+  constructor(
+    private viewActions: ViewActions,
+    private ngRedux: NgRedux<AppState>
+  ) {
+    this.part$ = this.ngRedux
+      .select<number>(["view", "params", "stagePart"])
+      .takeUntil(this.componentDestroyed)
+      .subscribe(p => {
+        this.activePart = p;
+      });
+  }
+  ngOnDestroy(): void {
+    this.componentDestroyed.next();
+    this.componentDestroyed.unsubscribe();
   }
 
   goToPart(index) {
-    // unlock nav params if locked (#114)
-    this.customRouter.unlockHash();
-    if (index == 0) {
-      this.customRouter.removeHashParam("stagePart");
-    } else {
-      this.customRouter.updateHashParams({ stagePart: index });
-    }
+    this.viewActions.updateView({ params: { stagePart: index } });
   }
 }

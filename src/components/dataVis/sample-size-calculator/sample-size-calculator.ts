@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { NgRedux } from "@angular-redux/store";
 import { DataProvider } from "../../../providers/data/data";
-import { CustomRouterProvider } from "../../../providers/router/router";
 import {
   AppState,
   ReportingLevel,
@@ -54,14 +53,12 @@ export class SampleSizeCalculatorComponent {
 
   constructor(
     public dataPrvdr: DataProvider,
-    private customRouter: CustomRouterProvider,
     private ngRedux: NgRedux<AppState>,
     private formPrvdr: FormProvider,
     public dataVisPrvdr: DataVisProvider
   ) {}
 
   ngOnInit() {
-    this.customRouter.lockHash();
     this._waitForProject();
   }
   init(values: ProjectValues) {

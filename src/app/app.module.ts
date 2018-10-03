@@ -32,7 +32,6 @@ import {
 import { AngularFireModule } from "@angular/fire";
 import { firebaseConfig } from "../components/_dev/config";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
-import { CustomRouterProvider } from "../providers/router/router";
 import { SentryErrorHandler } from "../providers/error-handler/error-handler";
 import { GlossaryProvider } from "../providers/glossary/glossary";
 import { ResourcesProvider } from "../providers/resources/resources";
@@ -66,7 +65,6 @@ import { DataVisProvider } from "../providers/data-vis/data-vis";
     ViewActions,
     TreeDiagramActions,
     DevToolsExtension,
-    CustomRouterProvider,
     GlossaryProvider,
     ResourcesProvider,
     DataVisProvider

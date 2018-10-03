@@ -18,10 +18,7 @@
           <div id="stageOverview" [innerHtml]="introHtml[stage.number]">
           </div>
           <div id="stageResources">
-            <button ion-button clear (click)="showResourcesList()" [disabled]="!totalResources">
-              <!-- <span *ngIf="totalResources">
-                {{totalResources}}
-              </span> -->
+            <button ion-button clear (click)="showResourcesList()">
               <span style="padding-right:8px">
                 <ion-icon style="font-size: 1.8em" ios="ios-help-circle-outline" md="ios-help-circle-outline" color="primary"></ion-icon>
               </span>

@@ -15,9 +15,8 @@ import { DataProvider } from "../../../providers/data/data";
 import { DataVisProvider } from "../../../providers/data-vis/data-vis";
 import { FormProvider } from "../../../providers/form/form";
 import { ViewActions, ProjectActions } from "../../../actions/actions";
-import { select, NgRedux } from "@angular-redux/store";
-import { Observable } from "rxjs";
-import { CustomRouterProvider } from "../../../providers/router/router";
+import { NgRedux } from "@angular-redux/store";
+import { Subscription } from "rxjs";
 import { ResourcesProvider } from "../../../providers/resources/resources";
 import { IStageResources, AppState, IStageMeta } from "../../../models/models";
 
@@ -50,12 +49,7 @@ export class StagePage {
   content: Content;
   @ViewChild("stageSlides")
   stageSlides: Slides;
-  @select(["activeProject", "values"])
-  readonly formValues$: Observable<any>;
-  // @select(["view", "params", "tabSection"])
-  // readonly tabSection$: Observable<any>;
-  @select(["view", "params", "stagePart"])
-  readonly stagePart$: Observable<string>;
+  stagePart$: Subscription;
   stagePart: string;
   activeSection: string = "main";
   introHtml = INTRO_HTML;
@@ -64,7 +58,6 @@ export class StagePage {
   section: any;
   relevant: string;
   loaded: boolean;
-  totalResources: number;
   stageResources: IStageResources;
 
   constructor(
@@ -77,16 +70,22 @@ export class StagePage {
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public viewActions: ViewActions,
-    public customRouter: CustomRouterProvider,
     private resourcesPrvdr: ResourcesProvider,
     // project actions and ngredux required for child components
     public ngRedux: NgRedux<AppState>,
     public projectActions: ProjectActions
   ) {
     // part of workaround for router locked params #114
-    this.customRouter.unlockHash();
     this.stageInit(navParams);
-    this._subscribeToViewChanges();
+    this._addSubscribers();
+  }
+  ngOnDestroy() {
+    this.stagePart$.unsubscribe();
+  }
+  _addSubscribers() {
+    this.stagePart$ = this.ngRedux
+      .select<string>(["view", "params", "stagePart"])
+      .subscribe(p => (this.stagePart = p));
   }
   ionViewWillEnter() {
     this.getResources(this.stage.number);
@@ -144,7 +143,7 @@ export class StagePage {
 
   ionViewDidEnter() {
     this.loaded = true;
-    this._addBackButtonFunction();
+    // this._addBackButtonFunction();
   }
 
   showResourcesList(relevant?: string) {
@@ -159,42 +158,8 @@ export class StagePage {
   // *** note, will want to change in future if containing additional resource types, e.g. weblinks
   async getResources(stage: number) {
     this.stageResources = await this.resourcesPrvdr.getStageResources(stage);
-    this.totalResources = Object.keys(this.stageResources.questions).length;
   }
 
-  // handle routing between main/resource/glossary sections using hash query params (changes subscribed to in _subscribeToViewChanges)
-  goTo(section: "resources" | "glossary") {
-    if (section) {
-      this.customRouter.updateHashParams({
-        tabSection: section
-      });
-    } else {
-      this.customRouter.removeHashParam("tabSection");
-    }
-  }
-
-  _subscribeToViewChanges() {
-    // this.tabSection$.subscribe(
-    //   section => (this.activeSection = section ? section : "main")
-    // );
-    this.stagePart$.subscribe(p => {
-      this.stagePart = p;
-    });
-  }
-
-  // custom intercept for back button to handle going back in sections vs nav pop
-  _addBackButtonFunction() {
-    // if in main section pop, otherwise go to main
-    this.navbar.backButtonClick = () => {
-      this.customRouter.unlockHash();
-      let section = location.hash.split("tabSection=")[1];
-      if (section) {
-        window.history.back();
-      } else {
-        this.navCtrl.pop();
-      }
-    };
-  }
   closeModal() {
     this.dataPrvdr.backgroundSave();
     this.viewCtrl.dismiss();
@@ -206,20 +171,13 @@ export class StagePage {
 
   // click handler to move to next part of stage subsection
   nextStep() {
-    // unlock nav params if locked (#114)
-    this.customRouter.unlockHash();
-    // first part (0) undefined so just go part 1
-    if (!this.stagePart) {
-      this.customRouter.updateHashParams({ stagePart: 1 });
+    let part;
+    try {
+      part = Number(this.ngRedux.getState().view.params.stagePart);
+    } catch (error) {
+      part = 0;
     }
-    // otherwise increment part and update
-    else {
-      try {
-        let nextPart = parseInt(this.stagePart) + 1;
-        this.customRouter.updateHashParams({ stagePart: nextPart });
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    part++;
+    this.viewActions.updateView({ params: { stagePart: part } });
   }
 }

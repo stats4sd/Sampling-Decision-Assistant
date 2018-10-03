@@ -1,7 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
-import { CustomRouterProvider } from "../../../../../providers/router/router";
 import { ModalController } from "ionic-angular";
 
 @Component({
@@ -14,14 +13,10 @@ export class Stage5_FrameBuilderOverviewComponent {
   @select(["activeProject", "values", "samplingStages"])
   readonly samplingStages$: Observable<any[]>;
   samplingStages: any[] = [];
-  constructor(
-    private customRouter: CustomRouterProvider,
-    private modalCtrl: ModalController
-  ) {}
+  constructor(private modalCtrl: ModalController) {}
   ngOnInit() {
     // lock params are used to bypass case where url hash loses navparams on action sheet open (when clicking a select question)
     // this is likely to be fixed via router upgrade
-    this.customRouter.lockHash();
     this.samplingStages$.subscribe(stages => {
       if (stages) {
         this.samplingStages = stages;
