@@ -1,15 +1,37 @@
-tree-table{
-    tr{
-        border:1px solid transparent;
-    }
-    th[has-reporting='true']{
-        background-color: #F0B89E
-    }
-    .spacing-header{
-        color: white;
-        border: none
-    }
-    .section-title{
-        padding:1em 0;
-    }
+tree-table {
+  tr {
+    border: 1px solid transparent;
+  }
+  th[has-reporting="true"] {
+    background-color: #f0b89e;
+  }
+  .spacing-header {
+    color: white;
+    border: none;
+  }
+  .section-title {
+    padding: 1em 0;
+  }
+  .table-input {
+    background-color: wheat;
+    width: 100px;
+  }
+  .table-fixed {
+    padding: 5px 11px;
+  }
+  td.pass {
+    background-color: rgba(40, 167, 69, 0.6);
+  }
+  td.fail {
+    background-color: #ffc107;
+  }
+  .strata-name {
+    color: color($colors, primary);
+    text-decoration: underline;
+  }
+  ul {
+    margin: 2px;
+    padding-left: 15px;
+    margin-block-end: 5px;
+  }
 }

@@ -67,9 +67,8 @@ export class SampleSizeCalculatorComponent {
   init(values: ProjectValues) {
     this.sampleStageMeta = values.samplingStages;
     // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
-    if (!this.dataVisPrvdr.levelCombinations) {
-      this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
-    }
+    this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
+    console.log("disag meta", this.disaggregationMeta);
     this.calculateVariables();
     this.calculateSize();
   }
@@ -97,6 +96,16 @@ export class SampleSizeCalculatorComponent {
   setDefaultFields() {
     this.inputFields = this._jsonToArray(this.inputFieldsDefault);
     this.calculatedFields = this._jsonToArray(this.calculatedFieldsDefault);
+  }
+  // when number of units specified for final stage want to reflect to state as well as applying usual calculations and save
+  setFinalStageN() {
+    this.sampleStageMeta[this.sampleStageMeta.length - 1].sampleSize = Number(
+      this.inputValues.nHH
+    );
+    this.formPrvdr.formGroup.patchValue({
+      samplingStages: this.sampleStageMeta
+    });
+    this.calculateSize();
   }
 
   _jsonToArray(json) {

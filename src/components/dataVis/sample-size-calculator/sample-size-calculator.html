@@ -44,7 +44,7 @@
           <ion-item class="input-item" *ngIf="sampleStages>1">
             <ion-label fixed>Number of {{sampleStageMeta[sampleStageMeta.length-1].name}} per
               {{sampleStageMeta[sampleStageMeta.length-2].name}}</ion-label>
-            <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="calculateSize()"></ion-input>
+            <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="setFinalStageN()"></ion-input>
           </ion-item>
           <ion-item class="input-item">
             <ion-label fixed>Expected Population Size</ion-label>

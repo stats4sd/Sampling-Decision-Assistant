@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { NgRedux, select } from "@angular-redux/store";
 import { Subject, Subscription, Observable } from "rxjs";
-import { StageMeta, AppState } from "../../../../models/models";
+import { StageMeta, AppState, ReportingLevel } from "../../../../models/models";
 import { CalculatorRecommendations } from "../../sample-size-calculator/sample-size-calculator";
-import { Events } from "ionic-angular";
+import { DataVisProvider } from "../../../../providers/data-vis/data-vis";
 
 @Component({
   selector: "tree-table",
@@ -13,16 +13,21 @@ export class TreeTableComponent {
   // @select(['_treeMeta', 'activeNode']) readonly activeNode$: Observable<TreeDiagramNode>
   samplingStages$: Subscription;
   samplingStages: StageMeta[] = [];
-  totalSampleSize: number;
+  totalSampleSize: number = -1;
+  stageStrata: string[][];
   @select(["activeProject", "values", "_calculatorVars", "recommendations"])
   readonly recommendations$: Observable<CalculatorRecommendations>;
   private componentDestroyed: Subject<any> = new Subject();
 
-  constructor(private ngRedux: NgRedux<AppState>, private events: Events) {
+  constructor(
+    private ngRedux: NgRedux<AppState>,
+    public dataVisPrvdr: DataVisProvider
+  ) {
     this._addSubscribers();
   }
 
   ngOnDestroy() {
+    // want to remove subscriptions on destroy (note automatically handled for @select bound to async pipe in html)
     // using subject emits value manually (like event emitter) by calling the 'next()' function
     // on destroy we want to emit any value so that the takeUntil subscription records it no longer needs to subscribe
     this.componentDestroyed.next();
@@ -34,10 +39,46 @@ export class TreeTableComponent {
     if (typeof e._value == "string") {
       this.samplingStages[index].sampleSize = Number(e._value);
     } else {
-      this.totalSampleSize = this.samplingStages
-        .map(s => (s.sampleSize ? s.sampleSize : 0))
-        .reduce((a, b) => a * b);
-      console.log("total sample size", this.totalSampleSize);
+      this.calculateTotalSampleSize();
+    }
+  }
+  calculateTotalSampleSize() {
+    this.totalSampleSize = this.samplingStages
+      .map(s => (s.sampleSize ? s.sampleSize : 0))
+      .reduce((a, b) => a * b);
+  }
+
+  // for each stage want the total reporting combinations to allocate from the sample
+  // adds _reportingLevels and _stageStrata properties, could be done at earlier stage (e.g. when building tree nodes)
+  // *** note, currently strata names simply listed so don't need full combinations (would be useful if allowing more allocation)
+  getStageStrata(stages: StageMeta[]) {
+    stages = stages.map(s => {
+      if (s["q5.3.4.2"] && s["q5.3.4.2"].length > 0) {
+        s._reportingLevels = s["q5.3.4.2"].map(level =>
+          this.getReportingLevel(level)
+        );
+        const classifications = [];
+        s._reportingLevels.forEach(l =>
+          classifications.push(l.classifications.names)
+        );
+        s._stageStrata = this.dataVisPrvdr._buildCombinations(classifications);
+      }
+      return s;
+    });
+    return stages;
+  }
+
+  getReportingLevel(name: string) {
+    try {
+      const allReportingLevels = this.ngRedux.getState().activeProject.values
+        .reportingLevels;
+      const level: ReportingLevel = allReportingLevels.filter(
+        l => l.name == name
+      )[0];
+      return level;
+    } catch (error) {
+      console.error("could not match level", name);
+      // could not match level
     }
   }
 
@@ -48,36 +89,34 @@ export class TreeTableComponent {
       .takeUntil(this.componentDestroyed)
       .subscribe(stages => {
         if (stages) {
-          this.samplingStages = stages;
+          this.samplingStages = this.getStageStrata(stages);
           console.log("stages", stages);
-          // this.reportingStages = stages.filter(s => {
-          //   return s["q5.3.4.2"] && s["q5.3.4.2"].length > 0;
-          // });
+          this.calculateTotalSampleSize();
         }
       });
-
-    // this.allocation$ = this.ngRedux
-    //   .select(["activeProject", "values", "allocation"])
-    //   .pipe(debounceTime(200))
-    //   .takeUntil(this.componentDestroyed)
-    //   .subscribe(allocation => {
-    //     if (allocation) {
-    //       this.calculateTotals(allocation);
-    //     }
-    //   });
-    // *** use events also as redux doesn't seem to capture sub property changes - possibly better if only tracking sample sizes,
-    // or had seperate popsize and samplesize objects to track with path subproperties
-    // update - even with simple allocation object with only number sub properties still doesn't pick up
-    // could try dynamically add select listeners
-    // this.events.subscribe("allocation:updated", allocation => {
-    //   this.calculateTotals(allocation);
-    // });
   }
 
   /************************************************************************************************************
   NOTE, code below needs review, lots from legacy node diagram allocation methods which are no longer relevant
   CC: 2018-10-02
   *************************************************************************************************************/
+
+  // this.allocation$ = this.ngRedux
+  //   .select(["activeProject", "values", "allocation"])
+  //   .pipe(debounceTime(200))
+  //   .takeUntil(this.componentDestroyed)
+  //   .subscribe(allocation => {
+  //     if (allocation) {
+  //       this.calculateTotals(allocation);
+  //     }
+  //   });
+  // *** use events also as redux doesn't seem to capture sub property changes - possibly better if only tracking sample sizes,
+  // or had seperate popsize and samplesize objects to track with path subproperties
+  // update - even with simple allocation object with only number sub properties still doesn't pick up
+  // could try dynamically add select listeners
+  // this.events.subscribe("allocation:updated", allocation => {
+  //   this.calculateTotals(allocation);
+  // });
 
   // calculate total fsu and intermediate for each path through tree diagram
   // calculateTotals(allocation) {

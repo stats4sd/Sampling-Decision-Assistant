@@ -20,13 +20,14 @@ tree-table {
     width: 300px;
     padding: 5px;
     background-color: gainsboro;
+    min-width: 220px;
   }
   .calc-section.results {
     flex: 1;
     background-color: white;
     border: 2px solid color($colors, primary);
   }
-  .input-label {
+  .calc-section .input-label {
     width: 120px;
   }
   .input-label.results {

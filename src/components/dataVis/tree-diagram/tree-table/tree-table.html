@@ -1,61 +1,66 @@
 <!-- aggregation table -->
 <div>
   <div class="section-title">Totals by disaggregation</div>
-
-  <table style="margin-bottom:2em" *ngIf="recommendations$ | async; let recommendations">
-    <tr>
-      <th>Stage</th>
-      <th>Take</th>
-      <th>Allocation</th>
-      <!-- <th>Stratification</th> -->
-    </tr>
-    <tr *ngFor="let stage of samplingStages; index as i; first as first">
-      <td>{{stage.name}} <span *ngIf="!first">per {{samplingStages[i-1].name}}</span></td>
-      <td>{{stage['q5.3.3']}}</td>
-      <td *ngIf="i<samplingStages.length-1">
-        <ion-input type="number" [(ngModel)]="stage.sampleSize" (ionChange)="allocationChange($event,i)"></ion-input>
-      </td>
-      <td *ngIf="i==samplingStages.length-1">{{recommendations.countFinalStage}}</td>
-  </table>
-  <div></div>
-
-  <table style="display: none">
-    <!-- header row -->
-    <!-- <tr>
-      <th *ngFor="let stage of reportingStages" [attr.has-reporting]="stage['q5.3.4.2'] ? true : false">{{stage.name}}</th>
-      <th class="spacing-header">...</th>
-      <th>Sampled</th>
-    </tr> -->
-    <tr>
-      <th *ngFor="let stage of samplingStages">{{stage.name}}</th>
-      <th class="spacing-header">...</th>
-      <th>Sampled</th>
-    </tr>
-    <!-- main rows -->
-    <tr *ngFor="let r of reportingTotals">
-      <td *ngFor="let classification of r.allocationTitle">{{classification}}</td>
-      <td class="spacing-header">...</td>
-      <td>{{r.allocationTotal.total}}</td>
-    </tr>
-  </table>
-  <!-- <div style="margin-top:1em">The recommended sample size per group is
-    <strong>{{calculatorOutputs.raw.FinalstageN_FPC}}</strong>
-  </div> -->
+  <div *ngIf="recommendations$ | async; let recommendations">
+    <table style="margin-bottom:2em">
+      <tr>
+        <th>Stage</th>
+        <th>Take</th>
+        <th>Total</th>
+        <th>Reporting</th>
+        <th>Additional Strata</th>
+      </tr>
+      <tr *ngFor="let stage of samplingStages; index as i; first as first">
+        <!-- stage -->
+        <td>{{stage.name}} <span *ngIf="!first">per {{samplingStages[i-1].name}}</span></td>
+        <!-- take -->
+        <td>{{stage['q5.3.3']}}</td>
+        <!-- total -->
+        <td *ngIf="i<samplingStages.length-1" class="table-input">
+          <ion-input type="number" [(ngModel)]="stage.sampleSize" (ionChange)="allocationChange($event,i)"></ion-input>
+        </td>
+        <td *ngIf="i==samplingStages.length-1" class="table-fixed">{{recommendations.countFinalStage}}</td>
+        <!-- Reporting levels -->
+        <td>
+          <div *ngIf="stage._reportingLevels">
+            <div *ngFor="let level of stage._reportingLevels">
+              <div *ngIf="level.reportingRequired">
+                <div class="strata-name">{{level.name}}</div>
+                <ul>
+                  <li class="strata-classification" *ngFor="let name of level.classifications.names">{{name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </td>
+        <!-- additional strata -->
+        <td>
+          <div *ngIf="stage._reportingLevels">
+            <div *ngFor="let level of stage._reportingLevels">
+              <div *ngIf="!level.reportingRequired">
+                <div class="strata-name">{{level.name}}</div>
+                <ul>
+                  <li class="strata-classification" *ngFor="let name of level.classifications.names">{{name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </td>
+      <tr>
+        <th>
+          <div>Total Sample Size</div>
+          <div class="recommended-size">(recommended:{{recommendations.totalSampleSize}} )</div>
+        </th>
+        <td></td>
+        <td [class]="totalSampleSize>=recommendations.totalSampleSize ? 'pass':'fail'">
+          <span *ngIf="totalSampleSize>0">{{totalSampleSize}}</span>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <note type="warning" *ngIf="totalSampleSize && totalSampleSize < recommendations.totalSampleSize">
+      The recommended minimum sample size is {{recommendations.totalSampleSize}}
+    </note>
+  </div>
 </div>
-
-
-<!-- <div class="calc-section results">
-    <div class="section-title results">
-        <div style="margin-right: 5px">
-            <ion-icon name="calculator"></ion-icon>
-            <span style="margin-left:5px">Recommendations</span>
-        </div>
-
-    </div>
-    <div *ngFor="let result of calculatorOutputs.formatted" class="input-item">
-        <div class="input-label results">{{result.label}}</div>
-        <div class="input-value results">{{calculatorOutputs.raw[result.var]}}</div>
-    </div>
-</div> -->
-
-<!-- *** copied from sample size calculator, could be made into own component -->

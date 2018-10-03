@@ -140,6 +140,8 @@ export interface StageMeta {
   stageNumber?: number;
   reportingAllocations?: number[];
   _built?: boolean;
+  _reportingLevels?: ReportingLevel[];
+  _stageStrata?: string[];
 }
 
 // no longer tracking popsize, want to just use sample size to make it easier to bind to redux changes

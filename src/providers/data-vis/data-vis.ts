@@ -5,11 +5,8 @@ import { AppState, ReportingLevel } from "../../models/models";
 @Injectable()
 export class DataVisProvider {
   reportingCombinations: string[];
-  levelCombinations: string[];
   reportingLevels: ReportingLevel[];
-  constructor(private ngRedux: NgRedux<AppState>) {
-    console.log("hello data vis provider");
-  }
+  constructor(private ngRedux: NgRedux<AppState>) {}
 
   buildReportingCombinations(levelNames: string[], arrays?) {
     // takes a list of group names and creates a list of all combinations on their category names
@@ -128,10 +125,11 @@ export class DataVisProvider {
           });
         });
         console.log("category lists", categoryLists);
-        this._buildCombinations(categoryLists);
+        const levelCombinations = this._buildCombinations(categoryLists);
+        console.log("level combinations", levelCombinations);
         return {
           reportingLevels: this.reportingLevels,
-          levelCombinations: this.levelCombinations
+          levelCombinations: levelCombinations
         };
       }
     } catch (error) {
@@ -141,7 +139,7 @@ export class DataVisProvider {
   }
   // recursive function to build all combinations of variables across an array list
   // e.g    [a,b],[1,2,3]  ->  [a,1],[a,2],[a,3],[b,1],[b,2],[b,3],[c,1],[c,2],[c,3]
-  _buildCombinations(arrays: any[]) {
+  _buildCombinations(arrays: string[][]) {
     let combinations = [];
     if (arrays[1]) {
       for (let el of arrays[0]) {
@@ -151,17 +149,14 @@ export class DataVisProvider {
       }
       arrays[1] = combinations;
       arrays.splice(0, 1);
-      this._buildCombinations(arrays);
+      // make sure to return recursive function otherwise end result will be undefined
+      return this._buildCombinations(arrays);
     } else {
       // final list
-      if (arrays[0]) {
-        combinations = arrays[0].map(el => {
-          return el.split("||");
-        });
-        this.levelCombinations = combinations;
-      }
-      console.log("level combinations", this.levelCombinations);
-      return this.levelCombinations;
+      console.log("final list", arrays);
+      combinations = arrays[0].map(el => el.split("||"));
+      console.log("final combinations", combinations);
+      return combinations;
     }
   }
 }
