@@ -1,5 +1,5 @@
 import { Component, ViewChildren } from "@angular/core";
-import { IonicPage, ModalController } from "ionic-angular";
+import { IonicPage } from "ionic-angular";
 import { DataProvider } from "../../../providers/data/data";
 import { NgRedux } from "@angular-redux/store";
 import {
@@ -27,7 +27,6 @@ export class ReviewPage {
   questionText: any;
 
   constructor(
-    private modalCtrl: ModalController,
     private dataPrvdr: DataProvider,
     private ngRedux: NgRedux<AppState>
   ) {
@@ -50,16 +49,6 @@ export class ReviewPage {
       const val = groups[k];
       this.questionGroups.push(val);
     });
-  }
-
-  startNew() {
-    let modal = this.modalCtrl.create("SavedInfoPage", { view: "save" });
-    modal.onDidDismiss(data => {
-      if (data) {
-        this.showIntro = false;
-      }
-    });
-    modal.present();
   }
 
   exportTreeImage() {

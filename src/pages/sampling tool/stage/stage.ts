@@ -67,7 +67,6 @@ export class StagePage {
     public dataVisPrvdr: DataVisProvider,
     public events: Events,
     public formPrvdr: FormProvider,
-    public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public viewActions: ViewActions,
     private resourcesPrvdr: ResourcesProvider,

@@ -279,6 +279,10 @@ ion-card {
     display: none;
   }
 }
+// used to hide modal when content needs to be viewed underneath
+.no-display {
+  display: none;
+}
 
 // --------------------------------------------------
 // --------------------------------------------------

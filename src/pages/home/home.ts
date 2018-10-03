@@ -3,7 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  ModalController,
   ToastController
 } from "ionic-angular";
 import version from "../../pages/changelog/version";
@@ -22,7 +21,6 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public modalCtrl: ModalController,
     private toastCtrl: ToastController
   ) {
     this.sections = [

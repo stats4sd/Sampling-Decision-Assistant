@@ -1,98 +1,97 @@
 stage-5-frame-builder-overview {
-    .builder-stage-container,
-    .builder-container {
-        max-width: 600px;
-        margin: unset;
+  .builder-stage-container,
+  .builder-container {
+    max-width: 600px;
+    margin: unset;
+  }
+  .build-stage {
+    min-height: 3em;
+    flex: 1;
+    min-height: 3em;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    color: color($colors, primary);
+  }
+  .row-headers {
+    background-color: rgb(250, 250, 250);
+    font-weight: bold;
+    border-color: rgb(128, 128, 128);
+    text-align: center;
+  }
+  .row {
+    align-items: center; //border-bottom: 1px solid rgb(232, 232, 232);
+    border-bottom: 1px solid rgb(232, 232, 232);
+    height: 3em;
+    text-align: center;
+  }
+  .stage-name {
+    text-align: center;
+  }
+  .hover {
+    // add fade when background hover enabled (could use 'all' to apply to all transitions)
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .hover:hover {
+    background-color: rgb(230, 247, 255);
+    font-weight: bold;
+  }
+  .builder-arrow-down {
+    font-size: x-large;
+  }
+  .reference-text {
+    padding: 0 !important;
+  }
+  .item {
+    background-color: unset;
+    font-size: small;
+    border-bottom: unset;
+  }
+  .list {
+    margin-bottom: 0;
+  }
+  .sample-size {
+    font-size: x-small;
+    width: 100%;
+    position: absolute;
+    top: 1.2em;
+  }
+  .col {
+    padding: 0;
+  }
+  // edit button
+  .row {
+    position: relative;
+  }
+  .edit-button-container {
+    cursor: pointer;
+    float: right;
+    position: absolute;
+    height: 3em;
+    width: 100%;
+  }
+  .edit-button-container:hover {
+    .edit-button {
+      opacity: 1;
+      z-index: 2;
     }
-    .build-stage {
-        min-height: 3em;
-        flex: 1;
-        min-height: 3em;
-        text-align: center;
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        font-weight: bold;
-        color: color($colors, primary)
+    .edit-button-overlay {
+      opacity: 0.8;
     }
-    .row-headers {
-        background-color: rgb(250, 250, 250);
-        font-weight: bold;
-        border-color: rgb(128, 128, 128);
-        text-align: center;
-    }
-    .row {
-        align-items: center; //border-bottom: 1px solid rgb(232, 232, 232); 
-        border-bottom: 1px solid rgb(232, 232, 232);
-        height: 3em;
-        text-align: center;
-    }
-    .stage-name {
-        text-align: center;
-    }
-    .hover {
-        // add fade when background hover enabled (could use 'all' to apply to all transitions)
-        transition: background-color .3s ease;
-        cursor: pointer;
-    }
-    .hover:hover {
-        background-color: rgb(230, 247, 255);
-        font-weight: bold;
-    }
-    .builder-arrow-down {
-        font-size: x-large;
-    }
-    .reference-text {
-        padding: 0!important
-    }
-    .item {
-        background-color: unset;
-        font-size: small;
-        border-bottom: unset;
-    }
-    .list {
-        margin-bottom: 0;
-    }
-    .sample-size {
-        font-size: x-small;
-        width: 100%;
-        position: absolute;
-        top: 1.2em;
-    }
-    .col {
-        padding: 0;
-    }
-    // edit button
-    .row{
-        position:relative;
-    }
-    .edit-button-container {
-        cursor: pointer;
-        float: right;
-        position: absolute;
-        height: 3em;
-        width: 100%;        
-    }
-    .edit-button-container:hover{
-        .edit-button{
-            opacity: 1;
-            z-index: 2;
-        }
-        .edit-button-overlay{
-            opacity: 0.8;
-        }
-    }
-    .edit-button-overlay{
-        width:100%;
-        background-color: wheat;
-        height: 100%;
-        opacity: 0;
-    }
-    .edit-button{
-        width:100%;
-        opacity: 0;
-        z-index: 2;
-        position:relative;
-    }
-
+  }
+  .edit-button-overlay {
+    width: 100%;
+    background-color: wheat;
+    height: 100%;
+    opacity: 0;
+  }
+  .edit-button {
+    width: 100%;
+    opacity: 0;
+    z-index: 2;
+    position: relative;
+  }
 }

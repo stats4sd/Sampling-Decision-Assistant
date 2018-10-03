@@ -9,17 +9,12 @@ export class Stage6Component extends StagePage {
   selectedNode: any = {};
   initComplete: boolean;
 
-  ngOnInit() {}
-
   ngAfterViewInit() {
     if (this.stageSlides) {
       this.stageSlides.lockSwipes(true);
     }
     setTimeout(_ => (this.initComplete = true), 200);
   }
-  // launchSampleSizeCalculator() {
-  //   this.modalCtrl.create('SampleSizeCalculatorPage').present()
-  // }
   goBack() {
     this.navCtrl.pop();
   }
