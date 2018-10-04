@@ -3,7 +3,6 @@ page-home {
     display: flex;
     flex-direction: column;
   }
-
   .start-button {
     font-size: large;
   }
@@ -12,6 +11,9 @@ page-home {
   }
   .feature-image {
     height: 140px;
+  }
+  .card:hover {
+    background-color: wheat;
   }
 
   .button-block {

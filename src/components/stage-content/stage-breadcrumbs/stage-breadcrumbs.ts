@@ -29,6 +29,10 @@ export class StageBreadcrumbsComponent {
     private viewActions: ViewActions,
     private ngRedux: NgRedux<AppState>
   ) {
+    console.log("stage breadcrumbs constructor");
+    // clear stage part from old steps
+    this.viewActions.updateView({ params: { stagePart: null } });
+    // subscribe to stage part state changes
     this.part$ = this.ngRedux
       .select<number>(["view", "params", "stagePart"])
       .takeUntil(this.componentDestroyed)
