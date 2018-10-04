@@ -30,6 +30,7 @@ export class TreeDiagramComponent {
   nodes: any[] = [];
   treeNodes: any;
   treeEdges: any;
+  treeDiagram: any;
   form: FormGroup;
   samplingStages: StageMeta[];
   initComplete: boolean;
@@ -302,13 +303,13 @@ export class TreeDiagramComponent {
     };
     setTimeout(_ => {
       // initialize your network!
-      var network = new vis.Network(container, data, treeOptions);
+      this.treeDiagram = new vis.Network(container, data, treeOptions);
       // network.on('click', params => {console.log('node clicked', params)})
-      network.on("selectNode", params => {
+      this.treeDiagram.on("selectNode", params => {
         let selectedNode = this._getNode(params.nodes[0]) as TreeDiagramNode;
         this.treeActions.setActiveNode(selectedNode);
       });
-      network.on("deselectNode", params => {
+      this.treeDiagram.on("deselectNode", params => {
         this.treeActions.setActiveNode(null);
       }),
         500;
@@ -321,38 +322,7 @@ export class TreeDiagramComponent {
       label: update.label
     });
   }
-  // *** Snippet from code which might be reused to automatically calculate sample sizes for final stage
-  // updateFinalStageSize(size: number) {
-  //   try {
-  //     const samplingStages = this.ngRedux.getState().activeProject.values.samplingStages
-  //     let finalStage: StageMeta = samplingStages[samplingStages.length - 1]
-  //     let nodes
-  //     // update final reporting level nodes and final stage
-  //     if (finalStage["q5.3.4.2"] instanceof Array) {
-  //       nodes = this.nodes.filter(n => {
-  //         return (n.group == 'reportingLevelNodes' && n.id.indexOf('_._') > -1 && n.nodePath.length == samplingStages.length)
-  //       })
-  //       let reportingAllocations = []
-  //       nodes.forEach((n, i) => {
-  //         reportingAllocations[i] = size
-  //         // update labels?
-  //       })
-  //       finalStage.reportingAllocations = reportingAllocations
-  //       size = size * (nodes.length / samplingStages.length)
-  //     }
-  //     // update final stage nodes
-  //     nodes = this.nodes.filter(n => {
-  //       return (n.group == 'stageNodes' && n.nodePath.length == samplingStages.length)
-  //     })
-  //     nodes.forEach(n => {
-  //       // update labels?
-  //     })
-  //     finalStage.sampleSize = size
-  //     this.updateStageControl(samplingStages.length - 1, finalStage)
-  //   } catch (error) {
-  //   }
-  // }
-  // *** lots of shared code with node allocation component
+
   updateStageControl(stageIndex: number, update: any) {
     let allStages = this.formPrvdr.formGroup.controls.samplingStages.value.slice();
     allStages[stageIndex] = Object.assign({}, allStages[stageIndex], update);

@@ -1,5 +1,5 @@
 import { Component, ViewChildren } from "@angular/core";
-import { IonicPage } from "ionic-angular";
+import { IonicPage, LoadingController } from "ionic-angular";
 import { DataProvider } from "../../../providers/data/data";
 import { NgRedux } from "@angular-redux/store";
 import {
@@ -28,7 +28,8 @@ export class ReviewPage {
 
   constructor(
     private dataPrvdr: DataProvider,
-    private ngRedux: NgRedux<AppState>
+    private ngRedux: NgRedux<AppState>,
+    private loading: LoadingController
   ) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
     this._generateQuestionGroups();
@@ -51,13 +52,28 @@ export class ReviewPage {
     });
   }
 
-  exportTreeImage() {
+  async exportTreeImage() {
     const project = this.ngRedux.getState().activeProject;
     const canvas = document.querySelector("canvas");
     console.log("canvas", canvas);
+    const treeContainer = document.getElementById("treeContainer");
+    console.log("tree container", treeContainer);
+    // resize tree canvas for larger export, wait for resize and download
+    const loader = this.loading.create({
+      enableBackdropDismiss: false,
+      content: "Preparing Export"
+    });
+    await loader.present();
+    treeContainer.classList.toggle("export-mode");
+    await this._wait(2000);
     const dataURL = canvas.toDataURL("image/png");
     let exportFileDefaultName = project.title + ".png";
     this.download(dataURL, exportFileDefaultName);
+    treeContainer.classList.toggle("export-mode");
+    loader.dismiss();
+  }
+  _wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   exportJSON() {
