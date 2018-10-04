@@ -5,17 +5,10 @@
   <div *ngIf="recommendations">
     <table style="margin-bottom:2em">
       <tr>
-        <td class="no-border"></td>
-        <td class="no-border"></td>
-        <td class="no-border"></td>
-        <th colspan="2" style="text-align: center">Strata</th>
-      </tr>
-      <tr>
         <th>Stage</th>
         <th>Take</th>
-        <th>Total</th>
-        <th>Reporting</th>
-        <th>Non-Reporting</th>
+        <th>Sampling Units</th>
+        <th>Reporting Strata</th>
       </tr>
       <tr *ngFor="let stage of samplingStages; index as i; first as first">
         <!-- stage -->
@@ -33,25 +26,13 @@
             <div *ngFor="let level of stage._reportingLevels">
               <div *ngIf="level.reportingRequired">
                 <div class="strata-name">{{level.name}}</div>
-                <div style="display: flex; flex-wrap: wrap">
-                  <div class="strata-classification" *ngFor="let name of level.classifications.names">
-                    <div>- {{name}}</div>
-                    <div class="sample-size">n = {{stage.sampleSize}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-        <!-- additional strata -->
-        <td>
-          <div *ngIf="stage._reportingLevels">
-            <div *ngFor="let level of stage._reportingLevels">
-              <div *ngIf="!level.reportingRequired">
-                <div class="strata-name">{{level.name}}</div>
                 <ul>
-                  <li class="strata-classification" *ngFor="let name of level.classifications.names">{{name}}</li>
+                  <li class="strata-classification" *ngFor="let name of level.classifications.names">
+                    <div>{{name}}</div>
+                    <div class="sample-size">n = {{stage.sampleSize}}</div>
+                  </li>
                 </ul>
+
               </div>
             </div>
           </div>
@@ -65,7 +46,6 @@
           <span *ngIf="allocationSampleSize>0">{{allocationSampleSize}}</span>
         </td>
         <td></td>
-        <td></td>
       </tr>
       <tr>
         <td>Overall Sample Size</td>
@@ -74,7 +54,6 @@
           <span *ngIf="allocationSampleSize>0">{{allocationSampleSize *
             recommendations.disaggregationMeta.levelCombinations.length}}</span>
         </td>
-        <td></td>
         <td></td>
       </tr>
     </table>

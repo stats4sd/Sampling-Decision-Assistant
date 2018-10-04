@@ -148,7 +148,11 @@ export class StageCompleteComponent extends StagePage {
       }
       case s == 6: {
         // *** basic validation of some allocation complete, could be improved on
-        if (v.allocation) {
+        if (
+          v._allocation &&
+          v._allocation.aggregationSampleSize >=
+            v._allocation.recommendedAggregationSize
+        ) {
           return true;
         }
         break;

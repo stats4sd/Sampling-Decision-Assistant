@@ -183,5 +183,12 @@ export interface ProjectValues {
   reportingLevels?: ReportingLevel[];
   samplingStages?: StageMeta[];
   _calculatorVars?: CalculatorVars;
-  allocation?: any;
+  _allocation?: IAllocation;
+}
+
+export interface IAllocation {
+  aggregationSampleSize: number;
+  totalSampleSize: number;
+  recommendedAggregationSize: number;
+  recommendedTotalSampleSize: number;
 }

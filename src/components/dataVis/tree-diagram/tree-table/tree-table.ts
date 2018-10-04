@@ -1,7 +1,12 @@
 import { Component } from "@angular/core";
 import { NgRedux, select } from "@angular-redux/store";
 import { Subject, Subscription, Observable } from "rxjs";
-import { StageMeta, AppState, ReportingLevel } from "../../../../models/models";
+import {
+  StageMeta,
+  AppState,
+  ReportingLevel,
+  IAllocation
+} from "../../../../models/models";
 import { CalculatorRecommendations } from "../../sample-size-calculator/sample-size-calculator";
 import { DataVisProvider } from "../../../../providers/data-vis/data-vis";
 import { DataProvider } from "../../../../providers/data/data";
@@ -50,6 +55,26 @@ export class TreeTableComponent {
     } catch (error) {}
   }
 
+  // check .allocation values control exist, create if doesn't using recommendation and allocated values
+  updateAllocation() {
+    const allocation: IAllocation = {
+      aggregationSampleSize: this.allocationSampleSize,
+      totalSampleSize:
+        this.allocationSampleSize *
+        this.recommendations.disaggregationMeta.levelCombinations.length,
+      recommendedAggregationSize: this.recommendations.requiredPerAggregation,
+      recommendedTotalSampleSize: this.recommendations.totalSampleSize
+    };
+    if (!this.formPrvdr.formGroup.controls._allocation) {
+      this.formPrvdr.formGroup.addControl(
+        "_allocation",
+        this.formPrvdr.fb.control(allocation)
+      );
+    } else {
+      this.formPrvdr.formGroup.patchValue({ _allocation: allocation });
+    }
+  }
+
   allocationChange(e, index) {
     // convert strings back to number (will fire change event again)
     if (typeof e._value == "string") {
@@ -59,6 +84,7 @@ export class TreeTableComponent {
       this.formPrvdr.formGroup.patchValue({
         samplingStages: this.samplingStages
       });
+      this.updateAllocation();
       this.dataPrvdr.backgroundSave();
     }
   }
