@@ -2,6 +2,7 @@ import { Component, Input } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { DevActions } from "../../actions/actions";
 import { ToastController } from "ionic-angular";
+import QUESTION_META from "../../providers/questionMeta";
 
 @Component({
   selector: "dev-editor-resources",
@@ -12,12 +13,16 @@ export class DevEditorResourcesComponent {
   set stage(stage: number) {
     this.stageNumber = stage;
     this.getResources(stage);
+    this.filterStageSurveyQuestions(this.stageNumber);
   }
   allResources: any;
   liveResources: any = {};
   liveQuestions: any = [];
   stageNumber: number;
   status: string = "Ready";
+  allSurveyQuestions = QUESTION_META;
+  stageSurveyQuestions = [];
+  relevant: any;
 
   constructor(
     private db: AngularFirestore,
@@ -32,6 +37,14 @@ export class DevEditorResourcesComponent {
         this.getResources(this.stageNumber);
       });
   }
+
+  filterStageSurveyQuestions(stage: number) {
+    this.stageSurveyQuestions = this.allSurveyQuestions.filter(
+      q => q.controlName.indexOf("q" + stage) > -1
+    );
+    console.log("filtered stage survey questions", this.stageSurveyQuestions);
+  }
+
   save() {
     let patch: any = {};
     let questions = {};
@@ -79,6 +92,7 @@ export class DevEditorResourcesComponent {
     // )
     // }
   }
+
   addQuestion() {
     this.liveQuestions.push({
       a: "",
