@@ -1,8 +1,8 @@
 <div class="question-container">
   <form style="display: flex; padding:5px">
     <ion-item>
-      <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
-        type="text" placeholder="Sampling Stages"></ion-input>
+      <ion-input id="textMultipleInput" #textMultipleInput (ionChange)="validateInput()" [(ngModel)]="multipleTextInput"
+        [ngModelOptions]="{standalone: true}" type="text" placeholder="Sampling Stages"></ion-input>
     </ion-item>
     <button ion-button (click)="addSamplingStage()" type="submit" [disabled]="!multipleTextInput" *ngIf="!editMode">Add</button>
     <button ion-button (click)="saveEdits()" type="submit" *ngIf="editMode">Save</button>
@@ -21,7 +21,8 @@
             <button ion-button icon-only clear [disabled]="last" [attr.data-drag-handle]="last ? 'no-drag' : 'drag'">
               <ion-icon name="reorder"></ion-icon>
             </button>
-            <button ion-button block icon-right class="multiple-arrows-button" (click)="enableEdit(i)" [attr.data-editing]="editIndex==i? 'editing':''">
+            <button ion-button block icon-right class="multiple-arrows-button" (click)="enableEdit(i)"
+              [attr.data-editing]="editIndex==i? 'editing':''">
               <span style="flex-basis:100%">{{stage.name}}</span>
               <ion-icon name="create" class="edit-button" *ngIf="!editMode" style="opacity:0.5"></ion-icon>
             </button>
@@ -54,9 +55,9 @@
 
 
     <div *ngIf="stages.length>2" style="margin-top:1em; margin-left:15px" icon-left>
-        You can use the
-        <ion-icon name="reorder" style="margin-left:5px"></ion-icon> handle to drag and change the order of stages
-      </div>
+      You can use the
+      <ion-icon name="reorder" style="margin-left:5px"></ion-icon> handle to drag and change the order of stages
+    </div>
 
   </div>
 </div>

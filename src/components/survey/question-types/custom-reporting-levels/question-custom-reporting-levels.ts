@@ -38,6 +38,11 @@ export class QuestionCustomReportingLevelsComponent extends SurveyQuestionCompon
     this.formPrvdr.formGroup.patchValue(patch);
   }
 
+  validateInput() {
+    // use regex to allow only alphanumberic (includes  _), whitespace and dash
+    this.multipleTextInput = this.multipleTextInput.replace(/[^\w\-\s]/gi, "");
+  }
+
   addTextMultiple() {
     // push response to array (this is the only functional difference to standard text multiple which only pushes value)
     //

@@ -89,6 +89,11 @@ export class QuestionCustomStagesDefineComponent extends SurveyQuestionComponent
     this.patchForm();
   }
 
+  validateInput() {
+    // use regex to allow only alphanumberic (includes  _), whitespace and dash
+    this.multipleTextInput = this.multipleTextInput.replace(/[^\w\-\s]/gi, "");
+  }
+
   patchForm() {
     let form = this.formPrvdr.formGroup;
     let patch: any = {};
