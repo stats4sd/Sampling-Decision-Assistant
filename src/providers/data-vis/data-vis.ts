@@ -96,6 +96,7 @@ export class DataVisProvider {
   */
 
   getReportingLevels() {
+    console.log("getting reporting levels");
     try {
       const levels: ReportingLevel[] = this.ngRedux
         .getState()
@@ -106,7 +107,6 @@ export class DataVisProvider {
         this.reportingLevels = levels.filter(l => {
           return l.reportingRequired;
         });
-        console.log("reporting levels", this.reportingLevels);
         let categoryLabels = [];
         this.reportingLevels.forEach(level => {
           // manage empty arrays (just push not blank)
@@ -124,9 +124,7 @@ export class DataVisProvider {
             categoryLists[i].push(name);
           });
         });
-        console.log("category lists", categoryLists);
         const levelCombinations = this._buildCombinations(categoryLists);
-        console.log("level combinations", levelCombinations);
         return {
           reportingLevels: this.reportingLevels,
           levelCombinations: levelCombinations
@@ -153,9 +151,7 @@ export class DataVisProvider {
       return this._buildCombinations(arrays);
     } else {
       // final list
-      console.log("final list", arrays);
       combinations = arrays[0].map(el => el.split("||"));
-      console.log("final combinations", combinations);
       return combinations;
     }
   }

@@ -165,7 +165,7 @@ export class DataProvider {
           this.saveToStorage("savedSurveys", this.savedProjectsJson).then(
             res => {
               this.isSaving = false;
-              console.log("saved");
+              console.log("project saved");
               resolve();
             }
           );

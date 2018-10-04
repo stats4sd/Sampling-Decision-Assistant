@@ -87,4 +87,15 @@ tree-table {
     width: 33%;
     margin: auto;
   }
+  .level-combination {
+    padding: 5px;
+    border: 1px solid black;
+    margin: 2px 2px 0 0;
+    min-width: 75px;
+    max-width: 100px;
+    min-height: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }

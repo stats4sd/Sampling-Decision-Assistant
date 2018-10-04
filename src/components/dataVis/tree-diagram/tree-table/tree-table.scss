@@ -20,18 +20,30 @@ tree-table {
     padding: 5px 11px;
   }
   td.pass {
-    background-color: rgba(40, 167, 69, 0.6);
+    // background-color: rgba(40, 167, 69, 0.6);
+    font-weight: bold;
   }
   td.fail {
-    background-color: #ffc107;
+    // background-color: #ffc107;
+    color: red;
   }
   .strata-name {
     color: color($colors, primary);
-    border-bottom: 1px solid;
+    text-decoration: underline;
+  }
+  .sample-size {
+    text-align: center;
+  }
+  .strata-classification {
+    margin: 2px 2px 0 0;
+    padding: 5px;
   }
   ul {
     margin: 2px;
     padding-left: 15px;
     margin-block-end: 5px;
+  }
+  td.no-border {
+    border: unset;
   }
 }

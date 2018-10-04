@@ -4,26 +4,35 @@ import { Subject, Subscription, Observable } from "rxjs";
 import { StageMeta, AppState, ReportingLevel } from "../../../../models/models";
 import { CalculatorRecommendations } from "../../sample-size-calculator/sample-size-calculator";
 import { DataVisProvider } from "../../../../providers/data-vis/data-vis";
+import { DataProvider } from "../../../../providers/data/data";
+import { FormProvider } from "../../../../providers/form/form";
 
 @Component({
   selector: "tree-table",
   templateUrl: "tree-table.html"
 })
 export class TreeTableComponent {
-  // @select(['_treeMeta', 'activeNode']) readonly activeNode$: Observable<TreeDiagramNode>
   samplingStages$: Subscription;
   samplingStages: StageMeta[] = [];
-  totalSampleSize: number = -1;
+  allocationSampleSize: number = -1;
   stageStrata: string[][];
-  @select(["activeProject", "values", "_calculatorVars", "recommendations"])
-  readonly recommendations$: Observable<CalculatorRecommendations>;
+  disaggregationMeta: {
+    reportingLevels: ReportingLevel[];
+    levelCombinations: string[];
+  };
+  // @select(["activeProject", "values", "_calculatorVars", "recommendations"])
+  // readonly recommendations$: Observable<CalculatorRecommendations>;
+  recommendations: CalculatorRecommendations;
   private componentDestroyed: Subject<any> = new Subject();
 
   constructor(
     private ngRedux: NgRedux<AppState>,
-    public dataVisPrvdr: DataVisProvider
+    public dataVisPrvdr: DataVisProvider,
+    private dataPrvdr: DataProvider,
+    private formPrvdr: FormProvider
   ) {
     this._addSubscribers();
+    this.getRecommendations();
   }
 
   ngOnDestroy() {
@@ -34,16 +43,27 @@ export class TreeTableComponent {
     this.componentDestroyed.unsubscribe();
   }
 
+  getRecommendations() {
+    try {
+      this.recommendations = this.ngRedux.getState().activeProject.values._calculatorVars.recommendations;
+      console.log("recommendations", this.recommendations);
+    } catch (error) {}
+  }
+
   allocationChange(e, index) {
     // convert strings back to number (will fire change event again)
     if (typeof e._value == "string") {
       this.samplingStages[index].sampleSize = Number(e._value);
     } else {
-      this.calculateTotalSampleSize();
+      this.calculateAllocationSampleSize();
+      this.formPrvdr.formGroup.patchValue({
+        samplingStages: this.samplingStages
+      });
+      this.dataPrvdr.backgroundSave();
     }
   }
-  calculateTotalSampleSize() {
-    this.totalSampleSize = this.samplingStages
+  calculateAllocationSampleSize() {
+    this.allocationSampleSize = this.samplingStages
       .map(s => (s.sampleSize ? s.sampleSize : 0))
       .reduce((a, b) => a * b);
   }
@@ -90,99 +110,8 @@ export class TreeTableComponent {
       .subscribe(stages => {
         if (stages) {
           this.samplingStages = this.getStageStrata(stages);
-          console.log("stages", stages);
-          this.calculateTotalSampleSize();
+          this.calculateAllocationSampleSize();
         }
       });
   }
-
-  /************************************************************************************************************
-  NOTE, code below needs review, lots from legacy node diagram allocation methods which are no longer relevant
-  CC: 2018-10-02
-  *************************************************************************************************************/
-
-  // this.allocation$ = this.ngRedux
-  //   .select(["activeProject", "values", "allocation"])
-  //   .pipe(debounceTime(200))
-  //   .takeUntil(this.componentDestroyed)
-  //   .subscribe(allocation => {
-  //     if (allocation) {
-  //       this.calculateTotals(allocation);
-  //     }
-  //   });
-  // *** use events also as redux doesn't seem to capture sub property changes - possibly better if only tracking sample sizes,
-  // or had seperate popsize and samplesize objects to track with path subproperties
-  // update - even with simple allocation object with only number sub properties still doesn't pick up
-  // could try dynamically add select listeners
-  // this.events.subscribe("allocation:updated", allocation => {
-  //   this.calculateTotals(allocation);
-  // });
-
-  // calculate total fsu and intermediate for each path through tree diagram
-  // calculateTotals(allocation) {
-  //   const v: ProjectValues = this.ngRedux.getState().activeProject.values;
-  //   if (v.reportingLevels) {
-  //     this.showByDisaggregation = true;
-  //     const reportingNodes = this.getReportingAllocationNodes(
-  //       v.samplingStages.length
-  //     );
-  //     this.reportingTotals = reportingNodes.map(node =>
-  //       this.getReportingTotal(node, allocation)
-  //     );
-  //     console.log("reporting totals", this.reportingTotals);
-  //   }
-  // }
-
-  // use the existing node data to generate a list similar to stage 4 reporting level combinations
-  // getReportingAllocationNodes(totalStages: number = 0) {
-  //   const allNodes = this.ngRedux.getState()._treeMeta.nodes;
-  //   if (allNodes) {
-  //     // match nodes which have path for every stage and contains reporting level at end (i.e. not the final stage name)
-  //     // e.g [camp_._campA, District, Households_._male] and not [camp_._campA, District, Households]
-  //     let finalStageNodes = allNodes.filter(node => {
-  //       let idArray = node.id.split("/");
-  //       return (
-  //         idArray.length == totalStages &&
-  //         idArray[idArray.length - 1].includes("_._")
-  //       );
-  //     });
-  //     return finalStageNodes;
-  //   } else {
-  //     return [];
-  //   }
-  // }
-
-  // calculate the total sample size given by multiplying parent nodes upwards
-  // getReportingTotal(node: TreeDiagramNode, allocation) {
-  //   let idArray = node.id.split("/");
-  //   let total = 1;
-  //   node.allocationTotal = { byPart: {}, total: total };
-  //   idArray.forEach(part => {
-  //     // get substring up till part (parent nodes), e.g if [camp_._campA, District, Households_._male]
-  //     // want 'camp_.campA' ,'camp_.campA/District',  'camp_._campA/District/Households_._male'
-  //     let path: string = node.id.split("/" + part)[0];
-  //     let pathAllocation = allocation[path] ? allocation[path] : null;
-  //     node.allocationTotal.byPart[path] = pathAllocation;
-  //     node.allocationTitle = this.getAllocationTitle(node.id);
-  //     total = total * pathAllocation;
-  //   });
-  //   node.allocationTotal.total = total;
-  //   return node;
-  // }
-
-  // getAllocationTitle(nodeID: string) {
-  //   // split node id array to only parts which contain some reporting allocation
-  //   // e.g. [camp_._campA, District, Households_._male] => [camp_._campA, households_._male]
-  //   let combination = [];
-  //   let idArray = nodeID.split("/");
-  //   const reportingArray = idArray.filter(part => {
-  //     return part.includes("_._");
-  //   });
-  //   // finally remove stage name
-  //   // e.g. [camp_._campA, households_._male] => [campA, male]
-  //   combination = reportingArray.map(part => {
-  //     return part.split("_._")[1];
-  //   });
-  //   return combination;
-  // }
 }
