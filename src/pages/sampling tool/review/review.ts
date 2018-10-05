@@ -1,8 +1,7 @@
 import { Component, ViewChildren } from "@angular/core";
-import { IonicPage, LoadingController } from "ionic-angular";
+import { IonicPage, LoadingController, ModalController } from "ionic-angular";
 import { DataProvider } from "../../../providers/data/data";
 import { NgRedux } from "@angular-redux/store";
-import * as htmlDocx from "html-docx-js/dist/html-docx";
 import { saveAs } from "file-saver";
 import {
   AppState,
@@ -31,7 +30,8 @@ export class ReviewPage {
   constructor(
     private dataPrvdr: DataProvider,
     private ngRedux: NgRedux<AppState>,
-    private loading: LoadingController
+    private loading: LoadingController,
+    private modalCtrl: ModalController
   ) {
     // load question meta from questionMeta.ts and seperate out into question groups for binding to survey question components
     this._generateQuestionGroups();
@@ -94,16 +94,9 @@ export class ReviewPage {
     // linkElement.setAttribute("download", filename);
     // linkElement.click();
   }
-  /*****************************************************************
-          DOCX export functions (could be moved)
-  ******************************************************************/
+
   exportDocx() {
-    console.log("exporting docx", htmlDocx);
-    const sampleHtml = document.getElementById("reviewContent").outerHTML;
-    const content = "<!DOCTYPE html>" + sampleHtml;
-    const converted = htmlDocx.asBlob(content);
-    saveAs(converted, "test.docx");
-    console.log("converted", converted);
+    this.modalCtrl.create("SummaryPage").present();
   }
 
   /*****************************************************************

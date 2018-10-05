@@ -1,10 +1,16 @@
 import { Component } from "@angular/core";
-import { IonicPage } from "ionic-angular";
+import { IonicPage, ViewController } from "ionic-angular";
 import { NgRedux } from "@angular-redux/store";
-import { AppState, ProjectValues } from "../../../models/models";
+import {
+  AppState,
+  ProjectValues,
+  StageMeta,
+  ReportingLevel
+} from "../../../models/models";
 import { Subscription } from "rxjs";
 import { DataProvider } from "../../../providers/data/data";
 import { debounceTime } from "rxjs/operators";
+import * as utils from "../../../utils/download";
 import QUESTION_META from "../../../providers/questionMeta";
 
 interface IQuestionMeta {
@@ -31,7 +37,9 @@ interface ISectionMetaObject {
   };
 }
 
-@IonicPage()
+@IonicPage({
+  defaultHistory: ["HomePage", "StepByStepPage"]
+})
 @Component({
   selector: "page-summary",
   templateUrl: "summary.html"
@@ -42,11 +50,14 @@ export class SummaryPage {
   questionMetaObject: IQuestionMeta = {};
   summaryQuestions: ISummaryQuestion[];
   sections: ISectionMeta[];
+  samplingStages: StageMeta[];
+  reportingLevels: ReportingLevel[];
 
   constructor(
     private ngRedux: NgRedux<AppState>,
     // keep dataPrvdr import to allow project resume prompt
-    private dataPrvdr: DataProvider
+    private dataPrvdr: DataProvider,
+    private viewCtrl: ViewController
   ) {
     this._addSubscribers();
     this.getQuestionLabels();
@@ -56,7 +67,7 @@ export class SummaryPage {
   }
 
   _addSubscribers() {
-    this.ngRedux
+    this.projectValues$ = this.ngRedux
       .select<ProjectValues>(["activeProject", "values"])
       .pipe(debounceTime(250))
       .subscribe(v => this.init(v));
@@ -67,6 +78,14 @@ export class SummaryPage {
       this.projectValues = values;
       const questions: ISummaryQuestion[] = this.getOnlyQuestions(values);
       this.buildSections(questions);
+      if (values.samplingStages) {
+        this.samplingStages = values.samplingStages;
+        console.log("sampling stages", this.samplingStages);
+      }
+      if (values.reportingLevels) {
+        this.reportingLevels = values.reportingLevels;
+        console.log("reporting levels", this.reportingLevels);
+      }
     }
   }
 
@@ -112,12 +131,26 @@ export class SummaryPage {
         questions.push({
           controlName: k,
           section: this.questionMetaObject[k].section,
-          label: this.questionMetaObject[k].label,
+          label: this._stripHtml(this.questionMetaObject[k].label),
           response: values[k]
         });
       }
     });
     return this._sortObjectArrayByKey(questions, "controlName");
+  }
+  // strip anything between html tags
+  _stripHtml(text: string) {
+    return text.replace(/<[^>]*>/g, "");
+  }
+
+  download() {
+    const title = this.ngRedux.getState().activeProject.title;
+    utils._htmlToDoc("exportSummary", title);
+    try {
+      this.viewCtrl.dismiss();
+    } catch (error) {
+      // loaded page directly so back button will exist
+    }
   }
 
   _sortObjectArrayByKey(arr: any[], key: string) {

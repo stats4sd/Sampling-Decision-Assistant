@@ -1,29 +1,100 @@
-<!--
-  Generated template for the SummaryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>summary</ion-title>
+    <ion-title>Summary</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="download()">
+        <ion-icon name="download"></ion-icon>Download
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
+<!-- All styling in-line to format in word document also -->
+<ion-content padding id="exportSummary">
   <div *ngFor="let section of sections" style="margin-bottom:20px">
     <h1>{{section.section}}</h1>
     <table style="border:1px solid black">
-      <th style="width:100px; border:1px solid black">#</th>
+      <th style="width:50px; border:1px solid black">#</th>
       <th style="width:300px; border:1px solid black">Question</th>
       <th style="width:300px; border:1px solid black">Response</th>
       <tr *ngFor="let question of section.questions">
-        <td style="padding:5px; width:100px; border:1px solid black">{{question.controlName}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{question.controlName}}</td>
         <td style="padding:5px; width:300px; border:1px solid black">{{question.label}}</td>
         <td style="padding:5px; width:300px; border:1px solid black">{{question.response}}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- Reporting Levels -->
+  <div *ngIf="samplingStages" style="margin-bottom:20px">
+    <h1>Reporting Levels</h1>
+    <table>
+      <tr>
+        <th style="border:1px solid black">Reporting Level / Strata</th>
+        <th style="border:1px solid black">Classifications</th>
+        <th style="border:1px solid black">Reporting required?</th>
+      </tr>
+      <tr *ngFor="let level of reportingLevels; index as i">
+        <td style="padding:5px; width:50px; border:1px solid black">{{level.name}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          <ul>
+            <li *ngFor="let classification of level.classifications.names">{{classification}}</li>
+          </ul>
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{level.reportingRequired ? 'yes' : 'no'}}
+      </tr>
+    </table>
+  </div>
+  <!-- list of sampling stages -->
+  <div *ngIf="samplingStages" style="margin-bottom:20px">
+    <h1>Sampling Stages</h1>
+    <table>
+      <tr>
+        <th style="border:1px solid black">Stage</th>
+        <th style="border:1px solid black">Sampling Unit</th>
+        <th style="border:1px solid black">Frame</th>
+        <th style="border:1px solid black">Units</th>
+        <th style="border:1px solid black">Reporting Level</th>
+      </tr>
+      <tr *ngFor="let stage of samplingStages; index as i">
+        <td style="padding:5px; width:50px; border:1px solid black">{{i+1}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{stage.name}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{stage['q5.3.1']=='Yes' ? 'Available' : 'To be
+          built'}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{stage['q5.3.3']=='All' ? 'All Units' :
+          'Sample'}}
+        <td style="padding:5px; width:50px; border:1px solid black">
+          <div *ngIf="!stage['q5.3.4.2'] || stage['q5.3.4.2']==''">
+            <span>None</span>
+          </div>
+          <div *ngIf="stage['q5.3.4.2']">
+            <div *ngFor="let level of stage['q5.3.4.2']">{{level}}</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- allocation -->
+  <div *ngIf="samplingStages" style="margin-bottom:20px">
+    <h1>Resource Allocation</h1>
+    <h2>Assumptions</h2>
+    <table *ngIf="assumptions">
+      <tr *ngFor="let assumption of assumptions">
+        <td>assumption.label</td>
+        <td>assumption.value</td>
+      </tr>
+    </table>
+    <h2>Recommendations</h2>
+    <table *ngIf="recommendations">
+      <tr *ngFor="let recommendation of recommendations">
+        <td>recommendation.label</td>
+        <td>recommendation.value</td>
+      </tr>
+    </table>
+    <h2>Allocation</h2>
+    <table *ngIf="allocations">
+      <tr *ngFor="let allocation of allocations">
+        <td>allocation.label</td>
+        <td>allocation.value</td>
       </tr>
     </table>
   </div>
