@@ -52,12 +52,11 @@ export class ReviewPage {
     });
   }
 
+  // canvas exports at current size only, so take a copy, make larger and use for export
   async exportTreeImage() {
     const project = this.ngRedux.getState().activeProject;
     const canvas = document.querySelector("canvas");
-    console.log("canvas", canvas);
     const treeContainer = document.getElementById("treeContainer");
-    console.log("tree container", treeContainer);
     // resize tree canvas for larger export, wait for resize and download
     const loader = this.loading.create({
       enableBackdropDismiss: false,
@@ -87,6 +86,7 @@ export class ReviewPage {
 
   download(data, filename) {
     let linkElement = document.createElement("a");
+    document.body.appendChild(linkElement)
     linkElement.setAttribute("href", data);
     linkElement.setAttribute("download", filename);
     linkElement.click();
