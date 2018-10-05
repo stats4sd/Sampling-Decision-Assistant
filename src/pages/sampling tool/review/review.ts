@@ -2,6 +2,8 @@ import { Component, ViewChildren } from "@angular/core";
 import { IonicPage, LoadingController } from "ionic-angular";
 import { DataProvider } from "../../../providers/data/data";
 import { NgRedux } from "@angular-redux/store";
+import * as htmlDocx from "html-docx-js/dist/html-docx";
+import { saveAs } from "file-saver";
 import {
   AppState,
   StageMeta,
@@ -85,11 +87,23 @@ export class ReviewPage {
   }
 
   download(data, filename) {
-    let linkElement = document.createElement("a");
-    document.body.appendChild(linkElement)
-    linkElement.setAttribute("href", data);
-    linkElement.setAttribute("download", filename);
-    linkElement.click();
+    saveAs(data, filename);
+    // let linkElement = document.createElement("a");
+    // document.body.appendChild(linkElement);
+    // linkElement.setAttribute("href", data);
+    // linkElement.setAttribute("download", filename);
+    // linkElement.click();
+  }
+  /*****************************************************************
+          DOCX export functions (could be moved)
+  ******************************************************************/
+  exportDocx() {
+    console.log("exporting docx", htmlDocx);
+    const sampleHtml = document.getElementById("reviewContent").outerHTML;
+    const content = "<!DOCTYPE html>" + sampleHtml;
+    const converted = htmlDocx.asBlob(content);
+    saveAs(converted, "test.docx");
+    console.log("converted", converted);
   }
 
   /*****************************************************************

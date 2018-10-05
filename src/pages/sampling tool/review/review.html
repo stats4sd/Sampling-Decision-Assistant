@@ -13,9 +13,9 @@
 <ion-content class="slide-scroll-content survey" style="margin-bottom:10px">
   <ion-content>
     <!-- Review content -->
-    <div padding>
+    <div padding id="reviewContent">
       <h2>Review Decisions</h2>
-      
+
       <div>
         <div *ngFor="let group of questionGroups" class="section-group">
           <div class="heading">
@@ -51,11 +51,16 @@
       <h2>Export</h2>
       <div style="display: flex; flex-wrap: wrap  ">
         <button ion-button icon-left (click)="exportJSON()" class="export-button">
-          <ion-icon name="custom-database"></ion-icon>Project Data</button>
-        <button ion-button icon-left (click)="exportXLSX()" class="export-button" >
-          <ion-icon name="custom-excel"></ion-icon>XLSX Summary</button>
+          <ion-icon name="custom-database"></ion-icon>Project Data
+        </button>
+        <!-- <button ion-button icon-left (click)="exportXLSX()" class="export-button" >
+          <ion-icon name="custom-excel"></ion-icon>XLSX Summary</button> -->
+        <button ion-button icon-left (click)="exportDocx()" class="export-button">
+          <ion-icon name="custom-word"></ion-icon>Summary
+        </button>
         <button ion-button icon-left (click)="exportTreeImage()" class="export-button">
-          <ion-icon name="custom-tree"></ion-icon>Diagram</button>
+          <ion-icon name="custom-tree"></ion-icon>Diagram
+        </button>
       </div>
 
     </div>

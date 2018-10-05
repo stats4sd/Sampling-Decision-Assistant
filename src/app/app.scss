@@ -299,11 +299,6 @@ ion-card {
   }
 }
 
-// --------------------------------------------------
-// attempts to fix html2canvas for ionic, failed
-// .scroll-content,.pdf-content,.fixed-content,.content,body{
-//     overflow: visible!important
-// }
 // *************************** Custom Icons ******************************** //
 ion-icon {
   &[class*="custom-"] {
@@ -331,5 +326,8 @@ ion-icon {
   }
   &[class*="custom-excel"] {
     mask-image: url(../assets/img/icons/excel.svg);
+  }
+  &[class*="custom-word"] {
+    mask-image: url(../assets/img/icons/word.svg);
   }
 }
