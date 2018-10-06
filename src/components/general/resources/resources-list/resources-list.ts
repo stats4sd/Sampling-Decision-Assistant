@@ -1,15 +1,12 @@
 import { Component, Input } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
 // dev
 import { AngularFirestore } from "@angular/fire/firestore";
-import { expand } from "../../../../providers/animationStates";
 import { IResourceQuestion } from "../../../../models/models";
 import { Subscription } from "rxjs";
 
 @Component({
   selector: "resources-list",
-  templateUrl: "resources-list.html",
-  animations: [expand]
+  templateUrl: "resources-list.html"
 })
 export class ResourcesListComponent {
   @Input()

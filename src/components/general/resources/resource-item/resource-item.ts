@@ -1,7 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-// dev
-import { AngularFirestore } from "@angular/fire/firestore";
 import { expand } from "../../../../providers/animationStates";
 import { IResourceQuestion } from "../../../../models/models";
 
@@ -16,17 +14,19 @@ export class ResourceItemComponent {
   @Input()
   relevant: boolean;
   videoReady: boolean;
-  videoPlayerWidth: number = 675;
-  videoPlayerHeight: number = 450;
+  videoPlayerWidth: number;
+  videoPlayerHeight: number;
 
-  constructor(private sanitizer: DomSanitizer, private db: AngularFirestore) {}
+  constructor(private sanitizer: DomSanitizer) {
+    this.videoPlayerWidth = Math.min(window.innerWidth - 70, 675);
+    this.videoPlayerHeight = Math.round((this.videoPlayerWidth / 16) * 9);
+  }
 
   ngAfterContentInit() {
-    // set video player width - use timeout as error occuring locating div
+    // use timeout as error occuring locating div
     setTimeout(() => {
       this.videoReady = true;
     }, 200);
-
     // expand question if has been marked as relevant
     if (this.relevant) {
       this.viewResource();
