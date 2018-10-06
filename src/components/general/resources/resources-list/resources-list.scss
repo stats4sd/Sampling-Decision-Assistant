@@ -1,0 +1,13 @@
+resources-list {
+  h4 {
+    color: color($colors, primary);
+    font-size: 16px;
+  }
+  ion-list-header.list-header {
+    color: color($colors, primary);
+  }
+  .no-relevant-message {
+    padding: 0 0 2em 16px;
+    font-weight: bold;
+  }
+}

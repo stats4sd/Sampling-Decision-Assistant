@@ -89,6 +89,18 @@ export interface IStageMeta {
   icon: string;
   number: number;
 }
+export interface IResourceQuestion {
+  _key: string;
+  a: string;
+  q: string;
+  relevant?: string;
+  tags?: string;
+  audio?: string;
+  video?: string;
+  youtubeID?: string;
+  _expanded?: boolean;
+  _showFormat?: string;
+}
 // hard coded into stages page but keeping as reminder of how to
 // allow for any json key but with specific value format
 // interface stages {

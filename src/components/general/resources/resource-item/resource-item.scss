@@ -1,10 +1,6 @@
-resources-list {
-  h4 {
-    color: color($colors, primary);
-    font-size: 16px;
-  }
+resource-item {
   .item {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
   }
   .question-text {
@@ -17,12 +13,12 @@ resources-list {
     cursor: text;
   }
   p {
-    user-select: text
+    user-select: text;
   }
   .expanded {
-    background-color: #E0E0E0;
+    background-color: #e0e0e0;
     .question-text {
-      font-weight: bold
+      font-weight: bold;
     }
   }
   .relevant-question {
@@ -43,8 +39,8 @@ resources-list {
   .selected,
   .selected:hover {
     background-color: color($colors, primary) !important;
-    color: white
-  } // make all text consistent
+    color: white;
+  }
   .answer-text,
   p {
     font-size: small !important;
@@ -53,22 +49,23 @@ resources-list {
   ul {
     margin-top: -1.4em;
     margin-bottom: -1.4em;
-  } // temp - sizing for video, needs to be tweaked for mobile
-  .video-player,
-  .answer-video,
-  video {
-    width: 675px;
-    height: 450px;
   }
-  .video-time-bar {
-    background-color: white;
-    .background {
-      // this is actually the bar
-      background-color: color($colors, primary);
-      border: 1px solid color($colors, primary);
-    }
-  }
-  .video-volume-control {
-    margin-right: 10px;
-  }
+  // temp - sizing for video, needs to be tweaked for mobile
+  // .video-player,
+  // .answer-video,
+  // video {
+  //   width: 675px;
+  //   height: 450px;
+  // }
+  // .video-time-bar {
+  //   background-color: white;
+  //   .background {
+  //     // this is actually the bar
+  //     background-color: color($colors, primary);
+  //     border: 1px solid color($colors, primary);
+  //   }
+  // }
+  // .video-volume-control {
+  //   margin-right: 10px;
+  // }
 }

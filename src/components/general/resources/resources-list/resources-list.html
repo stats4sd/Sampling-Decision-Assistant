@@ -1,0 +1,17 @@
+<!-- Generated template for the ResourcesComponent component -->
+<div>
+  <h2>Key Questions</h2>
+  <!-- related -->
+  <ion-list *ngIf="relevant">
+    <ion-list-header *ngIf="relevant">Related to {{relevant}}</ion-list-header>
+    <resource-item *ngFor="let question of relevantQuestions; let i=index" [question]="question" [relevant]="true"></resource-item>
+    <div *ngIf="relevantQuestions && relevantQuestions.length==0" class="no-relevant-message">There are no specific
+      resources to support this
+      question</div>
+  </ion-list>
+  <!-- more in this step -->
+  <ion-list>
+    <ion-list-header *ngIf="relevant">More in this step</ion-list-header>
+    <resource-item *ngFor="let question of questions; let i=index" [question]="question"></resource-item>
+  </ion-list>
+</div>

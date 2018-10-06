@@ -59,18 +59,11 @@ export class SummaryPage {
     private dataPrvdr: DataProvider,
     private viewCtrl: ViewController
   ) {
-    this._addSubscribers();
+    this.addSubscribers();
     this.getQuestionLabels();
   }
   ngOnDestroy(): void {
     this.projectValues$.unsubscribe();
-  }
-
-  _addSubscribers() {
-    this.projectValues$ = this.ngRedux
-      .select<ProjectValues>(["activeProject", "values"])
-      .pipe(debounceTime(250))
-      .subscribe(v => this.init(v));
   }
 
   init(values: ProjectValues) {
@@ -112,6 +105,7 @@ export class SummaryPage {
     console.log("section meta", this.sections);
   }
 
+  // take master question meta array and reduce to object for quick reference
   getQuestionLabels() {
     const meta = {};
     QUESTION_META.forEach(q => {
@@ -138,10 +132,6 @@ export class SummaryPage {
     });
     return this._sortObjectArrayByKey(questions, "controlName");
   }
-  // strip anything between html tags
-  _stripHtml(text: string) {
-    return text.replace(/<[^>]*>/g, "");
-  }
 
   download() {
     const title = this.ngRedux.getState().activeProject.title;
@@ -151,6 +141,18 @@ export class SummaryPage {
     } catch (error) {
       // loaded page directly so back button will exist
     }
+  }
+
+  addSubscribers() {
+    this.projectValues$ = this.ngRedux
+      .select<ProjectValues>(["activeProject", "values"])
+      .pipe(debounceTime(250))
+      .subscribe(v => this.init(v));
+  }
+
+  // strip anything between html tags
+  _stripHtml(text: string) {
+    return text.replace(/<[^>]*>/g, "");
   }
 
   _sortObjectArrayByKey(arr: any[], key: string) {

@@ -1,0 +1,28 @@
+<ion-item [ngClass]="question._expanded ? 'expanded' : 'contracted'">
+  <div class="question-text" [innerHtml]="question.q" (click)="viewResource()"></div>
+  <div class="answer-display-options" *ngIf="question._expanded">
+    <button outline ion-button icon-left *ngIf="question.a" (click)="viewResource('text')" [class.selected]="question._expanded && question._showFormat=='text'">
+      <ion-icon name="list"></ion-icon>Text
+    </button>
+    <button outline ion-button icon-left *ngIf="question.video" (click)="viewResource('video')" [class.selected]="question._expanded && question._showFormat=='video'">
+      <ion-icon name="logo-youtube"></ion-icon>Video
+    </button>
+    <note type="dev" *ngIf="!question.a">Coming soon!</note>
+    <div style="flex:1" (click)="viewResource()"></div>
+  </div>
+  <!-- audio and text -->
+  <div *ngIf="question._expanded && question._showFormat=='text'" [@expand]="'expanded'">
+    <div class="answer-audio" *ngIf="question.audio">
+      <audio controls>
+        <source [src]="question.audio" type="audio/mp3">
+        <p>Your browser doesn't support HTML5 audio. Here is a
+          <a [href]="audio">link to the audio</a> instead.</p>
+      </audio>
+    </div>
+    <div class="answer-text" [innerHtml]="question.a"></div>
+  </div>
+  <!-- video -->
+  <div class="answer-video" *ngIf="videoReady && question._expanded && question._showFormat=='video'" [@expand]="'expanded'">
+    <youtube-player [videoId]="question.youtubeID" [width]="videoPlayerWidth" [height]="videoPlayerHeight"></youtube-player>
+  </div>
+</ion-item>

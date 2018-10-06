@@ -7,7 +7,8 @@ import { GlossaryLinkComponent } from "./glossary/glossary-link/glossary-link";
 import { GlossaryListComponent } from "./glossary/glossary-list";
 import { GlossaryDetailComponent } from "./glossary/glossary-detail/glossary-detail";
 import { NoteComponent } from "./note/note";
-import { ResourcesListComponent } from "./resources/resources-list";
+import { ResourceItemComponent } from "./resources/resource-item/resource-item";
+import { ResourcesListComponent } from "./resources/resources-list/resources-list";
 import { HelpIconComponent } from "./help-icon/help-icon";
 import { YoutubePlayerModule } from "ngx-youtube-player";
 import { ProjectTitleComponent } from "./project-title";
@@ -21,6 +22,7 @@ import { ProjectTitleComponent } from "./project-title";
     GlossaryDetailComponent,
     NoteComponent,
     ResourcesListComponent,
+    ResourceItemComponent,
     HelpIconComponent,
     ProjectTitleComponent
   ],
@@ -32,6 +34,7 @@ import { ProjectTitleComponent } from "./project-title";
     GlossaryDetailComponent,
     NoteComponent,
     ResourcesListComponent,
+    ResourceItemComponent,
     HelpIconComponent,
     ProjectTitleComponent
   ]
