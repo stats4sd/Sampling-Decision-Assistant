@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { NgRedux } from "@angular-redux/store";
+import * as jStat from "jStat";
+import { Subscription } from "rxjs";
 import { DataProvider } from "../../../providers/data/data";
 import {
   AppState,
@@ -8,10 +10,7 @@ import {
   ProjectValues
 } from "../../../models/models";
 import { FormProvider } from "../../../providers/form/form";
-// declare const jStat
-import * as jStat from "jStat";
 import { DataVisProvider } from "../../../providers/data-vis/data-vis";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "sample-size-calculator",
@@ -230,7 +229,10 @@ export class SampleSizeCalculatorComponent {
         );
         stage2N = Math.ceil(FinalstageN_FPC / input.nHH);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      // throw new error("calculation error");
+    }
 
     /***********************************************************************************************************/
     const raw: CalculatorOutputVarsRaw = {
@@ -281,10 +283,10 @@ export class SampleSizeCalculatorComponent {
         this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
       }
       this.totalSampleSize =
-        this.outputs.raw.FinalstageN *
+        this.outputs.raw.FinalstageN_FPC *
         this.disaggregationMeta.levelCombinations.length;
     } else {
-      this.totalSampleSize = this.outputs.raw.FinalstageN;
+      this.totalSampleSize = this.outputs.raw.FinalstageN_FPC;
     }
   }
 

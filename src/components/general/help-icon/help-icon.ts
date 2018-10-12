@@ -6,6 +6,7 @@ import { Events } from "ionic-angular";
   template: `
   <div class="help-container" >
     <button ion-button icon-only clear style="color:rgba(0,0,0,0.9); margin:0" (click)="helpClicked()">
+    <span>{{text}}</span>
     <ion-icon style="padding:0 8px" ios="ios-help-circle-outline" md="ios-help-circle-outline"></ion-icon>
     </button>
   </div>
@@ -13,7 +14,11 @@ import { Events } from "ionic-angular";
 })
 export class HelpIconComponent {
   @Input("relevant")
-  relevant: any;
+  relevant: string;
+
+  // optional additional text to display next to button
+  @Input("text")
+  text: string;
 
   constructor(public events: Events) {}
 

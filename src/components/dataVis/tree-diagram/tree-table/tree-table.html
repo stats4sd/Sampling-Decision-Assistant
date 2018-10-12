@@ -58,7 +58,13 @@
       </tr>
     </table>
     <note type="warning" *ngIf="allocationSampleSize && allocationSampleSize < recommendations.requiredPerAggregation">
-      The recommended minimum sample size is {{recommendations.requiredPerAggregation}} for each reporting combination
+      The recommended minimum sample size is <span style="font-weight: bold">{{recommendations.requiredPerAggregation}}</span>
+      for each reporting combination
+    </note>
+    <note type="success" *ngIf="allocationSampleSize && allocationSampleSize >= recommendations.requiredPerAggregation">
+      The current sample size satifies the minimum reccomendation of <span style="font-weight: bold">{{recommendations.requiredPerAggregation}}</span>
+      for
+      each reporting combination
     </note>
   </div>
 </div>

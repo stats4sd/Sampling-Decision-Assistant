@@ -57,6 +57,9 @@
           </ion-item>
 
         </div>
+        <button ion-button clear icon-right color="primary">
+          <help-icon relevant="q6.1" text="How is the sample size calculated?"></help-icon>
+        </button>
       </div>
     </div>
 
@@ -78,7 +81,7 @@
         <div [style.opacity]="showResults ? 1 : 0.2">
           <div class="result-subsection">
             <span>The sample size calculation for each reporting combination is </span>
-            <span class="result primary">{{outputs.raw.FinalstageN}}
+            <span class="result primary">{{outputs.raw.FinalstageN_FPC}}
               {{sampleStageMeta[sampleStageMeta.length-1].name}}</span>
           </div>
           <div class="result-subsection">
@@ -95,7 +98,7 @@
                 <div>
                   <span *ngFor="let label of combination; last as last">{{label}}<span *ngIf="!last">, </span></span>
                 </div>
-                <div style="margin-top:1em">n = {{outputs.raw.FinalstageN}}</div>
+                <div style="margin-top:1em">n = {{outputs.raw.FinalstageN_FPC}}</div>
               </div>
             </div>
             <div style="margin-top:1em;">Therefore the overall minimum sample size recommended is
@@ -121,27 +124,6 @@
           <div class="result-subsection"> You will decide how you want to distribute the
             {{sampleStageMeta[sampleStageMeta.length-1].name}} within the other sampling stages during the next part.
           </div>
-
-          <!-- <div class="result-subsection">
-            <span>With the information you provided, if you visit</span>
-            <span class="primary">
-              {{outputs.raw.nHH}} {{sampleStageMeta[sampleStageMeta.length-1].name}}
-              per
-              {{sampleStageMeta[sampleStageMeta.length-2].name}}
-            </span>
-            <span> in each reporting combination across</span>
-            <span class="primary"> {{outputs.raw.stage2N}} {{sampleStageMeta[sampleStageMeta.length-2].name}}</span>
-            <span> then you will have a total of </span>
-            <span class="primary"> {{outputs.raw.nHH * outputs.raw.stage2N}}
-              {{sampleStageMeta[sampleStageMeta.length-1].name}}</span>
-            <span> and an estimated design effect of</span>
-            <span class="primary"> {{outputs.raw.DEFF1}}.</span>
-          </div>
-          <div class="result-subsection"> You will need to think
-            about how you want to distribute the {{sampleStageMeta[sampleStageMeta.length-2].name}} within the other
-            sampling stages.
-          </div> -->
-
         </div>
 
       </div>

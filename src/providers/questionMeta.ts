@@ -335,8 +335,8 @@ const questionMeta: QuestionMeta[] = [
   {
     isQuestion: "TRUE",
     controlName: "q6.1",
-    type: "number",
-    label: "Input your required total sample size",
+    type: "info",
+    label: "How is the sample size calculated?",
     section: "Allocating and deploying resources",
     condition: "",
     labelMultiple: null,
@@ -357,7 +357,8 @@ interface QuestionMeta {
     | "custom-reporting-levels"
     | "custom-stages-define"
     | "repeat"
-    | "custom-strata-select";
+    | "custom-strata-select"
+    | "info";
   selectOptions?: any;
   options?: any;
   repeatGroup?: string;
