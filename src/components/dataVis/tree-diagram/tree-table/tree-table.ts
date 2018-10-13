@@ -36,8 +36,8 @@ export class TreeTableComponent {
     private dataPrvdr: DataProvider,
     private formPrvdr: FormProvider
   ) {
+    console.log("tree table constructor");
     this._addSubscribers();
-    this.getRecommendations();
   }
 
   ngOnDestroy() {
@@ -135,6 +135,7 @@ export class TreeTableComponent {
       .takeUntil(this.componentDestroyed)
       .subscribe(stages => {
         if (stages) {
+          this.getRecommendations();
           this.samplingStages = this.getStageStrata(stages);
           this.calculateAllocationSampleSize();
         }

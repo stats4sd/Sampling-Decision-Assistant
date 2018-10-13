@@ -42,13 +42,14 @@
               <ion-option value="0.5">High (0.5)</ion-option>
             </ion-select>
           </ion-item>
-          <ion-item class="input-item" *ngIf="sampleStages>1">
+          <ion-item class="input-item" *ngIf="sampleStages>1 && sampleStageMeta">
             <ion-label fixed>Number of {{sampleStageMeta[sampleStageMeta.length-1].name}} per
               {{sampleStageMeta[sampleStageMeta.length-2].name}}</ion-label>
             <ion-input type="number" [(ngModel)]="inputValues.nHH" (ionChange)="setFinalStageN()"></ion-input>
           </ion-item>
           <ion-item class="input-item">
-            <ion-label fixed>Total {{sampleStageMeta[sampleStageMeta.length-1].name}} in Population</ion-label>
+            <ion-label fixed *ngIf="sampleSTageMeta">Total {{sampleStageMeta[sampleStageMeta.length-1].name}} in
+              Population</ion-label>
             <ion-input type="number" min="1" max="9999999999" [(ngModel)]="inputValues.Population" (ionChange)="calculateSize()"></ion-input>
           </ion-item>
           <ion-item class="input-item">

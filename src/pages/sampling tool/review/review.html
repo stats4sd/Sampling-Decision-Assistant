@@ -1,21 +1,14 @@
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>Review and Analysis</ion-title>
-    <!-- <ion-buttons end>
-      <button ion-button icon-left *ngIf="viewSection==0" (click)="slideTo(1)">
-        <ion-icon name="analytics"></ion-icon>View Analysis</button>
-      <button ion-button icon-left *ngIf="viewSection==1" (click)="slideTo(0)">
-        <ion-icon name="list"></ion-icon>View Decisions</button>
-    </ion-buttons> -->
   </ion-navbar>
 </ion-header>
+
 <ion-content class="slide-scroll-content survey" style="margin-bottom:10px">
   <ion-content>
     <!-- Review content -->
     <div padding id="reviewContent">
       <h2>Review Decisions</h2>
-
       <div>
         <div *ngFor="let group of questionGroups" class="section-group">
           <div class="heading">
@@ -38,10 +31,12 @@
             </div>
             <div *ngSwitchCase="'Allocating and deploying resources'">
               <tree-diagram></tree-diagram>
+              <div style="height:1em"></div>
+              <sample-size-calculator></sample-size-calculator>
+              <div style="height:1em"></div>
+              <tree-table></tree-table>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
