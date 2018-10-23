@@ -18,7 +18,7 @@
           <div id="stageOverview" [innerHtml]="introHtml[stage.number]">
           </div>
           <div id="stageResources">
-            <button ion-button clear (click)="showResourcesList()">
+            <button block ion-button clear (click)="showResourcesList()">
               <span style="padding-right:8px">
                 <ion-icon style="font-size: 1.8em" ios="ios-help-circle-outline" md="ios-help-circle-outline" color="primary"></ion-icon>
               </span>
@@ -28,7 +28,12 @@
             </button>
           </div>
         </div>
-        <youtube-player [videoId]="introVideos[stage.number]" [width]="videoPlayerWidth" [height]="videoPlayerHeight"></youtube-player>
+        <div class="video-button">
+          <button ion-button icon-left>
+            <ion-icon name="logo-youtube"></ion-icon>Watch Video
+          </button>
+        </div>
+        <!-- <youtube-player [videoId]="introVideos[stage.number]" [width]="videoPlayerWidth" [height]="videoPlayerHeight"></youtube-player> -->
       </div>
 
       <!-- main stage content -->
