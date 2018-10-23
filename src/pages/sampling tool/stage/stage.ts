@@ -31,6 +31,14 @@ const INTRO_HTML = {
   5: `You will develop a sampling system to support the collection of data to meet your overall objective`,
   6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages`
 };
+const INTRO_VIDEOS = {
+  1: "XIMLoLxmTDw",
+  2: "XIMLoLxmTDw",
+  3: "XIMLoLxmTDw",
+  4: "XIMLoLxmTDw",
+  5: "XIMLoLxmTDw",
+  6: "XIMLoLxmTDw"
+};
 
 @IonicPage({
   segment: "step-by-step/:stageID",
@@ -53,12 +61,15 @@ export class StagePage {
   stagePart: string;
   activeSection: string = "main";
   introHtml = INTRO_HTML;
+  introVideos = INTRO_VIDEOS;
   activeGlossaryTerm: string;
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   relevant: string;
   loaded: boolean;
   stageResources: IStageResources;
+  videoPlayerWidth: number;
+  videoPlayerHeight: number;
 
   constructor(
     public navCtrl: NavController,
@@ -76,6 +87,8 @@ export class StagePage {
   ) {
     this.stageInit(navParams);
     this._addSubscribers();
+    this.videoPlayerWidth = Math.min(window.innerWidth - 70, 675);
+    this.videoPlayerHeight = Math.round((this.videoPlayerWidth / 16) * 9);
   }
   ngOnDestroy() {
     this.stagePart$.unsubscribe();
