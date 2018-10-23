@@ -4,14 +4,16 @@ page-step-by-step {
     opacity: 0.3;
     color: #bcbcbc;
   }
-  .card {
-    max-width: 300px;
-    margin: 10px 0 0 10px;
-  }
-  .main-container {
+  #sectionCardsContainer {
     display: flex;
     flex-wrap: wrap;
   }
+  .card {
+    flex: 1;
+    min-width: 290px;
+    margin: 5px;
+  }
+
   .hidden {
     display: none;
   }
@@ -49,8 +51,8 @@ page-step-by-step {
     border: 1px solid #d2c9d9;
     padding-bottom: 10px;
     cursor: pointer;
-    max-width: 610px;
-    margin-left: 10px;
+    margin: 0;
+    width: 100%;
     color: rgba(0, 0, 0, 0.9);
   }
   .review-box:hover {

@@ -9,7 +9,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
   <div class="content-container">
     <div>
@@ -57,12 +56,12 @@
       </div>
       <!-- step by step sections -->
       <div class="section-break">Step By Step Decisions</div>
-      <div class="main-container">
-        <p class="instruction" icon-left>
-          <ion-icon name="information-circle"></ion-icon>Use each step below to build an overview of your sampling
-          decisions
-        </p>
-        <!-- section cards -->
+      <p class="instruction" icon-left>
+        <ion-icon name="information-circle"></ion-icon>Use each step below to build an overview of your sampling
+        decisions
+      </p>
+      <!-- section cards -->
+      <div id="sectionCardsContainer">
         <ion-card *ngFor="let section of sections" class="hover-fill" style="height:120px" (click)="goToSection(section)"
           [ngClass]="section.class">
           <div class="section-container">
@@ -76,7 +75,6 @@
               <button ion-button icon-only clear [disabled]="!stagesComplete[section.stage]">
                 <ion-icon name="checkmark-circle"></ion-icon>
               </button>
-
             </div>
           </div>
         </ion-card>
@@ -87,23 +85,25 @@
         <ion-icon name="information-circle"></ion-icon>Review the decisions you have made and make revisions before
         final export
       </p>
-      <ion-card class="review-box" (click)="pushPage('ReviewPage')" style="margin-bottom:2em">
-        <div style="display:flex; ">
-          <div class="review-card">
-            <span>Review</span>
+      <div>
+        <ion-card class="review-box" (click)="pushPage('ReviewPage')">
+          <div style="display:flex; ">
+            <div class="review-card">
+              <span>Review</span>
+            </div>
+            <img class="section-icon _80px" src="assets/img/icons/arrows-dual.svg">
+            <div class="review-card">
+              <span>Improve</span>
+            </div>
           </div>
-          <img class="section-icon _80px" src="assets/img/icons/arrows-dual.svg">
-          <div class="review-card">
-            <span>Improve</span>
+          <div style="display:flex; justify-content:center">
+            <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
+            <div class="review-card">
+              <div>Export</div>
+            </div>
           </div>
-        </div>
-        <div style="display:flex; justify-content:center">
-          <img class="section-icon _80px" src="assets/img/icons/arrow-right.svg">
-          <div class="review-card">
-            <div>Export</div>
-          </div>
-        </div>
-      </ion-card>
+        </ion-card>
+      </div>
     </div>
   </div>
 </ion-content>
