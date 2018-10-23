@@ -5,6 +5,9 @@
       <button ion-button icon-left (click)="download()">
         <ion-icon name="download"></ion-icon>Download
       </button>
+      <button ion-button icon-left (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>Close
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -98,5 +101,7 @@
       </tr>
     </table>
     <h3>How it was calculated</h3>
+    <p>The following formula was used to calculate sample sizes:</p>
+    <img src="assets/img/tool-formula.png">
   </div>
 </ion-content>
