@@ -6,7 +6,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions:
       "Estimating the value of one or a set of characteristics of a population, A comparison that needs a quasi-experimental or an experimental approach",
-    label: "How would you categorise the general purpose of your survey",
+    label: "How would you categorise the general purpose of your survey?",
     section: "General objectives",
     condition: "",
     labelMultiple: null
