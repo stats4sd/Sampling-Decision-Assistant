@@ -25,6 +25,7 @@ export class StepByStepPage {
   sections: any = [];
   stagesComplete: boolean[] = [];
   activeProject: Project;
+  editingMode: boolean;
   @select("activeProject")
   readonly activeProject$: Observable<Project>;
 
@@ -80,6 +81,9 @@ export class StepByStepPage {
       this.navCtrl.push("StagePage", { stageID: "stage-" + section.stage });
     }
   }
+  enableEditing() {
+    this.editingMode = true;
+  }
   showMenu(e) {
     let popover = this.popoverCtrl.create(DecisionToolMenuComponent);
     popover.onDidDismiss(params => {
@@ -116,6 +120,7 @@ export class StepByStepPage {
   }
   save() {
     this.dataPrvdr.backgroundSave();
+    this.editingMode = false;
   }
   pushPage(page) {
     this.navCtrl.push(page);

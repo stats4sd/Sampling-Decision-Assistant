@@ -1,90 +1,108 @@
 page-step-by-step {
-    // most in app.scss
-    .button[disabled]{
-        opacity: 0.3;
-        color:#bcbcbc
-    }
-    .card{
-        max-width: 300px;
-        margin:10px 0 0 10px;
-    }
-    .main-container{
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .hidden{
-        display: none
-    }
-    .instruction{
-        font-size: medium;
-    }
-    .section-break{
-        width: 100%;
-        padding:5px;
-        text-align: center;
-        background-color: color($colors,primary);
-        margin-top:20px;
-        color: white;
-        font-size: large;
-    }
-    ._80px{
-        max-width:80px;
-        max-width: 80px;
-    }
+  // most in app.scss
+  .button[disabled] {
+    opacity: 0.3;
+    color: #bcbcbc;
+  }
+  .card {
+    max-width: 300px;
+    margin: 10px 0 0 10px;
+  }
+  .main-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .hidden {
+    display: none;
+  }
+  .instruction {
+    font-size: medium;
+  }
+  .section-break {
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    background-color: color($colors, primary);
+    margin-top: 20px;
+    color: white;
+    font-size: large;
+  }
+  ._80px {
+    max-width: 80px;
+    max-width: 80px;
+  }
 
-    .review-card{
-        display: flex;
-        cursor: pointer;
-        justify-content: center;
-        align-items: center;
-        width:120px;
-        font-size: large;
-        font-weight: 700;
-        // background-color: rgba(196,201,255,0.8)        
+  .review-card {
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    font-size: large;
+    font-weight: 700;
+    // background-color: rgba(196,201,255,0.8)
+  }
+  .review-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid #d2c9d9;
+    padding-bottom: 10px;
+    cursor: pointer;
+    max-width: 610px;
+    margin-left: 10px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .review-box:hover {
+    background-color: wheat;
+  }
+  .section-container {
+    position: relative;
+  }
+  .section-status {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    .button {
+      margin: 0;
     }
-    .review-box{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        border: 1px solid #d2c9d9;
-        padding-bottom: 10px;
-        cursor: pointer;
-        max-width: 610px;
-        margin-left:10px;
-        color:rgba(0,0,0,0.9)
+    .icon {
+      padding: 0 2px;
     }
-    .review-box:hover{
-        background-color: wheat
+  }
+  .section-disabled {
+    position: absolute;
+    width: 100%;
+    height: 110px;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    pointer-events: none;
+  }
+  .new-project-info {
+    font-size: medium;
+    border: 1px solid color($colors, primary);
+    padding: 5px;
+    padding-bottom: calc(3.6rem + 20px);
+  }
+  .new-project-text {
+    width: 250px;
+  }
+  #saveProjectButton {
+    float: right;
+    margin-top: 12px;
+  }
+  .existing-project-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 450px) {
+    .review-card {
+      width: 90px;
     }
-    .section-container{
-        position: relative;
-    }
-    .section-status{
-        position: absolute;
-        right:0px;
-        top:0px;
-        .button{
-            margin:0
-        }
-        .icon{
-            padding:0 2px;
-        }
-    }
-    .section-disabled{
-        position: absolute;
-        width: 100%;
-        height: 110px;
-        background-color: rgba(255,255,255,0.8);
-        display: flex;
-        align-items: center;
-        text-align: center;
-        font-weight: bold;
-        pointer-events: none
-    }
-   
-    @media screen and (max-width: 450px){
-        .review-card{
-            width:90px
-        }
-    }
+  }
 }

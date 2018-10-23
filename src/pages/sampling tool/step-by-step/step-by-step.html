@@ -13,17 +13,47 @@
 <ion-content padding>
   <div class="content-container">
     <div>
-      <div style="font-size: medium; display:flex" *ngIf="activeProject && !activeProject.title">
-        <div style="margin-right:10px">
-          <ion-icon name="bulb"></ion-icon>
+      <div *ngIf="activeProject">
+        <!-- New project info -->
+        <div *ngIf="!activeProject.title || editingMode" class="new-project-container">
+          <p icon-left>
+            <ion-icon name="bulb"></ion-icon>You are working on a new project, please provide a title and description
+          </p>
+          <ion-list class="new-project-info">
+            <ion-item>
+              <ion-label color="primary">Title</ion-label>
+              <ion-input (ionFocus)="enableEditing()" [(ngModel)]="activeProject.title"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary">Description</ion-label>
+              <ion-textarea (ionFocus)="enableEditing()" [(ngModel)]="activeProject.description"></ion-textarea>
+            </ion-item>
+            <button ion-button id="saveProjectButton" (click)="save()">Save</button>
+          </ion-list>
+          <div class="new-project-text">
+            <button ion-button icon-left clear>
+              <ion-icon name="logo-youtube" (click)="showIntroVideo()"></ion-icon>Watch Intro Video
+            </button>
+          </div>
         </div>
-        <div>
-          <div>You are working on a new project, changes will be saved automatically to this device</div>
-          <div>To load a saved project click on the "menu" in the top right corner</div>
+
+        <!-- Existing project info -->
+        <div *ngIf="activeProject.title && !editingMode">
+          <div class="existing-project-container">
+            <div class="existing-project-container" style="flex:1">
+              <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeProject && activeProject.title">
+                <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}
+              </div>
+              <button ion-button icon-only clear (click)="enableEditing()">
+                <ion-icon name="create"></ion-icon>
+              </button>
+            </div>
+            <button ion-button icon-left clear>
+              <ion-icon name="logo-youtube" (click)="showIntroVideo()"></ion-icon>Watch Intro Video
+            </button>
+          </div>
+
         </div>
-      </div>
-      <div icon-left style="font-size: medium; font-weight:700" *ngIf="activeProject && activeProject.title">
-        <ion-icon name="clipboard"></ion-icon>{{activeProject.title}}
       </div>
       <!-- step by step sections -->
       <div class="section-break">Step By Step Decisions</div>
