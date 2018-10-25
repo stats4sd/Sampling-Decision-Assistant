@@ -4,27 +4,32 @@
     <!-- Intro slide -->
     <div *ngSwitchDefault>
       <p>
-        Before you try to determine the individual sampling units, it is important to define the reporting requirements
-        or goals.
+        To design a sampling plan, it is important to define the reporting requirements or goals.
         Depending on how you intend to report results, you may or may not have to consider your total sample size
         and method of selection differently.
+        <br><br>
+        The first question is to decide if you wish to divide your population to produce
+        <glossary-link slug="disaggregate-estimates">disaggregated estimates. </glossary-link>
+        If you need to give different figures for separate groups within your population, then you actually need an
+        estimate for each one.
       </p>
-      <p>The first question is to decide if you wish to divide your population to produce
-        <glossary-link slug="disaggregate-estimates">disaggregated estimates</glossary-link>
+      <p>
       </p>
       <survey-question controlName="q4.1"></survey-question>
       <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
         <p>
-          Here think about the reporting requirements for your estimates or any stratification criteria that you need
-          to
-          include. Reporting requirements means that you will provide estimates for the indicator of interest for each
-          subsection of the population. </p>
-        <p>Often strata are formed to define reporting requirements and in those cases this
-          tool makes no difference between strata and reporting requirements. Sometimes strata are constructed to
-          improve
-          the precision of estimation, with no intention of producing estimates disaggregated by those strata. If you
-          have strata of the second type, make sure you remove the tick from the table in the next screen where your
-          reporting requirements and strata are summarised.
+          Here, think about the reporting requirements for your estimates or any stratification criteria that you need
+          to include. Reporting requirements means that you will need to provide estimates for the indicator of
+          interest for each subsections of the population, divided by criteria you specify.
+          <br><br>
+          Often strata are formed to define reporting requirements and in those cases this tool makes no difference
+          between strata and reporting requirements. Sometimes, you may need to divide your population into strata to
+          improve the precision of your estimates, but you have no requirement for estimates disaggregated by those
+          strata. If you want this type of strata, make sure you remove the ‘reporting required’ tickstrata are
+          constructed to improve the precision of estimation, with no intention of producing estimates disaggregated by
+          those strata. If you have strata of the second type, make sure you remove the tick from the table in the next
+          screen where your reporting requirements and strata are summarised.
+
         </p>
       </div>
 

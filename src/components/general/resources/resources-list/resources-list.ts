@@ -42,9 +42,18 @@ export class ResourcesListComponent {
       Object.keys(stageResources.questions).forEach(k => {
         questions.push(stageResources.questions[k]);
       });
-      this.questions = questions;
+      this.questions = this._sortQuestions(questions);
       this.setRelevantQuestions(questions);
     }
+  }
+  // resources are populated Q1, Q2 etc. need to add better sort so that Q10 does not follow Q1
+  _sortQuestions(questions: IResourceQuestion[]) {
+    questions = questions.sort((a, b) => {
+      const indexA: number = Number(a._key.substring(1));
+      const indexB: number = Number(b._key.substring(1));
+      return indexA - indexB;
+    });
+    return questions;
   }
   // if relevant question specified push those matching to a new array and remove from full questions list
   setRelevantQuestions(questions: IResourceQuestion[]) {
