@@ -10,28 +10,36 @@ export class IntroductionComponent {
   constructor(public modalCtrl: ModalController, public events: Events) {}
 
   startNew() {
-    let modal = this.modalCtrl.create("SavedInfoPage", { view: "save" });
+    let modal = this.modalCtrl.create(
+      "SavedInfoPage",
+      { view: "save" },
+      { cssClass: "full-screen" }
+    );
     modal.onDidDismiss(data => {
       if (data) {
         this.events.publish("project:loaded", data);
-        //this.showIntro=false
       }
     });
     modal.present();
   }
   load() {
-    let modal = this.modalCtrl.create("SavedInfoPage", { view: "load" });
+    let modal = this.modalCtrl.create(
+      "SavedInfoPage",
+      { view: "load" },
+      { cssClass: "full-screen" }
+    );
     modal.onDidDismiss(data => {
       console.log("survey loaded", data);
       if (data) {
         this.events.publish("project:loaded", data);
-        //this.showIntro=false
       }
     });
     modal.present();
   }
   showIntroText() {
-    let modal = this.modalCtrl.create("IntroductionTextPage");
+    let modal = this.modalCtrl.create("IntroductionTextPage", null, {
+      cssClass: "full-screen"
+    });
     modal.present();
   }
 }
