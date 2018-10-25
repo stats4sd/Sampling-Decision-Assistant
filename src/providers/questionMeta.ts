@@ -63,7 +63,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions: "Yes, No",
     label:
-      "Do you know what is the value of the standard deviation for the indicator in the population?",
+      "Do you know the value of the standard deviation for the indicator in the population?",
     section: "Indicators",
     condition:
       "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
