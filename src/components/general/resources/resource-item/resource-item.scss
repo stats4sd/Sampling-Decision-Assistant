@@ -12,6 +12,9 @@ resource-item {
     white-space: pre-line;
     cursor: text;
   }
+  .answer-text > p {
+    margin: 0 0 1em 0;
+  }
   p {
     user-select: text;
   }
@@ -49,6 +52,17 @@ resource-item {
   ul {
     margin-top: -1.4em;
     margin-bottom: -1.4em;
+  }
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+  td {
+    padding: 5px;
+  }
+  table {
+    border-collapse: collapse;
   }
   // temp - sizing for video, needs to be tweaked for mobile
   // .video-player,

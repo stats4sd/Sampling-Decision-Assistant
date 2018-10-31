@@ -1,18 +1,11 @@
 <h4>Introduction</h4>
-<p>We will now find a method to select and reach the
-  <glossary-link slug="sampling-unit">sampling units</glossary-link>
-  .
-</p>
 <p>
-  When selecting the sampling units, it is important to ensure that any biases are limited as much as possible.
-  Sometimes this
-  is a relatively straight-forward process, but often it can involve multiple stages and more advanced techniques such
-  as the contstruction of
-  <glossary-link>sampling frames.</glossary-link>
+  We will now find a method to select and reach the
+  <glossary-link slug="sampling-unit">sampling units.</glossary-link>
+  <br><br>
+  To start, let us review some of the information that you have presented so far. Note that at any point you can
+  modify this to make sure you build an appropriate strategy.
 </p>
-<p>To start, let us review some of the information that you have presented so far. Note that at any point you can
-  modify this
-  to assist building an appropriate strategy</p>
 <div class="info-card-container">
   <ion-card *ngFor="let info of infoProvided" class="info-provided-card">
     <div style="display: flex" class="info-card-header">
@@ -48,7 +41,9 @@
           <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
             <div>Disaggregated by:</div>
             <ul *ngIf="form.value['reportingLevels']!=''">
-              <li *ngFor="let estimate of form.value['reportingLevels']">{{estimate.name}}</li>
+              <div *ngFor="let estimate of form.value['reportingLevels']">
+                <li *ngIf="estimate.reportingRequired">{{estimate.name}}</li>
+              </div>
             </ul>
           </div>
           <div *ngIf="form.value['q4.1']=='One estimate'">

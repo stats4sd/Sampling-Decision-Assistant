@@ -40,7 +40,7 @@ page-stage {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 10px 5px;
+    padding: 10px 5px 0px 5px;
   }
   #stageResources {
     width: 150px;
@@ -49,5 +49,17 @@ page-stage {
   #stageOverview {
     min-width: 280px;
     flex: 1;
+  }
+  .video-button {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+  @media only screen and (max-width: 500px) {
+    #stageResources {
+      width: 100%;
+    }
+  }
+  @media only screen and (max-width: 600px) {
   }
 }

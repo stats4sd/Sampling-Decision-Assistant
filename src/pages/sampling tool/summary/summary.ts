@@ -65,6 +65,9 @@ export class SummaryPage {
   ngOnDestroy(): void {
     this.projectValues$.unsubscribe();
   }
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
 
   init(values: ProjectValues) {
     if (values) {

@@ -4,6 +4,7 @@ import { CalculatorVars } from "../components/dataVis/sample-size-calculator/sam
 
 export interface Project {
   title?: string;
+  description?: string;
   created: number;
   edited: number;
   values: ProjectValues;

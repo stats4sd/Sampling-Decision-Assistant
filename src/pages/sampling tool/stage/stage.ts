@@ -21,8 +21,9 @@ import { ResourcesProvider } from "../../../providers/resources/resources";
 import { IStageResources, AppState, IStageMeta } from "../../../models/models";
 
 const INTRO_HTML = {
-  1: `You will identify the main objectives of the survey to help inform future decision making and identify how
-  the tool can best be used. There will be <strong>1-3 questions</strong> to answer during this step`,
+  1: `You will identify the main objectives of the survey you want to carry out. There are <strong>1-3 questions</strong> in 
+  this step, which will check if the tool is suitable for your purposes and record information to inform decisions later in 
+  the process.`,
   2: `You will specify the indicator that will guide some of your decisions about sampling.`,
   3: `You will identify your target population and consider any additional criteria for exclusion or inclusion to
   make it as well-defined as possible`,
@@ -30,6 +31,14 @@ const INTRO_HTML = {
   sampling frames and strata`,
   5: `You will develop a sampling system to support the collection of data to meet your overall objective`,
   6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages`
+};
+const INTRO_VIDEOS = {
+  1: "XIMLoLxmTDw",
+  2: "XIMLoLxmTDw",
+  3: "XIMLoLxmTDw",
+  4: "XIMLoLxmTDw",
+  5: "XIMLoLxmTDw",
+  6: "XIMLoLxmTDw"
 };
 
 @IonicPage({
@@ -53,12 +62,15 @@ export class StagePage {
   stagePart: string;
   activeSection: string = "main";
   introHtml = INTRO_HTML;
+  introVideos = INTRO_VIDEOS;
   activeGlossaryTerm: string;
   form: FormGroup = this.formPrvdr.formGroup;
   section: any;
   relevant: string;
   loaded: boolean;
   stageResources: IStageResources;
+  videoPlayerWidth: number;
+  videoPlayerHeight: number;
 
   constructor(
     public navCtrl: NavController,
@@ -76,6 +88,8 @@ export class StagePage {
   ) {
     this.stageInit(navParams);
     this._addSubscribers();
+    this.videoPlayerWidth = Math.min(window.innerWidth - 70, 675);
+    this.videoPlayerHeight = Math.round((this.videoPlayerWidth / 16) * 9);
   }
   ngOnDestroy() {
     this.stagePart$.unsubscribe();

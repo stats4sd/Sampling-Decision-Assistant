@@ -2,40 +2,39 @@
   <!-- intro -->
 
   <h2>Introduction</h2>
-  <p>To design a sampling process, you should first have a clear idea of your main objective. This is, your overall aim
-    for
-    the activity that you are doing sampling for.</p>
-
   <p>
-    Developing sampling designs is about making decisions that will define how you will collect data and how you will
-    estimate
-    the value of one or a set of characteristics of a population. We sometimes call those characteristics:
-    <glossary-link slug="indicator">indicators</glossary-link>. This guide has been designed to help with this type of
-    objective. This may happen for example
-    when profiling populations, setting
-    <glossary-link slug="baseline">baselines</glossary-link>
-    or assessing the value of indicators at
-    <glossary-link slug="endline">end-line</glossary-link> or midline points. Common examples can be seen in the
-    <a href="/#//stage-1/resources">resources</a> tab.
+    To begin designing your sampling process, you should first have a clear idea of your main objective. This is the
+    overall aim for the activity you are doing sampling for. Questions 1 and 2 are aimed at checking that this tool is
+    appropriate for use in designing your study. Question 3 will ask you to clearly describe your aims.
+    <br><br>
+    There is more than one type of study, and the first question is aimed at establishing which type yours is.
+    <br><br>
+    This tool is designed to help with designing studies that are aimed at estimating the values of characteristics of
+    a population. Such studies are aimed at observing the population and measuring the factors of interest without
+    trying to change anything. The decisions you make when designing this kind of study are about how you will sample
+    the population. This type of study is used for things like profiling populations, setting
+    <glossary-link slug="baseline">baselines </glossary-link>
+    and assessing
+    the value of
+    <glossary-link slug="indicator">indicators </glossary-link>
+    at midline or
+    <glossary-link slug="endline">end-line </glossary-link>
+    points. You can see some examples of suitable objectives in the
+    Additional Resources section.
+    <br><br>
+    In some cases, a study may be established to compare interventions. This can be called an
+    <glossary-link slug="experiments">'experimental' </glossary-link>
+    or
+    <glossary-link slug="quasi-experiments">'quasi-experimental' </glossary-link>
+    study, and the design for this is focused on controlling factors in the experiment to isolate
+    and measure the difference caused by a particular change. This tool was not created to support this kind of design.
+    <br><br>
+    The first question will ask you to identify which of these two categories your objective falls into. If you are not
+    sure, click on the ? icon to see some common examples.
   </p>
 
-  <p>In some cases a study may be established to compare interventions and require a
-    <glossary-link slug="quasi-experiments">quasi-experimental</glossary-link> or
-    <glossary-link slug="experiments">experimental</glossary-link> approach. This tool has not been aimed to support
-    decisions for this type of design, and it is recommended to seek advice from a statistician to design this type of
-    study.</p>
-
-  <!-- q1.1 -->
-  <p>
-    The first question you will answer broadly separates these two types of objectives. The first answer provided is
-    for people
-    conducting a survey to estimate a characteristic of a population. The second answer is for those wishing to
-    evaluate
-    the comparative benefits of a set of options while controlling external factors, that is, setting an experimental
-    or
-    a quasi-experimental study.</p>
   <div style="margin:1em 0; padding:5px">
-    <span>If you are not sure of your requirements, then click on the</span>
+    <span>If you are not sure, click on the</span>
     <ion-icon style="padding:0 4px" ios="ios-help-circle-outline" md="ios-help-circle-outline"></ion-icon>
     <span>icon to see some common examples.</span>
   </div>
@@ -53,13 +52,14 @@
       <glossary-link slug="representative-sample">representative</glossary-link> and
       <glossary-link slug="non-representative-sample">non-representative</glossary-link> samples. If you are not
       familiar with these terms then follow links to the glossary.
-      If you are not sure of your requirements then click on the help icon to see some common examples.
+      If you are not sure of your requirements, click on the help icon to see some common examples.
     </p>
   </div>
   <survey-question controlName="q1.2"></survey-question>
   <!-- q1.3 -->
   <div *ngIf="form.value['q1.2']=='Representative'">
-    <p>With your target population in mind, try to answer the following questions:</p>
+    <p>Bearing in mind the target population, aims and boundaries of your study, answer the following question as
+      precisely as you can. There are examples of objectives in the Additional Resources section.</p>
   </div>
   <survey-question controlName="q1.3"></survey-question>
 

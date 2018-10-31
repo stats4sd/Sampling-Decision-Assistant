@@ -6,7 +6,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions:
       "Estimating the value of one or a set of characteristics of a population, A comparison that needs a quasi-experimental or an experimental approach",
-    label: "How would you categorise the general purpose of your survey",
+    label: "How would you categorise the general purpose of your survey?",
     section: "General objectives",
     condition: "",
     labelMultiple: null
@@ -63,7 +63,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions: "Yes, No",
     label:
-      "Do you know what is the value of the standard deviation for the indicator in the population?",
+      "Do you know the value of the standard deviation for the indicator in the population?",
     section: "Indicators",
     condition:
       "type:value, controlName:q2.1.2, value:Average or total value of indicator in the population",
@@ -182,7 +182,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions: "One estimate, Disaggregated estimates",
     label:
-      "Are you interested in producing one estimate, that is a headline value, for each indicator for the whole population, or do you need to disaggregate the estimates? For example by geographical area or by camp, etc.",
+      "Are you interested in producing one estimate (a ‘headline value’) for each indicator for the whole population, or do you need to disaggregate the estimates? For example, they could be split up by geographical area or by camp, etc.",
     section: "At what level do you need to report these results",
     condition: "",
     labelMultiple: null
@@ -225,7 +225,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions: "Single-stage, Multi-stage",
     label:
-      "Would you prefer to conduct your sampling in a single stage or in multiple stages",
+      "Would you prefer to conduct your sampling in a single stage or in multiple stages?",
     section: "Selecting the sampling units",
     condition: "type:value, controlName:q5.1, value:Yes",
     labelMultiple: null
