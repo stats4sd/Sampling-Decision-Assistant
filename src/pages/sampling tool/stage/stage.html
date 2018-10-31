@@ -29,11 +29,8 @@
           </div>
         </div>
         <div class="video-button">
-          <button ion-button icon-left clear>
-            <ion-icon name="logo-youtube"></ion-icon>Watch Video
-          </button>
+          <video-popup-button buttonText="Watch Video" [youtubeID]="introVideos[stage.number]"></video-popup-button>
         </div>
-        <!-- <youtube-player [videoId]="introVideos[stage.number]" [width]="videoPlayerWidth" [height]="videoPlayerHeight"></youtube-player> -->
       </div>
 
       <!-- main stage content -->

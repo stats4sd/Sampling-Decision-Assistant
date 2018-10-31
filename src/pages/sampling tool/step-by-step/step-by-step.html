@@ -30,9 +30,7 @@
             <button ion-button id="saveProjectButton" (click)="save()">Save</button>
           </ion-list>
           <div class="new-project-text">
-            <button ion-button icon-left clear>
-              <ion-icon name="logo-youtube" (click)="showIntroVideo()"></ion-icon>Watch Intro Video
-            </button>
+            <video-popup-button buttonText="Watch Intro Video" [youtubeID]="introVideoYoutubeID"></video-popup-button>
           </div>
         </div>
 
@@ -47,9 +45,11 @@
                 <ion-icon name="create"></ion-icon>
               </button>
             </div>
-            <button ion-button icon-left clear>
-              <ion-icon name="logo-youtube" (click)="showIntroVideo()"></ion-icon>Watch Intro Video
-            </button>
+            <!-- <button ion-button icon-left clear (click)="showIntroVideo()">
+              <ion-icon name="logo-youtube"></ion-icon>Watch Intro Video
+            </button> -->
+            <video-popup-button buttonText="Watch Intro Video" [youtubeID]="introVideoYoutubeID">
+            </video-popup-button>
           </div>
 
         </div>

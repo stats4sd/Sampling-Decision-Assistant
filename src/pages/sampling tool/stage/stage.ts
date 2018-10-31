@@ -3,7 +3,6 @@ import {
   Content,
   Events,
   IonicPage,
-  ModalController,
   Navbar,
   NavController,
   NavParams,
@@ -33,12 +32,12 @@ const INTRO_HTML = {
   6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages`
 };
 const INTRO_VIDEOS = {
-  1: "XIMLoLxmTDw",
-  2: "XIMLoLxmTDw",
-  3: "XIMLoLxmTDw",
-  4: "XIMLoLxmTDw",
-  5: "XIMLoLxmTDw",
-  6: "XIMLoLxmTDw"
+  1: "fLZ-Tj3dcLw",
+  2: "6BizXOM3_2Y",
+  3: "Y37hbzZwHC8",
+  4: "iS_aL9lY-i4",
+  5: "lDFqz1CH3M0",
+  6: "8dwF0Zjz1ZY"
 };
 
 @IonicPage({

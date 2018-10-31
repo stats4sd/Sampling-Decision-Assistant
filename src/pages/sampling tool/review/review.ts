@@ -96,7 +96,9 @@ export class ReviewPage {
   }
 
   exportDocx() {
-    this.modalCtrl.create("SummaryPage").present();
+    this.modalCtrl
+      .create("SummaryPage", null, { cssClass: "full-screen" })
+      .present();
   }
 
   /*****************************************************************

@@ -24,7 +24,9 @@ export class ChangelogPage {
   ) {}
 
   launchSampleSizeCalculator() {
-    this.modalCtrl.create("SampleSizeCalculatorPage").present();
+    this.modalCtrl
+      .create("SampleSizeCalculatorPage", null, { cssClass: "full-screen" })
+      .present();
   }
 
   // tree diagram demo

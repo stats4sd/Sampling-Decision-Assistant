@@ -22,6 +22,7 @@ import { Project } from "../../../models/models";
   templateUrl: "step-by-step.html"
 })
 export class StepByStepPage {
+  introVideoYoutubeID = "c6RnCjDnRAI";
   sections: any = [];
   stagesComplete: boolean[] = [];
   activeProject: Project;
@@ -105,11 +106,16 @@ export class StepByStepPage {
       ev: e
     });
   }
+  showIntroVideo() {}
   startNew() {
     this.dataPrvdr.createNewProject();
   }
   load() {
-    let modal = this.modalCtrl.create("SavedInfoPage", { view: "load" });
+    let modal = this.modalCtrl.create(
+      "SavedInfoPage",
+      { view: "load" },
+      { cssClass: "full-screen" }
+    );
     modal.onDidDismiss(data => {
       console.log("survey loaded", data);
       if (data) {

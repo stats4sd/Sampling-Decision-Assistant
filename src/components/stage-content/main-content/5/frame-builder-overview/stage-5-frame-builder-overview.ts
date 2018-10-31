@@ -26,6 +26,8 @@ export class Stage5_FrameBuilderOverviewComponent {
   buildStage(stage, stageIndex) {
     // get formgroup matching stage name to parentID
     let params = { stageFormGroup: stage, stageIndex: stageIndex };
-    this.modalCtrl.create("FrameBuilderPage", params).present();
+    this.modalCtrl
+      .create("FrameBuilderPage", params, { cssClass: "full-screen" })
+      .present();
   }
 }

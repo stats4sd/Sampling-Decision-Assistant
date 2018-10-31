@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 // import ionic module if plan to use ionic components
 import { IonicModule } from "ionic-angular";
-
 import { IntroductionComponent } from "./introduction/introduction";
 import { GlossaryLinkComponent } from "./glossary/glossary-link/glossary-link";
 import { GlossaryListComponent } from "./glossary/glossary-list";
@@ -12,6 +11,7 @@ import { ResourcesListComponent } from "./resources/resources-list/resources-lis
 import { HelpIconComponent } from "./help-icon/help-icon";
 import { YoutubePlayerModule } from "ngx-youtube-player";
 import { ProjectTitleComponent } from "./project-title";
+import { VideoPopupButtonComponent } from "./video-player/video-popup-button";
 
 // import { DecisionToolMenuComponent } from './decision-tool-menu/decision-tool-menu';
 @NgModule({
@@ -24,7 +24,8 @@ import { ProjectTitleComponent } from "./project-title";
     ResourcesListComponent,
     ResourceItemComponent,
     HelpIconComponent,
-    ProjectTitleComponent
+    ProjectTitleComponent,
+    VideoPopupButtonComponent
   ],
   imports: [IonicModule, YoutubePlayerModule],
   exports: [
@@ -36,7 +37,8 @@ import { ProjectTitleComponent } from "./project-title";
     ResourcesListComponent,
     ResourceItemComponent,
     HelpIconComponent,
-    ProjectTitleComponent
+    ProjectTitleComponent,
+    VideoPopupButtonComponent
   ]
 })
 export class GeneralComponentsModule {}
