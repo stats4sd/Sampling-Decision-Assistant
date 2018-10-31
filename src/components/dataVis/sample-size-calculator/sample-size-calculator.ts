@@ -265,7 +265,12 @@ export class SampleSizeCalculatorComponent {
       inputs: input,
       outputs: this.outputs,
       recommendations: recommendations,
-      inputs_formatted: this.inputFields
+      // labels for use in word export
+      exportLabels: {
+        assumptions: this.inputFields,
+        calculated: this.calculatedFields,
+        results: this.outputs.formatted
+      }
     };
     // update tree meta state
     this.dataPrvdr.activeProject.values._calculatorVars = vars;
@@ -336,6 +341,7 @@ export interface CalculatorVars {
   inputs: CalculatorInputVars;
   outputs: CalculatorOutputVars;
   recommendations: CalculatorRecommendations;
+  exportLabels?: any;
 }
 
 export interface CalculatorInputVars {

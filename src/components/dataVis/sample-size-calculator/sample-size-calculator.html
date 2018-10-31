@@ -32,7 +32,6 @@
             <ion-label fixed>{{moe.label}}</ion-label>
             <ion-input type="number" [(ngModel)]="inputValues.moe" (ionChange)="calculateSize()"></ion-input>
           </ion-item>
-
           <ion-item class="input-item">
             <ion-label fixed>Clustering Level</ion-label>
             <ion-select [(ngModel)]="inputValues.rho" (ionChange)="calculateSize()">
