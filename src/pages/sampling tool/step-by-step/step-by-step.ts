@@ -22,7 +22,7 @@ import { Project } from "../../../models/models";
   templateUrl: "step-by-step.html"
 })
 export class StepByStepPage {
-  introVideoYoutubeID = "ScMzIvxBSi4";
+  introVideoYoutubeID = "c6RnCjDnRAI";
   sections: any = [];
   stagesComplete: boolean[] = [];
   activeProject: Project;
