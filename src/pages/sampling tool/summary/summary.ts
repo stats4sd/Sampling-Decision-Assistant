@@ -5,13 +5,15 @@ import {
   AppState,
   ProjectValues,
   StageMeta,
-  ReportingLevel
+  ReportingLevel,
+  IAllocation
 } from "../../../models/models";
 import { Subscription } from "rxjs";
 import { DataProvider } from "../../../providers/data/data";
 import { debounceTime } from "rxjs/operators";
 import * as utils from "../../../utils/download";
 import QUESTION_META from "../../../providers/questionMeta";
+import { CalculatorVars } from "../../../components/dataVis/sample-size-calculator/sample-size-calculator";
 
 interface IQuestionMeta {
   ["controlName"]?: {
@@ -36,6 +38,11 @@ interface ISectionMetaObject {
     complete: Boolean;
   };
 }
+interface ICalcVal {
+  label: string;
+  value: string | number;
+  var?: string;
+}
 
 @IonicPage({
   defaultHistory: ["HomePage", "StepByStepPage"]
@@ -49,6 +56,12 @@ export class SummaryPage {
   projectValues: ProjectValues;
   questionMetaObject: IQuestionMeta = {};
   summaryQuestions: ISummaryQuestion[];
+  calcVals: {
+    assumptions: ICalcVal[];
+    calculated: ICalcVal[];
+    outputs: ICalcVal[];
+  };
+  allocations: ICalcVal[];
   sections: ISectionMeta[];
   samplingStages: StageMeta[];
   reportingLevels: ReportingLevel[];
@@ -56,7 +69,6 @@ export class SummaryPage {
   constructor(
     private ngRedux: NgRedux<AppState>,
     // keep dataPrvdr import to allow project resume prompt
-    private dataPrvdr: DataProvider,
     private viewCtrl: ViewController
   ) {
     this.addSubscribers();
@@ -71,18 +83,59 @@ export class SummaryPage {
 
   init(values: ProjectValues) {
     if (values) {
+      console.log("values", values);
       this.projectValues = values;
       const questions: ISummaryQuestion[] = this.getOnlyQuestions(values);
       this.buildSections(questions);
       if (values.samplingStages) {
         this.samplingStages = values.samplingStages;
-        console.log("sampling stages", this.samplingStages);
       }
       if (values.reportingLevels) {
         this.reportingLevels = values.reportingLevels;
-        console.log("reporting levels", this.reportingLevels);
+      }
+      if (values._calculatorVars) {
+        this.calcVals = this.buildCalcVals(values._calculatorVars);
+        console.log("calc vals", this.calcVals);
+      }
+      if (values._allocation) {
+        this.allocations = this.buildAllocation(values._allocation);
       }
     }
+  }
+
+  // take the array of existing variable names and labels used within calculator and popuplate with values
+  buildCalcVals(vals: CalculatorVars) {
+    return {
+      assumptions: vals.exportLabels.assumptions.map(l => {
+        l.value = vals.inputs[l.var];
+        return l;
+      }),
+      calculated: vals.exportLabels.calculated.map(l => {
+        l.value = vals.inputs[l.var];
+        return l;
+      }),
+      outputs: vals.exportLabels.results.map(l => {
+        l.value = vals.outputs.raw[l.var];
+        return l;
+      })
+    };
+  }
+
+  buildAllocation(vals: IAllocation) {
+    return [
+      {
+        label: "Recommended Minimum Sample Size per Aggregation",
+        value: vals.recommendedAggregationSize
+      },
+      {
+        label: "Sample Size per Aggregation",
+        value: vals.aggregationSampleSize
+      },
+      {
+        label: "Total Sample Size",
+        value: vals.totalSampleSize
+      }
+    ];
   }
 
   // group questions by corresponding section and convert to array for rendering

@@ -77,31 +77,35 @@
     </table>
   </div>
   <!-- allocation -->
-  <div *ngIf="samplingStages" style="margin-bottom:20px">
+  <div *ngIf="samplingStages && calcVals" style="margin-bottom:20px">
     <h1>Resource Allocation</h1>
     <h2>Assumptions</h2>
-    <table *ngIf="assumptions">
-      <tr *ngFor="let assumption of assumptions">
-        <td>assumption.label</td>
-        <td>assumption.value</td>
+    <table>
+      <tr *ngFor="let assumption of calcVals.assumptions">
+        <td style="padding:5px; width:50px; border:1px solid black">{{assumption.label}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{assumption.value}}</td>
+      </tr>
+      <tr *ngFor="let calculated of calcVals.calculated">
+        <td style="padding:5px; width:50px; border:1px solid black">{{calculated.label}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{calculated.value}}</td>
       </tr>
     </table>
-    <h2>Recommendations</h2>
-    <table *ngIf="recommendations">
-      <tr *ngFor="let recommendation of recommendations">
-        <td>recommendation.label</td>
-        <td>recommendation.value</td>
+    <h2>Calculations</h2>
+    <table>
+      <tr *ngFor="let calculation of calcVals.outputs">
+        <td style="padding:5px; width:50px; border:1px solid black">{{calculation.label}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{calculation.value}}</td>
       </tr>
     </table>
     <h2>Allocation</h2>
-    <table *ngIf="allocations">
+    <table>
       <tr *ngFor="let allocation of allocations">
-        <td>allocation.label</td>
-        <td>allocation.value</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{allocation.label}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">{{allocation.value}}</td>
       </tr>
     </table>
-    <h3>How it was calculated</h3>
+    <!-- <h3>How it was calculated</h3>
     <p>The following formula was used to calculate sample sizes:</p>
-    <img src="assets/img/tool-formula.png">
+    <img src="assets/img/tool-formula.png"> -->
   </div>
 </ion-content>
