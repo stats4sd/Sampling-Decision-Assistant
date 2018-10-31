@@ -2,7 +2,6 @@ introduction {
   .content {
     font-size: 16px;
   }
-
   .sub-heading {
     color: rgba(0, 0, 0, 0.7);
     text-align: center;
@@ -15,8 +14,7 @@ introduction {
   .intro-section {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    //  justify-content: center;
+    width: 100%; //  justify-content: center;
   }
   .intro-box {
     padding: 10px;
@@ -30,5 +28,16 @@ introduction {
   }
   .sub-heading.smaller {
     font-size: large;
+  }
+  .download-section {
+    display: flex;
+    img {
+      width: 100px;
+    }
+    margin: 1em 0;
+  }
+  .download-section-text {
+    margin-left: 1em;
+    flex: 1;
   }
 }

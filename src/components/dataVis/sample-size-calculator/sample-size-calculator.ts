@@ -264,7 +264,8 @@ export class SampleSizeCalculatorComponent {
     let vars = {
       inputs: input,
       outputs: this.outputs,
-      recommendations: recommendations
+      recommendations: recommendations,
+      inputs_formatted: this.inputFields
     };
     // update tree meta state
     this.dataPrvdr.activeProject.values._calculatorVars = vars;
