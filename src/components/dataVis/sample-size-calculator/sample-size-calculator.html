@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="sampleStageMeta">
 
   <div style="display: flex; flex-wrap: wrap">
     <div>
@@ -71,7 +71,7 @@
         </div>
       </div>
       <!-- multi stage results -->
-      <div class="result-subsection" id="multiStageResults" *ngIf="sampleStageMeta && disaggregationMeta">
+      <div class="result-subsection" id="multiStageResults" *ngIf="disaggregationMeta">
         <!-- Show results button -->
         <div *ngIf="!showResults" id="showResults">
           <button ion-button (click)="toggleShowResults()">Calculate Results</button>

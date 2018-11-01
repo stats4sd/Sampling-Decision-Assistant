@@ -61,6 +61,7 @@ export class SampleSizeCalculatorComponent {
     this._waitForProject();
   }
   init(values: ProjectValues) {
+    console.log('init',values)
     this.sampleStageMeta = values.samplingStages;
     // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
     this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
