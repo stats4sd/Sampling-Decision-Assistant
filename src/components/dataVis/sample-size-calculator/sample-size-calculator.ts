@@ -99,6 +99,7 @@ export class SampleSizeCalculatorComponent {
     this.sampleStageMeta[this.sampleStageMeta.length - 1].sampleSize = Number(
       this.inputValues.nHH
     );
+    console.log("setting final stage N", this.inputValues.nHH);
     this.formPrvdr.formGroup.patchValue({
       samplingStages: this.sampleStageMeta
     });
@@ -311,9 +312,6 @@ export class SampleSizeCalculatorComponent {
     else {
       this.totalSampleSize =
         this.outputs.raw.FinalstageN_FPC * totalDisaggregations;
-      // if single stage pouplate nHH with as same output value as only 1 stage has to have all
-      // this.inputValues.nHH = this.outputs.raw.FinalstageN_FPC;
-      // this.setFinalStageN();
     }
   }
 

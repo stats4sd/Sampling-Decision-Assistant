@@ -17,7 +17,6 @@ import { FormProvider } from "../../../../providers/form/form";
   templateUrl: "tree-table.html"
 })
 export class TreeTableComponent {
-  samplingStages$: Subscription;
   samplingStages: StageMeta[] = [];
   allocationSampleSize: number = -1;
   stageStrata: string[][];
@@ -25,8 +24,7 @@ export class TreeTableComponent {
     reportingLevels: ReportingLevel[];
     levelCombinations: string[];
   };
-  // @select(["activeProject", "values", "_calculatorVars", "recommendations"])
-  // readonly recommendations$: Observable<CalculatorRecommendations>;
+  recommendations$: Subscription;
   recommendations: CalculatorRecommendations;
   private componentDestroyed: Subject<any> = new Subject();
 
@@ -37,7 +35,6 @@ export class TreeTableComponent {
     private formPrvdr: FormProvider
   ) {
     this._addSubscribers();
-    this.getRecommendations();
   }
 
   ngOnDestroy() {
@@ -46,13 +43,6 @@ export class TreeTableComponent {
     // on destroy we want to emit any value so that the takeUntil subscription records it no longer needs to subscribe
     this.componentDestroyed.next();
     this.componentDestroyed.unsubscribe();
-  }
-
-  getRecommendations() {
-    try {
-      this.recommendations = this.ngRedux.getState().activeProject.values._calculatorVars.recommendations;
-      console.log("recommendations", this.recommendations);
-    } catch (error) {}
   }
 
   // check .allocation values control exist, create if doesn't using recommendation and allocated values
@@ -130,11 +120,21 @@ export class TreeTableComponent {
 
   _addSubscribers() {
     // use 'takeuntil' to use second observable as an argument. This is only emitted on destruction
-    this.samplingStages$ = this.ngRedux
-      .select<StageMeta[]>(["activeProject", "values", "samplingStages"])
+    this.recommendations$ = this.ngRedux
+      .select<CalculatorRecommendations>([
+        "activeProject",
+        "values",
+        "_calculatorVars",
+        "recommendations"
+      ])
       .takeUntil(this.componentDestroyed)
-      .subscribe(stages => {
-        if (stages) {
+      .subscribe(recommendations => {
+        if (recommendations) {
+          console.log("recommendations updated");
+          this.recommendations = recommendations;
+          // trigger stages update too
+          const stages = this.ngRedux.getState().activeProject.values
+            .samplingStages;
           this.samplingStages = this.getStageStrata(stages);
           this.calculateAllocationSampleSize();
         }
