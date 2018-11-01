@@ -61,7 +61,7 @@ export class SampleSizeCalculatorComponent {
     this._waitForProject();
   }
   init(values: ProjectValues) {
-    console.log('init',values)
+    console.log("init", values);
     this.sampleStageMeta = values.samplingStages;
     // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
     this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
@@ -102,7 +102,10 @@ export class SampleSizeCalculatorComponent {
     this.formPrvdr.formGroup.patchValue({
       samplingStages: this.sampleStageMeta
     });
-    this.calculateSize();
+    // only calculate if more than 1 stage (otherwise inf loop as final stage n decided from calc)
+    if (this.sampleStageMeta.length > 1) {
+      this.calculateSize();
+    }
   }
 
   _jsonToArray(json) {
@@ -236,6 +239,14 @@ export class SampleSizeCalculatorComponent {
     }
 
     /***********************************************************************************************************/
+
+    // if single stage final stageN should be same as nHH so want to update
+    // both variable and stage allocation
+    if (this.sampleStages == 1) {
+      this.inputValues.nHH = FinalstageN_FPC;
+      this.setFinalStageN();
+    }
+
     const raw: CalculatorOutputVarsRaw = {
       SRSn: Math.round(SRSn),
       SRSn_FPC: SRSn_FPC,
@@ -279,21 +290,30 @@ export class SampleSizeCalculatorComponent {
   }
 
   calculateTotalSampleSize() {
+    // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
+    if (!this.disaggregationMeta) {
+      this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
+    }
+    const totalDisaggregations = this.disaggregationMeta
+      ? this.disaggregationMeta.levelCombinations.length
+      : 1;
     // for multi stage multiply combinations * nHH * stage2N
-    // for single stage simply return finalStageN
     if (
       this.sampleStageMeta.length > 1 &&
       typeof this.outputs.raw.stage2N == "number"
     ) {
-      // attempt to fetch disaggregation meta from data vis provider (returns null if no reporting levels)
       if (!this.disaggregationMeta) {
-        this.disaggregationMeta = this.dataVisPrvdr.getReportingLevels();
       }
       this.totalSampleSize =
-        this.outputs.raw.FinalstageN_FPC *
-        this.disaggregationMeta.levelCombinations.length;
-    } else {
-      this.totalSampleSize = this.outputs.raw.FinalstageN_FPC;
+        this.outputs.raw.FinalstageN_FPC * totalDisaggregations;
+    }
+    // for single stage simply return finalStageN * disaggregation combinations
+    else {
+      this.totalSampleSize =
+        this.outputs.raw.FinalstageN_FPC * totalDisaggregations;
+      // if single stage pouplate nHH with as same output value as only 1 stage has to have all
+      // this.inputValues.nHH = this.outputs.raw.FinalstageN_FPC;
+      // this.setFinalStageN();
     }
   }
 
