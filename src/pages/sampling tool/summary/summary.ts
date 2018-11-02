@@ -9,7 +9,6 @@ import {
   IAllocation
 } from "../../../models/models";
 import { Subscription } from "rxjs";
-import { DataProvider } from "../../../providers/data/data";
 import { debounceTime } from "rxjs/operators";
 import * as utils from "../../../utils/download";
 import QUESTION_META from "../../../providers/questionMeta";
@@ -122,6 +121,7 @@ export class SummaryPage {
   }
 
   buildAllocation(vals: IAllocation) {
+    console.log('build allocation',vals)
     return [
       {
         label: "Recommended Minimum Sample Size per Aggregation",
