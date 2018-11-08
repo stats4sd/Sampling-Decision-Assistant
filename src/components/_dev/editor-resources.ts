@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { DevActions } from "../../actions/actions";
-import { ToastController } from "ionic-angular";
+import { ToastController, AlertController } from "ionic-angular";
 import QUESTION_META from "../../providers/questionMeta";
 
 @Component({
@@ -27,7 +27,8 @@ export class DevEditorResourcesComponent {
   constructor(
     private db: AngularFirestore,
     private devActions: DevActions,
-    private toast: ToastController
+    private toast: ToastController,
+    private alertCtrl: AlertController
   ) {
     this.db
       .collection("resources")
@@ -105,7 +106,27 @@ export class DevEditorResourcesComponent {
   }
 
   deleteQuestion(i) {
-    this.liveQuestions.splice(i, 1);
+    const confirm = this.alertCtrl.create({
+      title: 'Delete question?',
+      message: 'Are you sure you want to delete this question? This cannot be undone.',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.liveQuestions.splice(i, 1);
+            
+          }
+        }
+      ]
+    });
+    confirm.present();
+    //this.liveQuestions.splice(i, 1);
   }
 
   // firstInit(){
