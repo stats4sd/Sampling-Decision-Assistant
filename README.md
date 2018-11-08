@@ -5,7 +5,7 @@
 ## Setup
 
 The project uses Ionic framework, install it via  
-`npm install -g cordova ionic`
+`yarn install -g cordova ionic`
 
 Use either nmp or yarn to install dependencies  
 `yarn install` or `npm install`
