@@ -182,7 +182,7 @@ const questionMeta: QuestionMeta[] = [
     type: "select",
     selectOptions: "One estimate, Disaggregated estimates",
     label:
-      "Are you interested in producing one estimate (a ‘headline value’) for each indicator for the whole population, or do you need to disaggregate the estimates? For example, they could be split up by geographical area or by camp, etc.",
+      "Are you interested in producing one estimate (a ‘headline value’) for each indicator for the whole population, or do you need to disaggregate the estimates? For example, they could be split up by geographical area or by camp, gender, age etc.",
     section: "At what level do you need to report these results",
     condition: "",
     labelMultiple: null
