@@ -138,7 +138,7 @@ const questionMeta: QuestionMeta[] = [
     type: "text",
     selectOptions: "",
     label:
-      "Geographical characteristics (e.g. area, setting, distance, composite)",
+      "Geographical characteristics (e.g. area, setting, distance, campsite)",
     section: "Definition of the target population and units of study",
     condition: "type:prerequisite, controlName:q3.1",
     labelMultiple: null
