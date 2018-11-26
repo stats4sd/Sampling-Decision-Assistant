@@ -25,18 +25,18 @@ const INTRO_HTML = {
   the process.`,
   2: `You will specify the indicator that will guide some of your decisions about sampling.`,
   3: `You will identify your target population and consider any additional criteria for exclusion or inclusion to
-  make it as well-defined as possible`,
+  make it as well-defined as possible.`,
   4: `You will consider the reporting requirements for the data to be collected, to use as a basis for determining
-  sampling frames and strata`,
-  5: `You will develop a sampling system to support the collection of data to meet your overall objective`,
-  6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages`
+  sampling frames and strata.`,
+  5: `You will develop a sampling system to support the collection of data to meet your overall objective.`,
+  6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages.`
 };
 const INTRO_VIDEOS = {
   1: "fLZ-Tj3dcLw",
   2: "6BizXOM3_2Y",
   3: "Y37hbzZwHC8",
   4: "iS_aL9lY-i4",
-  5: "lDFqz1CH3M0",
+  5: "v9lbkggU9lc",
   6: "8dwF0Zjz1ZY"
 };
 
