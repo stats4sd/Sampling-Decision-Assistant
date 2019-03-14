@@ -32,7 +32,7 @@ const INTRO_HTML = {
   6: `You will determine your desired sampling size and specify the number of sampling units across all sampling stages.`
 };
 const INTRO_VIDEOS = {
-  1: "fLZ-Tj3dcLw",
+  1: "WrItOI2G1cc",
   2: "6BizXOM3_2Y",
   3: "Y37hbzZwHC8",
   4: "iS_aL9lY-i4",
