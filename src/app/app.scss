@@ -12,6 +12,27 @@ $max-app-width: 768px;
 $small-screen-width: 320px;
 $medium-screen-width: 500px;
 // also applied direct to body so adjust accordingly
+// -------------------------------------------------
+// fonts
+@font-face {
+  font-family: "proxima_nova";
+  font-weight: 300;
+  font-style: normal;
+  src: url("../assets/fonts/proximanova-regular-webfont.woff2");
+  @font-face {
+    font-family: "proxima_nova";
+    font-style: semi-bold;
+    font-weight: 600;
+    src: url("../assets/fonts/proximanova-semibold-webfont.woff2");
+  }
+  @font-face {
+    font-family: "proxima_nova";
+    font-style: bold;
+    font-weight: 700;
+    src: url("../assets/fonts/proximanova-bold-webfont.woff2");
+  }
+}
+
 // --------------------------------------------------
 // header settings
 .header-logo {
@@ -258,6 +279,7 @@ ion-card {
     border: 1px solid white;
   }
 }
+
 // allow modal to take up full screen (no backdrop) whilst still fitting in max size bounds
 ion-modal.full-screen {
   .modal-wrapper {
@@ -268,6 +290,7 @@ ion-modal.full-screen {
     height: calc(100vh - 20px); //margin-top:100px;
   }
 }
+
 // when using the modal as a video popup want to limit height to fit video and make background a bit darker
 @media screen and (min-width: $max-app-width) {
   ion-modal.video-player {
@@ -293,6 +316,7 @@ ion-modal.full-screen {
     display: none;
   }
 }
+
 // used to hide modal when content needs to be viewed underneath
 .no-display {
   display: none;
