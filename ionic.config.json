@@ -1,7 +1,0 @@
-{
-  "name": "sampling-decision-assistant",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
-}
