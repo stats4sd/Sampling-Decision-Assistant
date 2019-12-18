@@ -1,0 +1,33 @@
+<h4>Review Levels</h4>
+
+<div *ngIf="reportingLevels.length>0">
+  <p>
+    Below you can see a list of all of the generated combinations of your
+    Disaggregation
+  </p>
+
+  <table style="margin-bottom:2em">
+    <tr>
+      <th *ngFor="let level of reportingLevels">{{level.name}}</th>
+    </tr>
+    <tr *ngFor="let combination of levelCombinations">
+      <td *ngFor="let val of combination">{{val}}</td>
+    </tr>
+  </table>
+
+  <note type="tip">
+    <p>
+      In step 6 the tool will guide you to determine an appropriate sample size
+      for sampling units within each of the combinations listed
+    </p>
+    <p>
+      If this number proves greater than what can reasonably be sampled you may
+      wish to modify your responses to this step
+    </p>
+  </note>
+</div>
+
+<note type="info" *ngIf="reportingLevels.length===0">
+  You have not specified any disaggregate estimate Disaggregation so you may
+  skip this step
+</note>

@@ -1,0 +1,11 @@
+.list-header {
+  color: var(--ion-color-primary);
+  font-size: 16px;
+}
+ion-list-header.list-header {
+  color: var(--ion-color-primary);
+}
+.no-relevant-message {
+  padding: 0 0 2em 16px;
+  font-weight: bold;
+}

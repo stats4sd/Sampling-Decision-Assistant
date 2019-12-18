@@ -1,0 +1,36 @@
+#treeContainer {
+  height: 100%;
+  width: 100%;
+}
+
+#treeContainerParent {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(97, 101, 103, 0.08);
+  border: 1px solid rgba(130, 148, 158, 0.4);
+}
+#treeContainer.export-mode {
+  width: 500%;
+  height: 500%;
+  overflow: auto;
+}
+
+// track color variables
+.n1 {
+  border: #2b7ce9;
+  background: #91bfdb;
+}
+.n2 {
+  border: #f1f131;
+  background: #ffffbf;
+}
+.n3 {
+  border: #e25f21;
+  background: #f0b89e;
+  .highlight {
+    background: #f5e3da;
+    border: #a33f11;
+  }
+}

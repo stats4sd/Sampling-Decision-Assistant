@@ -1,0 +1,22 @@
+.key-container {
+  margin-top: 2em;
+  border: 1px solid rgba(130, 148, 158, 0.4);
+  // background-color: rgba(97, 101, 103, 0.08);
+  width: 270px;
+}
+.key-heading {
+  font-weight: bold;
+  padding: 5px;
+}
+.shape-column {
+  width: 100px;
+}
+.text-column {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.table-row {
+  display: flex;
+}

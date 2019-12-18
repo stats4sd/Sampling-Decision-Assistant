@@ -1,0 +1,79 @@
+.build-stage {
+  min-height: 3em;
+  flex: 1;
+  min-height: 3em;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}
+.builder-container {
+  max-width: 600px;
+  margin-left: 0;
+}
+.row-headers {
+  font-weight: bold;
+  background: var(--ion-color-light-tint);
+  text-align: center;
+}
+ion-row {
+  align-items: center;
+  border-bottom: 1px solid var(--ion-color-light-tint);
+  text-align: center;
+}
+.col {
+  padding: 5px 0;
+}
+.required {
+  background-color: #fce5e3;
+  // input {}
+}
+.stage-name {
+  text-align: center;
+}
+.hover {
+  // add fade when background hover enabled (could use 'all' to apply to all transitions)
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+.hover:hover {
+  background-color: rgb(230, 247, 255);
+  font-weight: bold;
+}
+.builder-arrow-down {
+  font-size: x-large;
+}
+.reference-text {
+  padding: 0 !important;
+}
+.item {
+  background-color: unset;
+  font-size: small;
+  border-bottom: unset;
+}
+.list {
+  margin-bottom: 0;
+}
+.center {
+  input {
+    text-align: center;
+  }
+}
+
+// general review show/hide
+.review-mode > h4,
+.review-mode > p {
+  display: none;
+}
+
+.review-mode {
+  input {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  note {
+    display: none;
+  }
+}

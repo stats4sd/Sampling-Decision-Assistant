@@ -1,0 +1,30 @@
+<div class="breadcrumbs-container">
+  <div
+    class="breadcrumb"
+    *ngFor="let crumb of breadcrumbs; let last=last; let i=index; let first=first"
+    [class.last]="last"
+  >
+    <!-- first breadcrumb highlighted when no part is selected, others are highlighted if activePart equivalent to index-->
+    <span
+      *ngIf="first"
+      class="breadcrumb-name"
+      [attr.data]="activePart ? 'inactive' : 'active'"
+      (click)="goToPart(i)"
+      >{{crumb}}</span
+    >
+    <span
+      *ngIf="!first"
+      class="breadcrumb-name"
+      [attr.data]="activePart==i ? 'active' : 'inactive'"
+      (click)="goToPart(i)"
+      >{{crumb}}</span
+    >
+    <ion-icon
+      name="arrow-forward"
+      class="breadcrumb-icon"
+      color="light"
+      *ngIf="!last"
+      (click)="goToPart(i+1)"
+    ></ion-icon>
+  </div>
+</div>

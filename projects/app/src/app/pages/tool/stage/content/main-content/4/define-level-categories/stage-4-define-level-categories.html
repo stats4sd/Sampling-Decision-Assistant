@@ -1,0 +1,50 @@
+<div [ngClass]="reviewMode ? 'review-mode' : null">
+  <h4>Define Level Classifications</h4>
+
+  <p>
+    The next part of this step is to specify the number and names of
+    classifications used in each of your levels of disaggregation.
+  </p>
+  <p>
+    For example, if you wish to disaggregate by separate geographical regions,
+    you should specify the number of regions and your preferred way to denote
+    them.
+  </p>
+  <ion-card class="builder-container">
+    <ion-grid *ngIf="reportingLevels && reportingLevels.length>0">
+      <ion-row class="row-headers">
+        <ion-col>Disaggregation</ion-col>
+        <ion-col style="max-width: 110px">Number of Classifications</ion-col>
+        <ion-col col class="left">Names of Classifications</ion-col>
+      </ion-row>
+      <ion-row
+        *ngFor="let level of reportingLevels; let i=index; let last=last"
+      >
+        <ion-col>{{level.name}}</ion-col>
+        <ion-col class="center" style="max-width: 110px" class="required">
+          <ion-input
+            type="number"
+            (ionChange)="setClassificationsNumber(level,i)"
+            [(ngModel)]="level.classifications.total"
+          ></ion-input>
+        </ion-col>
+        <ion-col>
+          <div *ngFor="let name of level.classifications.names; let j=index">
+            <ion-item>
+              <ion-input
+                [id]="'nameInput-'+i+'-'+j"
+                [placeholder]="'group '+(j+1)"
+                [value]="name"
+              ></ion-input>
+            </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <note type="info" *ngIf="!reportingLevels || reportingLevels.length==0">
+    You have not specified any disaggregate estimate Disaggregation so you may
+    skip this step
+  </note>
+</div>

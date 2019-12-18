@@ -4,15 +4,12 @@
 
 ## Setup
 
-The project uses Ionic framework, install it via  
-`yarn global add cordova ionic`
-
 Use either nmp or yarn to install dependencies  
 `yarn install` or `npm install`
 
 ### Serving locally
 
-`ionic serve`
+`npm run start`
 
 ### Deploying remotely
 
@@ -40,11 +37,6 @@ External package vis.js is used for tree diagrams. Due to hammer.js conflicts it
 
 Currently only installed to show images from roadmap. Can remove alongside font awesome if not required in future.
 (font awesome loaded from index.html with files in assets/js/fontawesome)
-
-### viewing inline templates
-
-Some components are defined in a single .ts file. If editing, to view the html with proper markup try an extension
-such as https://github.com/Microsoft/typescript-lit-html-plugin for vscode
 
 ## Docs
 

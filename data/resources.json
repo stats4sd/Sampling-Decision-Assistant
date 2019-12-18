@@ -1,0 +1,304 @@
+{
+  "stage1Resources": {
+    "questions": {
+      "Q6": {
+        "youtubeID": "rxv_sB-wOkY",
+        "audio": "https://firebasestorage.googleapis.com/v0/b/unhcr-sampling-assistant.appspot.com/o/Resources%2F1%2FQ6.mp3?alt=media&token=92111531-9151-45b4-8720-aa6ad63a3709",
+        "relevant": ["q1.2"],
+        "tags": ["estimation"],
+        "_key": "Q6",
+        "q": "Are there any cases when we don’t need a representative sample?",
+        "video": "https://youtu.be/rxv_sB-wOkY",
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">One obvious case is when the population of interest is small, and we are able to get information from each element of the population. In these cases, a census is possible and it would be better, and probably not much more difficult or expensive, than a representative sample.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">In general, a representative sample would be more desirable than a non-representative sample when the objective is to make inferences about the population. However, in some cases it is not possible to go through the process of getting a representative sample and we need to use non-representative samples.&nbsp;</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">For example: when the population of interest cannot be properly identified or found. This may happen when there is an intrinsic interest from the people in the study population not to be found. For example, when they want to avoid negative consequences such as imprisonment or deportation, or when the subject of interest is legally or morally considered undesirable.&nbsp; In these cases we may need to use ways to get to elements of the population of interest that are based on networks of contacts using methods like snow ball sampling or Respondent Driven Sampling, which attempts to improve the results from snow ball sampling using a mathematical model that weights the sample to compensate for the fact that we are using a non-representative sample.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">Some common methods that yield non-representative samples are: accessibility sampling and quota sampling. One would need a strong justification before using them to make inferences and the findings can be regarded as disputable. People often use them because these methods make life easier during the field operations, but the issues of bias and the impossibility to calculate margins of errors, are serious drawbacks.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>"
+      },
+      "Q5": {
+        "relevant": ["q1.2"],
+        "tags": ["estimation"],
+        "_key": "Q5",
+        "video": "https://youtu.be/OGqLhgVH7cE",
+        "q": "When do you need a representative sample?",
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">A representative sample is needed when the results are going to be used to make statements about the overall population. In those cases, it is important to minimise the sources of bias, and to be able to say what is the value of estimate of interest, in other words, what is the margin of error in the estimation. Representative, probability-based samples, allow the estimation of the characteristic of interest and to establish the margin of error.&nbsp;</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">The contrast is with samples that cannot be said to be representative, and that provide reliable information only about the elements that are included in the sample. In practice, the same arithmetic operations that are carried out on the data from a representative sample can be carried out using the data from a non-representative sample. The difference is in whether we can use the resulting estimate to make reliable inferences. The risk of making inferences from non-representative samples is that our estimates may be subject to unknown biases and we have no way to quantify the margins of error. The latter is due to the fact that statistical theory does not apply to non-representative samples. However, the use of non-representative samples is sometimes necessary when it is impossible to draw a representative sample. In those situations they are better than no information at all.</p>",
+        "youtubeID": "OGqLhgVH7cE",
+        "audio": "https://firebasestorage.googleapis.com/v0/b/unhcr-sampling-assistant.appspot.com/o/Resources%2F1%2FQ5.mp3?alt=media&token=bee7facb-37b7-4b5c-b7b1-89a18080d443"
+      },
+      "Q2": {
+        "relevant": ["q1.1"],
+        "tags": ["estimation"],
+        "_key": "Q2",
+        "video": "https://youtu.be/PsdYqgfQEAM",
+        "q": "Where are baseline versus end-line comparisons in this distinction?",
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">Baselines and endlines require establishing the values of a set of indicators in a population at two particular points in time: at the beginning and at the end of a process. Often these characterisations require a process of sampling at each of those points. It makes sense to develop a good sampling design for a baseline so that efficient estimates are possible. Baseline and end-line designs should, whenever possible, have as similar sampling designs as possible so as to allow better comparisons.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">Sometimes endline and baseline comparisons also involve the study of intervention and control sites. In those cases, there are issues about how realistic the control or comparison sites may be, but if we can assume that the “control subset” of the population provides a good countrefactual, then a good sampling design would be of benefit to the characterisation of the intervened and control populations – both at baseline and endline. This tool is intended to help users design sampling processes that can be useful in those situations.</p>",
+        "youtubeID": "PsdYqgfQEAM",
+        "audio": "https://firebasestorage.googleapis.com/v0/b/unhcr-sampling-assistant.appspot.com/o/Resources%2F1%2FQ2.mp3?alt=media&token=1a07c91e-0643-402c-a67a-5535abd03cbe"
+      },
+      "Q1": {
+        "youtubeID": "akco-dy3dSA",
+        "audio": "https://firebasestorage.googleapis.com/v0/b/unhcr-sampling-assistant.appspot.com/o/Resources%2F1%2FQ1.mp3?alt=media&token=d5cae61f-19cf-4064-9794-507154132e70",
+        "relevant": ["q1.1"],
+        "tags": ["estimation"],
+        "_key": "Q1",
+        "q": "Can you explain the difference between studies that deal with estimation of population characteristics and studies to compare interventions?",
+        "video": "https://youtu.be/akco-dy3dSA",
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">In studies that deal with estimation of population characteristics, we are interested in\nfinding out something about the population as it is. We do not intervene to\nchange the conditions of any of the members of the population for the purposes\nof the study.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">In these cases we need to decide how to take samples from the population, and the aim of\nthe design (that is the set of decisions that are made) is to &nbsp;estimate the value and variability of\nindicators of interest. Typical examples of this are the profiling exercises\nthat are carried out on refugee or internally displaced populations. In these\ncases the design principles that apply are those related to sampling methods.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">Studies that compare interventions, intend to establish whether there are differences\nin the outcomes of one or more interventions. One could also say that the\nobjective is to measure the extent to which any of the interventions perfoms\nbetter.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">For example, we may want to establish whether the amount of firewood consumed by\nrefugee households is reduced when an improved model of cooker is introduced.\nIn such case, we would deliberately change the type of cooker that some\nhouseholds use by introducing improved cookers (this will be our intervention),\nwith the specific objective of comparing their fuel performance against that of\ntraditional cookers. This leads to designs where each treatment is assigned to\na subset of the households in such a manner that we maximise the ability of the\nstudy to compare cooker performance. This comparability is enhanced by\ncontrolling who and how a household receives a particular treatment. In these\ncases, the design principles that apply are those of experimental design.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">In practical field conditions we often end up designing quasi-experiments, that is\nexperiments that are conducted under conditions when controlling all undesired\ninfluencing factors is not always possible. Quasi-experiments often use\nprinciples of experimental design and principles of sampling.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">This tool focuses on how to develop sampling designs to characterise populations.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">Some of its contents may be useful when designing quasi-experiments, but it is not\noptimised for that purpose. The tool is not intended to support the design of\nexperiments.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\"><o:p></o:p></p>"
+      },
+      "Q8": {
+        "audio": null,
+        "relevant": ["q1.3"],
+        "tags": ["estimation"],
+        "_key": "Q8",
+        "q": "Can you give me examples about how to best formulate the main objectives for the purposes of designing a sampling scheme?",
+        "video": null,
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">When formulating objectives that will help in the process of designing a sampling scheme, bear in mind that you need to be as specific as possible in relation to:</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">1.<span style=\"white-space:pre\">\t</span>Establishing clear boundaries in time, space and other characteristics of the population of interest</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">2.<span style=\"white-space:pre\">\t</span>Defining in detail the set of indicators for which the sampling study is designed</p><ol>\n        </ol>"
+      },
+      "Q3": {
+        "youtubeID": "RQbyPouT3tE",
+        "audio": "https://firebasestorage.googleapis.com/v0/b/unhcr-sampling-assistant.appspot.com/o/Resources%2F1%2FQ3.mp3?alt=media&token=5c10dc20-3f26-42dd-8f0e-c15057538e36",
+        "relevant": ["q1.2"],
+        "tags": ["estimation"],
+        "_key": "Q3",
+        "q": "What is a representative sample?",
+        "video": "https://youtu.be/RQbyPouT3tE",
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">It is a sample that can be used to make reliable statements about the whole population. That means that the process of selecting the sample must have safeguards that ensure that we are able to:</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">•<span style=\"white-space:pre\">\t</span>Control and minimise potential biases</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">•<span style=\"white-space:pre\">\t</span>Capture the variability of the population as well as possible</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">To achieve this the sample needs to fulfil the following conditions:</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">•<span style=\"white-space:pre\">\t</span>First: the sampling process must have a component of random selection, particularly at the level of the study units that are the centre of interest. For example, probability based sampling at the level of households if the main interest of the study has to do with indicators of food security at household level. A probability based sampling process is the best way to address issues of bias in the selection of a sample. By the way, many people use the expression: “statistical sampling” as a short hand for probability based sampling.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">•<span style=\"white-space:pre\">\t</span>Secondly: the sample size should be large enough to give us a good picture of the variability of the population. A sample of an appropriate size should be able to describe the variability of a population. The most common question asked when designing a sampling study is “what sample size do I need?”, this tool will help you gathering information that you need to get to a point where this question can begin to be answered. Please follow the steps suggested for designing your sampling process. You will soon get to the section about deciding the sample size.</p><p class=\"MsoNormal\" style=\"margin-top:6.0pt\">Strictly speaking we should talk about representative estimates rather than representative samples. That is, sample estimates that are unbiased and for which we can calculate margins of error. A sample that has the characteristics mentioned above would give the minimum conditions to get representative estimates. There is however one more thing that would be required in the estimation process. It should take into account weights that need to be attached to each observation in our sample. Whether we need to use weights in our estimation process and how those weights are derived, depends on how the sample has been drawn. This tool will help you keeping a record of the information that will be useful to inform how to carry out the estimation process and how to derive weights. Derivation of weights is rarely an easy process and we advise consulting an experienced statistician for this purpose. When doing so, the information you will systematise in this tool will be particularly useful.</p>"
+      },
+      "Q7": {
+        "a": "<p class=\"MsoNormal\" style=\"margin-top:6.0pt\">The main limitations are that it is difficult to ensure and demonstrate that the\nresults are not biased and that there is no reliable way to estimate the margin\nof error of the estimates. Often people ignore this and take results from\nnon-representative samples with the same level of trust as if they came from\nrepresentative samples. The problem is that such information carries an unknown\nlevel of risk and may lead to ill informed decisions.<o:p></o:p></p>",
+        "youtubeID": "DqYrBzgSPAs",
+        "audio": "https://firebasestorage.googleapis.com/v0/b/unhcr-sampling-assistant.appspot.com/o/Resources%2F1%2FQ7.mp3?alt=media&token=3a37b0a0-2019-478d-a4d9-4c028184be19",
+        "relevant": ["q1.2"],
+        "tags": ["estimation"],
+        "_key": "Q7",
+        "q": "What are the limitations of results that come from a non-representative sample?",
+        "video": "https://youtu.be/DqYrBzgSPAs"
+      }
+    }
+  },
+  "stage2Resources": {
+    "questions": {
+      "Q1": {
+        "q": "How do you suggest I choose this indicator? I am equally interested in several of indicators and is very difficult to select one.",
+        "video": "",
+        "a": "This is a common problem when designing sampling processes. To be able to use statistical theory for sample size calculations, we normally select one important estimate<a href=\"http://\" class=\"\">&nbsp;</a>in the study. We all know that in practice a study generates multiple indicators and profiles of populations, but it would be very difficult to optimise the sampling design for each estimate. Because of that one needs to choose one indicator that will guide the key decisions on for sampling. You may want to choose the indicator that is more important in your case for decision making purposes, alternatively the you could consider the indicator that has higher variability in your population. The latter will lead to a sample sizes that will yield good precision for all estimates, but also to a larger sample size!",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q1"
+      },
+      "Q3": {
+        "q": "Where can I find good definitions of standardised indicators?",
+        "video": "",
+        "a": "<div>List of websites or documents to be requested from UNHCR. See: <a href=\"https://unhcr.github.io/Integrated-framework-household-survey/\">https://unhcr.github.io/Integrated-framework-household-survey/</a></div><div>Still incomplete but I think this is what they are aiming at and we are contributing to.</div>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q3"
+      },
+      "Q7": {
+        "a": "<div>The margin of error is a measure of the precision of the estimate: the larger the margin of error, the less precise the estimate is.</div><div><br></div><div>The fact that the estimate is computed from a sample (one sample among all possible samples) means that if the sample was different, the estimate for each sample would be different as well. Hopefully the differences would not be too big, but they will be different. And, just because every sample would yield a different estimate, all these estimates are also different from the true (and unknown) population value.&nbsp;</div><div><br></div><div>The margin of error quantifies these differences. For example, if the indicator’s estimate computed from the sample is, say, 51.7%, and the margin of error is 3%, for a confidence of 95% this means that we are 95% confident that the true population value would be in the range 51.7% ± 3%, so between 48.7% and 54.7%.</div><div><br></div><div>The margin of error has implications in the sample size: the smaller the margin of error that is required (and, thus, the higher the precision), the larger the sample needs to be.</div>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q7",
+        "q": "What is the Margin of error?",
+        "video": ""
+      },
+      "Q6": {
+        "audio": "",
+        "relevant": [],
+        "_key": "Q6",
+        "q": "What is the standard deviation and why do I need to provide an initial value for the indicator I would like to estimate?",
+        "video": "",
+        "a": "<div>The standard deviation is a measure of the variability (spread) in the data.&nbsp;</div><div><br></div><div>Example: in a survey, last year’s household income is asked. For each household there will be a value for the income, and they will be different, some smaller, some in the middle, some large. The standard deviation is a measure of such spread.</div><div><br></div><div>You need to have already collected data, or a good idea of the spread it will have when collected to estimate the standard deviation. A good approximation is to divide the range (Maximum - Minimum)/6.&nbsp;</div><div><br></div><div>A good estimate for the standard deviation will improve the sample size determination.</div>"
+      },
+      "Q4": {
+        "a": "This is related to the sample size determination. The optimum sample size required to estimate an indicator with a given precision is, possibly, different to the sample size required to estimate a second indicator with the same precision. Therefore, despite the fact that usually several indicators are of interest, the sample size will be defined for the “main” indicator, and all the others will be estimated with a different precision.",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q4",
+        "q": "Why do I need to identify a single indicator when I am interested in several ones?",
+        "video": ""
+      },
+      "Q5": {
+        "relevant": [],
+        "_key": "Q5",
+        "q": "Why do I need to provide an initial estimate of the proportion I would like to estimate?",
+        "video": "",
+        "a": "Unfortunately, in order to determine the optimum sample size, some information on the indicators is required. The more accurate this information is, the better the sample size will be determined. So, for example, to estimate with a given precision an indicator for which the true (but unknown) population value is close to 50% requires a larger sample size than to estimate an indicator close to 90%. This is the reason why, in case of no information available to provide this initial guess, using 0.5 (50%) as a guess is a sensible option, as it will provide a sample size that fulfils the precision requirements for all possible values of the indicator.",
+        "audio": ""
+      },
+      "Q2": {
+        "q": "Should I use standard indicators or can I make up my own?",
+        "video": "",
+        "a": "Try to avoid inventing your own indicators and use indicators that have already been used for similar studies. You can find a set of commonly used indicators in<a href=\"https://unhcr.github.io/Integrated-framework-household-survey\"> https://unhcr.github.io/Integrated-framework-household-survey</a>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q2"
+      }
+    }
+  },
+  "stage3Resources": {
+    "questions": {
+      "Q2": {
+        "q": "What is a study unit?",
+        "video": "",
+        "a": "(to be included)",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q2"
+      },
+      "Q3": {
+        "q": "Can you provide some examples of definitions for target populations?",
+        "video": "",
+        "a": "(to be included)",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q3"
+      }
+    }
+  },
+  "stage4Resources": {
+    "questions": {
+      "Q1": {
+        "audio": "",
+        "relevant": [],
+        "_key": "Q1",
+        "q": "What are disaggregated estimates?",
+        "video": "",
+        "a": "<div>To aggregate data is to compile and summarize data; to disaggregate data is to break down aggregated data into component parts or smaller units of data.</div><div><br></div><div>We can be interested in reporting the results for specific subsets of our population. If, for example, the indicator of interest is the average of last year’s personal income, the non-disaggregated estimate would be a single figure that includes the whole sample. Depending on what data has been collected, we can obtain disaggregated estimates by different variables, for example:</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>Sex of the respondent, and we would obtain the average income for male and for female respondents,</div><div>-<span style=\"white-space:pre\">\t</span>Age-group of the respondent, and we could obtain the average income for, for example, under 20, 20-40 and 40+ respondents</div><div>-<span style=\"white-space:pre\">\t</span>Geographic area of the respondent: we could obtain the average income for respondents coming from Region 1, Region 2 and so forth.</div><div><br></div><div>Disaggregation can be combined, and, therefore, we could get the average income for male respondents in Region 1, in Region 2, …., and for female respondents in Region 1, in Region 2, …</div><div>When this disaggregation happens at a high level in the sampling design, often we refer to each disaggregated group as a “recommendation domain”. Deciding the recommendation domains you need is crucial for your sampling design process.</div><div><br></div>"
+      },
+      "Q3": {
+        "relevant": [],
+        "_key": "Q3",
+        "q": "Reporting, at what level?",
+        "video": "",
+        "a": "<div>The level of reporting is closely related to data disaggregation. Reporting aggregated data means reporting for the population under study as a whole, and a single figure will be provided for each indicator’s estimate.&nbsp; &nbsp;</div><div><br></div><div>Reporting disaggregated estimates means breaking down the sample into subsamples by some category (Geographic area, sex of the respondent, age of the respondent, Nationality of the respondent, ….). A figure for each indicator’s estimate will be provided for each category.</div><div><br></div><div>Reporting at a disaggregated level means that the sample size requirements have to be met for each category, multiplying the overall sample size by as many categories is the data disaggregated to.</div><div><br></div>",
+        "audio": ""
+      },
+      "Q2": {
+        "relevant": [],
+        "_key": "Q2",
+        "q": "What are the advantages and disadvantages of disaggregated estimates?",
+        "video": "",
+        "a": "<div>Disaggregating an estimate allows for a better understanding of the results. Generally speaking, data is disaggregated for the purpose of revealing underlying trends, patterns, or insights that would not be observable in aggregated data sets, such as disparities across different categories of refugees, for example.</div><div>However, disaggregation implies splitting the sample in subsamples, one for each category. This has two consequences:</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>Disaggregated results will represent smaller sample sizes and lower precision of the estimates, or a significant increase in the overall sample size</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>The sampling design should aim for some level of balance, i.e. subsamples of similar size across the different categories</div><div><br></div>",
+        "audio": ""
+      }
+    }
+  },
+  "stage5Resources": {
+    "questions": {
+      "Q2": {
+        "q": "Single-stage or multi-stage sampling plans?",
+        "video": "",
+        "a": "<div>A single-stage sampling plan consist in drawing the sample directly from the complete sampling frame. In order to make sure that the drawn sample is representative, Simple Random Sampling must be used.&nbsp;</div><div>In a two-stage random sampling plan, the population is partitioned into primary units, say village, and each primary unit is composed by secondary units, say households, (the final sampling units). In the first stage, some primary units are selected using some suitable procedure, in the second stage sampling units are drawn from the selected primary units.&nbsp;</div><div><br></div><div>Example: let’s suppose that the population is composed by all refugees in a particular country, and to make it simpler, that all of them are in refugee camps. In a one-stage sampling plan, a sample of refugees is drawn from the complete sampling frame, the list including all the refugees in the country. In a two-stage sampling design, in the first stage a random sample of camps (primary units) would be selected, and in a second stage, refugees (secondary units = sampling units) would be randomly selected from the camps selected in the first stage.&nbsp;</div><div>In the first stage, a sampling frame of primary units (camps in the example) is needed, while in the second stage, a sampling frame of secondary units (refugees in the example) for each selected camp will be required. This procedure:&nbsp;</div><div><br></div><div>a-<span style=\"white-space:pre\">\t</span>reduces the resources needed to obtain the sampling frame. In the example, the list of refugees (sampling frame) for the not-selected camps won’t be needed.</div><div><br></div><div>b-<span style=\"white-space:pre\">\t</span>Is more resource-effective, as avoids visiting a camp just for one (or very few) sampling unit.&nbsp;</div><div>However, the two-stage sampling plan requires a larger sample size than the Simple Random Sampling if the same precision in the estimate is to be achieved.</div><div><br></div><div>This process can be generalised to more than two-stages to have a multi-stage sampling plan. In all multi-stage sampling plans, the final sampling units are drawn in the last stage.</div><div><br></div><div>The multi-stage plans, including the two-stage, are sometimes called cluster sampling designs.</div><div><br></div>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q2"
+      },
+      "Q1": {
+        "audio": "",
+        "relevant": [],
+        "_key": "Q1",
+        "q": "What is a sampling frame?",
+        "video": "",
+        "a": "<div>The sampling frame is the list of all sampling units. If, for example, the sampling unit is a refugee in a camp, the sampling frame will be the list of all refugees in this camp.&nbsp;&nbsp;</div><div><br></div><div>Without a sampling frame it is not possible to obtain, via random methods, a representative sample.</div><div><br></div><div>However, a complete sampling frame is not always available at the planning stage. Is that is the case, then the use multi-stage sampling designs may be necessary.</div><div><br></div>"
+      },
+      "Q8": {
+        "relevant": [],
+        "_key": "Q8",
+        "q": "Once everything in the sampling plan is decided, how will I actually get my sample?",
+        "video": "",
+        "a": "<div>If your sampling plan is single-stage, extract the sample from the sampling list using SRS.</div><div><br></div><div>If your sampling plan is multi-stage, the process of selecting the sampling units may be different depending on how many and what stages it has. Let’s suppose a 3-stage sampling plan, in which the first stage is stratification (due to reporting level), the second stage is the selection of clusters and the third the drawing of individuals from selected clusters. This procedure is easily generalisable if the plan is slightly different.</div><div><br></div><div>Stage 1 (stratification): you will probably sample from all your strata, so the only thing it has to be done is clearly define the boundaries of each stratum. An easy example is if you want to produce estimates for 3 different camps. The camp, will be a recommendation domain, they are clearly delimited, and the three camps are included in the sample by default.</div><div><br></div><div>Stage 2 (Clustering): you will need a sampling frame of all clusters for each stratum. Using the selected method of random extraction (SRS or PPS), select a sample of clusters for each stratum.&nbsp;</div><div><br></div><div>For example, you may split the camps into blocks, so that it is easy to create sampling frames of households within each block. A list of all the blocks in each camp will need to be produced, a number of blocks selected from the camp, using either SRS or PPS.</div><div><br></div><div>Stage 3: (Sampling units): you will need a sampling frame of sampling units (individuals, households, …) for each selected cluster (you won’t need it for the non-selected clusters!). Using the selected method of random selection (SRS or PPS), select a sample of units for each cluster. In the example, in each block, a list of all households in the sampled blocks will need to be created and the households for the sample will be selected from that list using often SRS.</div><div><br></div>",
+        "audio": ""
+      },
+      "Q9": {
+        "youtubeID": "RXWuQkWcjPk",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q9",
+        "q": "What are sampling weights?",
+        "video": "RXWuQkWcjPk",
+        "a": "<p class=\"MsoNormal\">When estimating the value of a characteristic of a population, the sample you take might not proportionally represent different divisions within that population. If that is the case, this over- or under-representation would need to be corrected for if you calculate an estimate for the overall population. This is done using sampling weights.</p><p class=\"MsoNormal\">For example:</p><p class=\"MsoNormal\">Imagine our population of interest is all of the refugee households in a large camp. We know there are ‘old arrival’ households – that is, they arrived two or more years ago – and there are households that are ‘new arrivals’, who have been in the camp for less than two years.&nbsp;</p><p class=\"MsoNormal\">In the camp, there are 15200 households in total. Out of those, 3200 are old arrivals and 12000 are new arrivals.&nbsp;</p><p class=\"MsoNormal\">A sample of 800 households has been selected, with 400 old arrival households, and 400 new arrival households. That means that half of our sample is old arrival households, even though the proportion of old arrival households in the camp is actually much smaller - just over a fifth of the total population.&nbsp;&nbsp;</p><p class=\"MsoNormal\">Why did we take equally sized samples from differently sized populations, then? One reason is that it ensures our estimates for new and old arrivals have similar margins of error.&nbsp;</p><p class=\"MsoNormal\">This is useful for our disaggregated estimates, but it does make things more complicated if we want to calculate an overall estimate for all the households in the camp. If we do this with the estimates as they are, new arrivals will be under-represented and old arrivals will be over-represented. We can correct this using sampling weights.</p><p class=\"MsoNormal\">You can think about sampling weights as follows:</p><p class=\"MsoNormal\">In the population, we have 3200 old arrivals, and our sample has 400 old arrivals. Each old arrival household in the sample represents 3200/400=8 households in the population. Therefore, the weight for each sampled old arrival household is 8.</p><p class=\"MsoNormal\">We have 12000 new arrivals in our population, and our sample has 400 new arrivals. Each new arrival household in the sample represents 12000/400=30 households in the population. Therefore, the weight for each sampled new arrival household is 30.&nbsp;</p><p class=\"MsoNormal\">Most sampling schemes are more complex than this example, and this can make the calculation of weights complicated. In general, it would be better to seek advice from a sampling statistician to derive sampling weights. You need to keep the correct information so it is available in order for this calculation to be carried out.</p>"
+      },
+      "Q10": {
+        "q": "What information is needed to derive sampling weights?",
+        "video": "",
+        "a": "<p>For each stage in your sampling scheme, you will be creating or acquiring a list of all the sampling units, known as a sampling frame. As you develop these, you must keep the details of the number of sampling units in each stage and strata, and the size of every sampling unit. The sizes at every stage must be in the same units, which should be the final sampling unit.</p><p>&nbsp;</p><p>In our example, the sampling units are households. We would need to know:</p><table>\n<tbody>\n<tr>\n<td width=\"200\">\n<p>Strata: time of arrival</p>\n</td>\n<td width=\"200\">\n<p>Population (households)</p>\n</td>\n<td width=\"200\">\n<p>Sample (households)</p>\n</td>\n</tr>\n<tr>\n<td width=\"200\">\n<p>New arrivals</p>\n</td>\n<td width=\"200\">\n<p>12000</p>\n</td>\n<td width=\"200\">\n<p>400</p>\n</td>\n</tr>\n<tr>\n<td width=\"200\">\n<p>Old arrivals</p>\n</td>\n<td width=\"200\">\n<p>3200</p>\n</td>\n<td width=\"200\">\n<p>400</p>\n</td>\n</tr>\n</tbody>\n</table><p>&nbsp;</p><p>Perhaps this sample is part of a larger, multi stage sampling scheme. In that case, similar information would need to be given at all the other stages, also given as a number of households.</p><p>It might sometimes be impossible to have complete information about the size of all the sampling units in some sampling stages. If that is the case, then assumptions have to be made to derive weights.</p><p>Another point to be aware of is that if weights are calculated at the design stage, they will need to be adjusted after the field work is carried out, as the final units that end up in the sample will be different from what was originally planned.</p><p>In any case, remember that it is very important to keep all the information that is collected for the construction of sampling frames, and store it together with the sampling design description.</p><div><div><div id=\"_com_1\" class=\"msocomtxt\" language=\"JavaScript\">\n\n<!--[if !supportAnnotations]--></div>\n\n<!--[endif]--></div>\n\n</div>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q10"
+      },
+      "Q3": {
+        "_key": "Q3",
+        "q": "Is a complete sampling frame always needed?",
+        "video": "",
+        "a": "<div>No, a complete sampling frame (with all the sampling units) not always is required.&nbsp;</div><div><br></div><div>If a complete sample frame is available, both single-stage and multiple-stage sampling plans are possible. If it is not available, a multi-stage plan is recommended, as building the required sampling frames on a stage by stage basis will require less resources.</div><div><br></div><div>In the first stage of a multi-stage sampling plan a sampling frame of primary units will be needed. This is usually easier to get that the complete sampling frame of all final sampling units in the population of interest. In the last stage, the sampling frame of final sampling unigs required will include the selected primary units.</div><div><br></div>",
+        "audio": "",
+        "relevant": []
+      },
+      "Q7": {
+        "q": "What kind of sampling, Simple Random or Proportional to Population size?",
+        "video": "",
+        "a": "<div>Once we have to randomly extract the units at any given stage, we have, basically, two different options, extract them purely by chance (Simple Random Sampling, SRS) or to select the units proportional to their size (PPS).</div><div><br></div><div>Example: let’s suppose a multi-stage design. In a given stage clusters have to be randomly selected and within each selected cluster a number of individuals will be randomly selected in the next stage.&nbsp;</div><div><br></div><div>The clusters can be selected either by SRS or PPS:</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>SRS: from the complete sampling frame of clusters, the clusters are selected completely by chance, all the clusters have the same probability to be selected</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>PPS: the probability of selection for a given cluster is proportional the number of final sampling units within the cluster. Suppose that the number of final sampling units in the 2 clusters are equal, the probability of each cluster to be selected will be the same for both clusters. However, if one cluster has double the number of final sampling units than the other, the probability of selecting the first cluster into the sample should be twice as big as that of selecting the second cluster. For example, if the number of refugees in cluster A is twice as large than the number of refugees in cluster B, the probability of cluster A being selected will be twice as much as the probability of cluster B being selected.</div><div><br></div>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q7"
+      },
+      "Q6": {
+        "relevant": [],
+        "_key": "Q6",
+        "q": "How many clusters? How many units per cluster? ",
+        "video": "",
+        "a": "<div>A useful concept to understand is that the relationship between the number of clusters and the number of sampling units within a cluster. If the values of indicator of interest are similar for the final sampling units in the same cluster then increasing the number of sampling units within the cluster will not help much in informing us.&nbsp;</div><div><br></div><div>For example, “distance to a source of clean water” where most people who live in a similar area will have similar distances to their source of clean water, specially if it is a shared source. Asking more people from the same village for far the well is, will only tell us how far the same well is! In those cases, it would be better to have more clusters and fewer sampling units within a cluster.&nbsp;</div><div><br></div><div>The decision on how many sampling units within a cluster should be selected are affected by the “intra-cluster correlation” of the indicator of interest and you should bear it in mind. Other factors such as efficiency of field work are also important. Finding a sensible compromise between these contrasting issues is very much part of designing your sampling scheme.</div>",
+        "audio": ""
+      },
+      "Q4": {
+        "audio": "",
+        "relevant": [],
+        "_key": "Q4",
+        "q": "What are the sampling stages of your sampling plan?",
+        "video": "",
+        "a": "<div>The last level in a multi-stage sampling plan will always be the final sampling units. If the unit we are interested on are individuals, the last level will draw a sample of individuals, if the sampling unit is the household, the last level will draw a sample of households, and so forth.</div><div><br></div><div>The next level up will be the cluster. The clusters will usually be villages or refugee camps, a unit within which is relatively straightforward to obtain the sampling frame. A sample of clusters will be randomly selected from the complete list of clusters.</div><div><br></div><div>The top level will be obtained from the disaggregation level at reporting. This level is known as strata: the different strata are not overlapping and together they comprise the whole population.</div><div><br></div>"
+      },
+      "Q5": {
+        "audio": "",
+        "relevant": [],
+        "_key": "Q5",
+        "q": "What are the implications of stratification? And clustering?",
+        "video": "",
+        "a": "<div>We already know that one way of increasing the precision of an estimate is to increase the sample size. Stratification is sometimes use to increase estimation precision by using information we already have about the population by creating strata: groups of sampling units that are similar to each other, and as different as possible from other groups. Stratification does not imply any departure from the principle of probability selection. All it means is that, before any selection takes place, the population is divided into a number of strata, then a random sample is drawn from each stratum.&nbsp; &nbsp;&nbsp;</div><div><br></div><div>Clustering, however, decreases the precision of estimates. The way clustering affects the precision of the estimates depends on:</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>The homogeneity/heterogeneity of the sample within clusters. The more diverse a cluster is, i.e. the more a cluster resembles the whole population, the least precision will be lost by clustering. However if the elements within a cluster are fairly similar among themselves, and do not resemble the variability of the overall population, the most precision will be lost.</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>With respect to how many clusters to select: in general, selecting a large number of small clusters is better -other things being equal- than a small number of large clusters.</div><div><br></div>"
+      }
+    }
+  },
+  "stage6Resources": {
+    "questions": {
+      "Q2": {
+        "_key": "Q2",
+        "q": "Sample size, what do I need?",
+        "video": "",
+        "a": "<div>Determining the minimum sample size for one indicator and a single-stage sampling plan with SRS selection of units is easy … provided that some information on the indicator is already known, before data collection starts. This required information is either an initial guess of the proportion (if the indicator is a percentage) or a measure of the spread of the data called standard deviation (if the indicator is a numeric variable).&nbsp;</div><div>In a more complex design, the information required to determine the optimum sample size is:</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>If the indicator is a percentage, an initial guess of such percentage. If there is no information of its value whatsoever, use 50%. The closer to 50%, the larger the sample size required, for a given precision. As the value moves out of 50% in either direction, the sample size decreases.&nbsp;</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>If the indicator is a numeric variable, an initial guess of its standard deviation. A good guess would be to divide the range (maximum-minimum)/6. The larger the standard deviation, the larger the sample size required. (Note that the standard deviation has the same units as the indicator)</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>The desired margin of error, as a measure of precision of the estimate. The larger the margin of error, the smaller the required sample size.</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>Confidence interval: this vale is usually set to 0.95 (95%). Don’t change it unless you understand the consequences of doing so.</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>Clustering level (in statistical terms, intra-cluster correlation): this is a measure of homogeneity within the selected clusters: the more similar the sampling units (individuals, household, … ) within the cluster, the higher the intra-cluster correlation (rho), and the larger the sample size needs to be. One out of four possible levels has to be selected.</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>Number of samples per PSU. PSU = Primary Sampling Unit, i.e. the cluster. How many units (individuals, households, …) will be selected in each selected cluster. As a general rule, selecting a large number of small clusters is better -other things being equal- in terms of precision than a small number of large clusters. But generally, this requires more resources.</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>Expected population size: this has a small affect on the sample size, provided that the population size is much larger than the sample size.</div><div><br></div>",
+        "audio": "",
+        "relevant": []
+      },
+      "Q1": {
+        "q": "Sample size, why it matters?",
+        "video": "",
+        "a": "<div>The sample size affects the precision of the computed estimates. In general, the larger the sample size, the more precise the estimates will be. Of course, the larger the sample size, the more resources will be needed to collect the data.&nbsp;</div><div><br></div><div>Therefore, the sample size determination takes into account the balance between costs and precision. The figure provided is the minimum sample size that will fulfil the precision requirements, and takes into account:</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span> Information on the data to be collected. Sometimes, this information will be unknown</div><div><br></div><div>-<span style=\"white-space:pre\">\t</span>The sampling design</div>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q1"
+      },
+      "Q3": {
+        "_key": "Q3",
+        "q": "How are the sample sizes calculated",
+        "video": "",
+        "a": "<div>The formula used to calculate sample sizes is as follows:</div><img src='assets/img/tool-formula.png'>",
+        "audio": "",
+        "relevant": ["q6.1"]
+      },
+      "Q4": {
+        "q": "What do each of the calculator variables mean?",
+        "video": "",
+        "a": "<p><strong>Margin of Error:</strong></p> <p>This is a measure of how much random variation an estimate will be subject to. When sampling a population, a certain amount of randomness is inevitable due to the fact that you aren’t surveying the entire population.</p> <p>Margin of error is given as +/- a value. You can think of this as how much difference you could expect to see in the results if you repeated the survey with another random sample of the same design. If, for example, we get an estimate of the value of an indicator that is 75% and we know the margin of error is +/- 3%, we can assume* that the true value for the whole population is somewhere within this range.</p> <p>*The margin of error is linked to the confidence level, which is the probability that the assumption we mention in the example above is correct.</p> <p>The larger the margin of error, the less precise we can assume our estimate to be. Increasing the sample size reduces the margin of error.&nbsp;</p> <p>&nbsp;</p> <p><strong>Clustering level: </strong></p> <p>If you have sampled your final sampling units from within discrete groups (known as clusters), such as in the penultimate stage of a multi-stage sampling plan, then the units within that cluster may share certain characteristics due to the fact that they are in the same cluster. For example, the distance to market will be roughly the same for all the households within a village because they are geographically clustered. If your key indicator is distance to market, then you will not gain much more information by increasing the number of households you visit in the village. This would be a high clustering level.</p> <p>&nbsp;</p> <p><strong>Number of (final sampling units) per (penultimate unit):</strong></p> <p>This is how many of your final sampling units (the households, individuals or other single units of the population you indicated you would get your data points from in step 3) you will survey in each cluster you visit. This number will depend on various factors, including the time it takes to gather the data you need, travel, the amount of final sampling units present in each cluster, and the clustering level. The smaller this number, the more clusters you will have to reach to get to the minimum sample size, which could be expensive or difficult. However, reducing this number can reduce the minimum sample size, depending on the clustering level.</p> <p>&nbsp;</p> <p><strong>Total (final sampling units) in population:</strong></p> <p>This is the size of your entire target population as defined in step 2, measured in terms of your final sampling unit. At smaller numbers (less than 2000) this has an impact on the margin of error. This effect reduces significantly to the point of irrelevance as it increases after that.</p> <p>&nbsp;</p> <p><strong>Desired confidence level:</strong></p> <p>The confidence level is the probability that the true value of the measured indicator for the target population is within the given margin of error of the estimate. Any time you are taking an estimate from a sample rather than measuring the value for the whole population, there is a chance that the estimate is different to the true value, because of the random chance involved in sampling.</p> <p>In the example described above in the definition for ‘margin of error’, if we have a 95% confidence level, that means that the true value for the the population has a 95% chance of being within 3% (the margin of error) of our estimate of 75%.<br></p> <p>A 95% confidence level is the standard for this kind of estimation, and we strongly recommend you do not adjust this option unless you know that it is appropriate to do so for your particular study.</p>",
+        "audio": "",
+        "relevant": [],
+        "_key": "Q4"
+      }
+    }
+  }
+}

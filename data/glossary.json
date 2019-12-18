@@ -1,0 +1,207 @@
+{
+  "area-sample-frame": {
+    "term": "area sample frame",
+    "slug": "area-sample-frame",
+    "definition": "An area sampling frame comprises the geographical units of the area under study (e.g. a camp, a country, a programme area) in a hierarchical arrangement. For example, a list of the districts in a programme area is an area sampling frame. An area sampling frame differs from a list sampling frame in that it does not list the final sampling units (e.g. households) individually, but instead lists the geographical units they are contained in."
+  },
+  "area-sampling": {
+    "slug": "area-sampling",
+    "definition": "A method of sampling when no complete list sampling frame is available. The total area under investigation is divided into small sub-areas which are sampled at random. Each of the chosen sub-areas is then used to select sampling units from. Area sampling is a form of multi-stage sampling that uses geographic areas as first-stage primary sampling units.",
+    "term": "area sampling"
+  },
+  "baseline": {
+    "slug": "baseline",
+    "definition": "A baseline study is done to understand what the original situation at the beginning of a programme, project or intervention is. It measures the status quo before the intervention is rolled out. Results from the baseline are used to be compared against studies at later stages of the intervention (midline or endline) in order to assess the changes that happened between the baseline and later studies.",
+    "term": "baseline"
+  },
+  "bias": {
+    "slug": "bias",
+    "definition": "Bias may happen when estimating unknown population characteristics using statistics computed from a sample. It is the difference between the true (and usually unknown) value of the population characteristic and the (expected value of the) sample estimate.  ",
+    "term": "bias"
+  },
+  "census": {
+    "slug": "census",
+    "definition": "A census is a complete count of the units (individuals, households, …) of the population",
+    "term": "census"
+  },
+  "cluster-sampling": {
+    "slug": "cluster-sampling",
+    "definition": "When the basic sampling unit in the population is to be found in groups or clusters, e.g. households beings in villages, the sampling is sometimes carried out by selecting a sample of clusters (e.g. villages) and observing all or a subset of the sampling units of each selected cluster. If all sampling units of a cluster are selected, this is known as one-stage cluster sampling. If a random selection of the sampling units in each cluster is interviewed, it is referred to as two-stage cluster sampling. In some cases, the first-stage clusters (also called primary sampling units) contain not the final sampling units, but another form of clusters as the second-stage clusters. This is a third-stage cluster samplign design. For example, the primary sampling units in an urban setting could be enumeration areas, of which a random selection is drawn. In a second step, the selected enumeration areas are divived into blocks, of which again a random selection is drawn for each enumeration area. In a final step, a simple random sample of households is drawn in each selected block. The clusters should always be non-overlapping and complete. Furthermore, it is recommended that clusters are mutually homogeneous, meaning that clusters resemble each other with regards to their internal composition of sampling units. The big advantage of cluster sampling is that a full list frame of the final sampling units(e.g.households) is not required. Only lists of the the final sampling units for the higher-level sampling units(e.g.city blocks) that were selected are needed.Even this requirement can be dropped if the final sampling units are randomly selected using techniques such as GPS sampling, the EPI method(spin the pen/bottle), or community-built sampling frames. Another advantage is that(if the clusters are geographical, i.e.the final sampling units in a cluster are geographically close) cluster sampling reduces the need to visit many different locations, thereby bringing down travel costs and time. The main disadvantage is that the cluster design decreases the efficiency of the sample.This means that a higher sample size is required compared to simple random sampling(see also design effect).",
+    "term": "cluster sampling"
+  },
+  "design-effect": {
+    "slug": "design-effect",
+    "definition": "The design effect (deff) is a useful quantity for complex sampling designs. It measures the loss in estimation precision compared to a simple sampling design, the Simple Random Sampling (SRS). From a statistics point of view it is defined as the ratio of the variance of the estimate obtained from the sample (from the complex design) to the variance of the estimate obtained from a SRS design of the same number of units.\nIt has two primary uses:\n•\tIn sample-size determination\n•\tIn appraising the efficiency of more complex plans.",
+    "term": "design effect"
+  },
+  "disaggregate-estimates": {
+    "term": "disaggregate estimates",
+    "slug": "disaggregate-estimates",
+    "definition": "The results of the data analysis can be reported for specific subsets of the population. These subset should cover the whole population and do not overlap. Examples are\n-\tSex of individual \n-\tEducation level of respondent\n-\tGeographic location"
+  },
+  "endline": {
+    "slug": "endline",
+    "definition": "An end-line study is done to understand what the original situation at the end of a programme, project or intervention is. It measures the status quo after the intervention is rolled out. Results from the endline are used to be compared against studies at later stages of the intervention (midline or baseline) in order to assess the changes that happened during the intervention.",
+    "term": "endline"
+  },
+  "estimation": {
+    "slug": "estimation",
+    "definition": "The process of infering the value of an unknown parameter in a population from a subset (sample) of this population. A key aspect of an estimation is that measurements only for a subset of the population are available.",
+    "term": "estimation"
+  },
+  "experiments": {
+    "slug": "experiments",
+    "definition": "An experiment is a controlled study in which the researcher attempts to understand cause-and-effect relationships. The study is \"controlled\" in the sense that the researcher controls \n1-\thow subjects are assigned to groups. This is usually done by randomisation\n2-\twhich treatments each group receives.",
+    "term": "experiments"
+  },
+  "external-validity": {
+    "term": "external validity",
+    "slug": "external-validity",
+    "definition": "The degree to which the observed results can be generalised to some wider population."
+  },
+  "final-sampling-unit": {
+    "slug": "final-sampling-unit",
+    "definition": "The units of the population under study that will be extracted in the final sampling stage.",
+    "term": "final sampling unit"
+  },
+  "hypothesis-testing": {
+    "slug": "hypothesis-testing",
+    "definition": "A statistical hypothesis is a statement about a parameter in the population. Statistical hypothesis testing is the formal process to infer from the observed sample data to make a decision as to whether the hypothesis is true in the population.",
+    "term": "hypothesis testing"
+  },
+  "indicator": {
+    "term": "indicator",
+    "slug": "indicator",
+    "definition": "A means of measuring actual results against planned or expected results in terms of quantity, quality and timeliness. An indicator is a variable that measures a concept. It is very important that a) you can measure the indicator and b) the indicator is specific, meaning it measures the concept exactly and there is no ambiguity."
+  },
+  "inference": {
+    "slug": "inference",
+    "definition": "Using sample data to answer questions about an unknown population is called inference. Estimation is one branch of inference that tries to determine the value of a population parameter. Interval estimation tries to discover values for an unknown parameter that are consistent with sample data that have been collected. Hypothesis testing asks whether some particular values for the parameters are consistent with the sample data. As with estimation, any conclusions that are drawn from a sample can be in error, so the reliability of the inference must be understood and quantified.",
+    "term": "inference"
+  },
+  "internal-validity": {
+    "slug": "internal-validity",
+    "definition": "The degree to which the observed results can be attributed to the intervention and not some other rival explanation. A research study with high internal validity lets you choose one explanation over another with a lot of confidence, because it avoids (many possible) confounds.",
+    "term": "internal validity"
+  },
+  "intra-cluster-correlation": {
+    "slug": "intra-cluster-correlation",
+    "definition": "In a cluster sampling design, the positive correlation between units in the same cluster inflates de variance of the sample mean. This means that intra-cluster correlation causes a loss in precision, for the same sample size.",
+    "term": "intra cluster correlation"
+  },
+  "key-informants": {
+    "slug": "key-informants",
+    "definition": "The term key informant is generally associated, though not exclusively, with qualitative research in which a researcher employs interviewing of knowledgeable participants as an important part of the method of investigation. Key informants must have first-hand knowledge about your community, its residents, and issues or problems you are trying to investigate. Key informants can be a wide range of people, including agency representatives, community residents, community leaders, or local business owners.\nKey informants can extend the investigator's reach in situations where he or she has not, or cannot, be a direct observer, and they can illuminate the meanings of behavior that the researcher does not understand. They can also serve as a check on the information obtained from other informants.",
+    "term": "key informants"
+  },
+  "list-sample-frame": {
+    "slug": "list-sample-frame",
+    "definition": "A list sampling frame is a frame made up of a list of the target population units. It differs from an area sampling frame in that the area frame does not list the individual units, but simply the geographic divisions they are contained in. A list frame lists each sampling unit individually and can be easily used to draw a random sample from.",
+    "term": "list sample frame"
+  },
+  "listing": {
+    "term": "listing",
+    "slug": "listing",
+    "definition": "Procedure to list all sampling units in a selected area (for example in the selected primary sampling units) with the aim of obtaining a full list to sample from, together with auxiliary information (e.g. household size, sex of head of household etc) to facilitate stratification. A successful listing exercise must include all sampling units of the pre-defined population of interest without exceptions."
+  },
+  "main-objective": {
+    "term": "main objective",
+    "slug": "main-objective",
+    "definition": "The margin of error expresses the amount of the random variation underlying a survey's results. This can be thought of as a measure of the variation one would see in reported percentages if the same poll were taken multiple times. The larger the margin of error, the less precise the estimate of the proportion is and the less confidence one has that the survey’s reported percentages are close to the \"true\" percentages, that is the percentages in the whole population.\nA margin of error can be calculated for each figure produced from a sample survey, unless a nonprobability sample is used, and decreases as the sample size is increased."
+  },
+  "margin-of-error": {
+    "term": "margin of error",
+    "slug": "margin-of-error",
+    "definition": "The margin of error expresses the amount of the random variation underlying a survey's results. This can be thought of as a measure of the variation one would see in reported percentages if the same poll were taken multiple times. The larger the margin of error, the less precise the estimate of the proportion is and the less confidence one has that the survey’s reported percentages are close to the \"true\" percentages, that is the percentages in the whole population.\nA margin of error can be calculated for each figure produced from a sample survey, unless a nonprobability sample is used, and decreases as the sample size is increased."
+  },
+  "multi-stage-sampling": {
+    "slug": "multi-stage-sampling",
+    "definition": "The sample is drawn in two or more stages for example: selection of settlements at the first stage and a selection of households within settlement at the second stage.",
+    "term": "multi-stage sampling"
+  },
+  "non-probability-based-sampling": {
+    "slug": "non-probability-based-sampling",
+    "definition": "Is any sampling method based where some elements of the population have no chance of selection because the sampling strategy is based on decisions related to convenience, quotas or deliberate choice of elements of the population. In these cases, the probability of selection can't be determined. Because the selection of elements is non-random, non-probability-based sampling does not allow the estimation of sampling errors, and it is not possible to assume that biases cancel each other out. The ability of making inferences about the population is limited when using non-probability based sampling and the information generated needs to be treated carefully.\nSome adaptations of non-probability-based sampling have been made to allow for limited inferences. An example of this is Respondent-Driven Sampling, (RDS);, that proposes ways of estimating weights to try to account for biases in when using snowball sampling.",
+    "term": "non-probability-based sampling"
+  },
+  "non-representative-sample": {
+    "slug": "non-representative-sample",
+    "definition": "A non-representative sample is a sample in which the distrbution of the characteristics of interest is different from the population from which it has been drawn. It is based on human choice rather than random selection, and it does not allow for generalisations to the whole population.",
+    "term": "non-representative sample"
+  },
+  "population": {
+    "slug": "population",
+    "definition": "The population (also referred to as universe) is the entire group of all units about which we want information",
+    "term": "population"
+  },
+  "population-characteristics": {
+    "slug": "population-characteristics",
+    "definition": "Our interest when conducting a survey usually is not on the values taken by some variable for the different members of the population, but on aggregate measures of this variable over the population. The population characteristics are these aggregate measures defined with reference to the variable of interest. The most commonly studied are:\n\n•\tThe population total\n•\tThe population mean\n•\tThe proportion of members of the population which fall into some category of classification for the variable.\n",
+    "term": "population characteristics"
+  },
+  "precision-of-an-estimate": {
+    "term": "precision of an estimate",
+    "slug": "precision-of-an-estimate",
+    "definition": "The results of sample surveys are always subject to some uncertainty because only part of the population has been measured and because of errorsof measurement. The uncertanty can be reduced by taking larger samples and by using superior instruments of measurement. But this usually costs time and money. Teherfore, the specification of the degree of precision wanted in the results is an important step. \nThe smaller the uncertainty, the larger the precision. It is usually measured by the standard error of the estimate or by the margin of error (which is straiightforward to obtain from the standard error)."
+  },
+  "primary-sampling-unit": {
+    "slug": "primary-sampling-unit",
+    "definition": "In a Multi-stage sampling design, the units selected in the first sampling stage are the primary sampling units. For example, in a design where villages are sampled in the first stage and households within the selected villages in the second stage, the villages would be the primary sampling units. ",
+    "term": "primary sampling unit"
+  },
+  "probability-based-sampling": {
+    "slug": "probability-based-sampling",
+    "definition": "Is a process to select a sample in which every unit in the population has a chance (greater than zero) of being selected in the sample, and this probability can be accurately determined. The fact that the probability can be established does not mean that it is always calculated. cThis makes it possible to produce unbiased estimates of population totals, by weighting sampled units according to their probability of selection.",
+    "term": "probability-based sampling"
+  },
+  "probability-proportional-to-size-(pps)": {
+    "term": "probability proportional to size (PPS)",
+    "slug": "probability-proportional-to-size-(pps)",
+    "definition": "Sample units are selected in proportion to their size giving a higher chance of selection to the larger sampling units. For example if we are sampling settlements, and the size of the settlement is given by the number of households, if sampling of settlements is done with PPS, larger settlements would have higher probability of selection. For example if a settlement is double the size of another, it will have a probability of selection that is double than the other."
+  },
+  "quasi-experiments": {
+    "term": "quasi-experiment",
+    "slug": "quasi-experiments",
+    "definition": "Surveys are observational studies, and as such they can describe (the characterisitcs of a population) but cannot attribute causal effects. To attribute causal effects, experiments are needed. In experiments, units are assigned randomly to the treatments and cotrol groups, but in a sample, for example, the age of a respondent cannot be assigned randomly, it is what it is! Quasi-experiments can test causal hypothesis, by identifying a comparison group that is as similar as possible to the Treatment group. There are different techniques for creating a valid comparison group."
+  },
+  "representative-sample": {
+    "slug": "representative-sample",
+    "definition": "To generalise the sample result to the population, we need to ensure the sample is representative of the population, i.e. each interviewed unit represents a certain number of similar units in the target population. A representative sample has to bring in qualitative aspects of the population to ensure there is adequate representation of divisions of the population, e.g. rural/urban, different wealth categories, geographical coverage, etc.\nIt may be achieved by sampling from these different sub-groups so that all necessary factors likely to influence survey results are represented. In doing so, ensure selection is such that variability of sampling units within each sub-division is captured, i.e. more than one unit is needed per group.\nIn order to get representative samples we will need to draw them randomly from the population, or, at least, with an element of randomness",
+    "term": "representative sample"
+  },
+  "respondent-driven-sampling": {
+    "slug": "respondent-driven-sampling",
+    "definition": "Respondent-driven sampling (RDS), combines 'snowball sampling' (getting individuals to refer those they know, these individuals in turn refer those they know and so on) with a mathematical model that weights the sample to compensate for the fact that the sample was collected in a non-random way.\nFor more information visit: <a href='http://www.respondentdrivensampling.org/' target='_blank' rel='nofollow'>respondentdrivensampling.org</a>",
+    "term": "respondent-driven sampling"
+  },
+  "sample": {
+    "term": "sample",
+    "slug": "sample",
+    "definition": "A sample is a subset of units drawn from the population. It is not always convenient or possible to examine every member of an entire population. Sampling reduces the resources needed and, if done properly, provides estimates of the population characteristics with known accuracy."
+  },
+  "sampling": {
+    "slug": "sampling",
+    "definition": "Sampling is the process of selecting units (e.g., Households, people, …) from a population of interest so that by studying the sample we may generalize our results back to the population from which units were selected",
+    "term": "sampling"
+  },
+  "sampling-frame": {
+    "slug": "sampling-frame",
+    "definition": "A simple definition of a sampling frame is the set of source materials from which the sample is selected. The definition also encompasses the purpose of sampling frames, which is to provide a means for choosing the particular members of the target population that are to be interviewed in the survey.\nThe two most important goals that a good sampling frame achieves are comprehensiveness and accuracy. Comprehensiveness refers to the degree to which a [Page 993]sampling frame covers the entire target population. Accuracy refers to the degree to which a sampling frame includes correct information about the elements of the target population it covers. ",
+    "term": "sampling frame"
+  },
+  "sampling-unit": {
+    "slug": "sampling-unit",
+    "definition": "Sampling units are the entities on which measurements are made during a survey. In most surveys, units may occur at different levels because sampling is done at different levels, e.g. villages; households within villages; and individuals within the households. These units must cover the whole of the population and they must not overlap.",
+    "term": "sampling unit"
+  },
+  "simple-random-sampling": {
+    "term": "Simple Random Sampling",
+    "slug": "simple-random-sampling",
+    "definition": "Simple Random Sampling (SRS) is a method of selecting n units out of the N such that any unit has exactly the same probability of being drawn. Requires a sampling frame."
+  },
+  "strata-(stratum)": {
+    "slug": "strata-(stratum)",
+    "definition": "Strata are defined with one or more variables known for all population units in advance. They partition the entire population into mutually exclusive groups. For example, we can divide a population of refugees according to their countries of origin. Country of origin would then be the stratifying variable, and each group of refugees from the same country of origin would be one stratum. Strata are especially useful if they correspond to domains for which separate estimates are needed. In stratified sampling, a separate sample is then drawn from each stratum. Stratified sampling has the following potential benefits: It avoids a very unbalanced sample with respect to the stratifying variable; It guarantees a certain sample size in each stratum; It can improve sample efficiency for total population estimates; To manage cost; And for logistical/administrative reasons.",
+    "term": "strata (stratum)"
+  }
+}

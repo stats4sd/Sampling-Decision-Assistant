@@ -1,0 +1,69 @@
+<ion-header class="header">
+  <img src="assets/img/unhcr-logo.png" class="header-logo" />
+  <div class="header-text hide-small">Sampling Decision Assistant</div>
+</ion-header>
+
+<page-content style="display: flex;flex-direction: column;">
+  <div style="flex:1; margin-bottom: 5em">
+    <h1 style="margin-top:35px"></h1>
+    <div style="text-align: center; flex:1">
+      <h2 style="margin-bottom:20px">Where do you want to start?</h2>
+      <img src="assets/img/feature-image-2.jpg" alt="" class="feature-image" />
+      <hr />
+      <div>
+        <h3 class="invert">Sampling Decision Assistant</h3>
+        <ion-card
+          *ngFor="let section of sections"
+          style="height: 100%; max-height:120px; padding:0"
+          (click)="goToSection(section)"
+          [ngClass]="section.class"
+        >
+          <ion-button class="section-container" expand="block" fill="clear">
+            <span [attr.data-section]="section.name" class="section-name"
+              >{{section.name}}</span
+            >
+            <ion-icon
+              style="margin-left:10px"
+              [name]="section.icon"
+              slot="end"
+            ></ion-icon>
+          </ion-button>
+        </ion-card>
+        <hr />
+        <h3 class="invert">Extra Resources</h3>
+        <!-- Add other options to the main menu / home page -->
+        <ion-card
+          *ngFor="let alt of altSections"
+          style="height: 100%; max-height:120px"
+          (click)="goToSection(alt)"
+          [ngClass]="alt.class"
+        >
+          <ion-button class="section-container" expand="block" fill="clear">
+            <span [attr.data-section]="alt.name" class="section-name"
+              >{{alt.name}}</span
+            >
+          </ion-button>
+        </ion-card>
+        <hr />
+      </div>
+    </div>
+  </div>
+  <div class="footer-container">
+    <div style="flex:1">
+      Developed in partnership with
+      <a
+        id="stats4sdLink"
+        href="https://stats4sd.org"
+        target="_blank"
+        rel="nofollow"
+        >Statistics for Sustainable Development</a
+      >
+    </div>
+    <div
+      style="cursor: pointer; opacity: 0.5; padding:5px"
+      (click)="showChangelog()"
+    >
+      v{{version.number}}
+    </div>
+  </div>
+</page-content>

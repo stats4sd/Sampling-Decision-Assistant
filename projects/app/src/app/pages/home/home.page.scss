@@ -1,0 +1,52 @@
+:host {
+  flex: 1;
+}
+.scroll-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+.feature-image {
+  height: 140px;
+}
+.card:hover {
+  background-color: wheat;
+}
+
+.version-info {
+  position: absolute;
+  right: 5px;
+  color: var(--ion-color-primary);
+  font-weight: 500;
+  text-align: right;
+  .button {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.section-icon {
+  font-size: x-large;
+}
+.section-name {
+  text-transform: none;
+}
+.section-name[data-section="Use the Tool"] {
+  font-weight: bold;
+}
+
+#stats4sdLink {
+  color: #cf1a27;
+}
+.footer-container {
+  opacity: 0.9;
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  font-size: 16px;
+  justify-content: space-between;
+  width: calc(100% - 32px);
+}

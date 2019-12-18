@@ -1,7 +1,5 @@
 {
-  "name": "sampling-decision-assistant",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
+  "name": "sampling-decision-assistant-2",
+  "integrations": {},
+  "type": "angular"
 }

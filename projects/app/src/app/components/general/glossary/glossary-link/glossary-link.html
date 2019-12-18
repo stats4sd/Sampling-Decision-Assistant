@@ -1,0 +1,25 @@
+<span *ngIf="term">
+  <span class="tooltip" (mouseenter)="tooltipHover($event)">
+    <span [class]="term.definition == '' ? 'missing' : 'default'">
+      <ng-content></ng-content>
+    </span>
+    <span
+      [class]="'tooltiptext '+tooltipPos"
+      *ngIf="term.definition && term.definition!=''"
+    >
+      <span style="display: flex; flex-direction: column">
+        <div id="fullGlossaryLink" (click)="goToGlossary(term)">
+          View in Glossary
+        </div>
+        <span id="termDefinition">
+          {{term.definition}}
+        </span>
+      </span>
+    </span>
+    <span
+      [class]="'tooltiptext '+tooltipPos"
+      *ngIf="!term.definition || term.definition==''"
+      >No defintion available</span
+    >
+  </span>
+</span>

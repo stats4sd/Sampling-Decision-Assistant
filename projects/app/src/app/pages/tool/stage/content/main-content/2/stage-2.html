@@ -1,0 +1,80 @@
+<div class="slide-content">
+  <h4>What indicators will guide your sampling decisions?</h4>
+  <p>
+    While most studies that use sampling intend to quantify multiple
+    <glossary-link slug="indicator">indicators</glossary-link>
+    , it is normal to base decisions about the study design on just one – a ‘key
+    indicator’. In this step, you will be asked to choose the key indicator for
+    your study and to specify some details about the estimate you are looking
+    for, which will help you make sampling decisions later on.
+    <br /><br />
+    If at all possible, try to select an indicator from the list of household
+    indicators provided by the
+    <a href="https://im.unhcr.org/qb/indicators" target="_blank" rel="nofollow"
+      >International Household Survey Network.</a
+    >
+    <br /><br />
+    There are several considerations to make when selecting a key indicator. For
+    guidance on this decision, please refer to the Additional Resources and the
+    introduction video for this step.
+  </p>
+  <survey-question controlName="q2.1.1"></survey-question>
+  <div>
+    <p>
+      The next question is about the estimate you are interested in. Many
+      estimation processes are about estimating either of the following. Please
+      select the estimate that best describes your interest.
+    </p>
+    <survey-question controlName="q2.1.2"></survey-question>
+  </div>
+  <!-- case averages -->
+  <div
+    *ngIf="form.value['q2.1.2']=='Average or total value of indicator in the population'"
+  >
+    <p>
+      The following 1-3 questions are about the standard deviation for the
+      indicator you have chosen. More information about standard deviation is
+      available in the Additional Resources section.
+    </p>
+    <survey-question controlName="q2.2.1"></survey-question>
+    <p>
+      This value may be known from previous studies. You don’t need to be exact
+      about this value, but the more exact you are, the better.
+    </p>
+    <div *ngIf="form.value['q2.2.1']=='Yes'">
+      <!-- q2.2.2 needs ngif logic instead of question condition so that it displays in all cases on review and export
+      (it's updated programatically in case no) -->
+      <survey-question controlName="q2.2.2"></survey-question>
+    </div>
+    <div *ngIf="form.value['q2.2.1']=='No'">
+      <p>
+        If you don’t know the value and there is no information you can rely on,
+        you may be able to come to an approximate value by answering the
+        following questions
+      </p>
+      <survey-question controlName="q2.2.3"></survey-question>
+      <survey-question controlName="q2.2.4"></survey-question>
+      <p>
+        If the distribution of the values of the indicator in the population is
+        roughly symmetric, the value below will be an acceptable estimate. If
+        the distribution is heavily skewed, the value may be an overestimate and
+        you may want to correct it slightly down. If the distribution is flat
+        (i.e. the values do not cluster towards the mean, but low values and
+        high values are as likely as values around the mean) this may be a
+        slight underestimate.
+      </p>
+      <div *ngIf="form.value['q2.2.3'] && form.value['q2.2.4']">
+        <div class="calculation">
+          <ion-icon name="calculator"></ion-icon>
+          <span>&sigma; = {{sd | number:'1.2-2' }}</span>
+        </div>
+        <p>
+          The above calculation establishes the standard deviation as:
+          (max-min)/6
+        </p>
+      </div>
+    </div>
+  </div>
+  <survey-question controlName="q2.3.1"></survey-question>
+  <stage-complete stageNumber="2"></stage-complete>
+</div>

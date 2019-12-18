@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>dev</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div style="display: flex; flex-direction: column; height:100%">
+    <h3>Storyline Embed</h3>
+    <div>
+      <ion-button *ngIf="!test1Complete" (click)="updateName()"
+        >Update Name</ion-button
+      >
+      <ion-button
+        *ngIf="test1Complete && !test2Complete"
+        (click)="changeSlide()"
+        >Demo 2</ion-button
+      >
+    </div>
+    <div style="flex:1">
+      <iframe
+        class="storyline-iframe"
+        src="assets/storylines/test/story_html5.html"
+      ></iframe>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,59 @@
+table {
+  border: 1px solid black;
+}
+tr {
+  padding: 5px;
+}
+th,
+td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+th[has-reporting="true"] {
+  background-color: #f0b89e;
+}
+.spacing-header {
+  color: white;
+  border: none;
+}
+.section-title {
+  padding: 1em 0;
+}
+.table-input {
+  background-color: wheat;
+  width: 100px;
+}
+.table-fixed {
+  padding: 5px 11px;
+}
+td.pass {
+  // background-color: rgba(40, 167, 69, 0.6);
+  font-weight: bold;
+}
+td.fail {
+  // background-color: #ffc107;
+  color: red;
+}
+.strata-name {
+  color: var(--ion-color-primary);
+  text-decoration: underline;
+}
+.exportMode {
+  .strata-name {
+    color: black;
+  }
+}
+
+.strata-classification {
+  margin: 2px 2px 0 0;
+  padding: 5px;
+}
+ul {
+  margin: 2px;
+  padding-left: 15px;
+  margin-block-end: 5px;
+}
+td.no-border {
+  border: unset;
+}

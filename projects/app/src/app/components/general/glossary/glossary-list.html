@@ -1,0 +1,33 @@
+<div>
+  <!-- section glossary terms -->
+  <!-- <div *ngIf="filteredGlossaryTerms && filteredGlossaryTerms.length>0">
+    <h3>In this step</h3>
+    <span *ngFor="let term of filteredGlossaryTerms">
+      <span (click)="setActiveTerm(term)" class="glossary-term" [ngClass]="{
+        'term-selected':activeTerm && term.slug==activeTerm.slug,
+        'term-incomplete':term.definition==''
+      }">{{term.term}}</span>
+    </span>
+    <ion-button  fill="clear" (click)="viewAllTerms()">View all terms</ion-button>
+    <div class="glossary-detail-container" *ngIf="activeTerm">
+      <glossary-detail *ngIf="activeTerm"></glossary-detail>
+    </div>
+
+  </div> -->
+  <!-- all glossary terms -->
+  <h3>All glossary terms</h3>
+  <span *ngFor="let term of allGlossaryTerms">
+    <span
+      (click)="setActiveTerm(term)"
+      class="glossary-term"
+      [ngClass]="{
+        'term-selected':activeTerm && term.slug==activeTerm.slug,
+        'term-incomplete':term.definition==''
+      }"
+      >{{term.term}}</span
+    >
+  </span>
+  <div class="glossary-detail-container" *ngIf="activeTerm">
+    <glossary-detail *ngIf="activeTerm" [term]="activeTerm"></glossary-detail>
+  </div>
+</div>

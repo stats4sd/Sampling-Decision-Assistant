@@ -1,0 +1,11 @@
+.reference-text,
+.no-value {
+  padding: 5px;
+  font-weight: bold;
+  // multi-line padding fix
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.no-value {
+  color: red !important;
+}

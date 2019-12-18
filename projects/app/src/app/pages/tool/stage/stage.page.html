@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar #navbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tool"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{stage.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<page-content #content id="content">
+  <div class="central-content">
+    <!-- Main Content -->
+    <div
+      class="slide-content"
+      [style.display]="activeSection=='main'? 'block' : 'none'"
+    >
+      <!-- stage intro -->
+      <div class="intro-box">
+        <div class="intro-heading">In this step</div>
+        <div class="stage-info">
+          <div id="stageOverview" [innerHtml]="introHtml[stage.number]"></div>
+          <div id="stageResources">
+            <ion-button
+              expand="block"
+              fill="clear"
+              (click)="showResourcesList()"
+            >
+              <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+              <span
+                style="white-space: initial;"
+                aria-label="Additional Resources"
+              >
+                Additional<br />Resources
+              </span>
+            </ion-button>
+          </div>
+        </div>
+        <div class="video-button">
+          <video-popup-button
+            buttonText="Watch Video"
+            [youtubeID]="introVideos[stage.number]"
+          ></video-popup-button>
+        </div>
+      </div>
+
+      <!-- main stage content -->
+      <stage-1 *ngIf="stage.number==1"></stage-1>
+      <stage-2 *ngIf="stage.number==2"></stage-2>
+      <stage-3 *ngIf="stage.number==3"></stage-3>
+      <stage-4 *ngIf="stage.number==4"></stage-4>
+      <stage-5 *ngIf="stage.number==5"></stage-5>
+      <stage-6 *ngIf="stage.number==6"></stage-6>
+    </div>
+  </div>
+</page-content>

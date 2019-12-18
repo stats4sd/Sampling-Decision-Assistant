@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tool"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Review and Analysis</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<page-content>
+  <!-- Review content -->
+  <div class="survey" id="reviewContent" style="margin-bottom:10px">
+    <h2>Review Decisions</h2>
+    <div>
+      <div *ngFor="let group of questionGroups" class="section-group">
+        <div class="heading">
+          {{group.section}}
+        </div>
+        <div *ngFor="let question of group.questions" class="section-question">
+          <survey-question
+            *ngIf="!question.repeatGroup && !question.hideOnReview"
+            [question]="question"
+            [reviewMode]="true"
+          ></survey-question>
+        </div>
+        <div [ngSwitch]="group.section">
+          <!-- additional group-specific content -->
+          <div
+            *ngSwitchCase="'At what level do you need to report these results'"
+          >
+            <ion-card class="container">
+              <stage-4-define-level-categories
+                [reviewMode]="true"
+              ></stage-4-define-level-categories>
+            </ion-card>
+          </div>
+          <div *ngSwitchCase="'Selecting the sampling units'">
+            <ion-card class="container">
+              <stage-5-frame-builder-overview
+                [reviewMode]="true"
+              ></stage-5-frame-builder-overview>
+            </ion-card>
+          </div>
+          <div *ngSwitchCase="'Allocating and deploying resources'">
+            <tree-diagram></tree-diagram>
+            <div class="section-padding"></div>
+            <sample-size-calculator></sample-size-calculator>
+            <div class="section-padding"></div>
+            <tree-table></tree-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analysis Content -->
+  <div class="ion-padding">
+    <h2>Export</h2>
+    <div style="display: flex; flex-wrap: wrap  ">
+      <ion-button (click)="exportJSON()" class="export-button">
+        <ion-icon src="assets/img/icons/database.svg" slot="start"></ion-icon
+        >Project Data
+      </ion-button>
+      <ion-button (click)="exportDocx()" class="export-button">
+        <ion-icon
+          src="assets/img/icons/word-inverted.svg"
+          slot="start"
+        ></ion-icon
+        >Summary
+      </ion-button>
+      <ion-button (click)="exportTreeImage()" class="export-button">
+        <ion-icon src="assets/img/icons/tree.svg" slot="start"></ion-icon
+        >Diagram
+      </ion-button>
+    </div>
+  </div>
+</page-content>

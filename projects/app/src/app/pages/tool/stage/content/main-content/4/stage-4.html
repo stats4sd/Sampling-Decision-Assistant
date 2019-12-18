@@ -1,0 +1,95 @@
+<div class="slide-content">
+  <stage-breadcrumbs [stage]="4"></stage-breadcrumbs>
+  <div [ngSwitch]="stagePart">
+    <!-- Intro slide -->
+    <div *ngSwitchDefault>
+      <p>
+        To design a sampling plan, it is important to define the reporting
+        requirements or goals. Depending on how you intend to report results,
+        you may or may not have to consider your total sample size and method of
+        selection differently.
+        <br /><br />
+        The first question is to decide if you wish to divide your population to
+        produce
+        <glossary-link slug="disaggregate-estimates"
+          >disaggregated estimates.
+        </glossary-link>
+        If you need to give different figures for separate groups within your
+        population, then you actually need an estimate for each one.
+      </p>
+      <p></p>
+      <survey-question controlName="q4.1"></survey-question>
+      <div *ngIf="form.value['q4.1']=='Disaggregated estimates'">
+        <p>
+          Now think about the characteristics of the population you want to
+          disaggregate by. The
+          <a
+            href="https://www.unhcr.org/5aa13c0c7.pdf"
+            target="_blank"
+            rel="nofollow"
+          >
+            UNHCR Policy on Age, Gender and Diversity</a
+          >
+          is a good starting point. Other variables you might want to
+          disaggregate by can be geographic such as camps or districts, or
+          relate to the characteristics of persons of concern like the country
+          of origin. Make sure the disaggregation variable refers to the final
+          sampling units or a higher level: For example, if your sampling unit
+          are households, you can disaggregate them by district (a higher
+          level), or by gender of the head of household (which is a
+          household-level characteristic). You cannot disaggregate them by
+          education, gender or other characteristics of individual persons
+          unless you can make this a household-level characteristics like for
+          heads of household.
+          <br /><br />
+          Keep in mind that adding too many disaggregation characteristics leads
+          to large required sample sizes. Try to focus on the one or two
+          disaggregation characteristics that are most important for your study.
+          Often strata are formed to define reporting requirements and in those
+          cases this tool makes no difference between strata and reporting
+          requirements. Sometimes, you may need to divide your population into
+          strata to improve the precision of your estimates, but you have no
+          requirement for estimates disaggregated by those strata.
+        </p>
+      </div>
+
+      <survey-question controlName="reportingLevels"></survey-question>
+
+      <div *ngIf="form.value['q4.1']=='One estimate'">
+        <p>
+          Provide a name or reference for the estimate. This should be the same
+          as, or an abbreviation of your indicator
+        </p>
+        <survey-question
+          controlName="q4.3"
+          [showLabel]="false"
+        ></survey-question>
+        <!-- <stage-complete stageNumber=4></stage-complete> -->
+      </div>
+    </div>
+
+    <!-- define levels slide -->
+    <div *ngSwitchCase="1">
+      <stage-4-define-level-categories></stage-4-define-level-categories>
+    </div>
+
+    <div *ngSwitchCase="2">
+      <stage-4-review-levels></stage-4-review-levels>
+      <stage-complete stageNumber="4"></stage-complete>
+    </div>
+  </div>
+
+  <!-- Next and back buttons -->
+  <div
+    style="display: flex; justify-content:space-between; padding-bottom:20px; margin-top:20px"
+  >
+    <ion-button
+      (click)="nextStep()"
+      *ngIf="stagePart !='2'"
+      fill="clear"
+      expand="block"
+      >Continue
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+    </ion-button>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sampling Decision Assistant</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showMenu($event)">
+        <ion-icon name="more" slot="start"></ion-icon>Menu
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<page-content>
+  <div>
+    <div *ngIf="activeProject">
+      <!-- New project info -->
+      <div
+        *ngIf="!activeProject.title || editingMode"
+        class="new-project-container"
+      >
+        <p>
+          <ion-icon name="bulb"></ion-icon>
+          <span style="margin-left:5px"
+            >You are working on a new project, please provide a title and
+            description</span
+          >
+        </p>
+        <ion-list class="new-project-info">
+          <ion-item>
+            <ion-label color="primary">Title</ion-label>
+            <ion-input
+              (ionFocus)="enableEditing()"
+              [(ngModel)]="activeProject.title"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Description</ion-label>
+            <ion-textarea
+              (ionFocus)="enableEditing()"
+              [(ngModel)]="activeProject.description"
+            ></ion-textarea>
+          </ion-item>
+          <ion-button id="saveProjectButton" (click)="save()">
+            Save
+          </ion-button>
+        </ion-list>
+        <div class="new-project-text">
+          <video-popup-button
+            buttonText="Watch Intro Video"
+            [youtubeID]="introVideoYoutubeID"
+          ></video-popup-button>
+        </div>
+      </div>
+
+      <!-- Existing project info -->
+      <div *ngIf="activeProject.title && !editingMode">
+        <div class="existing-project-container">
+          <div style="flex:1">
+            <div
+              style="font-size: medium; font-weight:700; display: flex; align-items: center;"
+              *ngIf="activeProject && activeProject.title"
+            >
+              <span style="margin-left:5px; ">{{activeProject.title}}</span>
+              <ion-button
+                fill="clear"
+                (click)="enableEditing()"
+                class="edit-button"
+              >
+                <ion-icon name="create" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+          <video-popup-button
+            buttonText="Watch Intro Video"
+            [youtubeID]="introVideoYoutubeID"
+          >
+          </video-popup-button>
+        </div>
+      </div>
+    </div>
+    <!-- step by step sections -->
+    <div class="section-break">Step By Step Decisions</div>
+    <p class="instruction">
+      <info-icon
+        >Use each step below to build an overview of your sampling
+        decisions</info-icon
+      >
+    </p>
+    <!-- section cards -->
+    <div id="sectionCardsContainer">
+      <ion-card
+        *ngFor="let section of sections"
+        class="hover-fill section-card"
+        style="height:120px"
+        (click)="goToSection(section)"
+      >
+        <div class="section-container">
+          <div class="section-icon-container">
+            <img class="section-icon" [src]="section.icon" />
+          </div>
+          <div class="section-title">{{section.stage}}: {{section.name}}</div>
+          <div class="section-status">
+            <ion-button
+              fill="clear"
+              [disabled]="!stagesComplete[section.stage]"
+            >
+              <ion-icon name="checkmark-circle" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+    <!-- Review and export -->
+    <div class="section-break">Review and Export</div>
+    <p class="instruction">
+      <info-icon
+        >Review the decisions you have made and make revisions before final
+        export</info-icon
+      >
+    </p>
+    <div style="margin-bottom: 2em">
+      <ion-card [routerLink]="['./review']">
+        <div class="review-box">
+          <div style="display:flex; ">
+            <div class="review-card">
+              <span>Review</span>
+            </div>
+            <img
+              class="section-icon _80px"
+              src="assets/img/icons/arrows-dual.svg"
+            />
+            <div class="review-card">
+              <span>Improve</span>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:center">
+            <img
+              class="section-icon _80px"
+              src="assets/img/icons/arrow-right.svg"
+            />
+            <div class="review-card">
+              <div>Export</div>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+</page-content>
