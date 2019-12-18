@@ -1,0 +1,28 @@
+.breadcrumbs-container {
+  display: flex;
+  position: relative;
+  height: 30px;
+  align-items: center;
+  background-color: var(--ion-color-primary);
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+}
+.breadcrumb-name {
+  color: var(--ion-color-primary);
+  cursor: pointer;
+  opacity: 0.5;
+  color: white;
+}
+[data="active"] {
+  opacity: 1;
+  //font-weight: bold;
+}
+.breadcrumb-icon {
+  cursor: pointer;
+  padding: 0 5px;
+  opacity: 0.5;
+}

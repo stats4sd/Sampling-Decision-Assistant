@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Summary</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="download()">
+        <ion-icon name="download" slot="start"></ion-icon>Download
+      </ion-button>
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" slot="start"></ion-icon>Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- All styling in-line to format in word document also -->
+<page-content id="exportSummary">
+  <div *ngFor="let section of sections" style="margin-bottom:20px">
+    <h1>{{section.section}}</h1>
+    <table style="border:1px solid black">
+      <th style="width:50px; border:1px solid black">#</th>
+      <th style="width:300px; border:1px solid black">Question</th>
+      <th style="width:300px; border:1px solid black">Response</th>
+      <tr *ngFor="let question of section.questions">
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{question.controlName}}
+        </td>
+        <td style="padding:5px; width:300px; border:1px solid black">
+          {{question.label}}
+        </td>
+        <td style="padding:5px; width:300px; border:1px solid black">
+          {{question.response}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- Disaggregation -->
+  <div *ngIf="samplingStages" style="margin-bottom:20px">
+    <h1>Disaggregation</h1>
+    <table>
+      <tr>
+        <th style="border:1px solid black">Disaggregation</th>
+        <th style="border:1px solid black">Classifications</th>
+      </tr>
+      <tr *ngFor="let level of reportingLevels; index as i">
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{level.name}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          <ul>
+            <li *ngFor="let classification of level.classifications.names">
+              {{classification}}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- list of sampling stages -->
+  <div *ngIf="samplingStages" style="margin-bottom:20px">
+    <h1>Sampling Stages</h1>
+    <table>
+      <tr>
+        <th style="border:1px solid black">Stage</th>
+        <th style="border:1px solid black">Sampling Unit</th>
+        <th style="border:1px solid black">Frame</th>
+        <th style="border:1px solid black">Units</th>
+        <th style="border:1px solid black">Reporting Level</th>
+      </tr>
+      <tr *ngFor="let stage of samplingStages; index as i">
+        <td style="padding:5px; width:50px; border:1px solid black">{{i+1}}</td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{stage.name}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{stage['q5.3.1']=='Yes' ? 'Available' : 'To be built'}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{stage['q5.3.3']=='All' ? 'All Units' : 'Sample'}}
+        </td>
+
+        <td style="padding:5px; width:50px; border:1px solid black">
+          <div *ngIf="!stage['q5.3.4.2'] || stage['q5.3.4.2']==''">
+            <span>None</span>
+          </div>
+          <div *ngIf="stage['q5.3.4.2']">
+            <div *ngFor="let level of stage['q5.3.4.2']">{{level}}</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- allocation -->
+  <div *ngIf="samplingStages && calcVals" style="margin-bottom:20px">
+    <h1>Resource Allocation</h1>
+    <h2>Assumptions</h2>
+    <table>
+      <tr *ngFor="let assumption of calcVals.assumptions">
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{assumption.label}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{assumption.value}}
+        </td>
+      </tr>
+      <tr *ngFor="let calculated of calcVals.calculated">
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{calculated.label}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{calculated.value}}
+        </td>
+      </tr>
+    </table>
+
+    <h2>Calculations</h2>
+    <table>
+      <tr *ngFor="let calculation of calcVals.outputs">
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{calculation.label}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{calculation.value}}
+        </td>
+      </tr>
+    </table>
+
+    <h2>Allocation</h2>
+    <!-- <tree-table [exportMode]="true"></tree-table> -->
+    <table>
+      <tr *ngFor="let allocation of allocations">
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{allocation.label}}
+        </td>
+        <td style="padding:5px; width:50px; border:1px solid black">
+          {{allocation.value}}
+        </td>
+      </tr>
+    </table>
+
+    <!-- <h3>How it was calculated</h3>
+    <p>The following formula was used to calculate sample sizes:</p>
+    <img src="assets/img/tool-formula.png"> -->
+  </div>
+</page-content>

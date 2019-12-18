@@ -1,0 +1,84 @@
+{
+  "title": "Example",
+  "created": 1576244538416,
+  "edited": 1576244548679,
+  "dbVersion": 3,
+  "values": {
+    "q1.1": null,
+    "q1.2": null,
+    "q1.3": null,
+    "q2.1.1": null,
+    "q2.1.2": null,
+    "q2.2.1": null,
+    "q2.2.2": null,
+    "q2.2.3": null,
+    "q2.2.4": null,
+    "q2.3.1": null,
+    "q3.2": "",
+    "q3.3": "",
+    "q3.4": "",
+    "q3.5": "",
+    "q4.1": null,
+    "reportingLevels": null,
+    "q4.3": null,
+    "q5.1": null,
+    "q5.1.1": null,
+    "q5.3": null,
+    "_calculatorVars": {
+      "inputs": {
+        "moe": 5,
+        "conf": 0.95,
+        "rho": 0.1,
+        "nHH": null,
+        "Population": 500000,
+        "stages": 1
+      },
+      "outputs": {
+        "raw": {
+          "SRSn": null,
+          "SRSn_FPC": null,
+          "DEFF1": "NA",
+          "FinalstageN": null,
+          "FinalstageN_FPC": null,
+          "stage2N": "NA",
+          "nHH": null
+        },
+        "rawArray": [
+          "SRSn",
+          "SRSn_FPC",
+          "DEFF1",
+          "FinalstageN",
+          "FinalstageN_FPC",
+          "stage2N",
+          "nHH"
+        ],
+        "formatted": [{ "var": "SRSn_FPC", "label": "Sample Size Required" }]
+      },
+      "recommendations": {
+        "disaggregationMeta": null,
+        "countFinalStage": null,
+        "countPenultimateStage": "NA",
+        "requiredPerAggregation": null,
+        "totalSampleSize": null
+      },
+      "exportLabels": {
+        "assumptions": [
+          { "label": "Desired Confidence Level", "var": "conf" },
+          { "label": "Clustering Level", "var": "rho" },
+          { "label": "Expected Population Size", "var": "Population" }
+        ],
+        "calculated": [
+          { "label": "Type of Variable", "var": "type" },
+          { "label": "Number of Sampling Stages", "var": "stages" }
+        ],
+        "results": [{ "var": "SRSn_FPC", "label": "Sample Size Required" }]
+      }
+    },
+    "q3.1": null,
+    "samplingStages": [{ "name": "Final Sampling Unit", "sampleSize": null }],
+    "_allocation": null,
+    "q5.2": ""
+  },
+  "stagesComplete": [null, false, false, false, false, false, false],
+  "description": "My Description"
+}

@@ -1,0 +1,6 @@
+page-admin {
+    button[selected=true], button[selected=true]:hover{
+        background-color: color($colors,primary)!important;
+        color:white!important;
+    }
+}

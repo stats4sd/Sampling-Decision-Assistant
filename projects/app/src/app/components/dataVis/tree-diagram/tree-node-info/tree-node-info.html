@@ -1,0 +1,29 @@
+<div #nodeInfo id="nodeInfo" [attr.data-visible]="activeNode ? 'true' : 'false'">
+  <div *ngIf="activeNode">
+    <div class="node-title">
+      {{activeNode.label}}
+    </div>
+    <div class="info-subsection-labels">
+      <ion-button  fill="clear" [attr.data-active]="infoSection=='info'" (click)="_updateInfoSection('info')">
+        <ion-icon slot="start" name="information-circle"></ion-icon>Info
+      </ion-button>
+    </div>
+    <div class="node-info-text">
+      <!-- info tab -->
+      <div [style.display]="infoSection=='info'?'block':'none'">
+        <div *ngFor="let meta of stageMeta">
+          <div *ngIf="nodeMeta.stageMeta && [meta.var]" class="meta-item">
+            <div class="meta-label">{{meta.label}}</div>
+            <div class="meta-value" *ngIf="nodeMeta.stageMeta[meta.var]">{{nodeMeta.stageMeta[meta.var]}}</div>
+            <div class="meta-value" *ngIf="!nodeMeta.stageMeta[meta.var]">NA</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- allocation tab -->
+      <tree-node-allocation [style.display]="infoSection=='allocation'?'block':'none'">
+
+      </tree-node-allocation>
+    </div>
+  </div>
+</div>

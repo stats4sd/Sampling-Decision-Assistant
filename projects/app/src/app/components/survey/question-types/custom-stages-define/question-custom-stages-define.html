@@ -1,0 +1,100 @@
+<div class="question-container">
+  <form style="display: flex; padding:5px">
+    <ion-item style="flex:1">
+      <ion-input
+        id="textMultipleInput"
+        #textMultipleInput
+        (ionChange)="validateInput()"
+        [(ngModel)]="multipleTextInput"
+        [ngModelOptions]="{standalone: true}"
+        type="text"
+        placeholder="Sampling Stages"
+      ></ion-input>
+    </ion-item>
+    <ion-button
+      (click)="addSamplingStage()"
+      type="submit"
+      [disabled]="!multipleTextInput"
+      *ngIf="!editMode"
+      >Add</ion-button
+    >
+    <ion-button (click)="saveEdits()" type="submit" *ngIf="editMode"
+      >Save</ion-button
+    >
+  </form>
+
+  <!-- multiple list with optional drag-->
+  <div style="margin:10px 0">
+    <!-- drag drop for arrow format -->
+    <div [dragula]="'bag-one'" [(dragulaModel)]="stages">
+      <div *ngFor="let stage of stages; let i=index; let last=last">
+        <div class="multiple-arrows" *ngIf="!last">
+          <div class="multiple-arrow-down">
+            <ion-icon name="arrow-down"></ion-icon>
+          </div>
+          <div style="display: flex">
+            <ion-button
+              fill="clear"
+              [disabled]="last"
+              [attr.data-drag-handle]="last ? 'no-drag' : 'drag'"
+            >
+              <ion-icon name="reorder" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button
+              expand="block"
+              style="flex:1"
+              class="multiple-arrows-button"
+              (click)="enableEdit(i)"
+              [attr.data-editing]="editIndex==i? 'editing':''"
+            >
+              <span style="flex-basis:100%">{{stage.name}}</span>
+              <ion-icon
+                slot="end"
+                name="create"
+                class="edit-button"
+                *ngIf="!editMode"
+                style="opacity:0.5"
+              ></ion-icon>
+            </ion-button>
+            <ion-button
+              fill="clear"
+              (click)="removeSamplingStage(i)"
+              [disabled]="last"
+            >
+              <ion-icon name="remove-circle" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- last element -->
+    <div>
+      <div class="multiple-arrows">
+        <div class="multiple-arrow-down">
+          <ion-icon name="arrow-down"></ion-icon>
+        </div>
+        <div style="display: flex">
+          <ion-button fill="clear" disabled>
+            <ion-icon name="reorder" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button
+            expand="block"
+            class="multiple-arrows-button"
+            style="flex:1"
+          >
+            <span style="flex-basis:100%">{{finalSamplingUnit}}</span>
+          </ion-button>
+          <ion-button fill="clear" disabled>
+            <ion-icon name="remove-circle" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="stages.length>2" style="margin-top:1em; margin-left:15px">
+      You can use the
+      <ion-icon name="reorder" style="margin-left:5px"></ion-icon> handle to
+      drag and change the order of stages
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="slide-content">
+  <!-- intro -->
+
+  <h2>Introduction</h2>
+  <p>
+    To begin designing your sampling process, you should first have a clear idea
+    of your main objective. This is the overall aim for the activity you are
+    doing sampling for. Questions 1 and 2 are aimed at checking that this tool
+    is appropriate for use in designing your study. Question 3 will ask you to
+    clearly describe your aims.
+    <br /><br />
+    There is more than one type of study, and the first question is aimed at
+    establishing which type yours is.
+    <br /><br />
+    This tool is designed to help with designing studies that are intended to
+    provide estimates of the values of characteristics of a population. Such
+    studies are aimed at observing the population and measuring the factors of
+    interest without trying to change anything. The decisions you make when
+    designing this kind of study are about how you will sample the population.
+    This type of study is used for things like profiling populations, setting
+    <glossary-link slug="baseline">baselines </glossary-link>
+    and assessing the value of
+    <glossary-link slug="indicator">indicators </glossary-link>
+    at midline or
+    <glossary-link slug="endline">end-line </glossary-link>
+    points.
+    <br /><br />
+    In some cases, a study may be established to compare interventions. This can
+    be called an
+    <glossary-link slug="experiments">'experimental' </glossary-link>
+    or
+    <glossary-link slug="quasi-experiments"
+      >'quasi-experimental'
+    </glossary-link>
+    study, and the design for this is focused on controlling factors in the
+    experiment to isolate and measure the difference caused by a particular
+    change. This tool was not created to support this kind of design.
+    <br /><br />
+    The first question will ask you to identify which of these two categories
+    your objective falls into.
+  </p>
+
+  <div style="margin:1em 0; padding:5px">
+    <span>If you are not sure, click on the</span>
+    <ion-icon
+      style="padding:0 4px"
+      ios="ios-help-circle-outline"
+      md="ios-help-circle-outline"
+    ></ion-icon>
+    <span>icon to see some common examples.</span>
+  </div>
+
+  <survey-question controlName="q1.1"></survey-question>
+  <note
+    type="warning"
+    *ngIf="form.value['q1.1']=='A comparison that needs a quasi-experimental or an experimental approach'"
+  >
+    <p>
+      This tool has not been aimed to support decisions for this type of design,
+      and it is recommended to seek advice from a statistician to design this
+      type of study
+    </p>
+  </note>
+  <!-- q1.2 -->
+  <div
+    *ngIf="form.value['q1.1']=='Estimating the value of one or a set of characteristics of a population'"
+  >
+    <p>
+      For the next question you will need to consider
+      <glossary-link slug="representative-sample">representative</glossary-link>
+      and
+      <glossary-link slug="non-representative-sample"
+        >non-representative</glossary-link
+      >
+      samples. If you are not familiar with these terms then follow links to the
+      glossary. If you are not sure of your requirements, click on the help icon
+      to see some common examples.
+    </p>
+  </div>
+  <survey-question controlName="q1.2"></survey-question>
+  <!-- q1.3 -->
+  <div *ngIf="form.value['q1.2']=='Representative'">
+    <p>
+      Bearing in mind the target population, aims and boundaries of your study,
+      answer the following question as precisely as you can.
+    </p>
+  </div>
+  <survey-question controlName="q1.3"></survey-question>
+
+  <note type="warning" *ngIf="form.value['q1.2']=='Non-representative'">
+    <p>
+      This tool does not provide support for sampling designs for
+      non-representative samples, and it is recommended to seek advice from a
+      statistician to design this type of study.
+    </p>
+    <p>
+      You should be aware about the issues of biases and the difficulties for
+      making inferences from the sample to the general population, that emerge
+      from studies that are based on non-representative samples. <br />
+      A good introduction to when non-representative samples may be useful can
+      be found in <br /><i
+        >“Research Methods in Anthropology: Qualitative and Quantitative
+        Approaches”
+      </i>
+      by Harvey Russell Bernard.
+    </p>
+    <!-- <span class="incomplete">Text to go here responding to measure impact</span> -->
+  </note>
+
+  <stage-complete stageNumber="1"></stage-complete>
+</div>

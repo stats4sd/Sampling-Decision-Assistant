@@ -1,0 +1,17 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "This folder holds code previouly used with the admin editor - a minimal interface to make changes to glossary terms and Q&A sections.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "export": "firestore-export -p --accountCredentials credentials.json",
+    "export:glossary": "npm run export -- -b ../../data/glossary.json -n glossary",
+    "export:resources": "npm run export -- -b ../../data/resources.json -n resources"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-firestore-import-export": "^0.14.0"
+  }
+}

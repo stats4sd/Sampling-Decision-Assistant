@@ -1,0 +1,327 @@
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+// --------------------------------------------------
+$max-app-width: 768px;
+$small-screen-width: 320px;
+$medium-screen-width: 500px;
+// also applied direct to body so adjust accordingly
+// -------------------------------------------------
+
+// --------------------------------------------------
+// header settings
+.header-logo {
+  height: 50px;
+}
+
+.header {
+  display: flex;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--ion-color-primary);
+  font-size: 14px;
+}
+
+// --------------------------------------------------
+// text block css
+h3 {
+  font-size: large;
+  font-weight: bold;
+  color: var(--ion-color-primary); //padding: 10px 0;
+}
+
+h2 {
+  font-size: x-large;
+  color: var(--ion-color-primary);
+}
+
+.feature-image {
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.incomplete {
+  color: red !important; //background-color: #ecbdb6;
+  padding: 5px;
+  font-weight: bold !important;
+}
+
+.dev-note {
+  margin: 5px;
+  color: rgba(11, 120, 175, 1);
+}
+
+.multi-line-button {
+  // requires text-wrap attribute on element for multiple lines
+  text-transform: none;
+  font-weight: 300;
+  @media screen and (max-width: 300px) {
+    // make buttons larger on very small screens
+    height: 6rem;
+  }
+}
+.disclaimer {
+  font-style: italic;
+  font-size: small;
+}
+
+// multi-line text in buttons
+.button-inner {
+  white-space: normal;
+}
+
+body {
+  user-select: text;
+  font-family: "proxima_nova", lato, sans-serif !important;
+  font-size: 1em;
+}
+
+// project resume prompt
+.project-title {
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+// --------------------------------------------------
+// css commonly used to help display vertical columns with correct height sections
+.central-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// --------------------------------------------------
+// more section css
+.hover-fill {
+  :hover {
+    background-color: wheat;
+    cursor: pointer;
+  }
+}
+
+.card.disabled {
+  opacity: 0.6;
+  :hover {
+    background-color: white;
+  }
+}
+
+.invert {
+  background-color: var(--ion-color-primary);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+}
+
+.section-icon {
+  height: 100%;
+  max-height: 110px;
+  max-width: 110px;
+  padding: 5px;
+  width: auto;
+}
+
+.section-icon-container {
+  width: 120px;
+}
+
+.section-container {
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+}
+
+.section-title {
+  color: var(--ion-color-primary);
+  font-size: large;
+  flex: 1;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-container {
+  height: calc(100vh - 106px);
+  display: flex;
+  flex-direction: column;
+}
+
+// segment buttons
+.segment-button {
+}
+
+.segment-button.activated,
+.segment-button.segment-activated {
+  background-color: var(--ion-color-primary) !important;
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.segment-container {
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 1rem;
+  width: calc(100% - 55px);
+  max-width: calc(100vw - 32px);
+  z-index: 2;
+  background-color: white;
+}
+
+@media screen and (min-width: $max-app-width) {
+  // .segment-container{
+  //     // bottom:2rem;
+  // }
+}
+
+// allow vertical scroll in slides
+.central-inner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.slide-content {
+  font-size: 14px;
+  text-align: left;
+  line-height: 18px;
+  margin-bottom: 1em; // need to increase to 40px if using tabs
+}
+
+.swiper-slide {
+  display: block !important; // max-height: calc(100vh - 150px);
+  overflow-y: scroll;
+  width: 100%;
+}
+
+// fix to stop height filling largest slide even when inactive
+// combine with @Viewchild for slides after view init: `this.slides.autoHeight=true`;
+.swiper-slide:not(.swiper-slide-active) > div {
+  display: none;
+}
+
+// --------------------------------------------------
+// glossary
+.glossary-link {
+  color: brown;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+// --------------------------------------------------
+// question display overrides
+ion-card {
+  #questionLabelText,
+  .question-number.dark {
+    color: var(--ion-color-dark);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .question-number.dark {
+    font-size: 10px;
+  }
+}
+
+.card {
+  margin: 5px; // padding:5px;
+}
+
+// popover fix for screen resizing (max-width - 100?)
+.popover-content {
+  // margin-right:400px;
+  // right: 0!important;
+  top: 56px !important;
+  left: unset !important;
+  width: 150px !important;
+  right: 0 !important; // right: calc(100% - #{$max-app-width}/2)!important;
+}
+
+// --------------------------------------------------
+// app root centering for wide display
+@media screen and (min-width: $max-app-width) {
+  body {
+    max-width: 768px;
+    left: calc(50% - #{$max-app-width}/ 2);
+    background-color: var(--ion-color-primary);
+    height: calc(100vh - 10px);
+    margin: 5px auto;
+  } // add padding, background and curved edges for large devices
+  .menu-content,
+  .ion-page {
+    border-radius: 10px;
+    border: 1px solid white;
+    background: white;
+  }
+}
+ion-modal.video-player-modal {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+// allow modal to take up full screen (no backdrop) whilst still fitting in max size bounds
+ion-modal.full-screen {
+  .modal-wrapper {
+    left: calc(50% - #{$max-app-width}/ 2);
+    top: 0px;
+    position: absolute;
+    width: $max-app-width;
+    height: calc(100vh - 20px); //margin-top:100px;
+    background-color: transparent;
+  }
+}
+
+// when using the modal as a video popup want to limit height to fit video and make background a bit darker
+@media screen and (min-width: $max-app-width) {
+  ion-modal.video-player-modal {
+    --height: 370px;
+    .modal-wrapper {
+      max-height: 392px;
+    }
+    ion-backdrop {
+      opacity: 0.6 !important;
+    }
+  }
+}
+
+// content to hide on small displays
+@media screen and (max-width: $small-screen-width) {
+  .hide-small {
+    display: none;
+  }
+}
+
+// content to hide on medium displays
+@media screen and (max-width: $medium-screen-width) {
+  .hide-medium {
+    display: none;
+  }
+}
+
+// used to hide modal when content needs to be viewed underneath
+.no-display {
+  display: none;
+}
+
+// --------------------------------------------------
+// --------------------------------------------------
+// matched css from questions.scss to apply to pdf clone
+.pdf-output {
+  .heading {
+    font-weight: 700;
+    color: white;
+    width: 100%;
+    background-color: var(--ion-color-primary);
+    padding: 5px;
+    font-size: large;
+    margin-top: 5px;
+  }
+}

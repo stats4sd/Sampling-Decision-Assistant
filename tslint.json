@@ -1,0 +1,30 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rulesDirectory": ["codelyzer"],
+  "rules": {
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "member-access": false,
+    "no-console": false,
+    "prefer-const": false,
+    "no-empty": false,
+    "no-shadowed-variable": false,
+    "triple-equals": false,
+    "object-literal-shorthand": false,
+    "no-unused-expression": false,
+    "interface-name": false,
+    "class-name": false,
+    "radix": false,
+    "max-classes-per-file": false,
+    "one-variable-per-declaration": false,
+    "only-arrow-functions": false,
+    "variable-name": false,
+    "comment-format": false,
+    "member-ordering": false,
+    "no-string-literal": false,
+    "no-bitwise": false,
+    "prefer-for-of": false,
+    "no-eval": false,
+    "adjacent-overload-signatures": false
+  }
+}

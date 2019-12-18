@@ -1,0 +1,19 @@
+.question-container {
+  margin: 20px 0 20px 45px;
+}
+.item-inner {
+  color: var(--ion-color-primary);
+}
+.list-header {
+  margin-bottom: 0;
+}
+
+.item-md.item-checkbox-disabled ion-label {
+  opacity: 0.9 !important;
+}
+.alreadySelected {
+  text-decoration: line-through;
+}
+.checkbox-md.checkbox-disabled {
+  opacity: 0.3;
+}

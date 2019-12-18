@@ -1,0 +1,10 @@
+<!-- Generated template for the NoteComponent component -->
+<div [ngClass]="['note',_type]">
+  <div style="display: flex">
+    <ion-icon slot="start" [name]="icon" class="note-icon"></ion-icon>
+  </div>
+
+  <div class="note-text">
+    <ng-content></ng-content>
+  </div>
+</div>

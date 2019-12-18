@@ -1,0 +1,97 @@
+.builder-stage-container,
+.builder-container {
+  margin: unset;
+}
+.build-stage {
+  min-height: 3em;
+  flex: 1;
+  min-height: 3em;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}
+.row-headers {
+  font-weight: bold;
+  background: var(--ion-color-light-tint);
+  text-align: center;
+}
+ion-row {
+  cursor: pointer;
+  position: relative;
+  align-items: center;
+  border-bottom: 1px solid var(--ion-color-light-tint);
+  height: 3em;
+  text-align: center;
+}
+.stage-name {
+  text-align: center;
+}
+.hover {
+  // add fade when background hover enabled (could use 'all' to apply to all transitions)
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+.hover:hover {
+  background-color: rgb(230, 247, 255);
+  font-weight: bold;
+}
+.builder-arrow-down {
+  font-size: x-large;
+}
+.reference-text {
+  padding: 0 !important;
+}
+.item {
+  background-color: unset;
+  font-size: small;
+  border-bottom: unset;
+}
+.list {
+  margin-bottom: 0;
+}
+.sample-size {
+  font-size: x-small;
+  width: 100%;
+  position: absolute;
+  top: 1.2em;
+}
+.col {
+  padding: 0;
+}
+// edit button
+.edit-button-container {
+  width: 100%;
+  position: absolute;
+  height: calc(100% - 2px);
+}
+.edit-button-container:hover {
+  background-color: rgba(245, 222, 179, 0.8);
+  .edit-button {
+    opacity: 1;
+  }
+}
+.edit-button {
+  opacity: 0;
+  position: relative;
+  margin: 0;
+  height: 100%;
+}
+
+// general review show/hide
+.review-mode > h4,
+.review-mode > p {
+  display: none;
+}
+
+.review-mode {
+  input {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  note {
+    display: none;
+  }
+}

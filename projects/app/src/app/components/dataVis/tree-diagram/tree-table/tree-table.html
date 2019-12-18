@@ -1,0 +1,103 @@
+<!-- aggregation table -->
+<div [class]="exportMode ? 'exportMode' : 'displayMode'">
+  <div *ngIf="recommendations">
+    <table style="margin-bottom:2em">
+      <tr>
+        <th>Stage</th>
+        <th>Take</th>
+        <th>Sampling Units</th>
+        <th>Disaggregation</th>
+      </tr>
+      <tr *ngFor="let stage of samplingStages; index as i; first as first">
+        <!-- stage -->
+        <td>
+          {{stage.name}}
+          <span *ngIf="!first">per {{samplingStages[i-1].name}}</span>
+        </td>
+        <!-- take -->
+        <td>{{stage['q5.3.3']}}</td>
+        <!-- total -->
+        <td
+          *ngIf="i<samplingStages.length-1 && !exportMode"
+          class="table-input"
+        >
+          <ion-input
+            type="number"
+            [(ngModel)]="stage.sampleSize"
+            (ionChange)="allocationChange($event,i)"
+          ></ion-input>
+        </td>
+        <td *ngIf="i<samplingStages.length-1 && exportMode">
+          {{stage.sampleSize}}
+        </td>
+        <td *ngIf="i==samplingStages.length-1" class="table-fixed">
+          {{recommendations.countFinalStage}}
+        </td>
+        <!-- Disaggregation -->
+        <td>
+          <div *ngIf="stage._reportingLevels">
+            <div *ngFor="let level of stage._reportingLevels">
+              <div>
+                <div class="strata-name">{{level.name}}</div>
+                <ul>
+                  <li
+                    class="strata-classification"
+                    *ngFor="let name of level.classifications.names"
+                  >
+                    <div>{{name}}</div>
+                    <div class="sample-size">n = {{stage.sampleSize}}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          <div>Reporting Combination Sample Size</div>
+        </th>
+        <td></td>
+        <td
+          [class]="allocationSampleSize>=recommendations.requiredPerAggregation ? 'pass':'fail'"
+        >
+          <span *ngIf="allocationSampleSize>0">{{allocationSampleSize}}</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Overall Sample Size</td>
+        <td></td>
+        <td>
+          <span *ngIf="allocationSampleSize>0"
+            >{{allocationSampleSize *
+            recommendations.disaggregationMeta.levelCombinations.length}}</span
+          >
+        </td>
+        <td></td>
+      </tr>
+    </table>
+
+    <note
+      type="warning"
+      *ngIf="!exportMode && allocationSampleSize && allocationSampleSize < recommendations.requiredPerAggregation"
+    >
+      The recommended minimum sample size is
+      <span style="font-weight: bold"
+        >{{recommendations.requiredPerAggregation}}</span
+      >
+      for each reporting combination
+    </note>
+    <note
+      type="success"
+      *ngIf="!exportMode && allocationSampleSize && allocationSampleSize >= recommendations.requiredPerAggregation"
+    >
+      The current sample size satifies the minimum reccomendation of
+      <span style="font-weight: bold"
+        >{{recommendations.requiredPerAggregation}}</span
+      >
+      for each reporting combination
+    </note>
+  </div>
+</div>

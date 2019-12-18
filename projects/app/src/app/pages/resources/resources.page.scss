@@ -1,0 +1,9 @@
+.toolbar-title {
+  display: flex;
+  flex-wrap: wrap;
+}
+.stage-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,13 @@
+ion-button.closeButton {
+  --padding-start: 5px;
+  --padding-end: 5px;
+  margin-left: auto;
+}
+.player-container {
+  background-color: white;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

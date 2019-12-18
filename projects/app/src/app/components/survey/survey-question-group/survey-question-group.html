@@ -1,0 +1,58 @@
+<div *ngIf="formGroup">
+  <div *ngFor="let question of groupQuestions">
+    <!-- display list of questions -->
+    <div *ngIf="question.type!='repeat'">
+      <!-- questions that are part of repeat groups and require formArrayName and formGroupName -->
+      <div *ngIf="formArrayName && formGroupName">
+        <survey-question [question]="question" [showLabel]="showLabel" [formArrayName]="formArrayName" [formGroupName]="formGroupName"
+         [formGroup]="formGroup"></survey-question>
+      </div>
+      <!-- all other regular questions -->
+      <div *ngIf="!formArrayName || !formGroupName" style="margin-bottom:15px">
+        <survey-question [question]="question" [showLabel]="showLabel" [formGroup]="formGroup"></survey-question>
+      </div>
+    </div>
+
+    <!-- display repeat groups -->
+    <div *ngIf="question.type=='repeat'">
+      <survey-repeat-group [repeatFilter]="repeatFilter" [repeatID]="repeatID" [repeatIndex]="repeatIndex" [question]="question"
+        [showLabel]="showLabel" [formGroup]="formGroup"></survey-repeat-group>
+    </div>
+
+    <!-- 
+        <!-- repeat groups 
+        <div *ngIf="question.type=='repeat'">
+          <!-- show all repeats
+          <div *ngIf="showAllRepeats">
+            <div [formArrayName]="question.controlName">
+              <div *ngFor="let group of formGroup.controls[question.controlName].controls; let i=index" [formGroupName]="i">
+                <div class="repeat-heading">{{getRepeatGroupTitle(question,i)}}</div>
+                <div *ngFor="let q of question.repeatQuestions">
+                  <survey-question *ngIf="_repeatFilterList.indexOf(q.controlName)==-1" [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[i]"
+                    [showLabel]="showLabel">
+                  </survey-question>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- show selected repeat 
+          <div *ngIf="!showAllRepeats">
+            <div [formArrayName]="question.controlName">
+              <div [formGroupName]="_repeatIndex">
+                <div class="repeat-heading">{{getRepeatGroupTitle(question,_repeatIndex)}}</div>
+                <div *ngFor="let q of question.repeatQuestions">
+                  <!-- filter out if using repeatFilter 
+                  <div *ngIf="_repeatFilterList">
+                    <survey-question *ngIf="_repeatFilterList.indexOf(q.controlName)>-1" [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]"></survey-question>
+                  </div>
+                  <div *ngIf="!_repeatFilterList">
+                    <survey-question [question]="q" [formGroup]="formGroup.controls[question.controlName].controls[_repeatIndex]" [showLabel]="showLabel"></survey-question>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        -->
+  </div>
+</div>

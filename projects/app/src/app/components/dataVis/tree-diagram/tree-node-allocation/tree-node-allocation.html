@@ -1,0 +1,31 @@
+<div class="node-info-text" *ngIf="stagePart=='3' || reviewMode">
+
+    <!-- stage allocation -->
+    <div *ngIf="allocationMeta.type=='stage'">
+        <div>
+            <div [ngSwitch]="allocationMeta.sampleTake">
+                <div *ngSwitchCase="'All'">
+                    <div>You said you want to sample all units in this stage</div>
+                    <div style="margin-top:1em">How many units are there?</div>
+                    <ion-input #sampleSizeInput class="allocation-input" type="number" [(ngModel)]="sampleSize" (ionChange)="setSampleSize()"></ion-input>
+                </div>
+                <div *ngSwitchCase="'Sample'">
+                    <div>You said you want to take a sample of units in this stage</div>
+                    <div style="margin-top:1em">How many units would you like to sample?</div>
+                    <ion-input #sampleSizeInput class="allocation-input" type="number" [(ngModel)]="sampleSize" (ionChange)="setSampleSize()"></ion-input>
+                </div>
+                <note type="error" *ngSwitchDefault>You have not answered q5.3.3 in stage 5</note>
+            </div>
+        </div>
+    </div>
+
+    <!-- reporting unit allocation -->
+    <div *ngIf="allocationMeta.type=='reportingLevel'">
+        <note type="dev">Currently assumes sample sizes allocated evenly, in the future there will be an option to change this</note>
+    </div>
+
+</div>
+
+<div *ngIf="stagePart!='3'">
+    <note type="info">Allocation will be completed during a later step</note>
+</div>
