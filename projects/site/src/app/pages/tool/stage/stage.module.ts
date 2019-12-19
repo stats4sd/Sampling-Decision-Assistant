@@ -26,6 +26,7 @@ import { FrameBuilderPageModule } from "../frame-builder/frame-builder.module";
     GeneralComponentsModule,
     FrameBuilderPageModule
   ],
-  declarations: [StagePage]
+  declarations: [StagePage],
+  exports: [StagePage]
 })
 export class StagePageModule {}

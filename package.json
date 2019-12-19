@@ -1,6 +1,6 @@
 {
   "name": "sampling-decision-assistant",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Statistics for Sustainable Development",
   "homepage": "https://github.com/stats4sd/Sampling-Decision-Assistant",
   "repository": {
@@ -13,16 +13,16 @@
   },
   "license": "GPL-3.0",
   "files": [
-    "www"
+    "dist"
   ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --prod",
-    "serve:prod": "http-server -p 8080 -c-1 www",
+    "serve:prod": "http-server -p 8080 -c-1 dist/site",
     "build:stats": "ng build --prod --stats-json",
-    "analyze": "webpack-bundle-analyzer www/stats-es2015.json",
+    "analyze": "webpack-bundle-analyzer dist/site/stats-es2015.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
