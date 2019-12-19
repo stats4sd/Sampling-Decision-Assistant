@@ -44,7 +44,7 @@ import { PageComponentsModule } from "../page/pageComponentsModule";
     // NOTE - Dragula needs extra config to work, see:
     // https://github.com/valor-software/ng2-dragula/issues/849
     // (currently in tsconfig.app.json)
-    DragulaModule.forRoot(),
+    DragulaModule,
     PipesModule,
     GeneralComponentsModule
   ],

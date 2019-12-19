@@ -16,15 +16,13 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "dragula": ["node_modules/dragula/dist/dragula.min.js"],
-      "@root/*": ["*"],
-      "@data/*": ["data/*"]
+      "src*": ["projects/site/src*"]
     }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true
   },
-  "include": ["projects/app/src/**/*"],
+  "include": ["projects/site/src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

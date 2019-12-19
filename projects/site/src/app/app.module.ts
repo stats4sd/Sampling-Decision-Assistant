@@ -22,6 +22,7 @@ import { SentryErrorHandler } from "./services/error-handler/error-handler";
 import { IonicStorageModule } from "@ionic/storage";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxYoutubePlayerModule } from "ngx-youtube-player";
+import { DragulaModule } from "ng2-dragula";
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +41,11 @@ import { NgxYoutubePlayerModule } from "ngx-youtube-player";
     NgReduxModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxYoutubePlayerModule.forRoot()
+    NgxYoutubePlayerModule.forRoot(),
+    DragulaModule.forRoot(),
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production
+    })
   ],
   providers: [
     StatusBar,
