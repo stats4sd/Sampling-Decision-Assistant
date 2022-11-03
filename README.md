@@ -1,6 +1,6 @@
 # Sampling Decision Assistant
 
-**This tool is actively under development and not intended for general use (yet!)**
+**This tool is no longer under development.**
 
 ## Setup
 
